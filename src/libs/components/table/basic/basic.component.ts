@@ -58,7 +58,7 @@ export class TableBasicComponent {
     { id: 'server', name: 'server — Gọi API phía server' },
   ];
   pageSizeOptions = [
-    { id: 5,  name: '5'  },
+    { id: 5, name: '5' },
     { id: 10, name: '10' },
     { id: 25, name: '25' },
   ];
@@ -76,9 +76,7 @@ export class TableBasicComponent {
       columns: this.buildColumns(),
       config: { visible: this.showConfig() },
       reload: this.showReload() ? { visible: true } : undefined,
-      export: this.showExport()
-        ? { visible: 'ALL' as const, items: () => this.getMockData() }
-        : undefined,
+      export: this.showExport() ? { visible: 'ALL' as const, items: () => this.getMockData() } : undefined,
       selector: { visible: this.showSelector() },
       paginate: { pageSize: this.pageSize(), pages: [5, 10, 25] },
       filter: { hideExternalFilterToolbar: true },
@@ -105,23 +103,23 @@ export class TableBasicComponent {
         title: 'Họ và tên',
         type: 'string',
         width: '200px',
-        copiable: true,
-        description: 'type: string — copiable: true cho phép sao chép nội dung ô',
+        cell: { copiable: true },
+        export: { description: 'type: string — cell.copiable: true cho phép sao chép nội dung ô' },
       },
       {
         field: 'email',
         title: 'Email',
         type: 'string',
         width: '220px',
-        copiable: true,
-        description: 'type: string — hỗ trợ htmlTemplate, transform, tooltip',
+        cell: { copiable: true },
+        export: { description: 'type: string — hỗ trợ htmlTemplate, transform, tooltip' },
       },
       {
         field: 'department',
         title: 'Phòng ban',
         type: 'values',
         width: '195px',
-        description: 'type: values — tra cứu nhãn từ danh sách tĩnh (items, valueField, displayField)',
+        export: { description: 'type: values — tra cứu nhãn từ danh sách tĩnh (items, valueField, displayField)' },
         option: { items: DEPARTMENT_OPTIONS, valueField: 'id', displayField: 'name' },
       },
       {
@@ -129,7 +127,7 @@ export class TableBasicComponent {
         title: 'Cấp độ',
         type: 'values',
         width: '120px',
-        description: 'type: values — field lưu khoá, hiển thị nhãn tương ứng',
+        export: { description: 'type: values — field lưu khoá, hiển thị nhãn tương ứng' },
         option: { items: LEVEL_OPTIONS, valueField: 'id', displayField: 'name' },
       },
       {
@@ -138,28 +136,28 @@ export class TableBasicComponent {
         type: 'number',
         width: '155px',
         align: 'right',
-        description: 'type: number — align: right, lọc khoảng qua filter.type: split-number',
+        export: { description: 'type: number — align: right, lọc khoảng qua filter.type: split-number' },
       },
       {
         field: 'birthDate',
         title: 'Ngày sinh',
         type: 'date',
         width: '135px',
-        description: 'type: date — hiển thị định dạng ngày, lọc theo ngày hoặc khoảng ngày',
+        export: { description: 'type: date — hiển thị định dạng ngày, lọc theo ngày hoặc khoảng ngày' },
       },
       {
         field: 'createdAt',
         title: 'Ngày tạo',
         type: 'datetime',
         width: '165px',
-        description: 'type: datetime — hiển thị cả ngày và giờ',
+        export: { description: 'type: datetime — hiển thị cả ngày và giờ' },
       },
       {
         field: 'isActive',
         title: 'Trạng thái',
         type: 'boolean',
         width: '135px',
-        description: 'type: boolean — tuỳ chỉnh nhãn qua option.displayOnTrue / displayOnFalse',
+        export: { description: 'type: boolean — tuỳ chỉnh nhãn qua option.displayOnTrue / displayOnFalse' },
         option: { displayOnTrue: 'Hoạt động', displayOnFalse: 'Tạm ngừng' },
       },
     ];
@@ -179,8 +177,8 @@ export class TableBasicComponent {
   items: () => this.getEmployees(),  // Trả về T[] hoặc Promise<T[]>
 
   columns: [
-    // string — copiable: true cho phép copy ô
-    { field: 'fullName', title: 'Họ và tên', type: 'string', copiable: true },
+    // string — cell.copiable: true cho phép copy ô
+    { field: 'fullName', title: 'Họ và tên', type: 'string', cell: { copiable: true } },
     // number — align: right, lọc khoảng
     { field: 'salary',   title: 'Lương',     type: 'number', align: 'right' },
     // date / datetime
@@ -228,8 +226,16 @@ ${cfg ? `  config:   { visible: true },  // Nút thiết lập hiển thị cộ
 
   private getMockData(): Employee[] {
     const firstNames = [
-      'Văn An', 'Thị Bình', 'Hoàng Cường', 'Thu Dung', 'Minh Đức',
-      'Thị Lan', 'Văn Hùng', 'Thị Mai', 'Quang Nam', 'Thị Oanh',
+      'Văn An',
+      'Thị Bình',
+      'Hoàng Cường',
+      'Thu Dung',
+      'Minh Đức',
+      'Thị Lan',
+      'Văn Hùng',
+      'Thị Mai',
+      'Quang Nam',
+      'Thị Oanh',
     ];
     const lastNames = ['Nguyễn', 'Trần', 'Lê', 'Phạm', 'Hoàng', 'Vũ', 'Đặng', 'Bùi', 'Đỗ', 'Ngô'];
     const depts = ['IT', 'HR', 'FIN', 'MKT', 'OPS'];

@@ -1,0 +1,61 @@
+<sd-page [title]="'System Icons'" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+      <div class="col-md-4">
+        <sd-section title="Bộ lọc" icon="tune">
+          <div class="demo-config-panel">
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">search</span>
+                <span class="config-item__desc">Lọc icon theo tên.</span>
+              </div>
+              <sd-input [(model)]="searchText" [placeholder]="'Ví dụ: user, settings, download'"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">iconSize</span>
+                <span class="config-item__desc">Kích thước icon hiển thị.</span>
+              </div>
+              <sd-input-number [(model)]="iconSize" [min]="16" [max]="48"></sd-input-number>
+            </div>
+
+            <div class="config-item config-item--stacked">
+              <div class="config-item__label">
+                <span class="config-item__title">copy</span>
+                <span class="config-item__desc">Click một icon để copy tên dùng cho thuộc tính icon/prefixIcon/suffixIcon.</span>
+              </div>
+              <div class="copy-note">Đã copy: <strong>{{ copiedIcon() || '---' }}</strong></div>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+          <sd-section title="Fill (material-icons)" icon="format_color_fill">
+            <div class="icon-grid">
+              @for (icon of filteredFillIcons(); track icon) {
+                <button type="button" class="icon-card" (click)="copyIcon(icon)">
+                  <span class="material-icons" [style.fontSize.px]="iconSize()">{{ icon }}</span>
+                  <span class="icon-name">{{ icon }}</span>
+                </button>
+              }
+            </div>
+          </sd-section>
+
+          <sd-section title="Outline (material-icons-outlined)" icon="pentagon">
+            <div class="icon-grid">
+              @for (icon of filteredOutlineIcons(); track icon) {
+                <button type="button" class="icon-card" (click)="copyIcon(icon)">
+                  <span class="material-icons-outlined" [style.fontSize.px]="iconSize()">{{ icon }}</span>
+                  <span class="icon-name">{{ icon }}</span>
+                </button>
+              }
+            </div>
+          </sd-section>
+        </div>
+      </div>
+    </div>
+  </div>
+</sd-page>

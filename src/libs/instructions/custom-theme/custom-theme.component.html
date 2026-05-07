@@ -1,0 +1,171 @@
+<sd-page [title]="'Tùy chỉnh Theme'" [description]="pageDescription()">
+  <div class="guide-body">
+
+    <!-- OVERVIEW -->
+    <div class="overview-card">
+      <span class="material-icons overview-card__icon">layers</span>
+      <div class="overview-card__text">
+        <strong>Kiến trúc 2 lớp:</strong>
+        <span>
+          <code>sd.theme()</code> sinh <code>--sd-*</code> CSS variables dùng cho toàn bộ <code>sd-*</code> components —
+          <code>mat.all-component-themes()</code> áp palette M2 cho Angular Material components.
+          Đổi màu primary cần cập nhật <strong>cả hai</strong>. Tất cả đặt trong <code>styles.scss</code>.
+        </span>
+      </div>
+    </div>
+
+    <div class="row row-sm mx-0">
+
+      <!-- CỘT TRÁI: THUỘC TÍNH + XEM TRƯỚC -->
+      <div class="col-md-4">
+        <div class="d-flex flex-column gap-16">
+
+          <sd-section title="Thuộc tính" icon="settings">
+            <div class="demo-config-panel">
+              <div class="config-item config-item--stacked">
+                <div class="config-item__label">
+                  <span class="config-item__title">primary</span>
+                  <span class="config-item__desc">Màu chính cho button, link, accent.</span>
+                </div>
+                <div class="color-input-row">
+                  <input type="color" [value]="primaryColor()" (input)="onColorPick(primaryColor, $event)">
+                  <input type="text" class="hex-input" [value]="primaryColor().toUpperCase()"
+                         (change)="onHexType(primaryColor, $event)">
+                </div>
+              </div>
+              <div class="config-item config-item--stacked">
+                <div class="config-item__label">
+                  <span class="config-item__title">primary-light</span>
+                  <span class="config-item__desc">Bản nhạt của màu chính.</span>
+                </div>
+                <div class="color-input-row">
+                  <input type="color" [value]="primaryLightColor()" (input)="onColorPick(primaryLightColor, $event)">
+                  <input type="text" class="hex-input" [value]="primaryLightColor().toUpperCase()"
+                         (change)="onHexType(primaryLightColor, $event)">
+                </div>
+              </div>
+            </div>
+          </sd-section>
+
+          <sd-section title="Xem trước" icon="visibility">
+            <div class="preview-wrap"
+                 [style.--sd-primary]="primaryColor()"
+                 [style.--sd-primary-light]="primaryLightColor()"
+                 [style.--sd-primary-dark]="previewPrimaryDark()">
+              <div class="preview-row">
+                <sd-button color="primary">Nút chính</sd-button>
+                <sd-button>Mặc định</sd-button>
+              </div>
+              <div class="preview-row">
+                <sd-button color="primary" variant="outlined">Viền</sd-button>
+                <sd-button color="primary" variant="text">Chữ</sd-button>
+              </div>
+              <div class="preview-row preview-row--switch">
+                <sd-switch [(model)]="previewSwitch" size="sm"></sd-switch>
+                <span class="preview-switch-label">Switch {{ previewSwitch() ? 'bật' : 'tắt' }}</span>
+              </div>
+            </div>
+          </sd-section>
+
+        </div>
+      </div>
+
+      <!-- CỘT PHẢI: HƯỚNG DẪN -->
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+
+          <!-- MÃ NGUỒN -->
+          <sd-section title="Mã nguồn" icon="code">
+            <p class="step-desc">
+              Import mixin <code>sd.theme()</code> từ <code>@sd-angular/core/assets/scss/themes/default</code>
+              và truyền map màu cần ghi đè. Mixin merge với bộ mặc định rồi sinh ra toàn bộ
+              <code>--sd-*</code> CSS custom properties cho tất cả <code>sd-*</code> components.
+            </p>
+            <sd-code-editor [model]="step1Code" language="scss" [viewed]="true" maxHeight="440px"></sd-code-editor>
+          </sd-section>
+
+          <!-- STEP 2: PALETTE GENERATOR -->
+          <sd-section title="Mã nguồn" icon="code">
+            <p class="step-desc">
+              Material components dùng <em>palette M2</em> với 10 shade (50→900) và map <code>contrast</code>.
+              Nhập màu gốc bên dưới để tự động sinh palette — sau đó copy SCSS vào <code>styles.scss</code>.
+              Thông thường cần 3 palette: <strong>primary</strong>, <strong>accent</strong> (thường dùng lại success),
+              và <strong>warn</strong> (map với error).
+            </p>
+
+            <!-- Color inputs for generator -->
+            <div class="palette-inputs">
+              <div class="palette-input-group">
+                <label class="color-label">Primary</label>
+                <div class="color-input-row">
+                  <input type="color" [value]="palettePrimary()" (input)="onColorPick(palettePrimary, $event)">
+                  <input type="text" class="hex-input" [value]="palettePrimary().toUpperCase()"
+                         (change)="onHexType(palettePrimary, $event)">
+                </div>
+              </div>
+              <div class="palette-input-group">
+                <label class="color-label">Accent</label>
+                <div class="color-input-row">
+                  <input type="color" [value]="paletteAccent()" (input)="onColorPick(paletteAccent, $event)">
+                  <input type="text" class="hex-input" [value]="paletteAccent().toUpperCase()"
+                         (change)="onHexType(paletteAccent, $event)">
+                </div>
+              </div>
+              <div class="palette-input-group">
+                <label class="color-label">Warn</label>
+                <div class="color-input-row">
+                  <input type="color" [value]="paletteWarn()" (input)="onColorPick(paletteWarn, $event)">
+                  <input type="text" class="hex-input" [value]="paletteWarn().toUpperCase()"
+                         (change)="onHexType(paletteWarn, $event)">
+                </div>
+              </div>
+            </div>
+
+            <!-- Swatches preview -->
+            <div class="palette-colors">
+              @for (p of paletteDisplay(); track p.name) {
+                <div class="palette-row">
+                  <div class="palette-row__name">{{ p.name }}</div>
+                  <div class="palette-swatches">
+                    @for (shade of p.shades; track shade.stop) {
+                      <div class="swatch" [style.background]="shade.hex"
+                           [style.color]="shade.white ? 'white' : 'rgba(0,0,0,0.7)'">
+                        <span class="swatch__stop">{{ shade.stop }}</span>
+                        <span class="swatch__hex">{{ shade.hex.toUpperCase() }}</span>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+
+            <!-- Generated SCSS -->
+            <div class="generated-label">SCSS đã sinh:</div>
+            <sd-code-editor [model]="generatedScss()" language="scss" [viewed]="true" maxHeight="420px"></sd-code-editor>
+          </sd-section>
+
+          <!-- STEP 3 -->
+          <sd-section title="Mã nguồn" icon="code">
+            <p class="step-desc">
+              Khai báo palette (từ Bước 2) và tạo theme M2 light. Đặt ngay trong <code>styles.scss</code>
+              sau phần <code>sd.theme()</code>. Lưu ý <code>density: -3</code> để khớp thiết kế compact của
+              <code>sd-*</code> components.
+            </p>
+            <sd-code-editor [model]="step3Code" language="scss" [viewed]="true" maxHeight="360px"></sd-code-editor>
+          </sd-section>
+
+          <!-- STEP 4 -->
+          <sd-section title="Mã nguồn" icon="code">
+            <p class="step-desc">
+              Đảm bảo <code>styles.scss</code> đã được đăng ký trong mảng <code>styles</code>
+              của <code>angular.json</code>.
+            </p>
+            <sd-code-editor [model]="step4Code" language="json" [viewed]="true" maxHeight="220px"></sd-code-editor>
+          </sd-section>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</sd-page>

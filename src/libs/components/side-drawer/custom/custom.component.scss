@@ -1,0 +1,32 @@
+// Styles cho Side Drawer Demo modernized
+:host {
+  display: block;
+  height: 100%;
+
+  .demo-page-body {
+    padding: 8px 4px; // Kết hợp với 4px padding của col trong row-sm để tạo ra 8px cân đối
+    background-color: #f1f5f9;
+    min-height: 100%;
+  }
+}
+
+::ng-deep .my-custom-drawer-style {
+  .sd-side-drawer-header {
+    background-color: #e0f2fe; /* Xanh nhạt */
+    border-bottom: 1px solid #bae6fd;
+  }
+  
+  .sd-side-drawer-title {
+    color: #0369a1 !important; /* Xanh đậm */
+    font-weight: 700;
+  }
+  
+  .sd-side-drawer-body {
+    background-color: #f0f9ff;
+  }
+
+  .sd-side-drawer-footer {
+    background-color: #e0f2fe;
+    border-top: 1px solid #bae6fd;
+  }
+}

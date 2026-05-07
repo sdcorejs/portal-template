@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  height: 100%;
+
+  .demo-page-body {
+    padding: 8px 4px;
+    background-color: #f1f5f9;
+    min-height: 100%;
+  }
+}

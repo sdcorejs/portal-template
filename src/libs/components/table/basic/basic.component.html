@@ -1,0 +1,87 @@
+<sd-page title="sd-table — Cơ bản" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+
+      <!-- CỘT TRÁI: THUỘC TÍNH -->
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="d-flex flex-column gap-12">
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">type</span>
+                <span class="config-item__desc">Chế độ xử lý: phía client hay server</span>
+              </div>
+              <sd-select [items]="tableTypeOptions" valueField="id" displayField="name" [(model)]="tableType" size="sm"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">paginate.pageSize</span>
+                <span class="config-item__desc">Số dòng hiển thị mỗi trang</span>
+              </div>
+              <sd-select [items]="pageSizeOptions" valueField="id" displayField="name" [(model)]="pageSize" size="sm"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">config.visible</span>
+                <span class="config-item__desc">Nút thiết lập hiển thị cột</span>
+              </div>
+              <sd-switch [(model)]="showConfig" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">reload.visible</span>
+                <span class="config-item__desc">Nút tải lại dữ liệu</span>
+              </div>
+              <sd-switch [(model)]="showReload" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">export.visible</span>
+                <span class="config-item__desc">Nút Export Excel/CSV</span>
+              </div>
+              <sd-switch [(model)]="showExport" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">selector.visible</span>
+                <span class="config-item__desc">Cột checkbox chọn dòng</span>
+              </div>
+              <sd-switch [(model)]="showSelector" size="sm"></sd-switch>
+            </div>
+
+          </div>
+        </sd-section>
+      </div>
+
+      <!-- CỘT PHẢI: XEM TRƯỚC + MÃ NGUỒN -->
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+
+          <sd-section title="Xem trước" icon="visibility">
+            @if (tableType() === 'server') {
+              <div class="request-bar">
+                <strong class="request-bar__label">Yêu cầu gần nhất gửi server:</strong>
+                <span class="request-bar__value">{{ lastRequest() }}</span>
+              </div>
+            }
+            <div style="height: 500px; overflow: auto;">
+              <sd-table [option]="tableOption()"></sd-table>
+            </div>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <sd-code-editor [model]="tsCode()" language="typescript" maxHeight="480px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</sd-page>

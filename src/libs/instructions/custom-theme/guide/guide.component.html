@@ -1,0 +1,54 @@
+<sd-page title="Hướng dẫn tùy chỉnh Theme cho Portal" description="Mặc định Portal sử dụng bộ màu built-in (primary xanh dương, error đỏ, success xanh lá…). Tuy nhiên mỗi dự án thường có Color Branding riêng — ví dụ muốn primary theo màu thương hiệu của doanh nghiệp, hoặc đơn giản là muốn giao diện trông khác biệt hơn. Trang này hướng dẫn cách ghi đè toàn bộ Color Theme chỉ bằng một file styles.scss.">
+  <div class="guide-body">
+
+    <div class="overview-card">
+      <span class="material-icons overview-card__icon">layers</span>
+      <div class="overview-card__text">
+        <strong>Kiến trúc 2 lớp:</strong>
+        <span>
+          <code>sd.theme()</code> sinh <code>--sd-*</code> CSS variables cho <code>sd-*</code> components —
+          <code>mat.all-component-themes()</code> áp palette M2 cho Angular Material components.
+          Đổi màu primary cần cập nhật <strong>cả hai</strong>. Tất cả đặt trong <code>styles.scss</code>.
+        </span>
+      </div>
+    </div>
+
+    <sd-section title="Thuộc tính" icon="settings">
+      <p class="step-desc">
+        Import mixin <code>sd.theme()</code> từ <code>@sd-angular/core/assets/scss/themes/default</code>
+        và truyền map màu cần ghi đè. Mixin merge với bộ mặc định rồi sinh ra toàn bộ
+        <code>--sd-*</code> CSS custom properties cho tất cả <code>sd-*</code> components.
+        Chỉ cần khai báo những token khác giá trị mặc định.
+      </p>
+      <sd-code-editor [model]="step1Code" language="scss" [viewed]="true" maxHeight="440px"></sd-code-editor>
+    </sd-section>
+
+    <sd-section title="Xem trước" icon="visibility">
+      <p class="step-desc">
+        Material components dùng <em>palette M2</em> với 10 shade (50→900) và map <code>contrast</code>.
+        Dùng tab <strong>Công cụ</strong> ở sidebar để sinh tự động từ 3 màu gốc (primary, error, success),
+        sau đó copy phần SCSS vào <code>styles.scss</code>. Thông thường cần 3 palette:
+        <strong>primary</strong>, <strong>accent</strong> (success), và <strong>warn</strong> (error).
+      </p>
+      <sd-code-editor [model]="step2Code" language="scss" [viewed]="true" maxHeight="360px"></sd-code-editor>
+    </sd-section>
+
+    <sd-section title="Mã nguồn" icon="code">
+      <p class="step-desc">
+        Khai báo palette (từ Bước 2) và tạo theme M2 light ngay trong <code>styles.scss</code>
+        sau phần <code>sd.theme()</code>. Lưu ý <code>density: -3</code> để khớp thiết kế compact
+        của <code>sd-*</code> components.
+      </p>
+      <sd-code-editor [model]="step3Code" language="scss" [viewed]="true" maxHeight="340px"></sd-code-editor>
+    </sd-section>
+
+    <sd-section title="Mã nguồn" icon="code">
+      <p class="step-desc">
+        Đảm bảo <code>styles.scss</code> đã được đăng ký trong mảng <code>styles</code>
+        của <code>angular.json</code>.
+      </p>
+      <sd-code-editor [model]="step4Code" language="json" [viewed]="true" maxHeight="220px"></sd-code-editor>
+    </sd-section>
+
+  </div>
+</sd-page>

@@ -1,0 +1,127 @@
+import { Component, EventEmitter, Output, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { SdButton, SdSection, SdUploadFile, SdSideDrawer } from '@sd-angular/core/components';
+import { SdFormsModule } from '@sd-angular/core/forms';
+import { SdLoadingService, SdNotifyService } from '@sd-angular/core/services';
+import { {{ properCase name }}DTO } from '../../services/{{ kebabCase name }}.model';
+import { {{ properCase name }}Service } from '../../services/{{ kebabCase name }}.service';
+
+@Component({
+  selector: '{{ kebabCase name }}-detail',
+  imports: [SdFormsModule, SdButton, SdUploadFile, SdSection, SdSideDrawer],
+  template: `
+    <sd-side-drawer width="400px" alwaysDisplayBackDrop #sideDrawer noCloseButton>
+      <div sdTitle>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="mr-12">{{ '{{' }} title {{ '}}' }}</div>
+        </div>
+      </div>
+
+      <div sdBody>
+        <div class="row mt-16">
+          <div class="col-12">
+            <sd-input label="Mã" [(model)]="entity.code" [form]="form" [viewed]="viewed"></sd-input>
+          </div>
+          <div class="col-12">
+            <sd-input label="Tên" [(model)]="entity.name" [form]="form" [viewed]="viewed"></sd-input>
+          </div>
+        </div>
+      </div>
+
+      <div sdFooter class="d-flex justify-content-end">
+        <sd-button title="Đóng" class="mr-8" type="light" color="secondary" (click)="onClose()"></sd-button>
+        @if (state === 'detail') {
+          <sd-button title="Cập nhật" class="mr-8" type="fill" prefixIcon="edit" color="primary" (click)="onUpdate()"></sd-button>
+        } @else if (state === 'update') {
+          <sd-button title="Lưu" class="mr-8" type="fill" prefixIcon="save" color="primary" (click)="onSave()" [loading]="saving"></sd-button>
+        } @else if (state === 'create') {
+          <sd-button title="Lưu" class="mr-8" type="fill" prefixIcon="save" color="primary" (click)="onSave()" [loading]="saving"></sd-button>
+        }
+      </div>
+    </sd-side-drawer>
+  `,
+})
+export class DetailComponent {
+  @ViewChildren(SdUploadFile) uploadFiles?: QueryList<SdUploadFile>;
+  @ViewChild('sideDrawer') sideDrawer!: SdSideDrawer;
+
+  @Output() accept = new EventEmitter<void>();
+
+  readonly #notifyService = inject(SdNotifyService);
+  readonly #loadingService = inject(SdLoadingService);
+  readonly #{{ camelCase name }}Service = inject({{ properCase name }}Service);
+
+  form = new FormGroup({});
+  saving = false;
+  entity: Partial<{{ properCase name }}DTO> = {};
+  id?: string;
+  state = '';
+  title = '';
+  viewed = false;
+
+  onOpen = (type: 'create' | 'update' | 'detail', id?: string) => {
+    this.state = type;
+    this.id = id;
+    this.viewed = this.state === 'detail';
+    this.form.reset();
+
+    if (this.state === 'update') {
+      this.title = 'Cập nhật {{ label }}';
+    } else if (this.state === 'create') {
+      this.title = 'Tạo mới {{ label }}';
+    } else {
+      this.title = 'Chi tiết {{ label }}';
+    }
+
+    if (this.id) {
+      this.#detail(this.id);
+    }
+    this.sideDrawer.open();
+  };
+
+  #detail = (id: string) => {
+    this.#loadingService.start();
+    this.#{{ camelCase name }}Service
+      .detail(id)
+      .then(entity => {
+        this.entity = entity;
+        this.viewed = this.state === 'detail';
+      })
+      .finally(() => this.#loadingService.stop());
+  };
+
+  onUpdate = () => {
+    this.state = 'update';
+    this.title = 'Cập nhật {{ label }}';
+    this.viewed = false;
+  };
+
+  onSave = async () => {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    this.saving = true;
+    try {
+      if (this.uploadFiles?.length) {
+        await Promise.all(this.uploadFiles.map(f => f.upload()));
+      }
+      if (this.entity.id) {
+        await this.#{{ camelCase name }}Service.update(this.entity.id, this.entity);
+        this.#notifyService.success('Cập nhật {{ label }} thành công');
+        if (this.id) this.#detail(this.id);
+      } else {
+        await this.#{{ camelCase name }}Service.create(this.entity);
+        this.#notifyService.success('Tạo mới {{ label }} thành công');
+        this.onClose();
+      }
+    } finally {
+      this.saving = false;
+    }
+  };
+
+  onClose = () => {
+    this.accept.emit();
+    this.sideDrawer.close();
+  };
+}

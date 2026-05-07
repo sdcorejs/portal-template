@@ -1,0 +1,64 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "strict": false,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": false,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "paths": {
+      "@components": [
+        "./src/libs/components"
+      ],
+      "@components/*": [
+        "./src/libs/components/*"
+      ],
+      "@services": [
+        "./src/libs/services"
+      ],
+      "@services/*": [
+        "./src/libs/services/*"
+      ],
+      "@forms": [
+        "./src/libs/forms"
+      ],
+      "@forms/*": [
+        "./src/libs/forms/*"
+      ],
+      "@patterns": [
+        "./src/libs/patterns"
+      ],
+      "@patterns/*": [
+        "./src/libs/patterns/*"
+      ],
+      "@instructions": [
+        "./src/libs/instructions"
+      ],
+      "@instructions/*": [
+        "./src/libs/instructions/*"
+      ],
+      "@utilities": [
+        "./src/libs/utilities"
+      ],
+      "@utilities/*": [
+        "./src/libs/utilities/*"
+      ],
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

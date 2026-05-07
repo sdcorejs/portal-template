@@ -1,0 +1,117 @@
+<sd-page title="Công cụ sinh Theme cho Portal" description="Nhập 3 màu gốc để tự động sinh SCSS hoàn chỉnh cho styles.scss — bao gồm sd.theme() và Angular Material M2 Palette.">
+  <div class="tool-body">
+    <div class="row row-sm mx-0">
+
+      <!-- CỘT TRÁI: THUỘC TÍNH + XEM TRƯỚC -->
+      <div class="col-md-4">
+        <div class="d-flex flex-column gap-16">
+
+          <sd-section title="Thuộc tính" icon="settings">
+            <div class="demo-config-panel">
+              <div class="config-item config-item--stacked">
+                <div class="config-item__label">
+                  <span class="config-item__title">primary</span>
+                  <span class="config-item__desc">Màu chính cho button, link, accent.</span>
+                </div>
+                <div class="color-input-row">
+                  <input type="color" [value]="primaryColor()" (input)="onColorPick(primaryColor, $event)">
+                  <input type="text" class="hex-input" [value]="primaryColor().toUpperCase()"
+                         (change)="onHexType(primaryColor, $event)">
+                </div>
+              </div>
+              <div class="config-item config-item--stacked">
+                <div class="config-item__label">
+                  <span class="config-item__title">error</span>
+                  <span class="config-item__desc">Màu cho thông báo lỗi, cảnh báo.</span>
+                </div>
+                <div class="color-input-row">
+                  <input type="color" [value]="errorColor()" (input)="onColorPick(errorColor, $event)">
+                  <input type="text" class="hex-input" [value]="errorColor().toUpperCase()"
+                         (change)="onHexType(errorColor, $event)">
+                </div>
+              </div>
+              <div class="config-item config-item--stacked">
+                <div class="config-item__label">
+                  <span class="config-item__title">success</span>
+                  <span class="config-item__desc">Màu cho thao tác thành công, dữ liệu tốt.</span>
+                </div>
+                <div class="color-input-row">
+                  <input type="color" [value]="successColor()" (input)="onColorPick(successColor, $event)">
+                  <input type="text" class="hex-input" [value]="successColor().toUpperCase()"
+                         (change)="onHexType(successColor, $event)">
+                </div>
+              </div>
+            </div>
+          </sd-section>
+
+          <sd-section title="Xem trước" icon="visibility">
+            <div class="preview-wrap" [ngStyle]="previewStyles()">
+
+              <!-- Buttons -->
+              <div class="preview-group-label">Button</div>
+              <div class="preview-row">
+                <sd-button type="fill"    color="primary" title="Fill"    size="sm"></sd-button>
+                <sd-button type="light"   color="primary" title="Light"   size="sm"></sd-button>
+                <sd-button type="outline" color="primary" title="Outline" size="sm"></sd-button>
+              </div>
+              <div class="preview-row">
+                <sd-button type="fill"    color="error" title="Fill"    size="sm"></sd-button>
+                <sd-button type="light"   color="error" title="Light"   size="sm"></sd-button>
+                <sd-button type="outline" color="error" title="Outline" size="sm"></sd-button>
+              </div>
+              <div class="preview-row">
+                <sd-button type="fill"    color="success" title="Fill"    size="sm"></sd-button>
+                <sd-button type="light"   color="success" title="Light"   size="sm"></sd-button>
+                <sd-button type="outline" color="success" title="Outline" size="sm"></sd-button>
+              </div>
+
+              <div class="preview-divider"></div>
+
+              <!-- Utility: background -->
+              <div class="preview-group-label">bg-*</div>
+              <div class="preview-chips">
+                <span class="preview-chip bg-primary text-white">.bg-primary</span>
+                <span class="preview-chip bg-primary-light text-primary">.bg-primary-light</span>
+                <span class="preview-chip bg-error text-white">.bg-error</span>
+                <span class="preview-chip bg-error-light text-error">.bg-error-light</span>
+                <span class="preview-chip bg-success text-white">.bg-success</span>
+                <span class="preview-chip bg-success-light text-success">.bg-success-light</span>
+              </div>
+
+              <!-- Utility: text -->
+              <div class="preview-group-label">text-*</div>
+              <div class="preview-chips">
+                <span class="preview-chip preview-chip--border text-primary">.text-primary</span>
+                <span class="preview-chip preview-chip--border text-primary-light">.text-primary-light</span>
+                <span class="preview-chip preview-chip--border text-error">.text-error</span>
+                <span class="preview-chip preview-chip--border text-success">.text-success</span>
+              </div>
+
+              <!-- Utility: border -->
+              <div class="preview-group-label">border-*</div>
+              <div class="preview-chips">
+                <span class="preview-chip preview-chip--border border border-primary text-primary">.border-primary</span>
+                <span class="preview-chip preview-chip--border border border-error text-error">.border-error</span>
+                <span class="preview-chip preview-chip--border border border-success text-success">.border-success</span>
+              </div>
+
+            </div>
+          </sd-section>
+
+        </div>
+      </div>
+
+      <!-- CỘT PHẢI: MÃ NGUỒN -->
+      <div class="col-md-8">
+        <sd-section title="Mã nguồn" icon="code">
+          <p class="source-desc">
+            Copy toàn bộ nội dung bên dưới vào <code>src/styles.scss</code> của dự án.
+            Bao gồm cả phần <code>sd.theme()</code> và Angular Material M2 Palette.
+          </p>
+          <sd-code-editor [model]="generatedScss()" language="scss" [viewed]="true" maxHeight="680px"></sd-code-editor>
+        </sd-section>
+      </div>
+
+    </div>
+  </div>
+</sd-page>

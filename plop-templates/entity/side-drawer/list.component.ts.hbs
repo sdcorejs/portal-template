@@ -1,0 +1,131 @@
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { SdPageComponent } from '@sd-angular/core/modules';
+import { SdButton, SdTabComponent, SdTabelCellDefDirective, SdTable, SdTableOption } from '@sd-angular/core/components';
+import { SdPermissionDirective } from '@sd-angular/core/modules';
+import { SdConfirmService, SdLoadingService, SdNotifyService } from '@sd-angular/core/services';
+import { SdSwitch } from '@sd-angular/core/forms';
+import { {{ properCase name }}DTO } from '../../services/{{ kebabCase name }}.model';
+import { {{ properCase name }}Service } from '../../services/{{ kebabCase name }}.service';
+import { DetailComponent } from '../detail/detail.component';
+
+@Component({
+  selector: '{{ kebabCase name }}-list',
+  imports: [SdButton, SdTable, SdTabelCellDefDirective, SdPermissionDirective, SdSwitch, SdPageComponent, DetailComponent],
+  template: `
+    <sd-page title="{{ label }}">
+      <div class="d-flex align-items-center" headerRight>
+        <sd-button
+          *sdPermission="'{{ upperCase lib }}_{{ upperCase (snakeCase name) }}_CREATE'"
+          title="Tạo mới"
+          type="fill"
+          prefixIcon="add"
+          size="sm"
+          color="primary"
+          (click)="onCreate()"
+        ></sd-button>
+      </div>
+      <div class="h-full p-8">
+        @if (tableOption) {
+          <sd-table [option]="tableOption" #table autoId="{{ snakeCase lib }}_{{ snakeCase name }}">
+            <ng-template sdTableCellDef="isActivated" let-item="item">
+              <sd-switch
+                class="d-block text-center"
+                [(model)]="item.isActivated"
+                (sdChange)="onChangeIsActivated(item)"
+              ></sd-switch>
+            </ng-template>
+          </sd-table>
+        }
+      </div>
+    </sd-page>
+
+    <{{ kebabCase name }}-detail #detail (accept)="onReload()"></{{ kebabCase name }}-detail>
+  `,
+})
+@SdTabComponent({
+  component: ListComponent,
+  name: '{{ label }}',
+  color: 'primary',
+})
+export class ListComponent implements OnInit {
+  @ViewChild(SdTable) table!: SdTable<{{ properCase name }}DTO>;
+  @ViewChild('detail') detail!: DetailComponent;
+
+  readonly #notifyService = inject(SdNotifyService);
+  readonly #confirmService = inject(SdConfirmService);
+  readonly #loadingService = inject(SdLoadingService);
+  readonly #{{ camelCase name }}Service = inject({{ properCase name }}Service);
+
+  tableOption!: SdTableOption<{{ properCase name }}DTO>;
+
+  ngOnInit(): void {
+    this.tableOption = {
+      key: '{{ lib }}-{{ dashCase name }}-list',
+      type: 'server',
+      reload: { visible: true },
+      config: { visible: true },
+      items: async (_, pagingRequest) => {
+        return await this.#{{ camelCase name }}Service.paging(pagingRequest);
+      },
+      selector: {
+        actions: [
+          {
+            icon: 'delete',
+            title: 'Xóa',
+            click: rows => {
+              this.#confirmService.confirm(`Xóa ${rows.length} dữ liệu đã chọn`).then(() => {
+                this.#onRemove(rows.map(e => e.id));
+              });
+            },
+          },
+        ],
+      },
+      columns: [
+        {
+          title: 'Mã',
+          field: 'code',
+          type: 'string',
+          width: '150px',
+          click: (value, row) => this.#onDetail(row.id),
+        },
+        { title: 'Tên', field: 'name', type: 'string', minWidth: '250px' },
+        {
+          title: 'Trạng thái',
+          field: 'isActivated',
+          type: 'boolean',
+          option: { displayOnTrue: 'Hoạt động', displayOnFalse: 'Khóa' },
+          width: '150px',
+        },
+        { title: 'Ngày tạo', field: 'createdAt', type: 'datetime', width: '180px' },
+      ],
+    };
+  }
+
+  onCreate = () => {
+    this.detail.onOpen('create');
+  };
+
+  #onDetail = (id: string) => {
+    this.detail.onOpen('detail', id);
+  };
+
+  #onRemove = (ids: string[]) => {
+    this.#loadingService.start();
+    this.#{{ camelCase name }}Service
+      .remove(ids)
+      .then(() => {
+        this.#notifyService.success('Xóa {{ label }} thành công');
+        this.onReload();
+      })
+      .catch(console.error)
+      .finally(() => this.#loadingService.stop());
+  };
+
+  onChangeIsActivated = (row: {{ properCase name }}DTO) => {
+    this.#{{ camelCase name }}Service.update(row.id, { isActivated: row.isActivated }).catch(console.error);
+  };
+
+  onReload = () => {
+    this.table.reload();
+  };
+}

@@ -1,0 +1,41 @@
+import { Injectable } from '@angular/core';
+// Sử dụng Path Alias (Barrel import) thay cho đường dẫn tương đối dài dòng
+import { BaseService } from '@{{dashCase lib}}/services';
+// Import các models tương ứng của Entity
+import { {{pascalCase name}}DTO, {{pascalCase name}}SaveReq } from './{{dashCase name}}.model';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class {{pascalCase name}}Service extends BaseService {
+  /**
+   * Đăng ký entity với BaseService để nhận full bộ CRUD (paging, detail, create, update, remove...)
+   * - Param truyền vào là path của API endpoint (VD: 'products', 'purchase-orders').
+   * - Hãy điều chỉnh lại chuỗi '{{dashCase name}}' nếu backend đặt tên endpoint khác.
+   */
+  readonly #api = this.register<{{pascalCase name}}DTO, {{pascalCase name}}SaveReq>('{{dashCase name}}');
+
+  // ===========================================================================
+  // --- BASE CRUD APIs ---
+  // ===========================================================================
+  // Expose các hàm CRUD cơ bản ra để Component gọi trực tiếp
+  paging = this.#api.paging;
+  search = this.#api.search;
+  all = this.#api.all;
+  detail = this.#api.detail;
+  create = this.#api.create;
+  update = this.#api.update;
+  remove = this.#api.remove;
+
+  // ===========================================================================
+  // --- CUSTOM APIs ---
+  // ===========================================================================
+
+  // TODO: Viết thêm các hàm gọi API đặc thù của riêng {{pascalCase name}} tại đây
+  // Ví dụ:
+  // approve = async (id: string) => {
+  //   const url = `${this.#api.baseUrl}/${id}/approve`;
+  //   const res = await this.#apiService.post(url, {});
+  //   return res?.data;
+  // };
+}

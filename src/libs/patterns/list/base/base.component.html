@@ -1,0 +1,101 @@
+<div class="page-wrap">
+  <button class="page-settings-btn" (click)="openSettings()" title="Thiết lập trang">
+    <span class="material-symbols-outlined">settings</span>
+  </button>
+
+  <sd-page [title]="appliedTitle()" [description]="appliedDescription()">
+    @if (appliedButtonIds().length > 0) {
+      <div headerRight class="header-buttons">
+        @for (id of appliedButtonIds(); track id) {
+          <app-demo-button #demoBtn></app-demo-button>
+        }
+      </div>
+    }
+
+    <div class="h-full p-8">
+      <app-demo-table #demoTable></app-demo-table>
+    </div>
+  </sd-page>
+</div>
+
+<sd-side-drawer #settingsDrawer title="Thiết lập trang" width="560px">
+
+  <div class="drawer-content">
+    <div class="drawer-tab-nav">
+      <button [class.active]="activeTab() === 'properties'" (click)="activeTab.set('properties')">Thuộc tính</button>
+      <button [class.active]="activeTab() === 'source'" (click)="activeTab.set('source')">Mã nguồn</button>
+    </div>
+
+    @if (activeTab() === 'properties') {
+      <div class="drawer-body">
+
+        <sd-input size="sm" [label]="'title'" [model]="draftTitle"
+          (modelChange)="draftTitle = $event"></sd-input>
+
+        <sd-input size="sm" [label]="'description'" [model]="draftDescription"
+          (modelChange)="draftDescription = $event"></sd-input>
+
+        <div class="prop-group">
+          <div class="prop-group__header">
+            <span class="prop-group__title">Nút hành động (headerRight)</span>
+            <span class="prop-group__hint">Hover vào nút trên trang để thiết lập thuộc tính riêng</span>
+          </div>
+          <div class="prop-group__body">
+            <div class="chips-row">
+              @for (id of draftButtonIds(); track id; let i = $index) {
+                <div class="chip">
+                  <span class="chip__label">Nút {{ i + 1 }}</span>
+                  <button class="chip__remove" (click)="removeButton(id)">
+                    <span class="material-symbols-outlined">close</span>
+                  </button>
+                </div>
+              }
+              <button class="chip chip--add" (click)="addButton()">
+                <span class="material-symbols-outlined">add</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    }
+
+    @if (activeTab() === 'source') {
+      <div class="drawer-body drawer-body--code">
+        <div class="source-file-nav">
+          <button [class.active]="activeSourceFile() === 'model'"
+            (click)="activeSourceFile.set('model')">item.model.ts</button>
+          <button [class.active]="activeSourceFile() === 'service'"
+            (click)="activeSourceFile.set('service')">item.service.ts</button>
+          <button [class.active]="activeSourceFile() === 'ts'"
+            (click)="activeSourceFile.set('ts')">list.component.ts</button>
+          <button [class.active]="activeSourceFile() === 'html'"
+            (click)="activeSourceFile.set('html')">list.component.html</button>
+          <button [class.active]="activeSourceFile() === 'scss'"
+            (click)="activeSourceFile.set('scss')">list.component.scss</button>
+        </div>
+        @if (activeSourceFile() === 'model') {
+          <sd-code-editor [model]="generatedModel()" language="typescript" [viewed]="true"></sd-code-editor>
+        }
+        @if (activeSourceFile() === 'service') {
+          <sd-code-editor [model]="generatedService()" language="typescript" [viewed]="true"></sd-code-editor>
+        }
+        @if (activeSourceFile() === 'ts') {
+          <sd-code-editor [model]="generatedTs()" language="typescript" [viewed]="true"></sd-code-editor>
+        }
+        @if (activeSourceFile() === 'html') {
+          <sd-code-editor [model]="generatedHtml()" language="html" [viewed]="true"></sd-code-editor>
+        }
+        @if (activeSourceFile() === 'scss') {
+          <sd-code-editor [model]="generatedScss()" language="scss" [viewed]="true"></sd-code-editor>
+        }
+      </div>
+    }
+  </div>
+
+  <div sdFooter class="drawer-footer">
+    <sd-button title="Hủy" type="light" (click)="cancelConfig()"></sd-button>
+    <sd-button title="Áp dụng" type="fill" color="primary" (click)="applyConfig()"></sd-button>
+  </div>
+
+</sd-side-drawer>

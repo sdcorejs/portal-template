@@ -1,0 +1,58 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { ISdApiConfiguration, SdNotifyService } from '@sd-angular/core/services';
+import { {{constantCase name}}_CONFIGURATION, I{{properCase name}}Configuration } from './{{dashCase name}}.configuration';
+
+/**
+ * Lớp cấu hình API cục bộ cho module {{properCase name}}.
+ * - Không sử dụng `providedIn: 'root'` để đảm bảo scope của interceptor chỉ nằm trong module này.
+ * - Được inject thông qua mảng `providers` ở tầng Route của module.
+ */
+@Injectable()
+export class ApiConfiguration implements ISdApiConfiguration {
+  // Inject service hiển thị thông báo lỗi (toast/snackbar) từ core
+  #notifyService = inject(SdNotifyService);
+
+  // Lấy các cấu hình đầu vào (host URL, userInfo...) mà Portal đã truyền xuống cho module
+  #configuration = inject<I{{properCase name}}Configuration>({{constantCase name}}_CONFIGURATION);
+
+  // Danh sách các bộ xử lý (interceptors) cho API
+  handlers: ISdApiConfiguration['handlers'] = [
+    {
+      // 1. CHỈ ĐỊNH HOST: Handler này chỉ chạy khi API được gọi đến chính xác host của module này
+      hosts: [this.#configuration.host],
+
+      // 2. INTERCEPT REQUEST: Can thiệp vào request TRƯỚC khi gửi lên server
+      intercept: request => {
+        // HTTP Request trong Angular là immutable, cần clone ra để sửa/thêm headers
+        request = request.clone({
+          setHeaders: {
+            // TODO: Thêm các header đặc thù khác của module ở đây nếu cần thiết
+            // Ví dụ: 'X-Module-Code': '{{constantCase name}}'
+          },
+        });
+        
+        // Có thể can thiệp xử lý logic khác ở đây (vd: tự động gắp token, mã hóa payload...)
+        return request;
+      },
+
+      // 3. AFTER REMOTE: Can thiệp vào response SAU khi server trả về (hoặc khi có lỗi HTTP)
+      afterRemote: res => {
+        // Ở đây chúng ta chỉ quan tâm đến việc xử lý lỗi tập trung
+        if (res instanceof HttpErrorResponse) {
+          
+          // Lọc ra các status báo lỗi (khác 200 OK và 204 No Content)
+          if (res.status !== 200 && res.status !== 204) {
+            
+            // Bóc tách câu thông báo lỗi từ payload của backend trả về 
+            // (Cấu trúc này có thể thay đổi tùy theo chuẩn API chung của dự án)
+            const errorMessage = res.error?.meta?.message || 'Đã có lỗi xảy ra';
+            
+            // Hiển thị thông báo lỗi lên màn hình cho người dùng
+            this.#notifyService.error(errorMessage);
+          }
+        }
+      },
+    },
+  ];
+}

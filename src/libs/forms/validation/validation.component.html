@@ -1,0 +1,221 @@
+<sd-page [title]="'Validation & hideInlineError'" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="d-flex flex-column gap-16">
+      <sd-section title="1) Validation cơ bản (inline error)" icon="error">
+        <div class="demo-validation-grid">
+          <sd-input
+            [label]="'Mã nhân viên (required + pattern)'"
+            [placeholder]="'VD: EMP001'"
+            [(model)]="basicPattern"
+            [form]="formValidation"
+            required
+            pattern="[A-Z0-9]{4,10}"
+            patternErrorMessage="Chỉ gồm chữ IN HOA và số (4-10 ký tự)">
+          </sd-input>
+
+          <sd-input
+            [label]="'Tên nhân viên (required)'"
+            [placeholder]="'Nhập họ tên'"
+            [(model)]="basicInput"
+            [form]="formValidation"
+            required>
+          </sd-input>
+
+          <sd-select
+            [label]="'Phòng ban (required)'"
+            [items]="departments"
+            valueField="id"
+            displayField="name"
+            [(model)]="basicSelect"
+            [form]="formValidation"
+            required>
+          </sd-select>
+        </div>
+
+        <div class="d-flex gap-8 mt-16">
+          <sd-button title="Validate" color="primary" (click)="validateBasic()"></sd-button>
+          <sd-button title="Reset" type="outline" color="secondary" (click)="resetBasic()"></sd-button>
+        </div>
+      </sd-section>
+
+      <sd-section title="2) So sánh khi nằm trong cell table" icon="table_chart">
+        <p class="text-secondary mb-12">
+          Với form trong cell table, lỗi inline dễ làm tăng chiều cao hàng và vỡ layout. Dùng
+          <code>hideInlineError</code> sẽ chuyển lỗi về icon/tooltip, giữ chiều cao cell ổn định.
+        </p>
+        <div class="table-size-note mb-12">
+          Khuyến nghị: Với form đặt trong table, nên dùng <code>size="sm"</code> cho
+          <code>sd-input</code>, <code>sd-select</code>, <code>sd-date</code>, <code>sd-datetime</code>...
+          để giữ chiều cao dòng gọn và đồng nhất.
+        </div>
+
+        <div class="table-compare-grid">
+          <div>
+            <h4 class="font-size-14 mb-8">A. Inline error mặc định</h4>
+            <table class="demo-table">
+              <thead>
+                <tr>
+                  <th>Mã NV</th>
+                  <th>Phòng ban</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <sd-input
+                      [(model)]="tableInlineName"
+                      [form]="tableInlineForm"
+                      size="sm"
+                      required
+                      [placeholder]="'EMP001'"
+                      pattern="[A-Z0-9]{4,10}"
+                      patternErrorMessage="Sai định dạng mã">
+                    </sd-input>
+                  </td>
+                  <td>
+                    <sd-select
+                      [items]="departments"
+                      valueField="id"
+                      displayField="name"
+                      size="sm"
+                      [(model)]="tableInlineDepartment"
+                      [form]="tableInlineForm"
+                      required>
+                    </sd-select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex gap-8 mt-12">
+              <sd-button title="Validate" size="sm" color="primary" (click)="validateInlineTable()"></sd-button>
+              <sd-button title="Reset" size="sm" type="outline" color="secondary" (click)="resetInlineTable()"></sd-button>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-size-14 mb-8">B. Dùng hideInlineError</h4>
+            <table class="demo-table">
+              <thead>
+                <tr>
+                  <th>Mã NV</th>
+                  <th>Phòng ban</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <sd-input
+                      [(model)]="tableHideName"
+                      [form]="tableHideForm"
+                      size="sm"
+                      required
+                      hideInlineError
+                      [placeholder]="'EMP001'"
+                      pattern="[A-Z0-9]{4,10}"
+                      patternErrorMessage="Sai định dạng mã">
+                    </sd-input>
+                  </td>
+                  <td>
+                    <sd-select
+                      [items]="departments"
+                      valueField="id"
+                      displayField="name"
+                      size="sm"
+                      [(model)]="tableHideDepartment"
+                      [form]="tableHideForm"
+                      required
+                      hideInlineError>
+                    </sd-select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex gap-8 mt-12">
+              <sd-button title="Validate" size="sm" color="primary" (click)="validateHideTable()"></sd-button>
+              <sd-button title="Reset" size="sm" type="outline" color="secondary" (click)="resetHideTable()"></sd-button>
+            </div>
+          </div>
+        </div>
+      </sd-section>
+
+      <sd-section title="3) Sử dụng SdPatternType có sẵn" icon="pattern">
+        <p class="text-secondary mb-12">
+          Truyền trực tiếp <code>SdPatternType</code> vào <code>pattern</code> — hệ thống tự lookup regex và
+          <code>errorMessage</code> từ <code>SdPatternCommons</code>, không cần khai báo thêm
+          <code>patternErrorMessage</code>.
+        </p>
+
+        <div class="demo-pattern-grid">
+          <div>
+            <span class="pattern-type-badge">EMAIL</span>
+            <sd-input
+              [label]="'Email'"
+              [placeholder]="'vd: user@example.com'"
+              [(model)]="patternEmail"
+              [form]="formPattern"
+              required
+              pattern="EMAIL">
+            </sd-input>
+          </div>
+
+          <div>
+            <span class="pattern-type-badge">PHONE</span>
+            <sd-input
+              [label]="'Số điện thoại'"
+              [placeholder]="'vd: 0901234567'"
+              [(model)]="patternPhone"
+              [form]="formPattern"
+              required
+              pattern="PHONE">
+            </sd-input>
+          </div>
+
+          <div>
+            <span class="pattern-type-badge">PHONE_VN</span>
+            <sd-input
+              [label]="'Số điện thoại VN'"
+              [placeholder]="'vd: 0912345678'"
+              [(model)]="patternPhoneVn"
+              [form]="formPattern"
+              required
+              pattern="PHONE_VN">
+            </sd-input>
+          </div>
+
+          <div>
+            <span class="pattern-type-badge">IDVN_OR_PASSPORT</span>
+            <sd-input
+              [label]="'CCCD / Hộ chiếu'"
+              [placeholder]="'vd: 034201012345'"
+              [(model)]="patternIdOrPass"
+              [form]="formPattern"
+              required
+              pattern="IDVN_OR_PASSPORT">
+            </sd-input>
+          </div>
+
+          <div>
+            <span class="pattern-type-badge">TIME</span>
+            <sd-input
+              [label]="'Giờ (HH:mm)'"
+              [placeholder]="'vd: 08:30'"
+              [(model)]="patternTime"
+              [form]="formPattern"
+              required
+              pattern="TIME">
+            </sd-input>
+          </div>
+        </div>
+
+        <div class="d-flex gap-8 mt-16">
+          <sd-button title="Validate" color="primary" (click)="validatePattern()"></sd-button>
+          <sd-button title="Reset" type="outline" color="secondary" (click)="resetPattern()"></sd-button>
+        </div>
+      </sd-section>
+
+      <sd-section title="Mã nguồn mẫu" icon="code">
+        <sd-code-editor [model]="htmlCode()" language="html" [viewed]="true" maxHeight="280px"></sd-code-editor>
+      </sd-section>
+    </div>
+  </div>
+</sd-page>

@@ -1,0 +1,94 @@
+<sd-page [title]="'Kết Hợp SdSectionItem'" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+
+      <!-- CỘT TRÁI: THUỘC TÍNH -->
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="demo-config-panel">
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">labelWidth</span>
+                <span class="config-item__desc">Độ rộng cột nhãn dùng để căn thẳng hàng các section item.</span>
+              </div>
+              <sd-input [label]="'labelWidth'" [(model)]="labelWidth" placeholder="VD: 150px, 200px"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">noPaddingBody</span>
+                <span class="config-item__desc">Bật để border giữa các item hiển thị liền mạch trong section.</span>
+              </div>
+              <sd-switch [(model)]="noPaddingBody" size="sm"></sd-switch>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <!-- CỘT PHẢI: XEM TRƯỚC + MÃ NGUỒN -->
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+
+          <sd-section title="Xem trước" icon="visibility">
+
+            <!-- Preview tương tác -->
+            <div class="p-16 bg-slate-100 rounded-8 border border-dashed border-slate-300">
+              <sd-section title="Xem trước" icon="person" [noPaddingBody]="noPaddingBody()">
+                <sd-section-item label="Họ và tên" [labelWidth]="labelWidth()">Nguyễn Văn A</sd-section-item>
+                <sd-section-item label="Email" [labelWidth]="labelWidth()">nguyen.van.a&#64;email.com</sd-section-item>
+                <sd-section-item label="Số điện thoại" [labelWidth]="labelWidth()">0901 234 567</sd-section-item>
+                <sd-section-item label="Địa chỉ" [labelWidth]="labelWidth()">123 Đường ABC, Quận 1, TP.HCM</sd-section-item>
+              </sd-section>
+            </div>
+
+            @if (!noPaddingBody()) {
+              <div class="c-tip c-tip--warn mt-12">
+                ⚠️ Thiếu <strong>noPaddingBody</strong>: padding 16px body cắt mất border giữa các item. Bật switch bên trái để so sánh.
+              </div>
+            } @else {
+              <div class="c-tip c-tip--ok mt-12">
+                ✅ <strong>noPaddingBody</strong> đang bật: border giữa các item hiển thị liền mạch hết chiều rộng section.
+              </div>
+            }
+
+            <!-- Divider -->
+            <div class="c-demo-divider my-20">
+              <span>Ví dụ - Tùy chỉnh <code>labelWidth</code></span>
+            </div>
+
+            <!-- labelWidth example -->
+            <div class="T13R text-secondary mb-12">
+              Dùng <code>labelWidth</code> khi nhãn có độ dài khác nhau để căn chỉnh cột đều đặn.
+            </div>
+            <sd-section title="Xem trước" icon="description" iconColor="info" noPaddingBody>
+              <sd-section-item label="Số hợp đồng">HD-2025-001</sd-section-item>
+              <sd-section-item label="Ngày ký hợp đồng" labelWidth="180px">01/01/2025</sd-section-item>
+              <sd-section-item label="Giá trị hợp đồng" labelWidth="180px">500,000,000 VNĐ</sd-section-item>
+              <sd-section-item label="Trạng thái" labelWidth="180px">
+                <span style="color: #16a34a; font-weight: 500;">Đang hiệu lực</span>
+              </sd-section-item>
+              <sd-section-item label="Ghi chú" labelWidth="180px">
+                Hợp đồng ưu tiên, hạn thanh toán 30 ngày.
+              </sd-section-item>
+            </sd-section>
+
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <h4 class="font-size-14 mb-8">HTML - Cơ bản</h4>
+            <sd-code-editor [model]="htmlGoodCode" language="html" maxHeight="200px" [viewed]="true"></sd-code-editor>
+
+            <h4 class="font-size-14 mb-8 mt-16">TypeScript</h4>
+            <sd-code-editor [model]="tsCode" language="typescript" maxHeight="200px" [viewed]="true"></sd-code-editor>
+
+            <h4 class="font-size-14 mb-8 mt-16">HTML - Tùy chỉnh labelWidth</h4>
+            <sd-code-editor [model]="htmlLabelWidthCode" language="html" maxHeight="240px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</sd-page>
+

@@ -1,0 +1,29 @@
+// Styles cho Upload File Demo
+:host {
+  display: block;
+  height: 100%;
+
+  .demo-page-body {
+    padding: 8px 4px;
+    background-color: #f1f5f9;
+    min-height: 100%;
+  }
+
+  .preview-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  }
+
+  .preview-status {
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #e2e8f0;
+    color: #334155;
+    font-size: 13px;
+  }
+}

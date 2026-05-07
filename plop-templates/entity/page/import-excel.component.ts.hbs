@@ -1,0 +1,32 @@
+import { Component, inject } from '@angular/core';
+import { SdButton, SdImportExcel, SdImportExcelOption } from '@sd-angular/core/components';
+import { SdPermissionDirective } from '@sd-angular/core/modules';
+import { {{ properCase name }}Service } from '../../services/{{ kebabCase name }}.service';
+
+@Component({
+  selector: '{{ kebabCase name }}-import-excel',
+  imports: [SdButton, SdImportExcel, SdPermissionDirective],
+  template: `
+    <sd-button
+      *sdPermission="'{{ upperCase lib }}_{{ upperCase (snakeCase name) }}_IMPORT'"
+      title="Import Excel"
+      type="outline"
+      prefixIcon="upload_file"
+      size="sm"
+      color="primary"
+      (click)="onImportExcel()"
+    ></sd-button>
+    <sd-import-excel [option]="option"></sd-import-excel>
+  `,
+})
+export class ImportExcelComponent {
+  readonly #{{ camelCase name }}Service = inject({{ properCase name }}Service);
+
+  option: SdImportExcelOption = {
+    // Cấu hình import Excel
+  };
+
+  onImportExcel = () => {
+    // Xử lý import Excel
+  };
+}

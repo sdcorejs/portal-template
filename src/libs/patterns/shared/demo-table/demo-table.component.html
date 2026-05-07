@@ -1,0 +1,290 @@
+<div class="demo-inline">
+  <sd-table [option]="tableOption()"></sd-table>
+
+  <button class="float-settings" (click)="openSettings()">
+    <span class="material-symbols-outlined">settings</span>
+  </button>
+</div>
+
+<sd-side-drawer #settingsDrawer title="Thiết lập bảng" width="680px">
+
+  <div class="drawer-content">
+    <div class="drawer-tab-nav">
+      <button [class.active]="activeTab() === 'properties'" (click)="activeTab.set('properties')">Thuộc tính</button>
+      <button [class.active]="activeTab() === 'source'" (click)="activeTab.set('source')">Mã nguồn</button>
+    </div>
+
+    @if (activeTab() === 'properties') {
+      <div class="drawer-body">
+
+        <!-- ── CỘT BẢNG ── -->
+        <div class="prop-group">
+          <div class="prop-group__header">
+            <span class="prop-group__title">Cột bảng</span>
+          </div>
+          <div class="prop-group__body">
+            <div class="chips-row">
+              @for (col of draftColumns; track col.id) {
+                <div class="chip" [class.chip--active]="editingColumnId() === col.id"
+                  (click)="toggleEditColumn(col.id)">
+                  <span class="chip__label">{{ col.title }}</span>
+                  <button class="chip__remove" (click)="$event.stopPropagation(); removeColumn(col.id)">
+                    <span class="material-symbols-outlined">close</span>
+                  </button>
+                </div>
+              }
+              <button class="chip chip--add" (click)="addColumn()">
+                <span class="material-symbols-outlined">add</span>
+              </button>
+            </div>
+
+            @for (col of draftColumns; track col.id) {
+              @if (col.id === editingColumnId()) {
+                <div class="edit-panel">
+                  <div class="edit-panel__grid">
+                    <sd-input size="sm" [label]="'Field (tên trường)'"
+                      [model]="col.field" (modelChange)="col.field = $event"></sd-input>
+                    <sd-input size="sm" [label]="'Tiêu đề hiển thị'"
+                      [model]="col.title" (modelChange)="col.title = $event"></sd-input>
+                    <sd-select size="sm" [label]="'Kiểu cột'" [items]="columnTypeOptions"
+                      valueField="id" displayField="name"
+                      [model]="col.type" (modelChange)="col.type = $any($event)"></sd-select>
+                    <sd-input size="sm" [label]="'Độ rộng (vd: 150px)'"
+                      [model]="col.width" (modelChange)="col.width = $event"></sd-input>
+                  </div>
+                </div>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- ── TÁC VỤ DÒNG (COMMANDS) ── -->
+        <div class="prop-group">
+          <div class="prop-group__header">
+            <span class="prop-group__title">Tác vụ dòng (commands)</span>
+            <span class="prop-group__hint">Nút hành động hiển thị trên mỗi dòng</span>
+          </div>
+          <div class="prop-group__body">
+            <div class="chips-row">
+              @for (cmd of draftCommands; track cmd.id) {
+                <div class="chip" [class.chip--active]="editingCommandId() === cmd.id"
+                  (click)="toggleEditCommand(cmd.id)">
+                  <span class="chip__label">{{ cmd.title }}</span>
+                  <button class="chip__remove" (click)="$event.stopPropagation(); removeCommand(cmd.id)">
+                    <span class="material-symbols-outlined">close</span>
+                  </button>
+                </div>
+              }
+              <button class="chip chip--add" (click)="addCommand()">
+                <span class="material-symbols-outlined">add</span>
+              </button>
+            </div>
+
+            @for (cmd of draftCommands; track cmd.id) {
+              @if (cmd.id === editingCommandId()) {
+                <div class="edit-panel">
+                  <div class="edit-panel__grid edit-panel__grid--3">
+                    <sd-input size="sm" [label]="'Tiêu đề'"
+                      [model]="cmd.title" (modelChange)="cmd.title = $event"></sd-input>
+                    <sd-input size="sm" [label]="'Icon (vd: edit, delete)'"
+                      [model]="cmd.icon" (modelChange)="cmd.icon = $event"></sd-input>
+                    <sd-select size="sm" [label]="'Màu'" [items]="colorOptions"
+                      valueField="id" displayField="name"
+                      [model]="cmd.color" (modelChange)="cmd.color = $any($event)"></sd-select>
+                  </div>
+                </div>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- ── EXTERNAL FILTERS ── -->
+        <div class="prop-group">
+          <div class="prop-group__header">
+            <span class="prop-group__title">External Filters</span>
+          </div>
+          <div class="prop-group__body">
+            <div class="chips-row">
+              @for (f of draftFilters; track f.id) {
+                <div class="chip" [class.chip--active]="editingFilterId() === f.id"
+                  (click)="toggleEditFilter(f.id)">
+                  <span class="chip__label">{{ f.title }}</span>
+                  <button class="chip__remove" (click)="$event.stopPropagation(); removeFilter(f.id)">
+                    <span class="material-symbols-outlined">close</span>
+                  </button>
+                </div>
+              }
+              <button class="chip chip--add" (click)="addFilter()">
+                <span class="material-symbols-outlined">add</span>
+              </button>
+            </div>
+
+            @for (f of draftFilters; track f.id) {
+              @if (f.id === editingFilterId()) {
+                <div class="edit-panel">
+                  <div class="edit-panel__grid edit-panel__grid--3">
+                    <sd-input size="sm" [label]="'Field (tên trường)'"
+                      [model]="f.field" (modelChange)="f.field = $event"></sd-input>
+                    <sd-input size="sm" [label]="'Tiêu đề hiển thị'"
+                      [model]="f.title" (modelChange)="f.title = $event"></sd-input>
+                    <sd-select size="sm" [label]="'Kiểu filter'" [items]="filterTypeOptions"
+                      valueField="id" displayField="name"
+                      [model]="f.type" (modelChange)="f.type = $any($event)"></sd-select>
+                  </div>
+                  <div class="config-item config-item--sm">
+                    <div class="config-item__label">
+                      <span class="config-item__title">required</span>
+                      <span class="config-item__desc">Bắt buộc nhập trước khi gọi API</span>
+                    </div>
+                    <sd-switch [model]="f.required" (modelChange)="f.required = $any($event)" size="sm"></sd-switch>
+                  </div>
+                </div>
+              }
+            }
+
+            <div class="filter-settings-row">
+              <sd-select size="sm" [label]="'Số filter/dòng'" [items]="filterPerRowOptions"
+                valueField="id" displayField="name"
+                [model]="draftFilterPerRow" (modelChange)="draftFilterPerRow = $any($event)"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">hideExternalFilterToolbar</span>
+                <span class="config-item__desc">Ẩn thanh toolbar (xóa filter, cài đặt)</span>
+              </div>
+              <sd-switch [model]="draftHideFilterToolbar"
+                (modelChange)="draftHideFilterToolbar = $any($event)" size="sm"></sd-switch>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SELECTOR ── -->
+        <div class="prop-group">
+          <div class="prop-group__header">
+            <span class="prop-group__title">Selector</span>
+          </div>
+          <div class="prop-group__body">
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">selector.visible</span>
+                <span class="config-item__desc">Hiển thị cột checkbox để chọn nhiều dòng</span>
+              </div>
+              <sd-switch [model]="draftShowSelector"
+                (modelChange)="draftShowSelector = $any($event)" size="sm"></sd-switch>
+            </div>
+
+            @if (draftShowSelector) {
+              <div class="prop-group prop-group--nested">
+                <div class="prop-group__header">
+                  <span class="prop-group__title">Tác vụ hàng loạt (actions)</span>
+                  <span class="prop-group__hint">Xuất hiện khi chọn nhiều dòng</span>
+                </div>
+                <div class="prop-group__body">
+                  <div class="chips-row">
+                    @for (action of draftActions; track action.id) {
+                      <div class="chip" [class.chip--active]="editingActionId() === action.id"
+                        (click)="toggleEditAction(action.id)">
+                        <span class="chip__label">{{ action.title }}</span>
+                        <button class="chip__remove" (click)="$event.stopPropagation(); removeAction(action.id)">
+                          <span class="material-symbols-outlined">close</span>
+                        </button>
+                      </div>
+                    }
+                    <button class="chip chip--add" (click)="addAction()">
+                      <span class="material-symbols-outlined">add</span>
+                    </button>
+                  </div>
+
+                  @if (draftActions.length === 0) {
+                    <p class="empty-hint">Chưa có tác vụ — selector chỉ hiển thị checkbox.</p>
+                  }
+
+                  @for (action of draftActions; track action.id) {
+                    @if (action.id === editingActionId()) {
+                      <div class="edit-panel">
+                        <div class="edit-panel__grid edit-panel__grid--3">
+                          <sd-input size="sm" [label]="'Tiêu đề'"
+                            [model]="action.title" (modelChange)="action.title = $event"></sd-input>
+                          <sd-input size="sm" [label]="'Icon (vd: delete, edit)'"
+                            [model]="action.icon" (modelChange)="action.icon = $event"></sd-input>
+                          <sd-select size="sm" [label]="'Màu'" [items]="colorOptions"
+                            valueField="id" displayField="name"
+                            [model]="action.color" (modelChange)="action.color = $any($event)"></sd-select>
+                        </div>
+                      </div>
+                    }
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- ── PAGINATOR ── -->
+        <div class="prop-group">
+          <div class="prop-group__header">
+            <span class="prop-group__title">Phân trang</span>
+          </div>
+          <div class="prop-group__body">
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">paginate</span>
+                <span class="config-item__desc">Hiển thị thanh phân trang phía dưới bảng</span>
+              </div>
+              <sd-switch [model]="draftShowPaginate"
+                (modelChange)="draftShowPaginate = $any($event)" size="sm"></sd-switch>
+            </div>
+
+            @if (draftShowPaginate) {
+              <div class="prop-group prop-group--nested">
+                <div class="prop-group__header">
+                  <span class="prop-group__title">Toolbar</span>
+                </div>
+                <div class="prop-group__body">
+                  <div class="config-item config-item--sm">
+                    <div class="config-item__label">
+                      <span class="config-item__title">reload</span>
+                      <span class="config-item__desc">Nút tải lại dữ liệu</span>
+                    </div>
+                    <sd-switch [model]="draftShowReload"
+                      (modelChange)="draftShowReload = $any($event)" size="sm"></sd-switch>
+                  </div>
+                  <div class="config-item config-item--sm">
+                    <div class="config-item__label">
+                      <span class="config-item__title">config</span>
+                      <span class="config-item__desc">Nút thiết lập cột hiển thị</span>
+                    </div>
+                    <sd-switch [model]="draftShowConfig"
+                      (modelChange)="draftShowConfig = $any($event)" size="sm"></sd-switch>
+                  </div>
+                  <div class="config-item config-item--sm" style="margin-bottom: 0">
+                    <div class="config-item__label">
+                      <span class="config-item__title">export</span>
+                      <span class="config-item__desc">Nút xuất dữ liệu ra file</span>
+                    </div>
+                    <sd-switch [model]="draftShowExport"
+                      (modelChange)="draftShowExport = $any($event)" size="sm"></sd-switch>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+      </div>
+    }
+
+    @if (activeTab() === 'source') {
+      <div class="drawer-body drawer-body--code">
+        <sd-code-editor [model]="generatedCode()" language="typescript" [viewed]="true"></sd-code-editor>
+      </div>
+    }
+  </div>
+
+  <div sdFooter class="drawer-footer">
+    <sd-button title="Hủy" type="light" (click)="cancelConfig()"></sd-button>
+    <sd-button title="Áp dụng" type="fill" color="primary" (click)="applyConfig()"></sd-button>
+  </div>
+
+</sd-side-drawer>

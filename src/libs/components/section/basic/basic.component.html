@@ -1,0 +1,122 @@
+<sd-page [title]="'Cơ Bản'" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+
+      <!-- CỘT TRÁI: THUỘC TÍNH -->
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="demo-config-panel">
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">title</span>
+                <span class="config-item__desc">Tiêu đề chính hiển thị trong header của section.</span>
+              </div>
+              <sd-input [label]="'Title'" [(model)]="title" placeholder="VD: Thông tin KH"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">subTitle</span>
+                <span class="config-item__desc">Dòng mô tả phụ hiển thị dưới title.</span>
+              </div>
+              <sd-input [label]="'SubTitle'" [(model)]="subTitle" placeholder="VD: Thông tin cơ bản"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">icon</span>
+                <span class="config-item__desc">Tên icon hiển thị trước title.</span>
+              </div>
+              <sd-input [label]="'Icon'" [(model)]="icon" placeholder="VD: person, info..."></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">iconColor</span>
+                <span class="config-item__desc">Màu sắc áp dụng cho icon header.</span>
+              </div>
+              <sd-select
+                [label]="'Icon Color'"
+                [items]="iconColorOptions"
+                valueField="id"
+                displayField="name"
+                [(model)]="iconColor">
+              </sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">collapsable</span>
+                <span class="config-item__desc">Cho phép thu gọn hoặc mở rộng khi click vào header.</span>
+              </div>
+              <sd-switch [(model)]="collapsable" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">collapsed</span>
+                <span class="config-item__desc">Trạng thái ban đầu của section khi có hỗ trợ thu gọn.</span>
+              </div>
+              <sd-switch [(model)]="collapsed" size="sm" [disabled]="!collapsable()"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">hideHeader</span>
+                <span class="config-item__desc">Ẩn toàn bộ phần header gồm icon, title và subtitle.</span>
+              </div>
+              <sd-switch [(model)]="hideHeader" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">noPaddingBody</span>
+                <span class="config-item__desc">Bỏ khoảng đệm mặc định quanh nội dung body.</span>
+              </div>
+              <sd-switch [(model)]="noPaddingBody" size="sm"></sd-switch>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <!-- CỘT PHẢI: XEM TRƯỚC + MÃ NGUỒN -->
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+
+          <sd-section title="Xem trước" icon="visibility">
+            <div class="p-16 bg-slate-100 rounded-8 border border-dashed border-slate-300">
+              <sd-section
+                [title]="title()"
+                [subTitle]="subTitle()"
+                [icon]="icon()"
+                [iconColor]="iconColor()"
+                [collapsable]="collapsable()"
+                [(collapsed)]="collapsed"
+                [hideHeader]="hideHeader()"
+                [noPaddingBody]="noPaddingBody()">
+                <p class="T14R" style="margin: 0;">
+                  Nội dung body của section. Bật <strong>noPaddingBody</strong> để xem hiệu ứng bỏ padding.
+                </p>
+              </sd-section>
+            </div>
+            @if (collapsable()) {
+              <div class="mt-12 T12R text-secondary text-center">
+                Trạng thái: <strong>{{ collapsed() ? 'Thu gọn' : 'Mở rộng' }}</strong> - click vào header để toggle.
+              </div>
+            }
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <h4 class="font-size-14 mb-8">HTML</h4>
+            <sd-code-editor [model]="htmlCode()" language="html" maxHeight="260px" [viewed]="true"></sd-code-editor>
+            <h4 class="font-size-14 mb-8 mt-16">TypeScript</h4>
+            <sd-code-editor [model]="tsCode" language="typescript" maxHeight="240px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</sd-page>
+

@@ -1,0 +1,148 @@
+<sd-page [title]="'Cơ Bản'" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+
+      <!-- CỘT TRÁI: THUỘC TÍNH -->
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="demo-config-panel">
+            <!-- HƯỚNG DẪN SỬ DỤNG -->
+            <div class="config-item">
+              <div class="c-tip c-tip--warn">
+                <strong>⚠️ Lưu ý bắt buộc:</strong> sd-anchor-v2 phải được bọc trong thẻ parent có chiều cao cụ thể (height: 600px, 100%, ...) để hoạt động đúng.
+              </div>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">sidebarWidth</span>
+                <span class="config-item__desc">Chiều rộng của sidebar anchor list.</span>
+              </div>
+              <sd-select
+                [label]="'Sidebar Width'"
+                [items]="sidebarWidthOptions"
+                valueField="id"
+                displayField="name"
+                [(model)]="sidebarWidth">
+              </sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">containerHeight</span>
+                <span class="config-item__desc">Chiều cao của container (⚠️ bắt buộc).</span>
+              </div>
+              <sd-select
+                [label]="'Container Height'"
+                [items]="containerHeightOptions"
+                valueField="id"
+                displayField="name"
+                [(model)]="containerHeight">
+              </sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">ellipsis</span>
+                <span class="config-item__desc">Cho phép cắt ngắn text với ... nếu quá dài.</span>
+              </div>
+              <sd-switch [label]="'Ellipsis'" [(model)]="ellipsis"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">isOverscroll</span>
+                <span class="config-item__desc">Cho phép cuộn vượt quá ranh giới component.</span>
+              </div>
+              <sd-switch [label]="'Allow Overscroll'" [(model)]="isOverscroll"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">isHiddenAnchorList</span>
+                <span class="config-item__desc">Ẩn hoàn toàn sidebar anchor list.</span>
+              </div>
+              <sd-switch [label]="'Hide Anchor List'" [(model)]="isHiddenAnchorList"></sd-switch>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <!-- CỘT PHẢI: XEM TRƯỚC + CODE -->
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+          <!-- PHẦN XEM TRƯỚC -->
+          <sd-section title="Xem Trước" icon="preview">
+          <div class="demo-preview-container" [style.height]="containerHeight()">
+            <div style="height: 100%">
+              <sd-anchor-v2
+                [sidebarWidth]="sidebarWidth()"
+                [ellipsis]="ellipsis()"
+                [isOverscroll]="isOverscroll()"
+                [isHiddenAnchorList]="isHiddenAnchorList()">
+
+                <sd-anchor-item-v2 [title]="'Giới thiệu'">
+                  <div style="height: 600px; padding: 20px; background: #f5f5f5; border-bottom: 1px solid #ddd">
+                    <h3>📚 Giới thiệu</h3>
+                    <p>sd-anchor-v2 là một component dùng để điều hướng các phần khác nhau trong một trang dài. Nó có một sidebar hiển thị danh sách các tiêu đề và tự động highlight phần hiện tại khi cuộn trang.</p>
+                    <p><strong>Lưu ý quan trọng:</strong> Component này phải được bọc trong một thẻ parent có chiều cao cụ thể (height: 600px, 100%, ...) để hoạt động đúng.</p>
+                  </div>
+                </sd-anchor-item-v2>
+
+                <sd-anchor-item-v2 [title]="'Tính năng chính'" [icon]="'star'">
+                  <div style="height: 600px; padding: 20px; background: #f5f5f5; border-bottom: 1px solid #ddd">
+                    <h3>⭐ Tính năng chính</h3>
+                    <ul>
+                      <li><strong>Scroll Tracking:</strong> Tự động detect phần nào đang hiển thị</li>
+                      <li><strong>Click Navigation:</strong> Click vào sidebar để jump đến phần</li>
+                      <li><strong>Active Highlight:</strong> Highlight phần hiện tại trong sidebar</li>
+                      <li><strong>Responsive:</strong> Sidebar width có thể tuỳ chỉnh</li>
+                      <li><strong>Dynamic Titles:</strong> Tiêu đề có thể cập nhật động</li>
+                    </ul>
+                  </div>
+                </sd-anchor-item-v2>
+
+                <sd-anchor-item-v2 [title]="'Hướng dẫn sử dụng'" [icon]="'info'">
+                  <div style="height: 600px; padding: 20px; background: #f5f5f5; border-bottom: 1px solid #ddd">
+                    <h3>📖 Hướng dẫn sử dụng</h3>
+                    <p><strong>Bước 1:</strong> Bọc sd-anchor-v2 trong một div có height cụ thể</p>
+                    <p><strong>Bước 2:</strong> Thêm các sd-anchor-item-v2 bên trong</p>
+                    <p><strong>Bước 3:</strong> Mỗi item cần có [title] và các nội dung con</p>
+                    <p><strong>Bước 4:</strong> Tuỳ chỉnh sidebarWidth, ellipsis, isOverscroll theo nhu cầu</p>
+                  </div>
+                </sd-anchor-item-v2>
+
+                <sd-anchor-item-v2 [title]="'API & Properties'" [icon]="'code'">
+                  <div style="height: 600px; padding: 20px; background: #f5f5f5">
+                    <h3>🔧 API & Properties</h3>
+                    <p><strong>sd-anchor-v2 Inputs:</strong></p>
+                    <ul>
+                      <li>sidebarWidth: string (default: '200px')</li>
+                      <li>ellipsis: boolean (default: false)</li>
+                      <li>isOverscroll: boolean (default: false)</li>
+                      <li>isHiddenAnchorList: boolean (default: false)</li>
+                    </ul>
+                    <p><strong>sd-anchor-item-v2 Inputs:</strong></p>
+                    <ul>
+                      <li>title: string (required)</li>
+                      <li>icon: string (optional - Material icon name)</li>
+                    </ul>
+                  </div>
+                </sd-anchor-item-v2>
+              </sd-anchor-v2>
+            </div>
+          </div>
+        </sd-section>
+
+        <!-- PHẦN CODE -->
+        <sd-section title="Mã nguồn" icon="code">
+          <sd-code-editor [model]="htmlCode" language="html"></sd-code-editor>
+          <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #ddd">
+            <sd-code-editor [model]="tsCode" language="typescript"></sd-code-editor>
+          </div>
+        </sd-section>
+        </div>
+      </div>
+    </div>
+  </div>
+</sd-page>

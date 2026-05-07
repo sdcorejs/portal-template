@@ -1,0 +1,78 @@
+<sd-page [title]="'SdAvatar Component'" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="demo-config-panel">
+            <div class="config-item config-item--stacked">
+              <div class="config-item__label">
+                <span class="config-item__title">src</span>
+                <span class="config-item__desc">Nhập URL ảnh hoặc chuỗi tên để avatar tự fallback sang chữ cái đầu và màu nền ngẫu nhiên.</span>
+              </div>
+              <sd-input [label]="'Hình ảnh URL hoặc Chuỗi Tên (Src)'" [(model)]="src"></sd-input>
+              <div class="font-size-12 text-secondary">
+                <a href="javascript:void(0)" (click)="simulateEmptyUrl()">Thử xoá URL</a> |
+                <a href="javascript:void(0)" (click)="simulateName()">Thử nhập Tên (Fallback)</a> |
+                <a href="javascript:void(0)" (click)="simulateError()">Thử nhập URL lỗi</a>
+              </div>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">size</span>
+                <span class="config-item__desc">Kích thước hiển thị avatar, đơn vị pixel.</span>
+              </div>
+              <sd-input-number [label]="'Kích thước (Size - px)'" [(model)]="size"></sd-input-number>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+          <sd-section title="Xem trước" icon="visibility">
+            <div class="preview-panel">
+              <div class="T14M mb-12">Trạng thái hiện tại:</div>
+              <div class="d-flex justify-content-center align-items-center" style="min-height: 120px; background: white; border: 1px solid #e2e8f0; border-radius: 8px;">
+                <sd-avatar [src]="src()" [size]="size()"></sd-avatar>
+              </div>
+              
+              <div class="mt-24">
+                <div class="T14M mb-12">Danh sách các kích thước cơ bản:</div>
+                <div class="d-flex gap-16 align-items-end">
+                  <sd-avatar [src]="'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'" [size]="24"></sd-avatar>
+                  <sd-avatar [src]="'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100'" [size]="32"></sd-avatar>
+                  <sd-avatar [src]="'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100'" [size]="48"></sd-avatar>
+                  <sd-avatar [src]="'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200'" [size]="64"></sd-avatar>
+                  <sd-avatar [src]="'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=300'" [size]="80"></sd-avatar>
+                </div>
+              </div>
+
+              <div class="mt-24">
+                <div class="T14M mb-12">Danh sách tạo màu tự động từ tên:</div>
+                <div class="d-flex gap-16 align-items-end flex-wrap">
+                  <sd-avatar [src]="'Nghia Tran'" [size]="40"></sd-avatar>
+                  <sd-avatar [src]="'Hoang Le'" [size]="40"></sd-avatar>
+                  <sd-avatar [src]="'Alex Brown'" [size]="40"></sd-avatar>
+                  <sd-avatar [src]="'John Doe'" [size]="40"></sd-avatar>
+                  <sd-avatar [src]="'Michael'" [size]="40"></sd-avatar>
+                  <sd-avatar [src]="'Zoe'" [size]="40"></sd-avatar>
+                  <sd-avatar [src]="'Emma'" [size]="40"></sd-avatar>
+                </div>
+              </div>
+
+            </div>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <h4 class="font-size-14 mb-8">HTML</h4>
+            <sd-code-editor [model]="htmlCode()" language="html" maxHeight="280px" [viewed]="true"></sd-code-editor>
+
+            <h4 class="font-size-14 mb-8 mt-16">TypeScript</h4>
+            <sd-code-editor [model]="tsCode" language="typescript" maxHeight="360px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+        </div>
+      </div>
+    </div>
+  </div>
+</sd-page>

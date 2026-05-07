@@ -1,0 +1,85 @@
+<sd-page [title]="'Tùy biến Css (drawerClass)'" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="demo-config-panel">
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">drawerTitle</span>
+                <span class="config-item__desc">Tiêu đề hiển thị trên drawer.</span>
+              </div>
+              <sd-input [(model)]="drawerTitle"></sd-input>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">width</span>
+                <span class="config-item__desc">Chiều rộng của drawer.</span>
+              </div>
+              <sd-select [items]="widthOptions" valueField="id" displayField="name" [(model)]="width"></sd-select>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">hideClose</span>
+                <span class="config-item__desc">Ẩn nút đóng ở góc trên cùng.</span>
+              </div>
+              <sd-switch [(model)]="hideClose" size="sm"></sd-switch>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">disableBackdropClose</span>
+                <span class="config-item__desc">Không cho đóng khi click ngoài drawer.</span>
+              </div>
+              <sd-switch [(model)]="disableBackdropClose" size="sm"></sd-switch>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+          <sd-section title="Xem trước" icon="visibility">
+            <div class="d-flex flex-column gap-16 p-24" style="border: 1px dashed #cbd5e1; border-radius: 12px; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
+              <div class="T14M">Mở Drawer Custom Class</div>
+              <div class="T12R text-secondary mb-8">Trường hợp sử dụng View Encapsulation để xuyên thủng đè css mặc định thông qua Class khai báo.</div>
+              
+              <div>
+                <sd-button title="Mở Drawer Custom Style" color="primary" (click)="openDrawer()"></sd-button>
+              </div>
+
+              <div style="padding: 12px 14px; border-radius: 10px; background: #e2e8f0; color: #334155; font-size: 13px;">
+                {{ lastClosedMessage() }}
+              </div>
+            </div>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <h4 class="font-size-14 mb-8">HTML</h4>
+            <sd-code-editor [model]="htmlCode()" language="html" maxHeight="200px" [viewed]="true"></sd-code-editor>
+            
+            <h4 class="font-size-14 mb-8 mt-16">SCSS (::ng-deep)</h4>
+            <sd-code-editor [model]="scssCode" language="scss" maxHeight="240px" [viewed]="true"></sd-code-editor>
+
+            <h4 class="font-size-14 mb-8 mt-16">TypeScript</h4>
+            <sd-code-editor [model]="tsCode" language="typescript" maxHeight="300px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+        </div>
+      </div>
+    </div>
+  </div>
+</sd-page>
+
+<sd-side-drawer #drawer [title]="drawerTitle()" [width]="width()" [hideClose]="hideClose()"
+  [disableBackdropClose]="disableBackdropClose()" (sdClosed)="handleDrawerClosed()" [drawerClass]="'my-custom-drawer-style'">
+  <div class="p-24">
+    <p>Nội dung đang được custom thay đổi CSS mặc định.</p>
+    <p>Background header, body và cả footer đều được chỉnh sửa trực tiếp sử dụng class <code>my-custom-drawer-style</code>.</p>
+  </div>
+
+  <div sdFooter>
+    <div class="d-flex justify-content-end gap-8 px-16">
+      <sd-button title="Hủy bỏ" type="outline" color="secondary" (click)="drawer.close()"></sd-button>
+      <sd-button title="Tiếp tục" color="primary"></sd-button>
+    </div>
+  </div>
+</sd-side-drawer>

@@ -1,0 +1,79 @@
+<div class="demo-inline">
+  <sd-button
+    [title]="appliedConfig().title"
+    [type]="appliedConfig().type"
+    [color]="appliedConfig().color"
+    [size]="appliedConfig().size"
+    [prefixIcon]="appliedConfig().prefixIcon || undefined"
+    [suffixIcon]="appliedConfig().suffixIcon || undefined"
+    [disabled]="appliedConfig().disabled"
+    [block]="appliedConfig().block">
+  </sd-button>
+
+  <button class="float-settings" (click)="openSettings()">
+    <span class="material-symbols-outlined">settings</span>
+  </button>
+</div>
+
+<sd-side-drawer #settingsDrawer title="Thiết lập nút" width="420px">
+
+  <div class="drawer-content">
+    <div class="drawer-tab-nav">
+      <button [class.active]="activeTab() === 'properties'" (click)="activeTab.set('properties')">Thuộc tính</button>
+      <button [class.active]="activeTab() === 'source'" (click)="activeTab.set('source')">Mã nguồn</button>
+    </div>
+
+    @if (activeTab() === 'properties') {
+      <div class="drawer-body">
+
+        <sd-input size="sm" [label]="'title'" [model]="draft.title" (modelChange)="draft.title = $event"></sd-input>
+
+        <sd-select size="sm" [label]="'type'" [items]="typeOptions" valueField="id" displayField="name"
+          [model]="draft.type" (modelChange)="draft.type = $any($event)"></sd-select>
+
+        <sd-select size="sm" [label]="'color'" [items]="colorOptions" valueField="id" displayField="name"
+          [model]="draft.color" (modelChange)="draft.color = $any($event)"></sd-select>
+
+        <sd-select size="sm" [label]="'size'" [items]="sizeOptions" valueField="id" displayField="name"
+          [model]="draft.size" (modelChange)="draft.size = $any($event)"></sd-select>
+
+        <sd-input size="sm" [label]="'prefixIcon'" [model]="draft.prefixIcon" (modelChange)="draft.prefixIcon = $event"
+          [placeholder]="'vd: add, save, delete'"></sd-input>
+
+        <sd-input size="sm" [label]="'suffixIcon'" [model]="draft.suffixIcon" (modelChange)="draft.suffixIcon = $event"
+          [placeholder]="'vd: arrow_forward'"></sd-input>
+
+        <div class="section-divider">Hành vi</div>
+
+        <div class="config-item">
+          <div class="config-item__label">
+            <span class="config-item__title">disabled</span>
+            <span class="config-item__desc">Vô hiệu hóa nút, không cho bấm</span>
+          </div>
+          <sd-switch [model]="draft.disabled" (modelChange)="draft.disabled = $any($event)" size="sm"></sd-switch>
+        </div>
+
+        <div class="config-item">
+          <div class="config-item__label">
+            <span class="config-item__title">block</span>
+            <span class="config-item__desc">Nút chiếm toàn bộ chiều ngang container</span>
+          </div>
+          <sd-switch [model]="draft.block" (modelChange)="draft.block = $any($event)" size="sm"></sd-switch>
+        </div>
+
+      </div>
+    }
+
+    @if (activeTab() === 'source') {
+      <div class="drawer-body drawer-body--code">
+        <sd-code-editor [model]="generatedCode()" language="html" [viewed]="true"></sd-code-editor>
+      </div>
+    }
+  </div>
+
+  <div sdFooter class="drawer-footer">
+    <sd-button title="Hủy" type="light" (click)="cancelConfig()"></sd-button>
+    <sd-button title="Áp dụng" type="fill" color="primary" (click)="applyConfig()"></sd-button>
+  </div>
+
+</sd-side-drawer>

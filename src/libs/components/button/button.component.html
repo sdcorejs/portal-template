@@ -1,0 +1,114 @@
+<sd-page [title]="'SdButton Component'" [description]="pageDescription()">
+  <div headerRight>
+    <div class="d-flex gap-8">
+      <!-- Có thể thêm nút Action ở đây nếu cần -->
+    </div>
+  </div>
+
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+      <!-- CỘT TRÁI: CONFIGURATION -->
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="demo-config-panel">
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">title</span>
+                <span class="config-item__desc">Nhãn văn bản hiển thị trên nút.</span>
+              </div>
+              <sd-input [label]="'Tiêu đề'" [(model)]="title"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">prefixIcon</span>
+                <span class="config-item__desc">Icon hiển thị phía trước tiêu đề nút.</span>
+              </div>
+              <sd-input [label]="'Prefix Icon'" [(model)]="prefixIcon" placeholder="Tên icon trước"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">suffixIcon</span>
+                <span class="config-item__desc">Icon hiển thị phía sau tiêu đề nút.</span>
+              </div>
+              <sd-input [label]="'Suffix Icon'" [(model)]="suffixIcon" placeholder="Tên icon sau"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">type</span>
+                <span class="config-item__desc">Biến thể giao diện của nút bấm.</span>
+              </div>
+              <sd-select [label]="'Kiểu'" [items]="typeOptions" valueField="id" displayField="name" [(model)]="type"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">color</span>
+                <span class="config-item__desc">Màu trạng thái chính của nút.</span>
+              </div>
+              <sd-select [label]="'Màu sắc'" [items]="colorOptions" valueField="id" displayField="name" [(model)]="color"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">size</span>
+                <span class="config-item__desc">Điều chỉnh kích thước và padding nút.</span>
+              </div>
+              <sd-select [label]="'Kích thước'" [items]="sizeOptions" valueField="id" displayField="name" [(model)]="size"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">disabled</span>
+                <span class="config-item__desc">Khoá sự kiện click và tương tác với nút.</span>
+              </div>
+              <sd-switch [(model)]="disabled" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">loading</span>
+                <span class="config-item__desc">Hiển thị trạng thái đang xử lý trên nút.</span>
+              </div>
+              <sd-switch [(model)]="loading" size="sm"></sd-switch>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <!-- CỘT PHẢI: PREVIEW & CODE -->
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+          <sd-section title="Xem trước" icon="visibility">
+            <div
+              class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
+              <sd-button
+                [type]="type()"
+                [color]="color()"
+                [size]="size()"
+                [disabled]="disabled()"
+                [loading]="loading()"
+                [prefixIcon]="prefixIcon()"
+                [suffixIcon]="suffixIcon()"
+                [title]="title()"
+                (click)="onButtonClick($event)"
+              ></sd-button>
+            </div>
+            <div class="mt-16 font-size-13 text-center">
+              Nhấn nút để kiểm tra sự kiện click.
+            </div>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <h4 class="font-size-14 mb-8">HTML</h4>
+            <sd-code-editor [model]="htmlCode()" language="html" maxHeight="300px" [viewed]="true"></sd-code-editor>
+            <h4 class="font-size-14 mb-8 mt-16">Typescript</h4>
+            <sd-code-editor [model]="tsCode" language="typescript" maxHeight="300px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+        </div>
+      </div>
+    </div>
+  </div>
+</sd-page>

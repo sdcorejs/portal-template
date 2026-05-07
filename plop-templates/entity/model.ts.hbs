@@ -1,0 +1,46 @@
+import { BaseEntity } from '@{{dashCase lib}}/services';
+
+// --- ENUMS & CONSTANTS ---
+// Sử dụng cho sd-select data tĩnh (Role)
+export const {{constantCase name}}_ROLES = [
+  { value: 'EMPLOYEE', display: 'Nhân viên' },
+  { value: 'MANAGER', display: 'Quản lý' },
+];
+
+// Mock Interface sử dụng cho sd-select gọi API (Department)
+export interface DepartmentMockDTO {
+  id: string;
+  code: string;
+  name: string;
+}
+
+// ===========================================================================
+// --- REQUEST MODELS ---
+// ===========================================================================
+// Payload gửi lên server khi Create/Update
+export interface {{pascalCase name}}SaveReq {
+  // UI: sd-input (required, maxlength 16)
+  code?: string;
+  // UI: sd-input (required)
+  name?: string;
+  // UI: sd-input-number
+  salary?: number;
+  // UI: sd-date (Chỉ chọn ngày, vd: 1990/01/01)
+  birthday?: string;
+  // UI: sd-datetime (Chọn cả ngày và giờ, vd: Thời gian bắt đầu có hiệu lực)
+  effectiveTime?: string;
+  // UI: sd-select (Data tĩnh: {{constantCase name}}_ROLES)
+  role?: string;
+  // UI: sd-select (Data động gọi API: Lưu ID của department)
+  departmentId?: string;
+  // UI: sd-select (True/False)
+  isActivated?: boolean;
+  // UI: sd-textarea
+  note?: string;
+}
+
+// ===========================================================================
+// --- RESPONSE MODELS ---
+// ===========================================================================
+// Dữ liệu trả về từ API dùng để hiển thị trên List/Detail
+export type {{pascalCase name}}DTO = Required<{{pascalCase name}}SaveReq> & BaseEntity;

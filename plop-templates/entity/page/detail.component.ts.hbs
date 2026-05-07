@@ -1,0 +1,149 @@
+import { Component, OnInit, QueryList, ViewChildren, inject } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SdButton, SdSection, SdTabComponent, SdUploadFile } from '@sd-angular/core/components';
+import { SdFormsModule } from '@sd-angular/core/forms';
+import { SdPageComponent } from '@sd-angular/core/modules';
+import { SdLoadingService, SdNotifyService } from '@sd-angular/core/services';
+import { {{ properCase name }}DTO } from '../../services/{{ kebabCase name }}.model';
+import { {{ properCase name }}Service } from '../../services/{{ kebabCase name }}.service';
+
+@Component({
+  selector: '{{ kebabCase name }}-detail',
+  imports: [SdFormsModule, SdButton, SdUploadFile, SdSection, SdPageComponent],
+  template: `
+    <sd-page [title]="title">
+      <div class="d-flex align-items-center" style="gap: 8px" headerRight>
+        <sd-button title="Quay lại" prefixIcon="replay" (click)="onBack()"></sd-button>
+        @if (state === 'DETAIL') {
+          <sd-button title="Cập nhật" type="fill" prefixIcon="edit" color="primary" (click)="onUpdate()"></sd-button>
+        } @else if (state === 'UPDATE') {
+          <sd-button title="Lưu" type="fill" prefixIcon="save" color="primary" (click)="onSave()" [loading]="saving"></sd-button>
+        } @else if (state === 'CREATE') {
+          <sd-button title="Lưu" type="fill" prefixIcon="save" color="primary" (click)="onSave()" [loading]="saving"></sd-button>
+        }
+      </div>
+      <div class="h-full p-8">
+        <sd-section title="">
+          <div class="row mx-0">
+            <div class="col-4">
+              <sd-input
+                label="Mã"
+                [(model)]="entity.code"
+                [form]="form"
+                [viewed]="state === 'DETAIL'"
+              ></sd-input>
+            </div>
+            <div class="col-4">
+              <sd-input
+                label="Tên"
+                [(model)]="entity.name"
+                [form]="form"
+                [viewed]="state === 'DETAIL'"
+              ></sd-input>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+    </sd-page>
+  `,
+})
+@SdTabComponent({
+  component: DetailComponent,
+  name: args => {
+    if (args?.url?.includes('update')) return 'Cập nhật {{ label }}';
+    if (args?.url?.includes('detail')) return 'Chi tiết {{ label }}';
+    return 'Tạo mới {{ label }}';
+  },
+  color: args => {
+    if (args?.url?.includes('update')) return 'warning';
+    if (args?.url?.includes('detail')) return 'info';
+    return 'success';
+  },
+})
+export class DetailComponent implements OnInit {
+  @ViewChildren(SdUploadFile) uploadFiles?: QueryList<SdUploadFile>;
+
+  readonly #router = inject(Router);
+  readonly #route = inject(ActivatedRoute);
+  readonly #notifyService = inject(SdNotifyService);
+  readonly #loadingService = inject(SdLoadingService);
+  readonly #{{ camelCase name }}Service = inject({{ properCase name }}Service);
+
+  form = new FormGroup({});
+  saving = false;
+  entity: Partial<{{ properCase name }}DTO> = {};
+  id = '';
+  state: 'CREATE' | 'UPDATE' | 'DETAIL' = 'CREATE';
+  title = '';
+
+  ngOnInit() {
+    this.id = this.#route.snapshot.params?.['id'];
+
+    if (this.#router.url.includes('update')) {
+      this.state = 'UPDATE';
+      this.title = 'Cập nhật {{ label }}';
+    } else if (this.#router.url.includes('detail')) {
+      this.state = 'DETAIL';
+      this.title = 'Chi tiết {{ label }}';
+    } else {
+      this.state = 'CREATE';
+      this.title = 'Tạo mới {{ label }}';
+    }
+
+    if (this.id) {
+      this.#detail(this.id);
+    }
+  }
+
+  #detail = (id: string) => {
+    this.#loadingService.start();
+    this.#{{ camelCase name }}Service
+      .detail(id)
+      .then(entity => {
+        this.entity = entity;
+      })
+      .finally(() => this.#loadingService.stop());
+  };
+
+  onBack = () => {
+    const path = this.state === 'CREATE' ? ['../'] : ['../../'];
+    this.#router.navigate(path, { relativeTo: this.#route, state: { replaceTab: true } });
+  };
+
+  onUpdate = () => {
+    if (this.state === 'DETAIL') {
+      this.#router.navigate(['../../update', this.id], {
+        relativeTo: this.#route,
+        state: { replaceTab: true },
+      });
+    }
+  };
+
+  onSave = async () => {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    this.saving = true;
+    try {
+      if (this.uploadFiles?.length) {
+        await Promise.all(this.uploadFiles.map(f => f.upload()));
+      }
+      if (this.entity.id) {
+        await this.#{{ camelCase name }}Service.update(this.entity.id, this.entity);
+        this.#notifyService.success('Cập nhật {{ label }} thành công');
+        this.#detail(this.id);
+      } else {
+        const newEntity = await this.#{{ camelCase name }}Service.create(this.entity);
+        this.#notifyService.success('Tạo mới {{ label }} thành công');
+        this.#router.navigate(['../detail', newEntity.id], {
+          relativeTo: this.#route,
+          state: { replaceTab: true },
+        });
+      }
+    } finally {
+      this.saving = false;
+    }
+  };
+}

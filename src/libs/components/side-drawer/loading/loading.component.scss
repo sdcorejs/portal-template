@@ -1,0 +1,11 @@
+// Styles cho Side Drawer Demo modernized
+:host {
+  display: block;
+  height: 100%;
+
+  .demo-page-body {
+    padding: 8px 4px; // Kết hợp với 4px padding của col trong row-sm để tạo ra 8px cân đối
+    background-color: #f1f5f9;
+    min-height: 100%;
+  }
+}

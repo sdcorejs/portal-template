@@ -1,0 +1,477 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+// ── Layout ────────────────────────────────────────────────────────────────────
+.c-builder {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+
+// ── Palette ───────────────────────────────────────────────────────────────────
+.c-palette {
+  width: 220px;
+  flex-shrink: 0;
+  background: #fff;
+  border-right: 1px solid #e2e8f0;
+  overflow-y: auto;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.c-palette-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #94a3b8;
+  padding: 0 6px 8px;
+}
+
+.c-palette-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 8px 10px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: grab;
+  transition: background 0.15s, border-color 0.15s;
+  user-select: none;
+
+  &:hover {
+    background: #f1f5f9;
+    border-color: #e2e8f0;
+
+    .c-drag-handle { opacity: 1; }
+  }
+
+  &:active { cursor: grabbing; }
+}
+
+.c-palette-icon {
+  font-size: 20px;
+  color: #3b82f6;
+  flex-shrink: 0;
+}
+
+.c-palette-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.c-drag-handle {
+  font-size: 16px;
+  color: #94a3b8;
+  opacity: 0;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+
+.c-palette-hint {
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 6px;
+  font-size: 11px;
+  color: #0369a1;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  line-height: 1.5;
+}
+
+// ── Workspace ─────────────────────────────────────────────────────────────────
+.c-workspace {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #f1f5f9;
+}
+
+.c-canvas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  flex-shrink: 0;
+}
+
+.c-item-count {
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+
+// ── Canvas ────────────────────────────────────────────────────────────────────
+.c-canvas {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 8px;
+  align-content: start;
+}
+
+.c-canvas-empty {
+  grid-column: span 12;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 64px 32px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  color: #94a3b8;
+
+  .material-symbols-outlined {
+    font-size: 48px;
+    color: #cbd5e1;
+  }
+}
+
+// Drop-before zone (visible only on dragover)
+.c-drop-before {
+  height: 6px;
+  border-radius: 3px;
+  background: transparent;
+  transition: background 0.15s, height 0.15s;
+  cursor: default;
+
+  span {
+    display: none;
+    font-size: 10px;
+    color: #3b82f6;
+    justify-content: center;
+    font-weight: 500;
+  }
+
+  &:hover, &.drag-over {
+    height: 32px;
+    background: #dbeafe;
+    border: 1.5px dashed #3b82f6;
+    display: flex;
+    align-items: center;
+
+    span { display: flex; }
+  }
+}
+
+// Canvas item wrapper — clean by default, controls appear on hover
+.c-canvas-item {
+  position: relative;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: border-color 0.15s, box-shadow 0.15s;
+
+  &:hover {
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.12), 0 2px 8px rgba(0,0,0,0.08);
+
+    .c-item-overlay { opacity: 1; pointer-events: all; }
+  }
+}
+
+// Floating overlay — dark pill at the top of the item
+.c-item-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px 0 10px;
+  height: 30px;
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+
+.c-overlay-drag {
+  font-size: 15px;
+  color: rgba(255,255,255,0.35);
+  cursor: default;
+}
+
+.c-overlay-icon {
+  font-size: 14px;
+  color: rgba(255,255,255,0.55);
+}
+
+.c-overlay-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.80);
+  white-space: nowrap;
+}
+
+.c-overlay-badge {
+  font-size: 10px;
+  font-weight: 600;
+  font-family: monospace;
+  background: rgba(255,255,255,0.10);
+  color: rgba(255,255,255,0.55);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.c-overlay-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  flex-shrink: 0;
+
+  .material-symbols-outlined { font-size: 14px; }
+
+  &:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+  &--settings:hover { background: rgba(96,165,250,0.25); color: #93c5fd; }
+  &--danger:hover   { background: rgba(248,113,113,0.25); color: #fca5a5; }
+}
+
+.c-item-body {
+  height: 100%;
+  overflow: auto;
+}
+
+.c-btn-wrap {
+  padding: 16px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+// ── Section drop zone ─────────────────────────────────────────────────────────
+.c-section-drop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px 16px;
+  border: 2px dashed #e2e8f0;
+  border-radius: 6px;
+  margin: 8px;
+  color: #94a3b8;
+  transition: border-color 0.15s, background 0.15s;
+
+  .material-symbols-outlined { font-size: 20px; }
+
+  &--active {
+    border-color: #3b82f6;
+    background: #eff6ff;
+    color: #2563eb;
+  }
+}
+
+// Form grid inside section
+.c-form-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  min-height: 60px;
+  transition: background 0.15s;
+
+  &--drag-over {
+    background: #eff6ff;
+    outline: 2px dashed #3b82f6;
+    outline-offset: -4px;
+  }
+}
+
+// Form item inside section — no visible bar, remove button floats on hover
+.c-form-item {
+  position: relative;
+
+  &:hover .c-form-item-remove { opacity: 1; pointer-events: all; }
+}
+
+.c-form-item-remove {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.65);
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s, background 0.12s;
+  backdrop-filter: blur(4px);
+
+  .material-symbols-outlined { font-size: 11px; }
+  &:hover { background: rgba(220, 38, 38, 0.85); }
+}
+
+// ── Source panel ──────────────────────────────────────────────────────────────
+.c-source-panel {
+  flex-shrink: 0;
+  border-top: 1px solid #e2e8f0;
+  background: #fff;
+
+  .drawer-tab-nav {
+    border-bottom: 1px solid #e2e8f0;
+  }
+}
+
+// ── Settings drawer (reuse shared classes) ────────────────────────────────────
+.drawer-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.drawer-tab-nav {
+  display: flex;
+  border-bottom: 1px solid #e2e8f0;
+  flex-shrink: 0;
+
+  button {
+    padding: 10px 18px;
+    border: none;
+    background: none;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.15s;
+
+    &.active { color: #2563eb; border-bottom-color: #2563eb; }
+    &:not(.active):hover { color: #1e293b; }
+  }
+}
+
+.drawer-body {
+  padding: 0 16px 16px;
+  overflow-y: auto;
+  flex: 1;
+
+  &--code { padding: 0; }
+}
+
+.drawer-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-right: 8px;
+}
+
+.section-divider {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #94a3b8;
+  margin: 12px 0 8px;
+}
+
+.config-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 6px;
+
+  &__label { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  &__title { font-size: 12px; font-weight: 600; color: #1e293b; font-family: monospace; }
+  &__desc  { font-size: 11px; color: #64748b; line-height: 1.4; }
+}
+
+// ── Section chips ─────────────────────────────────────────────────────────────
+.c-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.c-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: background 0.12s;
+
+  &:hover   { background: #e2e8f0; }
+  &--active { background: #dbeafe; border-color: #93c5fd; color: #1d4ed8; }
+  &--add    { background: #f0fdf4; border-color: #86efac; color: #166534; cursor: pointer;
+    .material-symbols-outlined { font-size: 14px; } }
+}
+
+.c-chip-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 0;
+
+  .material-symbols-outlined { font-size: 12px; }
+  &:hover { color: #dc2626; }
+}
+
+.c-chip-add-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.c-edit-panel {
+  padding: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-top: 6px;
+}

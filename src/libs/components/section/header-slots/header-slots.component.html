@@ -1,0 +1,175 @@
+<sd-page [title]="'Tùy Chỉnh Header'" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+
+      <!-- CỘT TRÁI: THUỘC TÍNH -->
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="demo-config-panel">
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">title</span>
+                <span class="config-item__desc">Tiêu đề mặc định của section khi chưa thay bằng slot trái.</span>
+              </div>
+              <sd-input [label]="'Tiêu đề (title)'" [(model)]="sectionTitle"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">sdHeaderRight.badge</span>
+                <span class="config-item__desc">Hiển thị badge trạng thái ở phía phải header.</span>
+              </div>
+              <sd-switch [(model)]="showStatusBadge" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">sdHeaderRight.edit</span>
+                <span class="config-item__desc">Bật nút chỉnh sửa trong vùng action bên phải.</span>
+              </div>
+              <sd-switch [(model)]="showEditBtn" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">sdHeaderRight.delete</span>
+                <span class="config-item__desc">Bật nút xoá trong vùng action bên phải.</span>
+              </div>
+              <sd-switch [(model)]="showDeleteBtn" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">collapsable</span>
+                <span class="config-item__desc">Cho phép thu gọn khi click vào header section.</span>
+              </div>
+              <sd-switch [(model)]="collapsable" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">sdHeaderLeft.icon</span>
+                <span class="config-item__desc">Emoji hoặc icon tự do cho slot header trái.</span>
+              </div>
+              <sd-input [label]="'Icon (emoji)'" [(model)]="customIcon" placeholder="VD: 💼 📋 🏢"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">sdHeaderLeft.title</span>
+                <span class="config-item__desc">Nội dung title tuỳ chỉnh cho slot bên trái.</span>
+              </div>
+              <sd-input [label]="'Tiêu đề tùy chỉnh'" [(model)]="customTitle"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">sdHeaderLeft.subTitle</span>
+                <span class="config-item__desc">Dòng mô tả phụ hiển thị trong slot bên trái.</span>
+              </div>
+              <sd-input [label]="'Phụ đề tùy chỉnh'" [(model)]="customSubTitle"></sd-input>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <!-- CỘT PHẢI: XEM TRƯỚC + MÃ NGUỒN -->
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+
+          <sd-section title="Xem trước" icon="visibility">
+
+            <!-- sdHeaderRight -->
+            <h4 class="font-size-14 mb-8">[sdHeaderRight] - chèn nội dung vào phần phải header</h4>
+            <div class="p-16 bg-slate-100 rounded-8 border border-dashed border-slate-300">
+              <sd-section [title]="sectionTitle()" icon="description" [collapsable]="collapsable()">
+                <div sdHeaderRight class="d-flex align-items-center gap-8">
+                  @if (showStatusBadge()) {
+                    <span class="c-status-badge">Đang hiệu lực</span>
+                  }
+                  @if (showEditBtn()) {
+                    <sd-button title="Chỉnh sửa" type="light" size="sm" prefixIcon="edit"></sd-button>
+                  }
+                  @if (showDeleteBtn()) {
+                    <sd-button title="Xoá" type="light" size="sm" prefixIcon="delete" [color]="'error'"></sd-button>
+                  }
+                </div>
+                <p class="T14R" style="margin: 0;">
+                  Slot <code>[sdHeaderRight]</code> chèn thêm nội dung vào phải header, không ảnh hưởng title và icon mặc định.
+                </p>
+              </sd-section>
+            </div>
+
+            <!-- Divider -->
+            <div class="c-demo-divider my-20">
+              <span>[sdHeaderLeft] - thay thế toàn bộ phần trái header</span>
+            </div>
+
+            <!-- sdHeaderLeft -->
+            <div class="T13R text-secondary mb-12">
+              Khi dùng <code>[sdHeaderLeft]</code>, các input <code>title</code> / <code>subTitle</code> / <code>icon</code>
+              sẽ bị bỏ qua - nội dung slot thay thế hoàn toàn.
+            </div>
+            <div class="p-16 bg-slate-100 rounded-8 border border-dashed border-slate-300">
+              <sd-section>
+                <div sdHeaderLeft class="d-flex align-items-center gap-12">
+                  <span style="font-size: 24px; line-height: 1;">{{ customIcon() }}</span>
+                  <div>
+                    <div class="T16M">{{ customTitle() }}</div>
+                    <div class="T12R text-secondary">{{ customSubTitle() }}</div>
+                  </div>
+                </div>
+                <p class="T14R" style="margin: 0;">
+                  Header trái được tuỳ biến hoàn toàn qua <code>[sdHeaderLeft]</code>.
+                </p>
+              </sd-section>
+            </div>
+
+            <!-- Divider -->
+            <div class="c-demo-divider my-20">
+              <span>Kết hợp cả hai slot</span>
+            </div>
+
+            <!-- Combined -->
+            <div class="p-16 bg-slate-100 rounded-8 border border-dashed border-slate-300">
+              <sd-section collapsable>
+                <div sdHeaderLeft class="d-flex align-items-center gap-12">
+                  <span style="font-size: 22px; line-height: 1;">📋</span>
+                  <div>
+                    <div class="T16M">Hợp đồng #HD-2025-001</div>
+                    <div class="T12R text-secondary">Ngày ký: 01/01/2025</div>
+                  </div>
+                </div>
+                <div sdHeaderRight class="d-flex align-items-center gap-8">
+                  <span class="c-status-badge">Đang hiệu lực</span>
+                  <sd-button title="Chỉnh sửa" type="light" size="sm" prefixIcon="edit"></sd-button>
+                </div>
+                <p class="T14R" style="margin: 0;">
+                  Kết hợp <code>[sdHeaderLeft]</code> + <code>[sdHeaderRight]</code>, đồng thời hỗ trợ thu gọn.
+                </p>
+              </sd-section>
+            </div>
+
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <h4 class="font-size-14 mb-8">HTML - [sdHeaderRight]</h4>
+            <sd-code-editor [model]="htmlHeaderRightCode()" language="html" maxHeight="280px" [viewed]="true"></sd-code-editor>
+
+            <h4 class="font-size-14 mb-8 mt-16">TypeScript</h4>
+            <sd-code-editor [model]="tsCode" language="typescript" maxHeight="220px" [viewed]="true"></sd-code-editor>
+
+            <h4 class="font-size-14 mb-8 mt-16">HTML - [sdHeaderLeft]</h4>
+            <sd-code-editor [model]="htmlHeaderLeftCode()" language="html" maxHeight="240px" [viewed]="true"></sd-code-editor>
+
+            <h4 class="font-size-14 mb-8 mt-16">HTML - Kết hợp hai slot</h4>
+            <sd-code-editor [model]="htmlCombinedCode" language="html" maxHeight="260px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</sd-page>
+

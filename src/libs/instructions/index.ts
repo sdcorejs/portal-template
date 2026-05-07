@@ -1,0 +1,1 @@
+export { instructionsRoutes } from './routes';

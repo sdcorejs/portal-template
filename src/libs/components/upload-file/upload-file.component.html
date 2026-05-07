@@ -1,0 +1,113 @@
+<sd-page [title]="'SdUploadFile Component'" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="demo-config-panel">
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">label</span>
+                <span class="config-item__desc">Tiêu đề trường upload hiển thị phía trên control.</span>
+              </div>
+              <sd-input [label]="'Tiêu đề trường (Label)'" [(model)]="label"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">description</span>
+                <span class="config-item__desc">Mô tả phụ giúp người dùng hiểu yêu cầu upload.</span>
+              </div>
+              <sd-input [label]="'Mô tả (Description)'" [(model)]="description"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">type</span>
+                <span class="config-item__desc">Giới hạn nhóm file cho phép tải lên.</span>
+              </div>
+              <sd-select [label]="'Kiểu Upload (Type)'" [items]="typeOptions" valueField="id" displayField="name" [(model)]="type"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">maxSize</span>
+                <span class="config-item__desc">Dung lượng tối đa mỗi file, đơn vị MB.</span>
+              </div>
+              <sd-input-number [label]="'Dung lượng File tối đa (MB)'" [(model)]="maxSize" [placeholder]="'Ví dụ: 5'"></sd-input-number>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">max</span>
+                <span class="config-item__desc">Số lượng file tối đa cho phép chọn.</span>
+              </div>
+              <sd-input-number [label]="'Số lượng File tối đa'" [(model)]="maxFiles" [placeholder]="'Ví dụ: 3'"></sd-input-number>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">required</span>
+                <span class="config-item__desc">Đánh dấu trường upload là bắt buộc.</span>
+              </div>
+              <sd-switch [(model)]="required" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">disabled</span>
+                <span class="config-item__desc">Khoá thao tác click, kéo thả và chọn file.</span>
+              </div>
+              <sd-switch [(model)]="disabled" size="sm"></sd-switch>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+          <sd-section title="Xem trước" icon="visibility">
+            <div class="preview-panel">
+              <div class="preview-copy">
+                <div class="T14M">Tương tác Upload File</div>
+                <div class="T12R text-secondary">
+                  Trường upload hỗ trợ click, kéo thả (Drag & Drop) tệp tin. Hỗ trợ xem trước đối với ảnh, check dung lượng bảo vệ form.
+                </div>
+              </div>
+
+              <div style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; width: 100%;">
+                <sd-upload-file 
+                  [label]="label()"
+                  [description]="description()"
+                  [type]="type()"
+                  [maxSize]="maxSize()"
+                  [max]="maxFiles()"
+                  [required]="required()"
+                  [disabled]="disabled()"
+                  [extensions]="currentExtensions()"
+                  [(model)]="uploadedFiles">
+                </sd-upload-file>
+              </div>
+
+              <div class="preview-status">
+                <strong>Raw Model Value ([(model)]):</strong>
+                <pre class="mb-0 mt-8" style="font-size: 11px; white-space: pre-wrap;">{{ getModelJson() }}</pre>
+              </div>
+              
+              <div class="d-flex justify-content-end">
+                <sd-button title="Gọi API giả lập lấy data Cũ (Binding CDNs)" type="outline" color="secondary" (click)="simulateFetchOldData()"></sd-button>
+              </div>
+            </div>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <h4 class="font-size-14 mb-8">HTML</h4>
+            <sd-code-editor [model]="htmlCode()" language="html" maxHeight="280px" [viewed]="true"></sd-code-editor>
+
+            <h4 class="font-size-14 mb-8 mt-16">TypeScript</h4>
+            <sd-code-editor [model]="tsCode" language="typescript" maxHeight="360px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+        </div>
+      </div>
+    </div>
+  </div>
+</sd-page>

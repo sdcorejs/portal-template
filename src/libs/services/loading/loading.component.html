@@ -1,0 +1,83 @@
+<sd-page [title]="'SdLoadingService'" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+      <!-- CỘT TRÁI: CONFIGURATION -->
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="demo-config-panel">
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">duration</span>
+                <span class="config-item__desc">Thời gian loading tự dừng, tính bằng mili giây.</span>
+              </div>
+              <sd-input-number [label]="'Thời gian (ms)'" [(model)]="duration"></sd-input-number>
+            </div>
+
+            <div class="config-item config-item--stacked">
+              <div class="config-item__label">
+                <span class="config-item__title">target</span>
+                <span class="config-item__desc">Chọn vùng hiển thị loading: toàn trang hoặc riêng khu vực preview.</span>
+              </div>
+              <div class="config-choice-list">
+                @for (opt of targetOptions; track opt.id) {
+                  <div
+                    class="config-choice"
+                    [class.config-choice--active]="targetSelector() === opt.id"
+                    (click)="targetSelector.set(opt.id)"
+                    (keyup.enter)="targetSelector.set(opt.id)"
+                    role="button"
+                    tabindex="0"
+                    aria-hidden="true">
+                    <div class="config-choice__title">{{ opt.name }}</div>
+                    <div class="config-choice__desc">{{ opt.id }}</div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <!-- CỘT PHẢI: PREVIEW & CODE -->
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+          <sd-section title="Xem trước" icon="visibility">
+            <div
+              id="preview-box"
+              class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex flex-column align-items-center justify-content-center gap-16"
+              style="min-height: 200px; position: relative;">
+              <div class="T16M">Vùng Preview</div>
+              <div class="T14R text-secondary text-center">
+                Nếu chọn <span class="font-mono">#preview-box</span>, loading sẽ xuất hiện trong khung này.<br>
+                Nếu chọn <span class="font-mono">body</span>, loading sẽ phủ toàn màn hình.
+              </div>
+            </div>
+            <div class="d-flex gap-12 mt-16 justify-content-center">
+              <sd-button
+                [title]="isRunning() ? 'Đang chạy...' : 'Bắt đầu Loading'"
+                color="primary"
+                [loading]="isRunning()"
+                (click)="startLoading()">
+              </sd-button>
+              <sd-button
+                [title]="'Dừng ngay'"
+                color="error"
+                type="outline"
+                [disabled]="!isRunning()"
+                (click)="stopLoading()">
+              </sd-button>
+            </div>
+            <div class="mt-16 font-size-13 text-center text-secondary">
+              Loading sẽ tự động dừng sau <strong>{{ duration() }}ms</strong>.
+              Nhấn "Dừng ngay" để dừng thủ công.
+            </div>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <sd-code-editor [model]="tsCode" language="typescript" maxHeight="400px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+        </div>
+      </div>
+    </div>
+  </div>
+</sd-page>

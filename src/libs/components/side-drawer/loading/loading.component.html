@@ -1,0 +1,78 @@
+<sd-page [title]="'Trạng Thái Loading'" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="demo-config-panel">
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">drawerTitle</span>
+                <span class="config-item__desc">Tiêu đề hiển thị trên drawer.</span>
+              </div>
+              <sd-input [(model)]="drawerTitle"></sd-input>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">width</span>
+                <span class="config-item__desc">Chiều rộng của drawer.</span>
+              </div>
+              <sd-select [items]="widthOptions" valueField="id" displayField="name" [(model)]="width"></sd-select>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">hideClose</span>
+                <span class="config-item__desc">Ẩn nút đóng ở góc trên cùng.</span>
+              </div>
+              <sd-switch [(model)]="hideClose" size="sm"></sd-switch>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">disableBackdropClose</span>
+                <span class="config-item__desc">Không cho đóng khi click ngoài drawer.</span>
+              </div>
+              <sd-switch [(model)]="disableBackdropClose" size="sm"></sd-switch>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+          <sd-section title="Xem trước" icon="visibility">
+            <div class="d-flex flex-column gap-16 p-24" style="border: 1px dashed #cbd5e1; border-radius: 12px; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
+              <div class="T14M">Mở Drawer Loading</div>
+              <div class="T12R text-secondary mb-8">Trường hợp gọi <code>drawer().startLoading()</code> để ngăn tương tác nội dung khi đang chờ hoàn tất API calls hoặc xử lý background.</div>
+              
+              <div>
+                <sd-button title="Mở Drawer kèm Loading" color="primary" (click)="openLoadingDrawer()"></sd-button>
+              </div>
+
+              <div style="padding: 12px 14px; border-radius: 10px; background: #e2e8f0; color: #334155; font-size: 13px;">
+                {{ lastClosedMessage() }}
+              </div>
+            </div>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <h4 class="font-size-14 mb-8">HTML</h4>
+            <sd-code-editor [model]="htmlCode()" language="html" maxHeight="280px" [viewed]="true"></sd-code-editor>
+
+            <h4 class="font-size-14 mb-8 mt-16">TypeScript</h4>
+            <sd-code-editor [model]="tsCode" language="typescript" maxHeight="360px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+        </div>
+      </div>
+    </div>
+  </div>
+</sd-page>
+
+<sd-side-drawer #drawer [title]="drawerTitle()" [width]="width()" [hideClose]="hideClose()"
+  [disableBackdropClose]="disableBackdropClose()" (sdClosed)="handleDrawerClosed()">
+  <div class="px-24 py-40 d-flex flex-column align-items-center justify-content-center text-center gap-12">
+    <span class="material-icons-outlined text-secondary" style="font-size: 40px;">hourglass_top</span>
+    <div class="T14M">Overlay loading sẽ tự tắt sau khoảng 1.8 giây.</div>
+    <div class="T12R text-secondary">
+      Demo này phù hợp cho trường hợp mở drawer trước rồi tải dữ liệu chi tiết sau từ API.
+    </div>
+  </div>
+</sd-side-drawer>

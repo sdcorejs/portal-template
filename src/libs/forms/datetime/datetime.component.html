@@ -1,0 +1,106 @@
+<sd-page [title]="'SdDatetime Component'" [description]="pageDescription()">
+  <div headerRight>
+    <div class="d-flex gap-8">
+      <!-- Có thể thêm nút Action ở đây nếu cần -->
+    </div>
+  </div>
+
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+      <!-- CỘT TRÁI: CONFIGURATION -->
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="demo-config-panel">
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">label</span>
+                <span class="config-item__desc">Tiêu đề hiển thị phía trên datetime picker.</span>
+              </div>
+              <sd-input [label]="'Label'" [(model)]="label"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">placeholder</span>
+                <span class="config-item__desc">Gợi ý định dạng ngày giờ cho người dùng.</span>
+              </div>
+              <sd-input [label]="'Placeholder'" [(model)]="placeholder"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">size</span>
+                <span class="config-item__desc">Điều chỉnh nhịp hiển thị của control ngày giờ.</span>
+              </div>
+              <sd-select [label]="'Size'" [items]="sizeOptions" valueField="id" displayField="name" [(model)]="size"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">min</span>
+                <span class="config-item__desc">Mốc ngày giờ nhỏ nhất được phép chọn.</span>
+              </div>
+              <sd-date [label]="'Min'" [(model)]="min" placeholder="YYYY/MM/DD"></sd-date>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">max</span>
+                <span class="config-item__desc">Mốc ngày giờ lớn nhất được phép chọn.</span>
+              </div>
+              <sd-date [label]="'Max'" [(model)]="max" placeholder="YYYY/MM/DD"></sd-date>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">disabled</span>
+                <span class="config-item__desc">Khoá tương tác với datetime picker.</span>
+              </div>
+              <sd-switch [(model)]="disabled" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">required</span>
+                <span class="config-item__desc">Đánh dấu trường bắt buộc nhập ngày giờ.</span>
+              </div>
+              <sd-switch [(model)]="required" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">viewed</span>
+                <span class="config-item__desc">Chuyển control sang chế độ xem giá trị.</span>
+              </div>
+              <sd-switch [(model)]="viewed" size="sm"></sd-switch>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <!-- CỘT PHẢI: PREVIEW & CODE -->
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+          <sd-section title="Xem trước" icon="visibility">
+            <div
+              class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
+              <sd-datetime style="width: 100%" [(model)]="modelValue" [label]="label()" [placeholder]="placeholder()"
+                [size]="size()" [disabled]="disabled()" [required]="required()" [viewed]="viewed()" [min]="min()"
+                [max]="max()"></sd-datetime>
+            </div>
+            <div class="mt-16 font-size-13">
+              <span class="T16M">Giá trị hiện tại:</span> {{ modelValue() }}
+            </div>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <h4 class="font-size-14 mb-8">HTML</h4>
+            <sd-code-editor [model]="htmlCode()" language="html" maxHeight="300px" [viewed]="true"></sd-code-editor>
+            <h4 class="font-size-14 mb-8 mt-16">Typescript</h4>
+            <sd-code-editor [model]="tsCode" language="typescript" maxHeight="400px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+        </div>
+      </div>
+    </div>
+  </div>
+</sd-page>

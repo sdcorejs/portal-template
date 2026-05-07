@@ -1,0 +1,22 @@
+import { Routes } from '@angular/router';
+import { ListComponent } from './pages/list/list.component';
+import { DetailComponent } from './pages/detail/detail.component';
+
+export const {{ camelCase name }}Routes: Routes = [
+  {
+    path: '',
+    component: ListComponent
+  },
+  {
+    path: 'create',
+    component: DetailComponent
+  },
+  {
+    path: 'detail/:id',
+    component: DetailComponent
+  },
+  {
+    path: 'update/:id',
+    component: DetailComponent
+  },
+];

@@ -1,0 +1,92 @@
+<sd-page [title]="'Xác nhận (.confirm)'" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+
+      <!-- CỘT TRÁI: CONFIGURATION -->
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="demo-config-panel">
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">title</span>
+                <span class="config-item__desc">Tiêu đề của modal xác nhận.</span>
+              </div>
+              <sd-input [(model)]="title"></sd-input>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">message</span>
+                <span class="config-item__desc">Nội dung lời nhắc của hộp thoại.</span>
+              </div>
+              <sd-input [(model)]="message"></sd-input>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">yesTitle</span>
+                <span class="config-item__desc">Nhãn của nút xác nhận.</span>
+              </div>
+              <sd-input [(model)]="yesTitle"></sd-input>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">noTitle</span>
+                <span class="config-item__desc">Nhãn của nút hủy bỏ.</span>
+              </div>
+              <sd-input [(model)]="noTitle"></sd-input>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">yesButtonColor</span>
+                <span class="config-item__desc">Màu của nút xác nhận.</span>
+              </div>
+              <sd-select [items]="colorOptions" valueField="id" displayField="name" [(model)]="yesButtonColor"></sd-select>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">noButtonColor</span>
+                <span class="config-item__desc">Màu của nút hủy bỏ.</span>
+              </div>
+              <sd-select [items]="colorOptions" valueField="id" displayField="name" [(model)]="noButtonColor"></sd-select>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">width</span>
+                <span class="config-item__desc">Chiều rộng của modal.</span>
+              </div>
+              <sd-select [items]="widthOptions" valueField="id" displayField="name" [(model)]="width"></sd-select>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <!-- CỘT PHẢI: PREVIEW & CODE -->
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+
+          <sd-section title="Xem trước" icon="visibility">
+            <div class="preview-area">
+              <p class="preview-area__desc">
+                Hộp thoại hiển thị <code>title</code> và <code>message</code>, kèm hai nút hành động:
+                <code>yesTitle</code> (chấp nhận) và <code>noTitle</code> (hủy bỏ).
+                Chỉ phương thức <code>.confirm()</code> hỗ trợ tuỳ chỉnh <code>width</code>.
+              </p>
+              <div>
+                <sd-button [title]="'Mở Confirm Dialog'" color="primary" (click)="test()"></sd-button>
+              </div>
+            </div>
+            <div class="result-bar">
+              <strong class="result-bar__label">Kết quả trả về:</strong>
+              <span class="result-bar__value">{{ lastResult() }}</span>
+            </div>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <sd-code-editor [model]="tsCode()" language="typescript" maxHeight="400px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</sd-page>

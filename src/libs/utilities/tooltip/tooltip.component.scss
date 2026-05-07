@@ -1,0 +1,161 @@
+:host {
+  display: block;
+  height: 100%;
+
+  .demo-page-body {
+    padding: 8px 4px;
+    background-color: #f1f5f9;
+    min-height: 100%;
+  }
+}
+
+.tooltip-preview {
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.demo-chip {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #1e293b;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.tooltip-template {
+  max-width: 220px;
+
+  &__title {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  &__desc {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+}
+
+.tooltip-card {
+  max-width: 228px;
+  box-sizing: border-box;
+
+  &--white {
+    color: #0f172a;
+  }
+
+  &__title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  &__desc {
+    font-size: 12px;
+    line-height: 1.45;
+    color: #334155;
+    margin-bottom: 8px;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+}
+
+.tooltip-buy-btn {
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #0ea5e9;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  cursor: pointer;
+
+  &:hover {
+    background: #0284c7;
+  }
+}
+
+.tooltip-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0369a1;
+  background: #e0f2fe;
+}
+
+.tooltip-price {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f766e;
+}
+
+.tooltip-media {
+  width: 228px;
+  max-width: 228px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0b1220;
+  display: flex;
+  flex-direction: column;
+
+  &__thumb {
+    height: 72px;
+    background:
+      linear-gradient(140deg, rgb(30 64 175 / 85%) 0%, rgb(14 116 144 / 75%) 45%, rgb(5 150 105 / 85%) 100%),
+      radial-gradient(circle at 75% 20%, rgb(255 255 255 / 45%) 0%, rgb(255 255 255 / 0%) 52%);
+  }
+
+  &__content {
+    padding: 10px 12px 12px;
+  }
+
+  &__title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 4px;
+  }
+
+  &__desc {
+    font-size: 11px;
+    line-height: 1.45;
+    color: #cbd5e1;
+  }
+}
+
+.tooltip-state {
+  font-size: 12px;
+  color: #475569;
+}
+
+.tooltip-color {
+  width: 100%;
+  height: 36px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: transparent;
+  padding: 2px;
+}
+
+

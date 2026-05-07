@@ -1,0 +1,134 @@
+<sd-page [title]="'sdTooltip Directive'" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="demo-config-panel">
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">sdTooltip</span>
+                <span class="config-item__desc">Nội dung tooltip dạng text hoặc TemplateRef.</span>
+              </div>
+              <sd-input [(model)]="tooltipText"></sd-input>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">sdTooltipPosition</span>
+                <span class="config-item__desc">Vị trí hiển thị tooltip quanh phần tử.</span>
+              </div>
+              <sd-select [items]="positionOptions" valueField="id" displayField="name" [(model)]="tooltipPosition"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">sdTooltipDelay</span>
+                <span class="config-item__desc">Độ trễ (ms) trước khi tooltip xuất hiện.</span>
+              </div>
+              <sd-input-number [(model)]="tooltipDelay" [min]="0" [max]="2000"></sd-input-number>
+            </div>
+
+            <div class="config-item config-item--stacked">
+              <div class="config-item__label">
+                <span class="config-item__title">sdTooltipColor</span>
+                <span class="config-item__desc">Màu nền tooltip (hex color).</span>
+              </div>
+              <input class="tooltip-color" type="color" [value]="tooltipColor()" (input)="tooltipColor.set($any($event.target).value)">
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+          <sd-section title="Xem trước" icon="visibility">
+            <div class="tooltip-preview">
+              <button
+                type="button"
+                class="demo-chip"
+                [sdTooltip]="tooltipText()"
+                [sdTooltipPosition]="tooltipPosition()"
+                [sdTooltipDelay]="tooltipDelay()"
+                [sdTooltipColor]="tooltipColor()">
+                Tooltip text
+              </button>
+
+              <button
+                type="button"
+                class="demo-chip"
+                [sdTooltip]="detailTpl"
+                [sdTooltipPosition]="'right'"
+                [sdTooltipDelay]="50"
+                [sdTooltipColor]="'#0f172a'">
+                Tooltip template
+              </button>
+
+              <button
+                type="button"
+                class="demo-chip"
+                [sdTooltip]="whiteCardTpl"
+                [sdTooltipPosition]="'bottom'"
+                [sdTooltipDelay]="80"
+                [sdTooltipColor]="'#ffffff'">
+                Tooltip nền trắng
+              </button>
+
+              <button
+                type="button"
+                class="demo-chip"
+                [sdTooltip]="mediaTpl"
+                [sdTooltipPosition]="'left'"
+                [sdTooltipDelay]="120"
+                [sdTooltipColor]="'#0f172a'">
+                Tooltip có ảnh/màu
+              </button>
+
+              <button type="button" class="demo-chip" [sdTooltip]="'Phù hợp cho hint ngắn trong cell table'" [sdTooltipPosition]="'top'">
+                Use-case: table cell
+              </button>
+            </div>
+
+            <ng-template #detailTpl>
+              <div class="tooltip-template">
+                <div class="tooltip-template__title">Thông tin chi tiết</div>
+                <div class="tooltip-template__desc">Có thể truyền template để hiển thị nhiều dòng nội dung thay vì text đơn.</div>
+              </div>
+            </ng-template>
+
+            <ng-template #whiteCardTpl>
+              <div class="tooltip-card tooltip-card--white">
+                <div class="tooltip-card__title">Gói Pro</div>
+                <div class="tooltip-card__desc">Bao gồm xuất báo cáo nâng cao, lịch sử 12 tháng và chia sẻ dashboard theo nhóm.</div>
+                <div class="tooltip-card__meta">
+                  <span class="tooltip-tag">Mới</span>
+                  <span class="tooltip-price">399.000đ/tháng</span>
+                </div>
+                <button type="button" class="tooltip-buy-btn" (click)="onBuyClick($event)">Mua ngay</button>
+              </div>
+            </ng-template>
+
+            <ng-template #mediaTpl>
+              <div class="tooltip-media">
+                <div class="tooltip-media__thumb"></div>
+                <div class="tooltip-media__content">
+                  <div class="tooltip-media__title">Summer Campaign</div>
+                  <div class="tooltip-media__desc">CTR tăng +18% so với tuần trước. Nhấn để xem báo cáo chi tiết theo kênh.</div>
+                </div>
+              </div>
+            </ng-template>
+
+            <div class="tooltip-state mt-12">Số lần bấm Mua ngay: <strong>{{ buyClicks() }}</strong></div>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <h4 class="font-size-14 mb-8">HTML</h4>
+            <sd-code-editor [model]="codeSample()" language="html" [viewed]="true" maxHeight="260px"></sd-code-editor>
+
+            <h4 class="font-size-14 mb-8 mt-16">TypeScript</h4>
+            <sd-code-editor [model]="tsSample" language="typescript" [viewed]="true" maxHeight="180px"></sd-code-editor>
+          </sd-section>
+        </div>
+      </div>
+    </div>
+  </div>
+</sd-page>

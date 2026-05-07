@@ -1,0 +1,484 @@
+<sd-page title="Page Builder" description="Kéo component từ bảng bên trái vào canvas để xây dựng layout trang. Mỗi component có thể thiết lập riêng và tạo mã nguồn đầy đủ.">
+
+  <div class="c-builder">
+
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <!-- PALETTE                                                            -->
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <aside class="c-palette">
+      <div class="c-palette-title">Components</div>
+
+      @for (p of paletteItems; track p.type) {
+        <div class="c-palette-item"
+          draggable="true"
+          (dragstart)="onPaletteDragStart($event, p.type)"
+          [title]="'Kéo vào canvas: ' + p.label">
+          <span class="material-symbols-outlined c-palette-icon">{{ p.icon }}</span>
+          <div class="c-palette-info">
+            <div class="T13M">{{ p.label }}</div>
+            <div class="T11R text-secondary">{{ p.desc }}</div>
+          </div>
+          <span class="material-symbols-outlined c-drag-handle">drag_indicator</span>
+        </div>
+      }
+
+      <div class="c-palette-hint">
+        <span class="material-symbols-outlined" style="font-size: 14px;">info</span>
+        <span>Input / Select / Textarea / Date / Upload File có thể kéo vào <strong>Section</strong></span>
+      </div>
+    </aside>
+
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <!-- WORKSPACE                                                          -->
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <div class="c-workspace">
+
+      <!-- Canvas header -->
+      <div class="c-canvas-header">
+        <div class="d-flex align-items-center gap-8">
+          <span class="material-symbols-outlined" style="font-size: 18px; color: #64748b;">grid_view</span>
+          <span class="T14M">Canvas — lưới 12 cột</span>
+          @if (items().length > 0) {
+            <span class="c-item-count">{{ items().length }} component</span>
+          }
+        </div>
+        <div class="d-flex gap-8">
+          @if (items().length > 0) {
+            <sd-button
+              [title]="showSource() ? 'Ẩn mã nguồn' : 'Xem mã nguồn'"
+              type="light"
+              size="sm"
+              [prefixIcon]="showSource() ? 'code_off' : 'code'"
+              (click)="showSource.set(!showSource())">
+            </sd-button>
+          }
+        </div>
+      </div>
+
+      <!-- Canvas grid -->
+      <div class="c-canvas"
+        (dragover)="onCanvasDragOver($event)"
+        (drop)="onCanvasDrop($event)">
+
+        @if (items().length === 0) {
+          <div class="c-canvas-empty">
+            <span class="material-symbols-outlined">drag_indicator</span>
+            <p class="T16M">Kéo component vào đây</p>
+            <p class="T13R text-secondary">Chọn từ bảng bên trái và kéo vào canvas</p>
+          </div>
+        }
+
+        @for (item of items(); track item.id) {
+          <!-- Drop-before zone -->
+          <div class="c-drop-before"
+            style="grid-column: span 12"
+            (dragover)="onItemDragOver($event)"
+            (drop)="onItemDrop($event, item.id)">
+            <span>Thả vào đây</span>
+          </div>
+
+          <!-- Canvas item -->
+          <div class="c-canvas-item"
+            [style.grid-column]="'span ' + item.colSpan"
+            [style.height]="item.height !== 'auto' ? item.height : undefined">
+
+            <!-- Floating overlay — visible only on hover -->
+            <div class="c-item-overlay">
+              <div class="d-flex align-items-center gap-4">
+                <span class="material-symbols-outlined c-overlay-drag">drag_indicator</span>
+                <span class="material-symbols-outlined c-overlay-icon">{{ getTypeIcon(item.type) }}</span>
+                <span class="c-overlay-label">{{ getTypeLabel(item.type) }}</span>
+                <span class="c-overlay-badge">col-{{ item.colSpan }}</span>
+                @if (item.height !== 'auto') {
+                  <span class="c-overlay-badge">{{ item.height }}</span>
+                }
+              </div>
+              <div class="d-flex gap-1">
+                <button class="c-overlay-btn" (click)="moveUp(item.id)" title="Lên">
+                  <span class="material-symbols-outlined">arrow_upward</span>
+                </button>
+                <button class="c-overlay-btn" (click)="moveDown(item.id)" title="Xuống">
+                  <span class="material-symbols-outlined">arrow_downward</span>
+                </button>
+                <button class="c-overlay-btn c-overlay-btn--settings" (click)="openSettings(item.id)" title="Cài đặt">
+                  <span class="material-symbols-outlined">tune</span>
+                </button>
+                <button class="c-overlay-btn c-overlay-btn--danger" (click)="removeItem(item.id)" title="Xóa">
+                  <span class="material-symbols-outlined">delete</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- ── Component render ── -->
+            <div class="c-item-body">
+
+              @switch (item.type) {
+
+                <!-- BUTTON -->
+                @case ('button') {
+                  <div class="c-btn-wrap">
+                    <sd-button
+                      [title]="$any(item.config).title"
+                      [type]="$any(item.config).type"
+                      [color]="$any(item.config).color"
+                      [size]="$any(item.config).size"
+                      [prefixIcon]="$any(item.config).prefixIcon || undefined"
+                      [suffixIcon]="$any(item.config).suffixIcon || undefined"
+                      [disabled]="$any(item.config).disabled"
+                      (click)="alert('Đã click nút \'' + $any(item.config).title + '\'')">
+                    </sd-button>
+                  </div>
+                }
+
+                <!-- TABLE -->
+                @case ('table') {
+                  <sd-table [option]="getTableOption(item)"></sd-table>
+                }
+
+                <!-- SECTION -->
+                @case ('section') {
+                  <sd-section
+                    [title]="$any(item.config).title"
+                    [icon]="$any(item.config).icon"
+                    [subTitle]="$any(item.config).subTitle"
+                    [collapsable]="$any(item.config).collapsable"
+                    [noPaddingBody]="getSectionItems(item).length > 0 ? true : $any(item.config).noPaddingBody">
+
+                    @if (getSectionItems(item).length > 0) {
+                      <div class="c-form-grid"
+                        (dragover)="onSectionDragOver($event, item.id)"
+                        (drop)="onSectionDrop($event, item.id)"
+                        (dragleave)="onSectionDragLeave()"
+                        [class.c-form-grid--drag-over]="sectionDragOver() === item.id">
+
+                        @for (si of getSectionItems(item); track si.id) {
+                          <div class="c-form-item" [style.grid-column]="'span ' + si.colSpan">
+                            <button class="c-form-item-remove" (click)="removeSectionItem(item.id, si.id)" title="Xóa">
+                              <span class="material-symbols-outlined">close</span>
+                            </button>
+                            @switch (si.type) {
+                              @case ('input')   { <sd-input [label]="si.label" [model]="''" [placeholder]="si.placeholder"></sd-input> }
+                              @case ('select')  { <sd-select [label]="si.label" [items]="[]" [model]="null" displayField="name" valueField="id"></sd-select> }
+                              @case ('textarea'){ <sd-textarea [label]="si.label" [model]="''" [placeholder]="si.placeholder"></sd-textarea> }
+                              @case ('date')    { <sd-date [label]="si.label" [model]="null"></sd-date> }
+                              @case ('upload-file') { <sd-upload-file [label]="si.label" [model]="[]" (filesChanged)="alert('Đã tải lên ' + $event.length + ' tệp')"></sd-upload-file> }
+                            }
+                          </div>
+                        }
+                      </div>
+                    }
+
+                    <!-- Drop zone khi section chưa có item -->
+                    @if (getSectionItems(item).length === 0) {
+                      <div class="c-section-drop"
+                        (dragover)="onSectionDragOver($event, item.id)"
+                        (drop)="onSectionDrop($event, item.id)"
+                        (dragleave)="onSectionDragLeave()"
+                        [class.c-section-drop--active]="sectionDragOver() === item.id">
+                        <span class="material-symbols-outlined">drag_indicator</span>
+                        <span class="T12R text-secondary">Kéo Input / Select / Textarea / Date / Upload File vào đây (6 cột)</span>
+                      </div>
+                    }
+                  </sd-section>
+                }
+
+                <!-- INPUT -->
+                @case ('input') {
+                  <sd-input
+                    [label]="$any(item.config).label"
+                    [model]="''"
+                    [placeholder]="$any(item.config).placeholder">
+                  </sd-input>
+                }
+
+                <!-- SELECT -->
+                @case ('select') {
+                  <sd-select
+                    [label]="$any(item.config).label"
+                    [items]="[]"
+                    [model]="null"
+                    displayField="name"
+                    valueField="id">
+                  </sd-select>
+                }
+
+                <!-- TEXTAREA -->
+                @case ('textarea') {
+                  <sd-textarea
+                    [label]="$any(item.config).label"
+                    [model]="''"
+                    [placeholder]="$any(item.config).placeholder">
+                  </sd-textarea>
+                }
+
+                <!-- DATE -->
+                @case ('date') {
+                  <sd-date
+                    [label]="$any(item.config).label"
+                    [model]="null">
+                  </sd-date>
+                }
+
+                <!-- UPLOAD FILE -->
+                @case ('upload-file') {
+                  <sd-upload-file
+                    [label]="$any(item.config).label"
+                    [model]="[]"
+                    [max]="$any(item.config).max"
+                    (filesChanged)="alert('Đã tải lên ' + $event.length + ' tệp')">
+                  </sd-upload-file>
+                }
+
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Source panel -->
+      @if (showSource() && items().length > 0) {
+        <div class="c-source-panel">
+          <div class="drawer-tab-nav">
+            <button [class.active]="activeSource() === 'html'" (click)="activeSource.set('html')">HTML</button>
+            <button [class.active]="activeSource() === 'ts'"   (click)="activeSource.set('ts')">TypeScript</button>
+          </div>
+          <sd-code-editor
+            [model]="activeSource() === 'html' ? generatedHtml() : generatedTs()"
+            [language]="activeSource() === 'html' ? 'html' : 'typescript'"
+            maxHeight="400px"
+            [viewed]="true">
+          </sd-code-editor>
+        </div>
+      }
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- SETTINGS DRAWER                                                        -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <sd-side-drawer
+    #settingsDrawer
+    [title]="'Thiết lập: ' + getTypeLabel(draft?.type)"
+    width="480px">
+
+    <div class="drawer-content">
+      <div class="drawer-tab-nav">
+        <button [class.active]="activeTab() === 'properties'" (click)="activeTab.set('properties')">Thuộc tính</button>
+        <button [class.active]="activeTab() === 'source'"     (click)="activeTab.set('source')">Mã nguồn</button>
+      </div>
+
+      @if (activeTab() === 'properties') {
+        <div class="drawer-body">
+
+          <!-- ── Bố cục (chung) ── -->
+          <div class="section-divider">Bố cục</div>
+          <sd-select size="sm" [label]="'Độ rộng (cột 1–12)'"
+            [items]="colSpanOptions" valueField="id" displayField="name"
+            [model]="draft?.colSpan" (modelChange)="draft && (draft.colSpan = $any($event))">
+          </sd-select>
+          <sd-select size="sm" [label]="'Chiều cao'"
+            [items]="heightOptions" valueField="id" displayField="name"
+            [model]="draft?.height" (modelChange)="draft && (draft.height = $any($event))">
+          </sd-select>
+
+          <!-- ══ BUTTON settings ══ -->
+          @if (draft?.type === 'button') {
+            <div class="section-divider">Nút bấm</div>
+            <sd-input size="sm" [label]="'title'" [model]="draftBtnCfg.title" (modelChange)="draftBtnCfg.title = $event"></sd-input>
+            <sd-select size="sm" [label]="'type'" [items]="btnTypeOptions" valueField="id" displayField="name"
+              [model]="draftBtnCfg.type" (modelChange)="draftBtnCfg.type = $any($event)"></sd-select>
+            <sd-select size="sm" [label]="'color'" [items]="btnColorOptions" valueField="id" displayField="name"
+              [model]="draftBtnCfg.color" (modelChange)="draftBtnCfg.color = $any($event)"></sd-select>
+            <sd-select size="sm" [label]="'size'" [items]="btnSizeOptions" valueField="id" displayField="name"
+              [model]="draftBtnCfg.size" (modelChange)="draftBtnCfg.size = $any($event)"></sd-select>
+            <sd-input size="sm" [label]="'prefixIcon'" [model]="draftBtnCfg.prefixIcon" (modelChange)="draftBtnCfg.prefixIcon = $event" placeholder="vd: save, add"></sd-input>
+            <sd-input size="sm" [label]="'suffixIcon'" [model]="draftBtnCfg.suffixIcon" (modelChange)="draftBtnCfg.suffixIcon = $event" placeholder="vd: arrow_forward"></sd-input>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">disabled</span>
+                <span class="config-item__desc">Vô hiệu hóa nút</span>
+              </div>
+              <sd-switch [model]="draftBtnCfg.disabled" (modelChange)="draftBtnCfg.disabled = $any($event)" size="sm"></sd-switch>
+            </div>
+          }
+
+          <!-- ══ TABLE settings ══ -->
+          @if (draft?.type === 'table') {
+            <div class="section-divider">Bảng dữ liệu</div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">paginate</span>
+                <span class="config-item__desc">Hiển thị phân trang</span>
+              </div>
+              <sd-switch [model]="draftTblCfg.showPaginate" (modelChange)="draftTblCfg.showPaginate = $any($event)" size="sm"></sd-switch>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">reload</span>
+                <span class="config-item__desc">Nút tải lại dữ liệu</span>
+              </div>
+              <sd-switch [model]="draftTblCfg.showReload" (modelChange)="draftTblCfg.showReload = $any($event)" size="sm"></sd-switch>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">config</span>
+                <span class="config-item__desc">Nút thiết lập cột hiển thị</span>
+              </div>
+              <sd-switch [model]="draftTblCfg.showConfig" (modelChange)="draftTblCfg.showConfig = $any($event)" size="sm"></sd-switch>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">selector</span>
+                <span class="config-item__desc">Chọn nhiều dòng (checkbox)</span>
+              </div>
+              <sd-switch [model]="draftTblCfg.showSelector" (modelChange)="draftTblCfg.showSelector = $any($event)" size="sm"></sd-switch>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">export</span>
+                <span class="config-item__desc">Xuất dữ liệu ra Excel</span>
+              </div>
+              <sd-switch [model]="draftTblCfg.showExport" (modelChange)="draftTblCfg.showExport = $any($event)" size="sm"></sd-switch>
+            </div>
+          }
+
+          <!-- ══ SECTION settings ══ -->
+          @if (draft?.type === 'section') {
+            <div class="section-divider">Khung Section</div>
+            <sd-input size="sm" [label]="'title'" [model]="draftSecCfg.title" (modelChange)="draftSecCfg.title = $event"></sd-input>
+            <sd-input size="sm" [label]="'icon'"  [model]="draftSecCfg.icon"  (modelChange)="draftSecCfg.icon = $event" placeholder="vd: info, person, description"></sd-input>
+            <sd-input size="sm" [label]="'subTitle'" [model]="draftSecCfg.subTitle" (modelChange)="draftSecCfg.subTitle = $event"></sd-input>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">collapsable</span>
+                <span class="config-item__desc">Cho phép thu gọn / mở rộng</span>
+              </div>
+              <sd-switch [model]="draftSecCfg.collapsable" (modelChange)="draftSecCfg.collapsable = $any($event)" size="sm"></sd-switch>
+            </div>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">noPaddingBody</span>
+                <span class="config-item__desc">Bỏ padding — luôn bật khi có form items</span>
+              </div>
+              <sd-switch [model]="draftSecCfg.noPaddingBody" (modelChange)="draftSecCfg.noPaddingBody = $any($event)" size="sm"></sd-switch>
+            </div>
+
+            <!-- Section inner items -->
+            <div class="section-divider">Form items bên trong (6 cột)</div>
+            <div class="c-chips-row">
+              @for (si of draftSecCfg.items; track si.id) {
+                <div class="c-chip" [class.c-chip--active]="draftSectionEditId === si.id"
+                  (click)="toggleSectionEdit(si.id)">
+                  <span>{{ si.label }}</span>
+                  <button class="c-chip-remove" (click)="$event.stopPropagation(); removeDraftSectionItem(si.id)">
+                    <span class="material-symbols-outlined">close</span>
+                  </button>
+                </div>
+              }
+              <div class="c-chip-add-group">
+                @for (ft of formTypeOptions; track ft.id) {
+                  <button class="c-chip c-chip--add" (click)="addDraftSectionItem(ft.id)">
+                    <span class="material-symbols-outlined">add</span>{{ ft.name }}
+                  </button>
+                }
+              </div>
+            </div>
+
+            @if (draftSecEditItem) {
+              <div class="c-edit-panel">
+                <sd-input size="sm" [label]="'label'" [model]="draftSecEditItem.label" (modelChange)="draftSecEditItem.label = $event"></sd-input>
+                <sd-input size="sm" [label]="'placeholder'" [model]="draftSecEditItem.placeholder" (modelChange)="draftSecEditItem.placeholder = $event"></sd-input>
+                <sd-select size="sm" [label]="'Độ rộng (cột 1–6)'" [items]="colSpan6Options" valueField="id" displayField="name"
+                  [model]="draftSecEditItem.colSpan" (modelChange)="draftSecEditItem.colSpan = $any($event)"></sd-select>
+                <div class="config-item">
+                  <div class="config-item__label">
+                    <span class="config-item__title">required</span>
+                    <span class="config-item__desc">Bắt buộc nhập</span>
+                  </div>
+                  <sd-switch [model]="draftSecEditItem.required" (modelChange)="draftSecEditItem.required = $any($event)" size="sm"></sd-switch>
+                </div>
+              </div>
+            }
+          }
+
+          <!-- ══ INPUT settings ══ -->
+          @if (draft?.type === 'input') {
+            <div class="section-divider">Ô nhập liệu</div>
+            <sd-input size="sm" [label]="'label'"       [model]="draftInpCfg.label"       (modelChange)="draftInpCfg.label = $event"></sd-input>
+            <sd-input size="sm" [label]="'placeholder'" [model]="draftInpCfg.placeholder" (modelChange)="draftInpCfg.placeholder = $event"></sd-input>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">required</span>
+                <span class="config-item__desc">Bắt buộc nhập</span>
+              </div>
+              <sd-switch [model]="draftInpCfg.required" (modelChange)="draftInpCfg.required = $any($event)" size="sm"></sd-switch>
+            </div>
+          }
+
+          <!-- ══ SELECT settings ══ -->
+          @if (draft?.type === 'select') {
+            <div class="section-divider">Dropdown chọn</div>
+            <sd-input size="sm" [label]="'label'" [model]="draftSelCfg.label" (modelChange)="draftSelCfg.label = $event"></sd-input>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">required</span>
+                <span class="config-item__desc">Bắt buộc chọn</span>
+              </div>
+              <sd-switch [model]="draftSelCfg.required" (modelChange)="draftSelCfg.required = $any($event)" size="sm"></sd-switch>
+            </div>
+          }
+
+          <!-- ══ TEXTAREA settings ══ -->
+          @if (draft?.type === 'textarea') {
+            <div class="section-divider">Textarea</div>
+            <sd-input size="sm" [label]="'label'"       [model]="draftTaCfg.label"       (modelChange)="draftTaCfg.label = $event"></sd-input>
+            <sd-input size="sm" [label]="'placeholder'" [model]="draftTaCfg.placeholder" (modelChange)="draftTaCfg.placeholder = $event"></sd-input>
+            <sd-input size="sm" [label]="'rows (số dòng)'" [model]="'' + draftTaCfg.rows" (modelChange)="draftTaCfg.rows = +$event"></sd-input>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">required</span>
+                <span class="config-item__desc">Bắt buộc nhập</span>
+              </div>
+              <sd-switch [model]="draftTaCfg.required" (modelChange)="draftTaCfg.required = $any($event)" size="sm"></sd-switch>
+            </div>
+          }
+
+          <!-- ══ DATE settings ══ -->
+          @if (draft?.type === 'date') {
+            <div class="section-divider">Chọn ngày</div>
+            <sd-input size="sm" [label]="'label'" [model]="draftDtCfg.label" (modelChange)="draftDtCfg.label = $event"></sd-input>
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">required</span>
+                <span class="config-item__desc">Bắt buộc chọn ngày</span>
+              </div>
+              <sd-switch [model]="draftDtCfg.required" (modelChange)="draftDtCfg.required = $any($event)" size="sm"></sd-switch>
+            </div>
+          }
+
+          <!-- ══ UPLOAD FILE settings ══ -->
+          @if (draft?.type === 'upload-file') {
+            <div class="section-divider">Tải tệp lên</div>
+            <sd-input size="sm" [label]="'label'" [model]="draftUplCfg.label" (modelChange)="draftUplCfg.label = $event"></sd-input>
+            <sd-input size="sm" [label]="'max (số tệp tối đa)'" [model]="'' + draftUplCfg.max" (modelChange)="draftUplCfg.max = +$event" placeholder="vd: 1, 5, 10"></sd-input>
+          }
+
+        </div>
+      }
+
+      @if (activeTab() === 'source') {
+        <div class="drawer-body drawer-body--code">
+          <sd-code-editor [model]="getItemCode(draft)" language="html" [viewed]="true"></sd-code-editor>
+        </div>
+      }
+    </div>
+
+    <div sdFooter class="drawer-footer">
+      <sd-button title="Hủy"     type="light" (click)="cancelSettings()"></sd-button>
+      <sd-button title="Áp dụng" type="fill"  color="primary" (click)="applySettings()"></sd-button>
+    </div>
+
+  </sd-side-drawer>
+
+</sd-page>

@@ -19,7 +19,7 @@ bootstrapApplication(AppComponent, {
     {
       provide: SD_CORE_CONFIGURATION,
       useValue: {
-        licenseKey: 'Nzg0MTY2NDQ0c2lnbmVk',
+        licenseKey: 'OTYyMDUwNzg2c2lnbmVk',
       },
     },
     { provide: SD_AUTH_CONFIGURATION, useClass: AuthConfiguration },

@@ -1,0 +1,75 @@
+<sd-page title="sd-table — Column" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="d-flex flex-column gap-12">
+            @for (item of propertyItems; track item.title) {
+              <div class="config-item">
+                <div class="config-item__label">
+                  <span class="config-item__title">{{ item.title }}</span>
+                  <span class="config-item__desc">{{ item.description }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        </sd-section>
+      </div>
+
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+          <sd-section title="Xem trước" icon="visibility">
+            <div class="preview-note">
+              Header cột đầu tiên dùng <strong>custom title</strong>. Cột liên hệ và trạng thái dùng <strong>custom cell</strong>.
+            </div>
+
+            <div style="height: 520px; overflow: auto;">
+              @if (tableOption(); as option) {
+                <sd-table [option]="option"></sd-table>
+              }
+            </div>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <sd-code-editor [model]="columnSampleCode" language="typescript" maxHeight="480px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #employeeTitleTpl>
+    <div class="custom-title">
+      <span class="custom-title__badge" aria-hidden="true">
+        <span class="custom-title__icon-bar"></span>
+        <span class="custom-title__icon-bar custom-title__icon-bar--short"></span>
+        <span class="custom-title__icon-bar"></span>
+      </span>
+      <div class="custom-title__content">
+        <div class="custom-title__label">Nhân viên</div>
+        <div class="custom-title__sub">Custom title with accent badge</div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #contactCellTpl let-item="item">
+    <div class="contact-cell">
+      <div class="contact-cell__head">
+        <span class="contact-cell__avatar">{{ item.fullName.slice(0, 1) }}</span>
+        <div class="contact-cell__summary">
+          <div class="contact-cell__name">{{ item.fullName }}</div>
+          <div class="contact-cell__meta">{{ item.department }} • {{ item.level }}</div>
+        </div>
+      </div>
+      <div class="contact-cell__footer">
+        <span class="contact-chip contact-chip--mail">{{ item.email }}</span>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #statusCellTpl let-item="item">
+    <span class="status-pill" [class.status-pill--active]="item.isActive" [class.status-pill--paused]="!item.isActive">
+      {{ item.isActive ? 'Hoạt động' : 'Tạm ngừng' }}
+    </span>
+  </ng-template>
+</sd-page>

@@ -60,6 +60,7 @@ export class MainComponent {
           title: 'Table',
           children: [
             { path: '/components/table/basic', title: 'Cơ bản' },
+            { path: '/components/table/column', title: 'Column & Custom' },
             { path: '/components/table/filter', title: 'Bộ lọc' },
           ],
         },

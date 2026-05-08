@@ -50,6 +50,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Copy index.html to 404.html for SPA routing
+        run: cp ${{ steps.build-output.outputs.path }}/index.html ${{ steps.build-output.outputs.path }}/404.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

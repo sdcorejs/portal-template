@@ -59,6 +59,10 @@ export const componentsRoutes: Routes = [
             loadComponent: () => import('./table/basic/basic.component').then(m => m.TableBasicComponent),
           },
           {
+            path: 'column',
+            loadComponent: () => import('./table/column/column.component').then(m => m.TableColumnComponent),
+          },
+          {
             path: 'filter',
             loadComponent: () => import('./table/filter/filter.component').then(m => m.TableFilterComponent),
           },

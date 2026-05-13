@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(xargs grep:*)",
-      "Read(//c/Users/nghiatt15_onemount/Documents/mh/lib-core-angular/**)"
-    ]
-  }
-}

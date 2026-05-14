@@ -11,11 +11,14 @@ import {
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 import { AuthConfiguration, LayoutConfiguration, PermissionConfiguration } from './app/configurations';
+import { importProvidersFrom } from '@angular/core';
+import { SdApiModule } from '@sd-angular/core/services';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes, withComponentInputBinding(), withRouterConfig({ onSameUrlNavigation: 'reload' })),
     provideHttpClient(withInterceptors([SdKeycloakInterceptor])),
+    importProvidersFrom(SdApiModule),
     {
       provide: SD_CORE_CONFIGURATION,
       useValue: {

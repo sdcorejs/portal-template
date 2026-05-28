@@ -84,11 +84,11 @@ export class MainComponent {
           ],
         },
         {
-          path: '/components/anchor-v2',
-          title: 'Anchor V2',
+          path: '/components/anchor',
+          title: 'Anchor',
           children: [
-            { path: '/components/anchor-v2/basic', title: 'Cơ bản' },
-            { path: '/components/anchor-v2/with-section', title: 'Với sd-section' },
+            { path: '/components/anchor/basic', title: 'Cơ bản' },
+            { path: '/components/anchor/with-section', title: 'Với sd-section' },
           ],
         },
       ],

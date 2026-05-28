@@ -9,7 +9,7 @@
             <!-- HƯỚNG DẪN SỬ DỤNG -->
             <div class="config-item">
               <div class="c-tip c-tip--warn">
-                <strong>⚠️ Lưu ý bắt buộc:</strong> sd-anchor-v2 phải được bọc trong thẻ parent có chiều cao cụ thể (height: 700px, 100%, ...) để hoạt động đúng.
+                <strong>⚠️ Lưu ý bắt buộc:</strong> sd-anchor phải được bọc trong thẻ parent có chiều cao cụ thể (height: 700px, 100%, ...) để hoạt động đúng.
               </div>
             </div>
 
@@ -75,11 +75,11 @@
           <sd-section title="Xem Trước" icon="preview">
           <div class="demo-preview-container" [style.height]="containerHeight()">
             <div style="height: 100%">
-              <sd-anchor-v2
+              <sd-anchor
                 [sidebarWidth]="sidebarWidth()"
                 [ellipsis]="ellipsis()">
 
-                <sd-anchor-item-v2 
+                <sd-anchor-item 
                   [title]="'Giới thiệu sản phẩm'" 
                   [icon]="showIcons() ? 'info' : undefined">
                   <sd-section
@@ -88,16 +88,16 @@
                     subTitle="Tìm hiểu thêm về sản phẩm của chúng tôi"
                     [noPaddingBody]="noPaddingBody()">
                     <sd-section-item label="Mô tả" labelWidth="190px">
-                      sd-anchor-v2 kết hợp với sd-section tạo nên giao diện chuyên nghiệp cho tài liệu, hướng dẫn hoặc FAQ.
+                      sd-anchor kết hợp với sd-section tạo nên giao diện chuyên nghiệp cho tài liệu, hướng dẫn hoặc FAQ.
                     </sd-section-item>
                     <sd-section-item label="Lợi ích 1" labelWidth="190px">Dễ điều hướng giữa các phần khác nhau.</sd-section-item>
                     <sd-section-item label="Lợi ích 2" labelWidth="190px">Giao diện sạch, đồng nhất với hệ thống form.</sd-section-item>
                     <sd-section-item label="Lợi ích 3" labelWidth="190px">Tự động tracking phần hiện tại khi cuộn.</sd-section-item>
                     <sd-section-item label="Lợi ích 4" labelWidth="190px">Hỗ trợ nội dung có cấu trúc qua sd-section-item.</sd-section-item>
                   </sd-section>
-                </sd-anchor-item-v2>
+                </sd-anchor-item>
 
-                <sd-anchor-item-v2 
+                <sd-anchor-item 
                   [title]="'Hướng dẫn cài đặt'" 
                   [icon]="showIcons() ? 'download' : undefined">
                   <sd-section
@@ -110,9 +110,9 @@
                     <sd-section-item label="Bước 3: Cấu hình" labelWidth="190px">Mở ứng dụng và cấu hình các tùy chọn theo nhu cầu.</sd-section-item>
                     <sd-section-item label="Bước 4: Kích hoạt" labelWidth="190px">Nhập mã kích hoạt để hoàn tất triển khai.</sd-section-item>
                   </sd-section>
-                </sd-anchor-item-v2>
+                </sd-anchor-item>
 
-                <sd-anchor-item-v2 
+                <sd-anchor-item 
                   [title]="'Tính năng nâng cao'" 
                   [icon]="showIcons() ? 'star' : undefined">
                   <sd-section title="Tính năng nâng cao" icon="star" [noPaddingBody]="noPaddingBody()">
@@ -120,19 +120,19 @@
                     <sd-section-item label="Responsive" labelWidth="190px">Hiển thị tốt trên nhiều kích thước màn hình.</sd-section-item>
                     <sd-section-item label="Smooth scrolling" labelWidth="190px">Cuộn mượt đến section đích khi người dùng chọn.</sd-section-item>
                   </sd-section>
-                </sd-anchor-item-v2>
+                </sd-anchor-item>
 
-                <sd-anchor-item-v2 
+                <sd-anchor-item 
                   [title]="'FAQ & Hỗ trợ'" 
                   [icon]="showIcons() ? 'help' : undefined">
                   <sd-section title="FAQ & Hỗ trợ" icon="help" subTitle="Câu hỏi thường gặp" [noPaddingBody]="noPaddingBody()">
                     <sd-section-item label="Custom sidebar" labelWidth="190px">Dùng property <code>[sidebarWidth]="'300px'"</code> để thay đổi chiều rộng.</sd-section-item>
                     <sd-section-item label="Container height" labelWidth="190px">Bắt buộc có parent với height cụ thể để anchor hoạt động đúng.</sd-section-item>
-                    <sd-section-item label="Ẩn sidebar" labelWidth="190px">Sử dụng <code>[isHiddenAnchorList]="true"</code> để ẩn danh sách anchor.</sd-section-item>
+                    <sd-section-item label="Ẩn sidebar" labelWidth="190px">Sử dụng <code>[hideNav]="true"</code> để ẩn danh sách anchor.</sd-section-item>
                     <sd-section-item label="Hiển thị icon" labelWidth="190px">Truyền tên Material icon vào <code>[icon]="'star'"</code>.</sd-section-item>
                   </sd-section>
-                </sd-anchor-item-v2>
-              </sd-anchor-v2>
+                </sd-anchor-item>
+              </sd-anchor>
             </div>
           </div>
         </sd-section>

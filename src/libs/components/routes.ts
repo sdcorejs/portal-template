@@ -91,7 +91,7 @@ export const componentsRoutes: Routes = [
         ],
       },
       {
-        path: 'anchor-v2',
+        path: 'anchor',
         children: [
           {
             path: '',
@@ -100,11 +100,11 @@ export const componentsRoutes: Routes = [
           },
           {
             path: 'basic',
-            loadComponent: () => import('./anchor-v2/basic/basic.component').then(m => m.AnchorV2BasicComponent),
+            loadComponent: () => import('./anchor/basic/basic.component').then(m => m.AnchorBasicComponent),
           },
           {
             path: 'with-section',
-            loadComponent: () => import('./anchor-v2/with-section/with-section.component').then(m => m.AnchorV2WithSectionComponent),
+            loadComponent: () => import('./anchor/with-section/with-section.component').then(m => m.AnchorWithSectionComponent),
           },
         ],
       },

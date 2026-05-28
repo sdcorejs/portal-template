@@ -46,7 +46,6 @@ export class ChipDemoComponent {
   removable = signal<boolean>(true);
 
   sizeOptions = [
-    { id: 'xs', name: 'Extra Small' },
     { id: 'sm', name: 'Small' },
     { id: 'md', name: 'Medium' },
     { id: 'lg', name: 'Large' },

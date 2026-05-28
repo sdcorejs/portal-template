@@ -37,9 +37,8 @@ export class InputNumberDemoComponent {
   suffixMode = signal<'none' | 'icon' | 'text'>('text');
   suffixValue = signal<string>('VNĐ');
 
-  sizes: SdSize[] = ['xs', 'sm', 'md', 'lg'];
+  sizes: SdSize[] = ['sm', 'md', 'lg'];
   sizeOptions = [
-    { id: 'xs', name: 'Extra Small' },
     { id: 'sm', name: 'Small' },
     { id: 'md', name: 'Medium' },
     { id: 'lg', name: 'Large' },

@@ -1,12 +1,11 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
 
 @Component({
-  selector: 'app-anchor-v2',
+  selector: 'app-anchor',
   standalone: true,
-  imports: [RouterOutlet, SdPageComponent],
+  imports: [RouterOutlet],
   template: `<router-outlet></router-outlet>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnchorV2Component {}
+export class AnchorComponent {}

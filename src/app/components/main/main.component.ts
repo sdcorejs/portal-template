@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { SdLayoutComponent, SdLayoutMenu } from '@sd-angular/core/modules';
 import { SdTabRouterOutletComponent } from '@sd-angular/core/components';
+import { loadPortalConfig } from '../../configurations';
 @Component({
   selector: 'app-main',
-  imports: [SdLayoutComponent, RouterOutlet, SdTabRouterOutletComponent],
+  imports: [SdLayoutComponent, SdTabRouterOutletComponent],
   templateUrl: './main.component.html',
 })
 export class MainComponent {
+  // why: đọc localStorage tại constructor — đổi config xong user phải reload nên không cần signal phản ứng.
+  private portalConfig = loadPortalConfig();
+  useTabRouter = this.portalConfig.useTabRouter;
+
   menus: SdLayoutMenu[] = [
     {
       icon: 'school',
@@ -32,6 +36,10 @@ export class MainComponent {
             { path: '/instructions/coding-convention/scss', title: 'CSS/SCSS' },
             { path: '/instructions/coding-convention/typescript', title: 'TypeScript' },
           ],
+        },
+        {
+          path: '/instructions/portal-config',
+          title: 'Cấu hình Portal',
         },
       ],
     },

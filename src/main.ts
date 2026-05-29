@@ -10,9 +10,12 @@ import {
 } from '@sd-angular/core/modules';
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
-import { AuthConfiguration, LayoutConfiguration, PermissionConfiguration } from './app/configurations';
+import { AuthConfiguration, LayoutConfiguration, PermissionConfiguration, loadPortalConfig } from './app/configurations';
 import { importProvidersFrom } from '@angular/core';
 import { SdApiModule } from '@sd-angular/core/services';
+
+// why: load config từ localStorage trước khi bootstrap để cấu hình lib (format số, ngôn ngữ) áp dụng ngay.
+const portalConfig = loadPortalConfig();
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -23,6 +26,8 @@ bootstrapApplication(AppComponent, {
       provide: SD_CORE_CONFIGURATION,
       useValue: {
         licenseKey: 'OTYyMDUwNzg2c2lnbmVk',
+        format: { number: portalConfig.numberFormat },
+        language: portalConfig.language,
       },
     },
     { provide: SD_AUTH_CONFIGURATION, useClass: AuthConfiguration },

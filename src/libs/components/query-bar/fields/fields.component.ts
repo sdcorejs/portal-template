@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
 import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
+import { SdSearchReq } from '@sd-angular/core/forms/models';
 import { SdQueryBar, SdQueryField } from '@sd-angular/core/components/query-bar';
 import { SdSection } from '@sd-angular/core/components/section';
 import { SdPageComponent } from '@sd-angular/core/modules/layout';
@@ -37,7 +36,7 @@ interface OptionItem {
 })
 export class QueryBarFieldsComponent {
   pageDescription = signal(
-    'Đầy đủ 7 kind field của <sd-query-bar>: string, number, boolean, date, datetime, values (option tĩnh), lazy-values (option async). Mỗi kind có icon mặc định, operator set riêng, và UI value control phù hợp. Demo cũng minh hoạ chế độ simple (1 operator cố định) vs operators: true (full set).'
+    'Đầy đủ 7 type field của <sd-query-bar>: string, number, boolean, date, datetime, values (option tĩnh), lazy-values (option async). Mỗi type có icon mặc định, operator set riêng, và UI value control phù hợp. Demo cũng minh hoạ chế độ simple (1 operator cố định) vs operators: true (full set).'
   );
 
   departmentOptions: OptionItem[] = [
@@ -67,24 +66,25 @@ export class QueryBarFieldsComponent {
     { value: 'VT', display: 'Vũng Tàu' },
   ];
 
-  searchCities = (req: { search?: string }): Observable<OptionItem[]> => {
-    const term = (req.search ?? '').toLowerCase();
+  searchCities = async (req: SdSearchReq): Promise<OptionItem[]> => {
+    if (req.type === 'VALUE') {
+      const vals = Array.isArray(req.value) ? req.value : req.value !== undefined ? [req.value] : [];
+      return this.cityPool.filter(c => vals.includes(c.value));
+    }
+    const term = (req.searchText ?? '').toLowerCase();
     const filtered = term ? this.cityPool.filter(c => c.display.toLowerCase().includes(term)) : this.cityPool;
-    return of(filtered).pipe(delay(150));
-  };
-
-  viewCities = async (values: unknown[]): Promise<OptionItem[]> => {
-    return this.cityPool.filter(c => values.includes(c.value));
+    await new Promise(r => setTimeout(r, 150));
+    return filtered;
   };
 
   fields: SdQueryField<Employee>[] = [
     // string simple — luôn CONTAIN
-    { kind: 'string', key: 'name', label: 'Họ tên (simple)' },
+    { type: 'string', key: 'name', label: 'Họ tên (simple)' },
     // string với full operators
-    { kind: 'string', key: 'email', label: 'Email (operators: true)', icon: 'alternate_email', operators: true },
+    { type: 'string', key: 'email', label: 'Email (operators: true)', icon: 'alternate_email', operators: true },
     // values — option tĩnh, full operators
     {
-      kind: 'values',
+      type: 'values',
       key: 'department',
       label: 'Phòng ban (full)',
       icon: 'apartment',
@@ -93,7 +93,7 @@ export class QueryBarFieldsComponent {
     },
     // values simple — luôn IN
     {
-      kind: 'values',
+      type: 'values',
       key: 'status',
       label: 'Trạng thái (simple)',
       icon: 'flag',
@@ -101,21 +101,20 @@ export class QueryBarFieldsComponent {
     },
     // lazy-values — async lookup
     {
-      kind: 'lazy-values',
+      type: 'lazy-values',
       key: 'city',
       label: 'Thành phố (lazy)',
       icon: 'location_city',
       operators: ['IN', 'NOT_IN'],
       option: {
         search: this.searchCities,
-        views: this.viewCities,
         valueField: 'value',
         displayField: 'display',
       },
     },
     // number — explicit operator subset
     {
-      kind: 'number',
+      type: 'number',
       key: 'salary',
       label: 'Lương',
       icon: 'payments',
@@ -125,11 +124,11 @@ export class QueryBarFieldsComponent {
       step: 1_000_000,
     },
     // boolean
-    { kind: 'boolean', key: 'active', label: 'Đang hoạt động', trueLabel: 'Có', falseLabel: 'Không' },
+    { type: 'boolean', key: 'active', label: 'Đang hoạt động', trueLabel: 'Có', falseLabel: 'Không' },
     // date
-    { kind: 'date', key: 'joinDate', label: 'Ngày vào', operators: true },
+    { type: 'date', key: 'joinDate', label: 'Ngày vào', operators: true },
     // datetime
-    { kind: 'datetime', key: 'lastLogin', label: 'Đăng nhập cuối', operators: true },
+    { type: 'datetime', key: 'lastLogin', label: 'Đăng nhập cuối', operators: true },
   ];
 
   filters = signal<Filter[]>([
@@ -141,41 +140,42 @@ export class QueryBarFieldsComponent {
   filtersJson = computed(() => JSON.stringify(this.filters(), null, 2));
 
   fieldsJson = `[
-  { kind: 'string', key: 'name', label: 'Họ tên (simple)' },
+  { type: 'string', key: 'name', label: 'Họ tên (simple)' },
   // → simple mode: không có operator dropdown, luôn CONTAIN
 
-  { kind: 'string', key: 'email', label: 'Email',
+  { type: 'string', key: 'email', label: 'Email',
     operators: true },
   // → operators: true → cho phép user chọn CONTAIN / EQUAL / NOT_EQUAL / START / END / NULL / NOT_NULL
 
-  { kind: 'values', key: 'department', label: 'Phòng ban',
+  { type: 'values', key: 'department', label: 'Phòng ban',
     operators: true,
     option: { items: DEPT_OPTIONS, valueField: 'value', displayField: 'display' } },
   // → values: option tĩnh, multi-select khi operator là IN / NOT_IN
 
-  { kind: 'values', key: 'status', label: 'Trạng thái',
+  { type: 'values', key: 'status', label: 'Trạng thái',
     option: { items: STATUS_OPTIONS, valueField: 'value', displayField: 'display' } },
   // → simple → luôn IN (multi-select), không có operator dropdown
 
-  { kind: 'lazy-values', key: 'city', label: 'Thành phố (lazy)',
+  { type: 'lazy-values', key: 'city', label: 'Thành phố (lazy)',
     operators: ['IN', 'NOT_IN'],
     option: {
-      search: (req) => api.searchCities(req.search),  // Observable<K[]> | Promise<K[]>
-      views:  (vals) => api.lookupCities(vals),       // resolve display label cho ID đã chọn
+      // req.type === 'SEARCH' → trả về list theo searchText
+      // req.type === 'VALUE'  → resolve display label cho ID đã chọn (chip render)
+      search: async (req) => api.searchCities(req),  // SdSearch<K> — Promise<K[]>
       valueField: 'value', displayField: 'display',
     } },
-  // → lazy-values: server-backed, searchable + paginated. views() resolve chip label cho selected IDs.
+  // → lazy-values: server-backed, searchable + paginated. Một callback search xử lý cả live query (SEARCH) lẫn resolve label (VALUE).
 
-  { kind: 'number', key: 'salary', label: 'Lương',
+  { type: 'number', key: 'salary', label: 'Lương',
     operators: ['EQUAL', 'GREATER_OR_EQUAL', 'LESS_OR_EQUAL', 'BETWEEN'],
     min: 0, max: 100_000_000, step: 1_000_000 },
 
-  { kind: 'boolean', key: 'active', label: 'Đang hoạt động',
+  { type: 'boolean', key: 'active', label: 'Đang hoạt động',
     trueLabel: 'Có', falseLabel: 'Không' },
 
-  { kind: 'date',     key: 'joinDate',  label: 'Ngày vào',        operators: true },
+  { type: 'date',     key: 'joinDate',  label: 'Ngày vào',        operators: true },
   // → date: mặc định BETWEEN (khoảng ngày). operators: true cho phép EQUAL/BEFORE/AFTER/BETWEEN/NULL.
 
-  { kind: 'datetime', key: 'lastLogin', label: 'Đăng nhập cuối', operators: true },
+  { type: 'datetime', key: 'lastLogin', label: 'Đăng nhập cuối', operators: true },
 ];`;
 }

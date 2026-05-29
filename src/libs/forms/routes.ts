@@ -13,6 +13,9 @@ export const formsRoutes: Routes = [
       { path: 'input-number', loadComponent: () => import('./input-number/input-number.component').then(m => m.InputNumberDemoComponent) },
       { path: 'chip', loadComponent: () => import('./chip/chip.component').then(m => m.ChipDemoComponent) },
       { path: 'chip-calendar', loadComponent: () => import('./chip-calendar/chip-calendar.component').then(m => m.ChipCalendarDemoComponent) },
+      { path: 'radio', loadComponent: () => import('./radio/radio.component').then(m => m.RadioDemoComponent) },
+      { path: 'checkbox', loadComponent: () => import('./checkbox/checkbox.component').then(m => m.CheckboxDemoComponent) },
+      { path: 'switch', loadComponent: () => import('./switch/switch.component').then(m => m.SwitchDemoComponent) },
     ]
   }
 ]

@@ -6,16 +6,21 @@
         <button type="button" class="btn-link" (click)="seedSample()">Seed 3 chip mẫu</button>
         <button type="button" class="btn-link btn-link--danger" (click)="clearAll()">Xoá hết</button>
         <span class="counter">apply: <strong>{{ applyCount() }}</strong> · gần nhất {{ lastApply() }}</span>
+        <span class="counter">
+          showSavedFilters: <sd-switch [(model)]="showSavedFilters" size="sm"></sd-switch>
+        </span>
       </div>
 
       <sd-query-bar
         [fields]="fields"
         [(filters)]="filters"
+        [showSavedFilters]="showSavedFilters()"
+        [savedFiltersKey]="savedFiltersKey"
         (apply)="onApply()">
       </sd-query-bar>
 
       <div class="tip mt-12">
-        💡 Bấm <strong>"+ Thêm bộ lọc"</strong> để chọn field. Chip có icon theo `kind`. Click chip để mở popover sửa value. Nút search bên phải fire <code>(apply)</code>.
+        💡 Bấm <strong>"+ Thêm bộ lọc"</strong> để chọn field. Chip có icon theo <code>type</code>. Click chip để mở popover sửa value. Nút search bên phải fire <code>(apply)</code>. Bật <strong>showSavedFilters</strong> để lưu/khôi phục bộ lọc đã đặt.
       </div>
     </sd-section>
 

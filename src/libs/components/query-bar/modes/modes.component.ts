@@ -58,17 +58,17 @@ export class QueryBarModesComponent {
   ];
 
   fields: SdQueryField<Employee>[] = [
-    { kind: 'string', key: 'name', label: 'Họ tên' },
-    { kind: 'string', key: 'email', label: 'Email', icon: 'alternate_email', operators: true },
+    { type: 'string', key: 'name', label: 'Họ tên' },
+    { type: 'string', key: 'email', label: 'Email', icon: 'alternate_email', operators: true },
     {
-      kind: 'values',
+      type: 'values',
       key: 'department',
       label: 'Phòng ban',
       icon: 'apartment',
       option: { items: this.departmentOptions, valueField: 'value', displayField: 'display' },
     },
     {
-      kind: 'number',
+      type: 'number',
       key: 'salary',
       label: 'Lương',
       icon: 'payments',
@@ -77,8 +77,8 @@ export class QueryBarModesComponent {
       max: 100_000_000,
       step: 1_000_000,
     },
-    { kind: 'date', key: 'joinDate', label: 'Ngày vào', operators: true },
-    { kind: 'boolean', key: 'active', label: 'Hoạt động' },
+    { type: 'date', key: 'joinDate', label: 'Ngày vào', operators: true },
+    { type: 'boolean', key: 'active', label: 'Hoạt động' },
   ];
 
   // Config signals

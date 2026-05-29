@@ -60,7 +60,7 @@ export class MainComponent {
           title: 'Table',
           children: [
             { path: '/components/table/basic', title: 'Cơ bản' },
-            { path: '/components/table/column', title: 'Column & Custom' },
+            { path: '/components/table/column', title: 'Tùy chỉnh cột' },
             { path: '/components/table/filter', title: 'Bộ lọc' },
             { path: '/components/table/index-column', title: 'Cột STT (index)' },
             { path: '/components/table/tree', title: 'Tree (cây)' },
@@ -137,6 +137,9 @@ export class MainComponent {
         { path: '/forms/input-number', title: 'Input Number' },
         { path: '/forms/chip', title: 'Chip' },
         { path: '/forms/chip-calendar', title: 'Chip Calendar' },
+        { path: '/forms/radio', title: 'Radio' },
+        { path: '/forms/checkbox', title: 'Checkbox' },
+        { path: '/forms/switch', title: 'Switch' },
         { path: '/forms/validation', title: 'Validation & hideInlineError' },
       ],
     },

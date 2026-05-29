@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
 import { SdQueryBar, SdQueryField } from '@sd-angular/core/components/query-bar';
 import { SdSection } from '@sd-angular/core/components/section';
+import { SdSwitch } from '@sd-angular/core/forms/switch';
 import { SdPageComponent } from '@sd-angular/core/modules/layout';
 import { Filter } from '@sd-angular/core/utilities/models';
 
@@ -19,7 +20,7 @@ interface Employee {
 @Component({
   selector: 'app-query-bar-basic',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdCodeEditor, SdPageComponent, SdQueryBar, SdSection],
+  imports: [CommonModule, FormsModule, SdCodeEditor, SdPageComponent, SdQueryBar, SdSection, SdSwitch],
   templateUrl: './basic.component.html',
   styleUrls: ['./basic.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,23 +44,23 @@ export class QueryBarBasicComponent {
   ];
 
   fields: SdQueryField<Employee>[] = [
-    { kind: 'string', key: 'name', label: 'Họ tên' },
+    { type: 'string', key: 'name', label: 'Họ tên' },
     {
-      kind: 'values',
+      type: 'values',
       key: 'department',
       label: 'Phòng ban',
       icon: 'apartment',
       option: { items: this.departmentOptions, valueField: 'value', displayField: 'display' },
     },
     {
-      kind: 'values',
+      type: 'values',
       key: 'status',
       label: 'Trạng thái',
       icon: 'flag',
       option: { items: this.statusOptions, valueField: 'value', displayField: 'display' },
     },
-    { kind: 'boolean', key: 'active', label: 'Hoạt động', trueLabel: 'Có', falseLabel: 'Không' },
-    { kind: 'date', key: 'joinDate', label: 'Ngày vào' },
+    { type: 'boolean', key: 'active', label: 'Hoạt động', trueLabel: 'Có', falseLabel: 'Không' },
+    { type: 'date', key: 'joinDate', label: 'Ngày vào' },
   ];
 
   filters = signal<Filter[]>([
@@ -69,6 +70,8 @@ export class QueryBarBasicComponent {
 
   applyCount = signal(0);
   lastApply = signal<string>('—');
+  showSavedFilters = signal<boolean>(true);
+  savedFiltersKey = 'query-bar-basic-demo';
 
   filtersJson = computed(() => JSON.stringify(this.filters(), null, 2));
 
@@ -99,17 +102,19 @@ import { Filter } from '@sd-angular/core/utilities/models';
     <sd-query-bar
       [fields]="fields"
       [(filters)]="filters"
+      [showSavedFilters]="true"
+      [savedFiltersKey]="'employee-list'"
       (apply)="onApply()">
     </sd-query-bar>
   \`,
 })
 export class EmployeeListComponent {
   fields: SdQueryField<Employee>[] = [
-    { kind: 'string', key: 'name', label: 'Họ tên' },
-    { kind: 'values', key: 'department', label: 'Phòng ban',
+    { type: 'string', key: 'name', label: 'Họ tên' },
+    { type: 'values', key: 'department', label: 'Phòng ban',
       option: { items: DEPT_OPTIONS, valueField: 'value', displayField: 'display' } },
-    { kind: 'boolean', key: 'active', label: 'Hoạt động' },
-    { kind: 'date', key: 'joinDate', label: 'Ngày vào' },
+    { type: 'boolean', key: 'active', label: 'Hoạt động' },
+    { type: 'date', key: 'joinDate', label: 'Ngày vào' },
   ];
 
   filters = signal<Filter[]>([]);

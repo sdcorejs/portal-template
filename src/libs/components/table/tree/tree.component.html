@@ -1,0 +1,85 @@
+<sd-page title="sd-table — Tree (cây)" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+
+      <!-- CỘT TRÁI: THUỘC TÍNH -->
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="d-flex flex-column gap-12">
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">tree.maxDepth</span>
+                <span class="config-item__desc">Giới hạn độ sâu cây — node sâu hơn sẽ không render con</span>
+              </div>
+              <sd-input-number [(model)]="maxDepth" [min]="1" [max]="10"></sd-input-number>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">tree.defaultExpanded</span>
+                <span class="config-item__desc">false | true | số cấp mở sẵn (vd 1 = mở cấp 1)</span>
+              </div>
+              <sd-select [items]="defaultExpandedOptions" valueField="id" displayField="name" [(model)]="defaultExpandedMode" size="sm"></sd-select>
+            </div>
+
+            @if (defaultExpandedMode() === 'level') {
+              <div class="config-item">
+                <div class="config-item__label">
+                  <span class="config-item__title">expandLevel</span>
+                  <span class="config-item__desc">Mở tới cấp N (1 = chỉ mở root, 2 = mở thêm cấp 2)</span>
+                </div>
+                <sd-input-number [(model)]="expandLevel" [min]="0" [max]="5"></sd-input-number>
+              </div>
+            }
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">tree.indentSize</span>
+                <span class="config-item__desc">Pixel thụt vào mỗi cấp (mặc định 20)</span>
+              </div>
+              <sd-input-number [(model)]="indentSize" [min]="0" [max]="60"></sd-input-number>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">index.enabled</span>
+                <span class="config-item__desc">Bật cột STT — chỉ đánh số trên root rows</span>
+              </div>
+              <sd-switch [(model)]="showIndex" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">selector.visible</span>
+                <span class="config-item__desc">Checkbox theo dòng — bao gồm cả node con</span>
+              </div>
+              <sd-switch [(model)]="showSelector" size="sm"></sd-switch>
+            </div>
+
+            <div class="hint-box">
+              📋 Dữ liệu: <strong>{{ rootCount() }}</strong> hạng mục gốc, mỗi mục có 2–4 con. Một số node có cấp 3 — đổi <code>maxDepth</code> để xác minh.<br/>
+              🌳 Bấm icon ▸/▾ ở cột đầu để mở/đóng từng node.
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <!-- CỘT PHẢI: XEM TRƯỚC + MÃ NGUỒN -->
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+          <sd-section title="Xem trước" icon="visibility">
+            <div style="height: 540px; overflow: auto;">
+              <sd-table [option]="tableOption()"></sd-table>
+            </div>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <sd-code-editor [model]="tsCode()" language="typescript" maxHeight="520px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</sd-page>

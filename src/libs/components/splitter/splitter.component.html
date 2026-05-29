@@ -1,0 +1,162 @@
+<sd-page title="sd-splitter — Bố cục panel co dãn" [description]="pageDescription()">
+  <div class="demo-page-body">
+
+    <!-- 1. Basic horizontal -->
+    <sd-section title="1. Cơ bản — Horizontal, 2 panel flex 1:1" icon="splitscreen" class="mb-16">
+      <div class="splitter-frame">
+        <sd-splitter orientation="horizontal">
+          <sd-splitter-panel size="1">
+            <div class="panel-body bg-blue">Left (flex 1)</div>
+          </sd-splitter-panel>
+          <sd-splitter-panel size="1">
+            <div class="panel-body bg-green">Right (flex 1)</div>
+          </sd-splitter-panel>
+        </sd-splitter>
+      </div>
+      <sd-code-editor [model]="basicCode" language="html" maxHeight="160px" [viewed]="true"></sd-code-editor>
+    </sd-section>
+
+    <!-- 2. Mix px + flex -->
+    <sd-section title="2. Mix px + flex — Sidebar 250px (min 100, max 400) + main co dãn" icon="view_quilt" class="mb-16">
+      <div class="splitter-frame">
+        <sd-splitter orientation="horizontal">
+          <sd-splitter-panel panelId="sidebar" size="250" unit="px" minSize="100" maxSize="400">
+            <div class="panel-body bg-purple">
+              Sidebar — 250px<br />
+              <small>min 100, max 400</small>
+            </div>
+          </sd-splitter-panel>
+          <sd-splitter-panel size="1">
+            <div class="panel-body bg-amber">Main (flex)</div>
+          </sd-splitter-panel>
+        </sd-splitter>
+      </div>
+      <sd-code-editor [model]="mixCode" language="html" maxHeight="180px" [viewed]="true"></sd-code-editor>
+    </sd-section>
+
+    <!-- 3. Vertical -->
+    <sd-section title="3. Vertical — Top 2 / Bottom 1" icon="vertical_split" class="mb-16">
+      <div class="splitter-frame">
+        <sd-splitter orientation="vertical">
+          <sd-splitter-panel size="2">
+            <div class="panel-body bg-blue">Top (flex 2)</div>
+          </sd-splitter-panel>
+          <sd-splitter-panel size="1">
+            <div class="panel-body bg-green">Bottom (flex 1)</div>
+          </sd-splitter-panel>
+        </sd-splitter>
+      </div>
+    </sd-section>
+
+    <!-- 4. Nested IDE layout -->
+    <sd-section title="4. Nested — IDE layout: sidebar + editor + terminal" icon="dashboard_customize" class="mb-16">
+      <div class="splitter-frame splitter-frame--tall">
+        <sd-splitter orientation="horizontal">
+          <sd-splitter-panel panelId="ide-sidebar" size="200" unit="px" minSize="100" collapsible>
+            <div class="panel-body bg-purple">File Explorer</div>
+          </sd-splitter-panel>
+          <sd-splitter-panel size="1">
+            <sd-splitter orientation="vertical">
+              <sd-splitter-panel size="2">
+                <div class="panel-body bg-amber">Editor</div>
+              </sd-splitter-panel>
+              <sd-splitter-panel panelId="ide-output" size="1" minSize="0.2" collapsible>
+                <div class="panel-body bg-blue">Output / Terminal</div>
+              </sd-splitter-panel>
+            </sd-splitter>
+          </sd-splitter-panel>
+        </sd-splitter>
+      </div>
+      <sd-code-editor [model]="nestedCode" language="html" maxHeight="240px" [viewed]="true"></sd-code-editor>
+    </sd-section>
+
+    <!-- 5. Imperative API -->
+    <sd-section title="5. Imperative API + collapsible panels" icon="touch_app" class="mb-16">
+      <div class="toolbar">
+        <sd-button title="Toggle sidebar" size="sm" (click)="toggleSidebar()"></sd-button>
+        <sd-button title="Sidebar 150px" size="sm" type="outline" (click)="resizeSidebar(150)"></sd-button>
+        <sd-button title="Sidebar 300px" size="sm" type="outline" (click)="resizeSidebar(300)"></sd-button>
+        <sd-button title="Expand all" size="sm" type="outline" (click)="expandAll()"></sd-button>
+        <sd-button title="Reset layout" size="sm" type="outline" (click)="resetLayout()"></sd-button>
+      </div>
+      <div class="splitter-frame">
+        <sd-splitter #apiSplitter orientation="horizontal" [snapThreshold]="0.4">
+          <sd-splitter-panel panelId="sidebar" size="220" unit="px" minSize="80" maxSize="500" collapsible>
+            <div class="panel-body bg-purple">Sidebar (collapsible)</div>
+          </sd-splitter-panel>
+          <sd-splitter-panel size="2">
+            <div class="panel-body bg-amber">Content (flex 2)</div>
+          </sd-splitter-panel>
+          <sd-splitter-panel panelId="detail" size="1" minSize="0.3" collapsible>
+            <div class="panel-body bg-blue">Detail (collapsible)</div>
+          </sd-splitter-panel>
+        </sd-splitter>
+      </div>
+      <p class="hint">💡 Kéo Sidebar/Detail xuống dưới 40% min → snap collapse. Double-click handle để toggle.</p>
+      <sd-code-editor [model]="apiCode" language="typescript" maxHeight="320px" [viewed]="true"></sd-code-editor>
+    </sd-section>
+
+    <!-- 6. Persistence -->
+    <sd-section title="6. Lưu layout vào localStorage (storageKey)" icon="save" class="mb-16">
+      <div class="toolbar">
+        <sd-button title="Clear storage + reload" size="sm" type="outline" color="error" (click)="clearStorage()"></sd-button>
+      </div>
+      <p class="hint">📦 Layout lưu vào <code>localStorage["portal-template-splitter-demo"]</code>. Refresh trang → layout giữ nguyên.</p>
+      <div class="splitter-frame">
+        <sd-splitter
+          orientation="horizontal"
+          storageKey="portal-template-splitter-demo"
+          (layoutChange)="onStorageLayoutChange($event)">
+          <sd-splitter-panel panelId="a" size="1">
+            <div class="panel-body bg-green">Panel A</div>
+          </sd-splitter-panel>
+          <sd-splitter-panel panelId="b" size="2">
+            <div class="panel-body bg-amber">Panel B</div>
+          </sd-splitter-panel>
+          <sd-splitter-panel panelId="c" size="1">
+            <div class="panel-body bg-purple">Panel C</div>
+          </sd-splitter-panel>
+        </sd-splitter>
+      </div>
+      @if (storageLayout(); as state) {
+        <details class="layout-state">
+          <summary>Layout state hiện tại (emit qua <code>(layoutChange)</code>)</summary>
+          <pre>{{ state | json }}</pre>
+        </details>
+      }
+      <sd-code-editor [model]="storageCode" language="html" maxHeight="200px" [viewed]="true"></sd-code-editor>
+    </sd-section>
+
+    <!-- 7. Disabled -->
+    <sd-section title="7. Disabled — Không kéo được" icon="lock" class="mb-16">
+      <div class="splitter-frame">
+        <sd-splitter orientation="horizontal" [disabled]="true">
+          <sd-splitter-panel size="1">
+            <div class="panel-body bg-blue">Left (disabled)</div>
+          </sd-splitter-panel>
+          <sd-splitter-panel size="1">
+            <div class="panel-body bg-green">Right (disabled)</div>
+          </sd-splitter-panel>
+        </sd-splitter>
+      </div>
+    </sd-section>
+
+    <!-- 8. Per-panel resizable -->
+    <sd-section title="8. Per-panel resizable=false — Panel giữa cố định, 2 handle kề bị disable" icon="grid_view" class="mb-16">
+      <div class="splitter-frame">
+        <sd-splitter orientation="horizontal">
+          <sd-splitter-panel size="1">
+            <div class="panel-body bg-blue">Left</div>
+          </sd-splitter-panel>
+          <sd-splitter-panel size="1" [resizable]="false">
+            <div class="panel-body bg-purple">Middle (resizable=false)</div>
+          </sd-splitter-panel>
+          <sd-splitter-panel size="1">
+            <div class="panel-body bg-green">Right</div>
+          </sd-splitter-panel>
+        </sd-splitter>
+      </div>
+    </sd-section>
+
+  </div>
+</sd-page>

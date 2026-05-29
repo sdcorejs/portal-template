@@ -1,0 +1,24 @@
+<sd-page title="sd-query-bar — 7 kind field" [description]="pageDescription()">
+  <div class="demo-page-body">
+
+    <sd-section title="Component (9 fields)" icon="filter_alt" class="mb-16">
+      <sd-query-bar
+        [fields]="fields"
+        [(filters)]="filters">
+      </sd-query-bar>
+
+      <div class="tip mt-12">
+        💡 Bấm <strong>"+ Thêm bộ lọc"</strong> để xem 9 field. Quan sát icon mặc định theo `kind`, UI value control khác nhau cho từng kind (multi-checkbox, range picker, date picker, lazy-loading list...).
+      </div>
+    </sd-section>
+
+    <sd-section title="filters() — sau khi thao tác" icon="data_object" class="mb-16">
+      <pre class="json">{{ filtersJson() }}</pre>
+    </sd-section>
+
+    <sd-section title="Cấu hình fields[] — 7 kind" icon="code" class="mb-16">
+      <sd-code-editor [model]="fieldsJson" language="typescript" maxHeight="600px" [viewed]="true"></sd-code-editor>
+    </sd-section>
+
+  </div>
+</sd-page>

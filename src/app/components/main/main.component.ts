@@ -62,6 +62,38 @@ export class MainComponent {
             { path: '/components/table/basic', title: 'Cơ bản' },
             { path: '/components/table/column', title: 'Column & Custom' },
             { path: '/components/table/filter', title: 'Bộ lọc' },
+            { path: '/components/table/index-column', title: 'Cột STT (index)' },
+            { path: '/components/table/tree', title: 'Tree (cây)' },
+          ],
+        },
+        {
+          path: '/components/preview-image',
+          title: 'Preview Image',
+        },
+        {
+          path: '/components/preview-pdf',
+          title: 'Preview PDF',
+        },
+        {
+          path: '/components/splitter',
+          title: 'Splitter',
+        },
+        {
+          path: '/components/query-bar',
+          title: 'Query Bar',
+          children: [
+            { path: '/components/query-bar/basic', title: 'Cơ bản' },
+            { path: '/components/query-bar/modes', title: 'Modes & Density' },
+            { path: '/components/query-bar/fields', title: '7 kind field' },
+          ],
+        },
+        {
+          path: '/components/modal',
+          title: 'Modal',
+          children: [
+            { path: '/components/modal/basic', title: 'Cơ bản' },
+            { path: '/components/modal/slots', title: 'Header / Footer slots' },
+            { path: '/components/modal/view-modes', title: 'View modes & Variants' },
           ],
         },
         {

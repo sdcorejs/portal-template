@@ -1,0 +1,139 @@
+:host {
+  display: block;
+  height: 100%;
+
+  .demo-page-body {
+    padding: 8px 4px;
+    background-color: #f1f5f9;
+    min-height: 100%;
+  }
+}
+
+.config-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+
+  sd-select,
+  sd-input {
+    width: 180px;
+    flex-shrink: 0;
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1e293b;
+    font-family: monospace;
+  }
+
+  &__desc {
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.4;
+  }
+}
+
+.file-input {
+  font-size: 11px;
+  width: 180px;
+  max-width: 180px;
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  padding: 8px 10px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 6px;
+  color: #065f46;
+
+  strong {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.preview-stage {
+  width: 100%;
+  height: 600px;
+  background: #1e293b;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+
+  sd-preview-pdf {
+    flex: 1;
+    display: block;
+    min-height: 0;
+  }
+}
+
+.modal-trigger {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .hint {
+    font-size: 11px;
+    color: #64748b;
+  }
+}
+
+.modal-preview-host {
+  width: 100%;
+  height: 100%;
+  min-height: 65vh;
+  display: flex;
+
+  sd-preview-pdf {
+    flex: 1;
+    display: block;
+  }
+}
+
+.event-log {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f8fafc;
+  padding: 10px 12px;
+  font-size: 12px;
+
+  &__title {
+    font-weight: 600;
+    font-size: 12px;
+    color: #1e293b;
+    margin-bottom: 6px;
+  }
+
+  .event-row {
+    display: flex;
+    gap: 6px;
+    color: #475569;
+    font-family: monospace;
+
+    span {
+      color: #0f172a;
+      font-weight: 600;
+    }
+  }
+}

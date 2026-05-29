@@ -1,0 +1,142 @@
+<sd-page title="sd-preview-image — Viewer ảnh" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+
+      <!-- CỘT TRÁI: THUỘC TÍNH -->
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="d-flex flex-column gap-12">
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">items</span>
+                <span class="config-item__desc">Bộ ảnh thử nghiệm (multi/single/empty/broken/mixed)</span>
+              </div>
+              <sd-select [items]="setOptions" valueField="id" displayField="name" [(model)]="imageSet" size="sm"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">thumbnailPosition</span>
+                <span class="config-item__desc">Vị trí dải thumbnail / dots / none</span>
+              </div>
+              <sd-select [items]="thumbOptions" valueField="id" displayField="name" [(model)]="thumbnailPosition" size="sm"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">theme</span>
+                <span class="config-item__desc">Bảng màu dark / light (flip qua [data-theme])</span>
+              </div>
+              <sd-select [items]="themeOptions" valueField="id" displayField="name" [(model)]="theme" size="sm"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">loop</span>
+                <span class="config-item__desc">Cuộn vòng khi đến ảnh cuối / đầu</span>
+              </div>
+              <sd-switch [(model)]="loop" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">showToolbar</span>
+                <span class="config-item__desc">Hiển thị thanh công cụ zoom/xoay/download</span>
+              </div>
+              <sd-switch [(model)]="showToolbar" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">zoomable</span>
+                <span class="config-item__desc">Cho phép phóng to / thu nhỏ (scroll + nút)</span>
+              </div>
+              <sd-switch [(model)]="zoomable" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">downloadable</span>
+                <span class="config-item__desc">Hiển thị nút tải về (emit (download))</span>
+              </div>
+              <sd-switch [(model)]="downloadable" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">title</span>
+                <span class="config-item__desc">Tiêu đề header (mặc định 'Xem ảnh')</span>
+              </div>
+              <sd-input [(model)]="titleOverride" size="sm"></sd-input>
+            </div>
+
+          </div>
+
+          <div class="event-log mt-12">
+            <div class="event-log__title">Sự kiện gần nhất</div>
+            <div class="event-row"><span>close:</span> {{ lastClose() }}</div>
+            <div class="event-row"><span>activeIndex:</span> {{ lastActiveIndex() }}</div>
+            <div class="event-row"><span>download:</span> {{ lastDownload() }}</div>
+            <div class="event-row"><span>imageError:</span> {{ lastError() }}</div>
+          </div>
+        </sd-section>
+      </div>
+
+      <!-- CỘT PHẢI: XEM TRƯỚC + MÃ NGUỒN -->
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+
+          <sd-section title="Xem trước (inline)" icon="visibility">
+            <div class="preview-stage">
+              <sd-preview-image
+                [items]="currentItems()"
+                [thumbnailPosition]="thumbnailPosition()"
+                [showToolbar]="showToolbar()"
+                [zoomable]="zoomable()"
+                [downloadable]="downloadable()"
+                [loop]="loop()"
+                [theme]="theme()"
+                [title]="currentTitle()"
+                (close)="onClose()"
+                (activeIndexChange)="onActiveIndex($event)"
+                (download)="onDownload($event)"
+                (imageError)="onError($event)">
+              </sd-preview-image>
+            </div>
+
+            <div class="modal-trigger">
+              <sd-button title="Mở trong modal (lightbox)" color="primary" (click)="openModal()"></sd-button>
+              <small class="hint">Consumer-wrapping: component không tự bọc modal — đặt vào &lt;sd-modal&gt; nếu cần.</small>
+            </div>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <sd-code-editor [model]="tsCode()" language="typescript" maxHeight="520px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</sd-page>
+
+<!-- Modal lightbox -->
+<sd-modal #previewModal title="Modal-wrapped preview" width="92vw" height="88vh" [disableBackdropClose]="false">
+  <div class="modal-preview-host">
+    <sd-preview-image
+      [items]="currentItems()"
+      [thumbnailPosition]="thumbnailPosition()"
+      [showToolbar]="showToolbar()"
+      [zoomable]="zoomable()"
+      [downloadable]="downloadable()"
+      [loop]="loop()"
+      [theme]="theme()"
+      [title]="currentTitle()"
+      (close)="closeModal()"
+      (activeIndexChange)="onActiveIndex($event)"
+      (download)="onDownload($event)"
+      (imageError)="onError($event)">
+    </sd-preview-image>
+  </div>
+</sd-modal>

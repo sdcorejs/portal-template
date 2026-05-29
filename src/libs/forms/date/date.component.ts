@@ -32,9 +32,8 @@ export class DateDemoComponent {
   min = signal<string>('');
   max = signal<string>('');
 
-  sizes: SdSize[] = ['xs', 'sm', 'md', 'lg'];
+  sizes: SdSize[] = ['sm', 'md', 'lg'];
   sizeOptions = [
-    { id: 'xs', name: 'Extra Small' },
     { id: 'sm', name: 'Small' },
     { id: 'md', name: 'Medium' },
     { id: 'lg', name: 'Large' },

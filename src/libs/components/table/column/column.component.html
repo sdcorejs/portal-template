@@ -1,26 +1,79 @@
-<sd-page title="sd-table — Column" [description]="pageDescription()">
+<sd-page title="sd-table — Tùy chỉnh cột" [description]="pageDescription()">
   <div class="demo-page-body">
     <div class="row row-sm mx-0">
+      <!-- CỘT TRÁI: BẬT/TẮT CUSTOM -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings">
-          <div class="d-flex flex-column gap-12">
-            @for (item of propertyItems; track item.title) {
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">{{ item.title }}</span>
-                  <span class="config-item__desc">{{ item.description }}</span>
-                </div>
+          <div class="demo-config-panel">
+            <div class="config-section-title">Cột Tên</div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">Custom title</span>
+                <span class="config-item__desc">Render header riêng qua <code>title.templateRef</code>, vẫn giữ <code>title</code> dạng text để export/config dùng.</span>
               </div>
-            }
+              <sd-switch [(model)]="customTitleName" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">Custom cell</span>
+                <span class="config-item__desc">Render thân ô bằng <code>cell.templateRef</code>, context nhận <code>{{ snippetCellContext }}</code>.</span>
+              </div>
+              <sd-switch [(model)]="customCellName" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">Copy</span>
+                <span class="config-item__desc">Bật <code>cell.copiable</code> để hiện nút copy nội dung cell khi hover.</span>
+              </div>
+              <sd-switch [(model)]="copyEnabled" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-section-title">Cột Ghi chú</div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">Truncate</span>
+                <span class="config-item__desc">Rút gọn nội dung dài qua <code>cell.truncate.enable</code>, kiểu hiển thị đầy đủ: <code>type: 'tooltip'</code> hoặc <code>'more'</code>.</span>
+              </div>
+              <sd-switch [(model)]="truncateEnabled" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-section-title">Cột Trạng thái</div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">Custom title</span>
+                <span class="config-item__desc">Header có icon nhấn mạnh trạng thái.</span>
+              </div>
+              <sd-switch [(model)]="customTitleStatus" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">Custom cell (switch)</span>
+                <span class="config-item__desc">Thay text mặc định bằng <code>sd-switch</code>: click để đổi <code>item.isActive</code> ngay trong bảng.</span>
+              </div>
+              <sd-switch [(model)]="customCellStatus" size="sm"></sd-switch>
+            </div>
           </div>
         </sd-section>
       </div>
 
+      <!-- CỘT PHẢI: XEM TRƯỚC + CODE -->
       <div class="col-md-8">
         <div class="d-flex flex-column gap-16">
           <sd-section title="Xem trước" icon="visibility">
             <div class="preview-note">
-              Header cột đầu tiên dùng <strong>custom title</strong>. Cột liên hệ và trạng thái dùng <strong>custom cell</strong>.
+              <strong>Cách custom cột sd-table:</strong>
+              <ul class="preview-note__list">
+                <li><strong>Custom title</strong> — đặt <code>title</code> dạng <code>ColumnTitleOption</code>: <code>{{ snippetTitleOption }}</code>. Field <code>title</code> vẫn giữ text gốc để export/config-column nhận dạng.</li>
+                <li><strong>Custom cell</strong> — đặt <code>cell.templateRef</code>. Template nhận context <code>let-item="item"</code>, <code>let-column="column"</code>, <code>let-autoId="autoId"</code>.</li>
+                <li><strong>Cell tương tác</strong> — đặt control (vd. <code>sd-switch</code>) trong cell template và emit event ra component để mutate item. Demo: cột Trạng thái bind <code>[model]="item.isActive"</code> + <code>(modelChange)</code>.</li>
+                <li><strong>Copy</strong> — <code>cell.copiable: true</code>. Truncate — <code>cell.truncate: {{ snippetTruncateOption }}</code>.</li>
+              </ul>
             </div>
 
             <div style="height: 520px; overflow: auto;">
@@ -30,46 +83,61 @@
             </div>
           </sd-section>
 
-          <sd-section title="Mã nguồn" icon="code">
-            <sd-code-editor [model]="columnSampleCode" language="typescript" maxHeight="480px" [viewed]="true"></sd-code-editor>
+          <sd-section title="Mã nguồn — Columns" icon="code">
+            <sd-code-editor [model]="configCode()" language="typescript" maxHeight="320px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+
+          <sd-section title="Mã nguồn — Templates" icon="code">
+            <sd-code-editor [model]="templateCode" language="html" maxHeight="360px" [viewed]="true"></sd-code-editor>
           </sd-section>
         </div>
       </div>
     </div>
   </div>
 
-  <ng-template #employeeTitleTpl>
+  <!-- ═══════════ TEMPLATES DÙNG CHO CUSTOM TITLE / CUSTOM CELL ═══════════ -->
+
+  <!-- Custom title cột Tên -->
+  <ng-template #nameTitleTpl>
     <div class="custom-title">
-      <span class="custom-title__badge" aria-hidden="true">
-        <span class="custom-title__icon-bar"></span>
-        <span class="custom-title__icon-bar custom-title__icon-bar--short"></span>
-        <span class="custom-title__icon-bar"></span>
-      </span>
+      <span class="custom-title__badge">N</span>
       <div class="custom-title__content">
-        <div class="custom-title__label">Nhân viên</div>
-        <div class="custom-title__sub">Custom title with accent badge</div>
+        <div class="custom-title__label">Tên</div>
+        <div class="custom-title__sub">Custom title</div>
       </div>
     </div>
   </ng-template>
 
-  <ng-template #contactCellTpl let-item="item">
-    <div class="contact-cell">
-      <div class="contact-cell__head">
-        <span class="contact-cell__avatar">{{ item.fullName.slice(0, 1) }}</span>
-        <div class="contact-cell__summary">
-          <div class="contact-cell__name">{{ item.fullName }}</div>
-          <div class="contact-cell__meta">{{ item.department }} • {{ item.level }}</div>
-        </div>
-      </div>
-      <div class="contact-cell__footer">
-        <span class="contact-chip contact-chip--mail">{{ item.email }}</span>
+  <!-- Custom cell cột Tên -->
+  <ng-template #nameCellTpl let-item="item">
+    <div class="name-cell">
+      <span class="name-cell__avatar">{{ item.fullName.slice(0, 1) }}</span>
+      <div class="name-cell__body">
+        <div class="name-cell__title">{{ item.fullName }}</div>
+        <div class="name-cell__sub">{{ item.email }}</div>
       </div>
     </div>
   </ng-template>
 
-  <ng-template #statusCellTpl let-item="item">
-    <span class="status-pill" [class.status-pill--active]="item.isActive" [class.status-pill--paused]="!item.isActive">
-      {{ item.isActive ? 'Hoạt động' : 'Tạm ngừng' }}
+  <!-- Custom title cột Trạng thái -->
+  <ng-template #statusTitleTpl>
+    <span class="status-title">
+      <span class="status-title__dot"></span>
+      Trạng thái
     </span>
+  </ng-template>
+
+  <!-- Custom cell cột Trạng thái: switch trigger trực tiếp -->
+  <ng-template #statusCellTpl let-item="item">
+    <div class="status-cell">
+      <sd-switch
+        [model]="item.isActive"
+        (modelChange)="toggleActive(item, $event)"
+        size="sm"
+      ></sd-switch>
+      <span class="status-cell__label" [class.status-cell__label--on]="item.isActive">
+        {{ item.isActive ? 'Hoạt động' : 'Tạm ngừng' }}
+      </span>
+    </div>
   </ng-template>
 </sd-page>

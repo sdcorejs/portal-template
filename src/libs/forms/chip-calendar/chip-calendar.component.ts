@@ -36,7 +36,7 @@ export class ChipCalendarDemoComponent {
 
   // Configuration signals
   label = signal<string>('Chọn các ngày');
-  modelValue = signal<string[]>(['2026/04/17', '2026/04/18', '2026/04/20']);
+  modelValue = signal<(string | number)[]>(['2026/04/17', '2026/04/18', '2026/04/20']);
   size = signal<SdSize>('md');
   required = signal<boolean>(false);
   minValue = signal<number>(0);
@@ -44,7 +44,6 @@ export class ChipCalendarDemoComponent {
   disabled = signal<boolean>(false);
 
   sizeOptions = [
-    { id: 'xs', name: 'Extra Small' },
     { id: 'sm', name: 'Small' },
     { id: 'md', name: 'Medium' },
     { id: 'lg', name: 'Large' },

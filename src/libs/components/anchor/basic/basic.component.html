@@ -9,7 +9,7 @@
             <!-- HƯỚNG DẪN SỬ DỤNG -->
             <div class="config-item">
               <div class="c-tip c-tip--warn">
-                <strong>⚠️ Lưu ý bắt buộc:</strong> sd-anchor-v2 phải được bọc trong thẻ parent có chiều cao cụ thể (height: 600px, 100%, ...) để hoạt động đúng.
+                <strong>⚠️ Lưu ý bắt buộc:</strong> sd-anchor phải được bọc trong thẻ parent có chiều cao cụ thể (height: 600px, 100%, ...) để hoạt động đúng.
               </div>
             </div>
 
@@ -51,18 +51,18 @@
 
             <div class="config-item">
               <div class="config-item__label">
-                <span class="config-item__title">isOverscroll</span>
+                <span class="config-item__title">overScroll</span>
                 <span class="config-item__desc">Cho phép cuộn vượt quá ranh giới component.</span>
               </div>
-              <sd-switch [label]="'Allow Overscroll'" [(model)]="isOverscroll"></sd-switch>
+              <sd-switch [label]="'Allow Overscroll'" [(model)]="overScroll"></sd-switch>
             </div>
 
             <div class="config-item">
               <div class="config-item__label">
-                <span class="config-item__title">isHiddenAnchorList</span>
+                <span class="config-item__title">hideNav</span>
                 <span class="config-item__desc">Ẩn hoàn toàn sidebar anchor list.</span>
               </div>
-              <sd-switch [label]="'Hide Anchor List'" [(model)]="isHiddenAnchorList"></sd-switch>
+              <sd-switch [label]="'Hide Anchor List'" [(model)]="hideNav"></sd-switch>
             </div>
           </div>
         </sd-section>
@@ -75,21 +75,21 @@
           <sd-section title="Xem Trước" icon="preview">
           <div class="demo-preview-container" [style.height]="containerHeight()">
             <div style="height: 100%">
-              <sd-anchor-v2
+              <sd-anchor
                 [sidebarWidth]="sidebarWidth()"
                 [ellipsis]="ellipsis()"
-                [isOverscroll]="isOverscroll()"
-                [isHiddenAnchorList]="isHiddenAnchorList()">
+                [overScroll]="overScroll()"
+                [hideNav]="hideNav()">
 
-                <sd-anchor-item-v2 [title]="'Giới thiệu'">
+                <sd-anchor-item [title]="'Giới thiệu'">
                   <div style="height: 600px; padding: 20px; background: #f5f5f5; border-bottom: 1px solid #ddd">
                     <h3>📚 Giới thiệu</h3>
-                    <p>sd-anchor-v2 là một component dùng để điều hướng các phần khác nhau trong một trang dài. Nó có một sidebar hiển thị danh sách các tiêu đề và tự động highlight phần hiện tại khi cuộn trang.</p>
+                    <p>sd-anchor là một component dùng để điều hướng các phần khác nhau trong một trang dài. Nó có một sidebar hiển thị danh sách các tiêu đề và tự động highlight phần hiện tại khi cuộn trang.</p>
                     <p><strong>Lưu ý quan trọng:</strong> Component này phải được bọc trong một thẻ parent có chiều cao cụ thể (height: 600px, 100%, ...) để hoạt động đúng.</p>
                   </div>
-                </sd-anchor-item-v2>
+                </sd-anchor-item>
 
-                <sd-anchor-item-v2 [title]="'Tính năng chính'" [icon]="'star'">
+                <sd-anchor-item [title]="'Tính năng chính'" [icon]="'star'">
                   <div style="height: 600px; padding: 20px; background: #f5f5f5; border-bottom: 1px solid #ddd">
                     <h3>⭐ Tính năng chính</h3>
                     <ul>
@@ -100,36 +100,36 @@
                       <li><strong>Dynamic Titles:</strong> Tiêu đề có thể cập nhật động</li>
                     </ul>
                   </div>
-                </sd-anchor-item-v2>
+                </sd-anchor-item>
 
-                <sd-anchor-item-v2 [title]="'Hướng dẫn sử dụng'" [icon]="'info'">
+                <sd-anchor-item [title]="'Hướng dẫn sử dụng'" [icon]="'info'">
                   <div style="height: 600px; padding: 20px; background: #f5f5f5; border-bottom: 1px solid #ddd">
                     <h3>📖 Hướng dẫn sử dụng</h3>
-                    <p><strong>Bước 1:</strong> Bọc sd-anchor-v2 trong một div có height cụ thể</p>
-                    <p><strong>Bước 2:</strong> Thêm các sd-anchor-item-v2 bên trong</p>
+                    <p><strong>Bước 1:</strong> Bọc sd-anchor trong một div có height cụ thể</p>
+                    <p><strong>Bước 2:</strong> Thêm các sd-anchor-item bên trong</p>
                     <p><strong>Bước 3:</strong> Mỗi item cần có [title] và các nội dung con</p>
-                    <p><strong>Bước 4:</strong> Tuỳ chỉnh sidebarWidth, ellipsis, isOverscroll theo nhu cầu</p>
+                    <p><strong>Bước 4:</strong> Tuỳ chỉnh sidebarWidth, ellipsis, overScroll theo nhu cầu</p>
                   </div>
-                </sd-anchor-item-v2>
+                </sd-anchor-item>
 
-                <sd-anchor-item-v2 [title]="'API & Properties'" [icon]="'code'">
+                <sd-anchor-item [title]="'API & Properties'" [icon]="'code'">
                   <div style="height: 600px; padding: 20px; background: #f5f5f5">
                     <h3>🔧 API & Properties</h3>
-                    <p><strong>sd-anchor-v2 Inputs:</strong></p>
+                    <p><strong>sd-anchor Inputs:</strong></p>
                     <ul>
                       <li>sidebarWidth: string (default: '200px')</li>
                       <li>ellipsis: boolean (default: false)</li>
-                      <li>isOverscroll: boolean (default: false)</li>
-                      <li>isHiddenAnchorList: boolean (default: false)</li>
+                      <li>overScroll: boolean (default: false)</li>
+                      <li>hideNav: boolean (default: false)</li>
                     </ul>
-                    <p><strong>sd-anchor-item-v2 Inputs:</strong></p>
+                    <p><strong>sd-anchor-item Inputs:</strong></p>
                     <ul>
                       <li>title: string (required)</li>
                       <li>icon: string (optional - Material icon name)</li>
                     </ul>
                   </div>
-                </sd-anchor-item-v2>
-              </sd-anchor-v2>
+                </sd-anchor-item>
+              </sd-anchor>
             </div>
           </div>
         </sd-section>

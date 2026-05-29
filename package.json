@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4200",
+    "start": "ng serve --port 2208",
     "test": "ng test",
     "plop:module": "npx plop module",
     "plop:entity": "npx plop entity",
@@ -20,7 +20,7 @@
     "lint": "ng lint"
   },
   "private": true,
-   "dependencies": {
+  "dependencies": {
     "@angular/animations": "~20.3.18",
     "@angular/cdk": "^20.2.14",
     "@angular/common": "~20.3.18",
@@ -28,11 +28,11 @@
     "@angular/core": "~20.3.18",
     "@angular/forms": "~20.3.18",
     "@angular/material": "^20.2.14",
-    "@angular/material-moment-adapter": "^20.2.14",
+    "@angular/material-date-fns-adapter": "^20.2.14",
     "@angular/platform-browser": "~20.3.18",
     "@angular/platform-browser-dynamic": "~20.3.18",
     "@angular/router": "~20.3.18",
-    "@sd-angular/core": "^19.0.0-beta.91",
+    "@sd-angular/core": "^19.0.0-beta.103",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "uuid": "^11.1.0",

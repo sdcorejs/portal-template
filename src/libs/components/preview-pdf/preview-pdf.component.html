@@ -1,0 +1,163 @@
+<sd-page title="sd-preview-pdf — Viewer PDF" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+
+      <!-- CỘT TRÁI: THUỘC TÍNH -->
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="d-flex flex-column gap-12">
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">source (preset)</span>
+                <span class="config-item__desc">Bộ PDF mẫu — Mozilla pdf.js / broken URL</span>
+              </div>
+              <sd-select [items]="setOptions" valueField="id" displayField="name" [(model)]="pdfSet" size="sm"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">source (File)</span>
+                <span class="config-item__desc">Chọn file PDF từ máy — override preset</span>
+              </div>
+              <input type="file" accept="application/pdf" (change)="onFilePick($event)" class="file-input" />
+            </div>
+
+            @if (uploadedFile(); as f) {
+              <div class="file-info">
+                📄 <strong>{{ f.name }}</strong> · {{ (f.size / 1024).toFixed(1) }} KB
+                <sd-button title="Xoá" size="sm" type="outline" (click)="clearFile()"></sd-button>
+              </div>
+            }
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">sidebar</span>
+                <span class="config-item__desc">Tab sidebar — thumbnails | outline | search | none</span>
+              </div>
+              <sd-select [items]="sidebarOptions" valueField="id" displayField="name" [(model)]="sidebar" size="sm"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">sidebarOpen</span>
+                <span class="config-item__desc">Mặc định mở/đóng sidebar</span>
+              </div>
+              <sd-switch [(model)]="sidebarOpen" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">initialZoom</span>
+                <span class="config-item__desc">Zoom khởi tạo (mode hoặc scale)</span>
+              </div>
+              <sd-select [items]="zoomOptions" valueField="id" displayField="name" [(model)]="initialZoomId" size="sm"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">theme</span>
+                <span class="config-item__desc">Bảng màu dark / light</span>
+              </div>
+              <sd-select [items]="themeOptions" valueField="id" displayField="name" [(model)]="theme" size="sm"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">showToolbar</span>
+                <span class="config-item__desc">Hiển thị thanh điều khiển trang/zoom</span>
+              </div>
+              <sd-switch [(model)]="showToolbar" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">downloadable</span>
+                <span class="config-item__desc">Hiển thị nút tải về</span>
+              </div>
+              <sd-switch [(model)]="downloadable" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">title</span>
+                <span class="config-item__desc">Tiêu đề header (ưu tiên file.name nếu rỗng)</span>
+              </div>
+              <sd-input [(model)]="titleOverride" size="sm"></sd-input>
+            </div>
+
+          </div>
+
+          <div class="event-log mt-12">
+            <div class="event-log__title">Sự kiện gần nhất</div>
+            <div class="event-row"><span>loaded:</span> {{ lastLoaded() }}</div>
+            <div class="event-row"><span>pageChange:</span> {{ lastPage() }}</div>
+            <div class="event-row"><span>zoomChange:</span> {{ lastZoom() }}</div>
+            <div class="event-row"><span>download:</span> {{ lastDownload() }}</div>
+            <div class="event-row"><span>loadError:</span> {{ lastError() }}</div>
+            <div class="event-row"><span>close:</span> {{ lastClose() }}</div>
+          </div>
+        </sd-section>
+      </div>
+
+      <!-- CỘT PHẢI: XEM TRƯỚC + MÃ NGUỒN -->
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+
+          <sd-section title="Xem trước (inline)" icon="visibility">
+            <div class="preview-stage">
+              <sd-preview-pdf
+                [source]="currentSource()"
+                [sidebar]="sidebar()"
+                [sidebarOpen]="sidebarOpen()"
+                [initialZoom]="initialZoom()"
+                [showToolbar]="showToolbar()"
+                [downloadable]="downloadable()"
+                [theme]="theme()"
+                [title]="currentTitle()"
+                (loaded)="onLoaded($event)"
+                (pageChange)="onPage($event)"
+                (zoomChange)="onZoom($event)"
+                (download)="onDownload($event)"
+                (loadError)="onError($event)"
+                (close)="onClose()">
+              </sd-preview-pdf>
+            </div>
+
+            <div class="modal-trigger">
+              <sd-button title="Mở trong modal (lightbox)" color="primary" (click)="openModal()"></sd-button>
+              <small class="hint">Consumer-wrapping: bọc component vào &lt;sd-modal&gt; để có UX lightbox.</small>
+            </div>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <sd-code-editor [model]="tsCode()" language="typescript" maxHeight="540px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</sd-page>
+
+<!-- Modal lightbox -->
+<sd-modal #previewModal title="Xem PDF (modal)" width="94vw" height="90vh" [disableBackdropClose]="false">
+  <div class="modal-preview-host">
+    <sd-preview-pdf
+      [source]="currentSource()"
+      [sidebar]="sidebar()"
+      [sidebarOpen]="sidebarOpen()"
+      [initialZoom]="initialZoom()"
+      [showToolbar]="showToolbar()"
+      [downloadable]="downloadable()"
+      [theme]="theme()"
+      [title]="currentTitle()"
+      (loaded)="onLoaded($event)"
+      (pageChange)="onPage($event)"
+      (zoomChange)="onZoom($event)"
+      (download)="onDownload($event)"
+      (loadError)="onError($event)"
+      (close)="closeModal()">
+    </sd-preview-pdf>
+  </div>
+</sd-modal>

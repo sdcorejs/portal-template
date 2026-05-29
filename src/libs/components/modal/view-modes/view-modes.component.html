@@ -1,0 +1,93 @@
+<sd-page title="sd-modal — View modes & Variants" [description]="pageDescription()">
+  <div class="demo-page-body">
+
+    <sd-section title="1. view='dialog' (mặc định) — Hộp thoại căn giữa" icon="check_box_outline_blank" class="mb-16">
+      <div class="trigger-card">
+        <sd-button title="Mở dialog" color="primary" (click)="openDialog()"></sd-button>
+        <span class="hint">Backdrop tối, có animation scale + fade.</span>
+      </div>
+      <sd-code-editor [model]="dialogCode" language="html" maxHeight="120px" [viewed]="true"></sd-code-editor>
+    </sd-section>
+
+    <sd-section title="2. view='bottom-sheet' — Slide-up từ đáy" icon="vertical_align_bottom" class="mb-16">
+      <div class="trigger-card">
+        <sd-button title="Mở bottom-sheet" color="primary" (click)="openBottomSheet()"></sd-button>
+        <span class="hint">Ưu tiên mobile / drawer-style. Có thể đặt <code>height</code> theo viewport.</span>
+      </div>
+      <sd-code-editor [model]="bottomSheetCode" language="html" maxHeight="120px" [viewed]="true"></sd-code-editor>
+    </sd-section>
+
+    <sd-section title="3. color & modalClass — Theming header" icon="palette" class="mb-16">
+      <div class="trigger-card">
+        <sd-button title="Mở modal màu warning" color="primary" (click)="openColor()"></sd-button>
+        <span class="hint">Truyền <code>color="warning"</code> để đổi tone header. Hoặc <code>[modalClass]</code> cho custom class container.</span>
+      </div>
+      <sd-code-editor [model]="colorCode" language="html" maxHeight="220px" [viewed]="true"></sd-code-editor>
+    </sd-section>
+
+    <sd-section title="4. lazyLoadContent — Lazy instantiate" icon="hourglass_empty" class="mb-16">
+      <div class="trigger-card">
+        <sd-button title="Mở lazy modal" color="primary" (click)="openLazy()"></sd-button>
+        <div class="lazy-stats">
+          Đã bấm mở: <strong>{{ lazyOpenCount() }}</strong> lần ·
+          Content đã render: <strong>{{ lazyChildRendered() ? '✅' : '❌' }}</strong>
+        </div>
+        <span class="hint">Lazy: content chỉ instantiate lần đầu, các lần sau giữ nguyên DOM → form không mất state.</span>
+      </div>
+      <sd-code-editor [model]="lazyCode" language="html" maxHeight="200px" [viewed]="true"></sd-code-editor>
+    </sd-section>
+
+  </div>
+</sd-page>
+
+<!-- Dialog -->
+<sd-modal #dialogModal title="Hộp thoại căn giữa" view="dialog" width="560px">
+  <div class="modal-body">
+    <p>Đây là dialog mặc định — căn giữa màn hình, có backdrop tối.</p>
+    <p>Tốc độ animation và tone màu kế thừa theme của <code>@sd-angular/core</code>.</p>
+  </div>
+  <div sdFooter class="modal-footer">
+    <sd-button title="Đóng" type="outline" (click)="dialogModal.close()"></sd-button>
+  </div>
+</sd-modal>
+
+<!-- Bottom-sheet -->
+<sd-modal #bottomSheetModal title="Bộ lọc nhanh" view="bottom-sheet" height="60vh">
+  <div class="modal-body">
+    <p>Bottom-sheet slide-up từ đáy — phù hợp filter/share/action menu trên mobile.</p>
+    <ul class="action-list">
+      <li>Tất cả</li>
+      <li>Hôm nay</li>
+      <li>7 ngày gần nhất</li>
+      <li>30 ngày gần nhất</li>
+      <li>Tuỳ chỉnh...</li>
+    </ul>
+  </div>
+  <div sdFooter class="modal-footer">
+    <sd-button title="Áp dụng" color="primary" (click)="bottomSheetModal.close()"></sd-button>
+  </div>
+</sd-modal>
+
+<!-- Color -->
+<sd-modal #colorModal title="Cảnh báo" color="warning" width="480px">
+  <div class="modal-body">
+    <p>⚠️ Hành động này sẽ huỷ đơn hàng và <strong>không thể hoàn tác</strong>.</p>
+    <p>Header dùng tone <code>color="warning"</code> để báo hiệu mức độ nguy hiểm.</p>
+  </div>
+  <div sdFooter class="modal-footer">
+    <sd-button title="Huỷ" type="outline" (click)="colorModal.close()"></sd-button>
+    <sd-button title="Tiếp tục huỷ đơn" color="error" (click)="colorModal.close()"></sd-button>
+  </div>
+</sd-modal>
+
+<!-- Lazy -->
+<sd-modal #lazyModal title="Lazy-loaded content" [lazyLoadContent]="true" width="640px">
+  <div class="modal-body lazy-content">
+    <p>👋 Tôi là content nặng (heavy-form / chart / iframe...) — chỉ được instantiate <strong>lần đầu</strong> mở modal.</p>
+    <p>Render-once flag: <strong>{{ lazyChildRendered() ? '✅ Đã render' : '⏳ Đợi onLazyRender' }}</strong></p>
+    <p>Mở/đóng modal lại — bạn sẽ thấy <code>lazyOpenCount</code> tăng nhưng nội dung không bị tạo lại (state form không reset).</p>
+  </div>
+  <div sdFooter class="modal-footer">
+    <sd-button title="Đóng" type="outline" (click)="lazyModal.close()"></sd-button>
+  </div>
+</sd-modal>

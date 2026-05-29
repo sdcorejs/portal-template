@@ -35,9 +35,8 @@ export class InputDemoComponent {
   suffixMode = signal<'none' | 'icon' | 'text'>('icon');
   suffixValue = signal<string>('search');
 
-  sizes: SdSize[] = ['xs', 'sm', 'md', 'lg'];
+  sizes: SdSize[] = ['sm', 'md', 'lg'];
   sizeOptions = [
-    { id: 'xs', name: 'Extra Small' },
     { id: 'sm', name: 'Small' },
     { id: 'md', name: 'Medium' },
     { id: 'lg', name: 'Large' },

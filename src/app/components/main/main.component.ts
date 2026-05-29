@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { SdLayoutComponent, SdLayoutMenu } from '@sd-angular/core/modules';
 import { SdTabRouterOutletComponent } from '@sd-angular/core/components';
+import { loadPortalConfig } from '../../configurations';
 @Component({
   selector: 'app-main',
-  imports: [SdLayoutComponent, RouterOutlet, SdTabRouterOutletComponent],
+  imports: [SdLayoutComponent, SdTabRouterOutletComponent],
   templateUrl: './main.component.html',
 })
 export class MainComponent {
+  // why: đọc localStorage tại constructor — đổi config xong user phải reload nên không cần signal phản ứng.
+  private portalConfig = loadPortalConfig();
+  useTabRouter = this.portalConfig.useTabRouter;
+
   menus: SdLayoutMenu[] = [
     {
       icon: 'school',
@@ -32,6 +36,10 @@ export class MainComponent {
             { path: '/instructions/coding-convention/scss', title: 'CSS/SCSS' },
             { path: '/instructions/coding-convention/typescript', title: 'TypeScript' },
           ],
+        },
+        {
+          path: '/instructions/portal-config',
+          title: 'Cấu hình Portal',
         },
       ],
     },
@@ -60,8 +68,40 @@ export class MainComponent {
           title: 'Table',
           children: [
             { path: '/components/table/basic', title: 'Cơ bản' },
-            { path: '/components/table/column', title: 'Column & Custom' },
+            { path: '/components/table/column', title: 'Tùy chỉnh cột' },
             { path: '/components/table/filter', title: 'Bộ lọc' },
+            { path: '/components/table/index-column', title: 'Cột STT (index)' },
+            { path: '/components/table/tree', title: 'Tree (cây)' },
+          ],
+        },
+        {
+          path: '/components/preview-image',
+          title: 'Preview Image',
+        },
+        {
+          path: '/components/preview-pdf',
+          title: 'Preview PDF',
+        },
+        {
+          path: '/components/splitter',
+          title: 'Splitter',
+        },
+        {
+          path: '/components/query-bar',
+          title: 'Query Bar',
+          children: [
+            { path: '/components/query-bar/basic', title: 'Cơ bản' },
+            { path: '/components/query-bar/modes', title: 'Modes & Density' },
+            { path: '/components/query-bar/fields', title: '7 kind field' },
+          ],
+        },
+        {
+          path: '/components/modal',
+          title: 'Modal',
+          children: [
+            { path: '/components/modal/basic', title: 'Cơ bản' },
+            { path: '/components/modal/slots', title: 'Header / Footer slots' },
+            { path: '/components/modal/view-modes', title: 'View modes & Variants' },
           ],
         },
         {
@@ -84,11 +124,11 @@ export class MainComponent {
           ],
         },
         {
-          path: '/components/anchor-v2',
-          title: 'Anchor V2',
+          path: '/components/anchor',
+          title: 'Anchor',
           children: [
-            { path: '/components/anchor-v2/basic', title: 'Cơ bản' },
-            { path: '/components/anchor-v2/with-section', title: 'Với sd-section' },
+            { path: '/components/anchor/basic', title: 'Cơ bản' },
+            { path: '/components/anchor/with-section', title: 'Với sd-section' },
           ],
         },
       ],
@@ -105,6 +145,9 @@ export class MainComponent {
         { path: '/forms/input-number', title: 'Input Number' },
         { path: '/forms/chip', title: 'Chip' },
         { path: '/forms/chip-calendar', title: 'Chip Calendar' },
+        { path: '/forms/radio', title: 'Radio' },
+        { path: '/forms/checkbox', title: 'Checkbox' },
+        { path: '/forms/switch', title: 'Switch' },
         { path: '/forms/validation', title: 'Validation & hideInlineError' },
       ],
     },

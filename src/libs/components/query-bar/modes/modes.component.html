@@ -1,0 +1,98 @@
+<sd-page title="sd-query-bar — Modes & Density" [description]="pageDescription()">
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+
+      <!-- CỘT TRÁI: TOGGLES -->
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings">
+          <div class="d-flex flex-column gap-12">
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">mode</span>
+                <span class="config-item__desc">popover (compact) vs inline (GitLab-style)</span>
+              </div>
+              <sd-select [items]="modeOptions" valueField="id" displayField="name" [(model)]="mode" size="sm"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">density</span>
+                <span class="config-item__desc">Chiều cao chip + control</span>
+              </div>
+              <sd-select [items]="densityOptions" valueField="id" displayField="name" [(model)]="density" size="sm"></sd-select>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">showSearch</span>
+                <span class="config-item__desc">Free-text search box bên trái</span>
+              </div>
+              <sd-switch [(model)]="showSearch" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">showLogicToggle</span>
+                <span class="config-item__desc">AND/OR — chỉ render khi có ≥2 chip</span>
+              </div>
+              <sd-switch [(model)]="showLogicToggle" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">showOperatorOnChip</span>
+                <span class="config-item__desc">In operator label lên mặt chip</span>
+              </div>
+              <sd-switch [(model)]="showOperatorOnChip" size="sm"></sd-switch>
+            </div>
+
+            <div class="config-item">
+              <div class="config-item__label">
+                <span class="config-item__title">showClearAll</span>
+                <span class="config-item__desc">Nút "Xoá hết" khi có filter</span>
+              </div>
+              <sd-switch [(model)]="showClearAll" size="sm"></sd-switch>
+            </div>
+
+            <div class="counter mt-12">
+              apply: <strong>{{ applyCount() }}</strong> · logic: <strong>{{ logic() }}</strong>
+            </div>
+          </div>
+        </sd-section>
+      </div>
+
+      <!-- CỘT PHẢI: COMPONENT + JSON -->
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+
+          <sd-section title="Component" icon="visibility">
+            <sd-query-bar
+              [fields]="fields"
+              [(filters)]="filters"
+              [(logic)]="logic"
+              [(search)]="search"
+              [mode]="mode()"
+              [density]="density()"
+              [showSearch]="showSearch()"
+              [showLogicToggle]="showLogicToggle()"
+              [showOperatorOnChip]="showOperatorOnChip()"
+              [showClearAll]="showClearAll()"
+              (apply)="onApply()">
+            </sd-query-bar>
+          </sd-section>
+
+          <sd-section title="Composite query() — payload gửi backend" icon="data_object">
+            <pre class="json">{{ queryJson() }}</pre>
+          </sd-section>
+
+          <sd-section title="Mã nguồn" icon="code">
+            <sd-code-editor [model]="tsCode()" language="html" maxHeight="420px" [viewed]="true"></sd-code-editor>
+          </sd-section>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</sd-page>

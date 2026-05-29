@@ -24,6 +24,10 @@ export const instructionsRoutes: Routes = [
         ],
       },
       {
+        path: 'portal-config',
+        loadComponent: () => import('./portal-config/portal-config.component').then(m => m.PortalConfigComponent),
+      },
+      {
         path: 'coding-convention',
         children: [
           { path: '', redirectTo: 'scss', pathMatch: 'full' },

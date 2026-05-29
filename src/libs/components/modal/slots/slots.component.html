@@ -1,0 +1,96 @@
+<sd-page title="sd-modal — Header / Footer slots" [description]="pageDescription()">
+  <div class="demo-page-body">
+
+    <sd-section title="1. Header slots — sdHeaderLeft / sdHeaderRight / sdHeader" icon="view_headline" class="mb-16">
+      <div class="trigger-card">
+        <p>Đặt chip status bên trái title, copy link bên phải. Có thể thay TOÀN BỘ header bằng <code>sdHeader</code>.</p>
+        <sd-button title="Mở modal có header tuỳ biến" color="primary" (click)="openHeader()"></sd-button>
+      </div>
+      <sd-code-editor [model]="headerCode" language="html" maxHeight="320px" [viewed]="true"></sd-code-editor>
+    </sd-section>
+
+    <sd-section title="2. Footer slots — Wizard 3 bước (sdFooterLeft / sdFooter / sdFooterRight)" icon="linear_scale" class="mb-16">
+      <div class="trigger-card">
+        <p>Footer 3 vùng: Cancel trái, step indicator giữa, Prev/Next phải. Step content tự đổi theo signal.</p>
+        <sd-button title="Mở wizard 3 bước" color="primary" (click)="openFooter()"></sd-button>
+      </div>
+      <sd-code-editor [model]="footerCode" language="html" maxHeight="380px" [viewed]="true"></sd-code-editor>
+    </sd-section>
+
+    <sd-section title="3. Form CRUD — disable Save khi invalid + loading state" icon="edit_note" class="mb-16">
+      <div class="trigger-card">
+        <p>Modal form thật: validation client-side, Save disabled khi invalid hoặc đang save, <code>disableBackdropClose=true</code> tránh mất dữ liệu.</p>
+        <sd-button title="Thêm sản phẩm" color="primary" (click)="openForm()"></sd-button>
+        <div class="form-result">Kết quả lưu: {{ savedMessage() }}</div>
+      </div>
+      <sd-code-editor [model]="formCode" language="html" maxHeight="420px" [viewed]="true"></sd-code-editor>
+    </sd-section>
+
+  </div>
+</sd-page>
+
+<!-- 1. Header slots -->
+<sd-modal #headerSlots title="Tài liệu hợp đồng — DH-2025-0042" width="640px">
+  <span sdHeaderLeft class="status-chip status-chip--active">Active</span>
+  <button sdHeaderRight type="button" class="icon-btn" title="Sao chép link">🔗</button>
+
+  <div class="modal-body">
+    <p>Hợp đồng số <strong>DH-2025-0042</strong> ký ngày 15/01/2025, hiệu lực 12 tháng.</p>
+    <p>Sử dụng <code>sdHeaderLeft</code> để thêm chip status, <code>sdHeaderRight</code> để thêm action icon (đứng trước nút X).</p>
+  </div>
+
+  <div sdFooter class="modal-footer">
+    <sd-button title="Đóng" type="outline" (click)="headerSlots.close()"></sd-button>
+  </div>
+</sd-modal>
+
+<!-- 2. Wizard -->
+<sd-modal #footerSlots title="Tạo đơn hàng — 3 bước" width="640px">
+  <div class="modal-body">
+    @switch (step()) {
+      @case (1) { <h4>Bước 1 — Chọn sản phẩm</h4><p>Danh sách sản phẩm để chọn (mock).</p> }
+      @case (2) { <h4>Bước 2 — Thông tin khách</h4><p>Form khách hàng (mock).</p> }
+      @case (3) { <h4>Bước 3 — Xác nhận</h4><p>Xem lại + đặt đơn (mock).</p> }
+    }
+  </div>
+
+  <div sdFooterLeft>
+    <sd-button title="Huỷ" type="outline" (click)="footerSlots.close()"></sd-button>
+  </div>
+
+  <div sdFooter class="step-indicator">
+    Bước <strong>{{ step() }}</strong> / {{ totalSteps }}
+  </div>
+
+  <div sdFooterRight class="footer-right">
+    <sd-button title="Trước" type="outline" [disabled]="step() === 1" (click)="prev()"></sd-button>
+    @if (step() < totalSteps) {
+      <sd-button title="Tiếp" color="primary" (click)="next()"></sd-button>
+    } @else {
+      <sd-button title="Hoàn tất" color="primary" (click)="footerSlots.close()"></sd-button>
+    }
+  </div>
+</sd-modal>
+
+<!-- 3. Form CRUD -->
+<sd-modal #formModal title="Thêm sản phẩm" width="520px" [disableBackdropClose]="true">
+  <div class="form-body">
+    <div class="form-row">
+      <sd-label>Mã sản phẩm <span class="req">*</span></sd-label>
+      <sd-input [(model)]="productCode" placeholder="VD: SP-001"></sd-input>
+    </div>
+    <div class="form-row">
+      <sd-label>Tên sản phẩm <span class="req">*</span></sd-label>
+      <sd-input [(model)]="productName" placeholder="VD: Nồi cơm điện 1.8L"></sd-input>
+    </div>
+    <div class="form-row">
+      <sd-label>Danh mục <span class="req">*</span></sd-label>
+      <sd-select [items]="categoryOptions" valueField="id" displayField="name" [(model)]="category"></sd-select>
+    </div>
+  </div>
+
+  <div sdFooter class="modal-footer">
+    <sd-button title="Huỷ" type="outline" (click)="formModal.close()"></sd-button>
+    <sd-button title="Lưu" color="primary" [disabled]="!isFormValid() || saving()" (click)="save()"></sd-button>
+  </div>
+</sd-modal>

@@ -66,6 +66,62 @@ export const componentsRoutes: Routes = [
             path: 'filter',
             loadComponent: () => import('./table/filter/filter.component').then(m => m.TableFilterComponent),
           },
+          {
+            path: 'index-column',
+            loadComponent: () => import('./table/index-column/index-column.component').then(m => m.TableIndexColumnComponent),
+          },
+          {
+            path: 'tree',
+            loadComponent: () => import('./table/tree/tree.component').then(m => m.TableTreeComponent),
+          },
+        ],
+      },
+      {
+        path: 'preview-image',
+        loadComponent: () => import('./preview-image/preview-image.component').then(m => m.PreviewImageDemoComponent),
+      },
+      {
+        path: 'preview-pdf',
+        loadComponent: () => import('./preview-pdf/preview-pdf.component').then(m => m.PreviewPdfDemoComponent),
+      },
+      {
+        path: 'splitter',
+        loadComponent: () => import('./splitter/splitter.component').then(m => m.SplitterDemoComponent),
+      },
+      {
+        path: 'query-bar',
+        children: [
+          { path: '', redirectTo: 'basic', pathMatch: 'full' },
+          {
+            path: 'basic',
+            loadComponent: () => import('./query-bar/basic/basic.component').then(m => m.QueryBarBasicComponent),
+          },
+          {
+            path: 'modes',
+            loadComponent: () => import('./query-bar/modes/modes.component').then(m => m.QueryBarModesComponent),
+          },
+          {
+            path: 'fields',
+            loadComponent: () => import('./query-bar/fields/fields.component').then(m => m.QueryBarFieldsComponent),
+          },
+        ],
+      },
+      {
+        path: 'modal',
+        children: [
+          { path: '', redirectTo: 'basic', pathMatch: 'full' },
+          {
+            path: 'basic',
+            loadComponent: () => import('./modal/basic/basic.component').then(m => m.ModalBasicComponent),
+          },
+          {
+            path: 'slots',
+            loadComponent: () => import('./modal/slots/slots.component').then(m => m.ModalSlotsComponent),
+          },
+          {
+            path: 'view-modes',
+            loadComponent: () => import('./modal/view-modes/view-modes.component').then(m => m.ModalViewModesComponent),
+          },
         ],
       },
       {
@@ -91,7 +147,7 @@ export const componentsRoutes: Routes = [
         ],
       },
       {
-        path: 'anchor-v2',
+        path: 'anchor',
         children: [
           {
             path: '',
@@ -100,11 +156,11 @@ export const componentsRoutes: Routes = [
           },
           {
             path: 'basic',
-            loadComponent: () => import('./anchor-v2/basic/basic.component').then(m => m.AnchorV2BasicComponent),
+            loadComponent: () => import('./anchor/basic/basic.component').then(m => m.AnchorBasicComponent),
           },
           {
             path: 'with-section',
-            loadComponent: () => import('./anchor-v2/with-section/with-section.component').then(m => m.AnchorV2WithSectionComponent),
+            loadComponent: () => import('./anchor/with-section/with-section.component').then(m => m.AnchorWithSectionComponent),
           },
         ],
       },

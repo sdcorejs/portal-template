@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SdButton } from '@sd-angular/core/components/button';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection, SdSectionItem } from '@sd-angular/core/components/section';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdLabel } from '@sd-angular/core/forms/label';
-import { SdSwitch } from '@sd-angular/core/forms/switch';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
+import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection, SdSectionItem } from '@sdcorejs/angular/components/section';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdLabel } from '@sdcorejs/angular/forms/label';
+import { SdSwitch } from '@sdcorejs/angular/forms/switch';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 
 @Component({
   selector: 'app-section-header-slots',
@@ -90,8 +90,8 @@ export class SectionHeaderSlotsComponent {
   });
 
   tsCode = `import { Component } from '@angular/core';
-import { SdButton } from '@sd-angular/core/components/button';
-import { SdSection } from '@sd-angular/core/components/section';
+import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdSection } from '@sdcorejs/angular/components/section';
 
 @Component({
   selector: 'app-my-component',

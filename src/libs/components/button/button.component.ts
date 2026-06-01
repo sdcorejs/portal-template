@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SdButton, SdButtonSize, SdButtonType } from '@sd-angular/core/components/button';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdLabel } from '@sd-angular/core/forms/label';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdSwitch } from '@sd-angular/core/forms/switch';
-import { SdColor } from '@sd-angular/core/utilities/models';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
+import { SdButton, SdButtonSize, SdButtonType } from '@sdcorejs/angular/components/button';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdLabel } from '@sdcorejs/angular/forms/label';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdSwitch } from '@sdcorejs/angular/forms/switch';
+import { SdColor } from '@sdcorejs/angular/utilities/models';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 
 @Component({
   selector: 'app-button-demo',
@@ -79,7 +79,7 @@ export class ButtonDemoComponent {
 
   // Code TS tĩnh
   tsCode = `import { Component } from '@angular/core';
-import { SdButton } from '@sd-angular/core/components/button';
+import { SdButton } from '@sdcorejs/angular/components/button';
 
 @Component({
   selector: 'app-my-component',

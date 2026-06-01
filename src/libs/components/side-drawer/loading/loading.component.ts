@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SdButton } from '@sd-angular/core/components/button';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdSideDrawer } from '@sd-angular/core/components/side-drawer';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdLabel } from '@sd-angular/core/forms/label';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdSwitch } from '@sd-angular/core/forms/switch';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
+import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdSideDrawer } from '@sdcorejs/angular/components/side-drawer';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdLabel } from '@sdcorejs/angular/forms/label';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdSwitch } from '@sdcorejs/angular/forms/switch';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 
 @Component({
   selector: 'app-side-drawer-loading',
@@ -69,8 +69,8 @@ export class SideDrawerLoadingComponent {
   });
 
   tsCode = `import { Component, viewChild } from '@angular/core';
-import { SdButton } from '@sd-angular/core/components/button';
-import { SdSideDrawer } from '@sd-angular/core/components/side-drawer';
+import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdSideDrawer } from '@sdcorejs/angular/components/side-drawer';
 
 @Component({
   selector: 'app-my-component',

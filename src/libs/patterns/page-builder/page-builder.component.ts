@@ -1,19 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, signal, viewChild } from '@angular/core';
-import { SdButton } from '@sd-angular/core/components/button';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection, SdSectionItem } from '@sd-angular/core/components/section';
-import { SdSideDrawer } from '@sd-angular/core/components/side-drawer';
-import { SdTable, SdTableOption } from '@sd-angular/core/components/table';
-import { SdUploadFile } from '@sd-angular/core/components/upload-file';
-import { SdDate } from '@sd-angular/core/forms/date';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdLabel } from '@sd-angular/core/forms/label';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdSwitch } from '@sd-angular/core/forms/switch';
-import { SdTextarea } from '@sd-angular/core/forms/textarea';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
-import { SdUtilities } from '@sd-angular/core/utilities/extensions';
+import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection, SdSectionItem } from '@sdcorejs/angular/components/section';
+import { SdSideDrawer } from '@sdcorejs/angular/components/side-drawer';
+import { SdTable, SdTableOption } from '@sdcorejs/angular/components/table';
+import { SdUploadFile } from '@sdcorejs/angular/components/upload-file';
+import { SdDate } from '@sdcorejs/angular/forms/date';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdLabel } from '@sdcorejs/angular/forms/label';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdSwitch } from '@sdcorejs/angular/forms/switch';
+import { SdTextarea } from '@sdcorejs/angular/forms/textarea';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
+import { SdUtilities } from '@sdcorejs/angular/utilities/extensions';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -504,7 +504,7 @@ export class PageBuilderComponent {
 
     const imports = new Set<string>([
       `import { Component } from '@angular/core';`,
-      `import { SdPageComponent } from '@sd-angular/core/modules/layout';`,
+      `import { SdPageComponent } from '@sdcorejs/angular/modules/layout';`,
     ]);
     const fields:   string[] = [];
     const methods:  string[] = [];
@@ -517,24 +517,24 @@ export class PageBuilderComponent {
 
       switch (si.type) {
         case 'input':
-          imports.add(`import { SdInput } from '@sd-angular/core/forms/input';`);
+          imports.add(`import { SdInput } from '@sdcorejs/angular/forms/input';`);
           fields.push(`  ${f} = '';`);
           break;
         case 'select':
-          imports.add(`import { SdSelect } from '@sd-angular/core/forms/select';`);
+          imports.add(`import { SdSelect } from '@sdcorejs/angular/forms/select';`);
           fields.push(`  ${f}: number | null = null;`);
           fields.push(`  ${f}Options = [{ id: 1, name: 'Option 1' }, { id: 2, name: 'Option 2' }];`);
           break;
         case 'textarea':
-          imports.add(`import { SdTextarea } from '@sd-angular/core/forms/textarea';`);
+          imports.add(`import { SdTextarea } from '@sdcorejs/angular/forms/textarea';`);
           fields.push(`  ${f} = '';`);
           break;
         case 'date':
-          imports.add(`import { SdDate } from '@sd-angular/core/forms/date';`);
+          imports.add(`import { SdDate } from '@sdcorejs/angular/forms/date';`);
           fields.push(`  ${f}: string | null = null;`);
           break;
         case 'upload-file':
-          imports.add(`import { SdUploadFile } from '@sd-angular/core/components/upload-file';`);
+          imports.add(`import { SdUploadFile } from '@sdcorejs/angular/components/upload-file';`);
           fields.push(`  ${f}Files: File[] = [];`);
           methods.push(
             `  on${toPascal(si.label)}Uploaded(files: (string | File)[]): void {`,
@@ -548,7 +548,7 @@ export class PageBuilderComponent {
     for (const item of list) {
       switch (item.type) {
         case 'button': {
-          imports.add(`import { SdButton } from '@sd-angular/core/components/button';`);
+          imports.add(`import { SdButton } from '@sdcorejs/angular/components/button';`);
           const c = item.config as ButtonCfg;
           methods.push(
             `  on${toPascal(c.title)}Click(): void {`,
@@ -558,7 +558,7 @@ export class PageBuilderComponent {
           break;
         }
         case 'table':
-          imports.add(`import { SdTable, SdTableOption } from '@sd-angular/core/components/table';`);
+          imports.add(`import { SdTable, SdTableOption } from '@sdcorejs/angular/components/table';`);
           if (!addedFields.has('__table')) {
             addedFields.add('__table');
             fields.push(
@@ -587,7 +587,7 @@ export class PageBuilderComponent {
           }
           break;
         case 'section':
-          imports.add(`import { SdSection, SdSectionItem } from '@sd-angular/core/components/section';`);
+          imports.add(`import { SdSection, SdSectionItem } from '@sdcorejs/angular/components/section';`);
           (item.config as SectionCfg).items.forEach(processFormItem);
           break;
         default:

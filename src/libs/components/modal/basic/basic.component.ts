@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SdButton } from '@sd-angular/core/components/button';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdModal } from '@sd-angular/core/components/modal';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdSwitch } from '@sd-angular/core/forms/switch';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
+import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdModal } from '@sdcorejs/angular/components/modal';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdSwitch } from '@sdcorejs/angular/forms/switch';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 
 @Component({
   selector: 'app-modal-basic',
@@ -76,7 +76,7 @@ export class ModalBasicComponent {
 </sd-modal>`);
 
   tsCode = `import { viewChild } from '@angular/core';
-import { SdModal } from '@sd-angular/core/components/modal';
+import { SdModal } from '@sdcorejs/angular/components/modal';
 
 @Component({
   imports: [SdButton, SdModal],

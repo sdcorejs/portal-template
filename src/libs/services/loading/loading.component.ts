@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { SdButton } from '@sd-angular/core/components/button';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdInputNumber } from '@sd-angular/core/forms/input-number';
-import { SdLabel } from '@sd-angular/core/forms/label';
-import { SdLoadingService } from '@sd-angular/core/services/loading';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
+import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdInputNumber } from '@sdcorejs/angular/forms/input-number';
+import { SdLabel } from '@sdcorejs/angular/forms/label';
+import { SdLoadingService } from '@sdcorejs/angular/services/loading';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 
 @Component({
   selector: 'app-loading-demo',
@@ -34,7 +34,7 @@ export class LoadingDemoComponent {
   ];
 
   tsCode = `import { Component, inject } from '@angular/core';
-import { SdLoadingService } from '@sd-angular/core/services/loading';
+import { SdLoadingService } from '@sdcorejs/angular/services/loading';
 
 @Component({
   selector: 'app-my-component',

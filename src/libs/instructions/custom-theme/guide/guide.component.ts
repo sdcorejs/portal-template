@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 
 @Component({
   selector: 'app-custom-theme-guide',
@@ -13,7 +13,7 @@ import { SdPageComponent } from '@sd-angular/core/modules/layout';
 })
 export class CustomThemeGuideComponent {
   readonly step1Code = `// src/styles.scss
-@use '@sd-angular/core/assets/scss/themes/default' as sd;
+@use '@sdcorejs/angular/assets/scss/themes/default' as sd;
 
 // Mixin merge map truyền vào với bộ mặc định rồi sinh toàn bộ --sd-* CSS variables.
 // Chỉ cần khai báo những token muốn ghi đè.

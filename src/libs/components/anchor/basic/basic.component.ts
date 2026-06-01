@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SdAnchorItem, SdAnchor } from '@sd-angular/core/components/anchor';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdLabel } from '@sd-angular/core/forms/label';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdSwitch } from '@sd-angular/core/forms/switch';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
+import { SdAnchorItem, SdAnchor } from '@sdcorejs/angular/components/anchor';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdLabel } from '@sdcorejs/angular/forms/label';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdSwitch } from '@sdcorejs/angular/forms/switch';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 
 @Component({
   selector: 'app-anchor-basic',
@@ -95,7 +95,7 @@ export class AnchorBasicComponent {
 </div>`;
 
   tsCode = `import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
-import { SdAnchor, SdAnchorItem } from '@sd-angular/core/components/anchor';
+import { SdAnchor, SdAnchorItem } from '@sdcorejs/angular/components/anchor';
 
 @Component({
   selector: 'app-anchor-demo',

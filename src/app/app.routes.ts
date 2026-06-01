@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { SdAuthGuard, SdPermissionGuard, SdPortalGuard } from '@sd-angular/core/modules';
+import { SdAuthGuard, SdPermissionGuard, SdPortalGuard } from '@sdcorejs/angular/modules';
 import { MainComponent } from './components/main/main.component';
 
 export const routes: Routes = [
@@ -20,7 +20,7 @@ export const routes: Routes = [
         children: [
           {
             path: 'layout',
-            loadChildren: () => import('@sd-angular/core/modules/layout').then(m => m.SdLayoutModule),
+            loadChildren: () => import('@sdcorejs/angular/modules/layout').then(m => m.SdLayoutModule),
           },
           {
             path: 'components',

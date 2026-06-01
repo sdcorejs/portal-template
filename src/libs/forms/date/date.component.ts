@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdDate } from '@sd-angular/core/forms/date';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdLabel } from '@sd-angular/core/forms/label';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdSwitch } from '@sd-angular/core/forms/switch';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
-import { SdSize } from '@sd-angular/core/utilities/models';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdDate } from '@sdcorejs/angular/forms/date';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdLabel } from '@sdcorejs/angular/forms/label';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdSwitch } from '@sdcorejs/angular/forms/switch';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
+import { SdSize } from '@sdcorejs/angular/utilities/models';
 
 @Component({
   selector: 'app-date-demo',
@@ -54,7 +54,7 @@ export class DateDemoComponent {
   });
 
   tsCode = `import { Component } from '@angular/core';
-import { SdDate } from '@sd-angular/core/forms/date';
+import { SdDate } from '@sdcorejs/angular/forms/date';
 
 @Component({
   selector: 'app-my-component',

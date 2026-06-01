@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, WritableSignal, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SdButton } from '@sd-angular/core/components/button';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
+import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 
 @Component({
   selector: 'app-custom-theme-tool',
@@ -56,7 +56,7 @@ export class CustomThemeToolComponent {
     const accentScss  = this.toScss('custom-accent',  this.successPalette());
     const warnScss    = this.toScss('custom-warn',     this.errorPalette());
 
-    return `@use '@sd-angular/core/assets/scss/themes/default' as sd;
+    return `@use '@sdcorejs/angular/assets/scss/themes/default' as sd;
 @use '@angular/material' as mat;
 @include mat.core();
 

@@ -38,7 +38,7 @@ src/libs/<group>/<demo-name>/
 
 Bám theo thứ tự sau (đọc [`forms/input/input.component.ts`](src/libs/forms/input/input.component.ts) làm mẫu):
 
-1. **Imports** — gom theo nhóm: `@angular/*`, third-party, `@sd-angular/core/*`, local. Mỗi component `SdXxx` import từ secondary entry point riêng (`@sd-angular/core/forms/<name>` hoặc `@sd-angular/core/components/<name>`).
+1. **Imports** — gom theo nhóm: `@angular/*`, third-party, `@sdcorejs/angular/*`, local. Mỗi component `SdXxx` import từ secondary entry point riêng (`@sdcorejs/angular/forms/<name>` hoặc `@sdcorejs/angular/components/<name>`).
 2. **Interface mock data** (nếu cần) — khai báo ngay trên class, không tách file.
 3. **Decorator `@Component`** — `standalone: true`, `imports: [...]`, `templateUrl`, `styleUrls`, `changeDetection: OnPush`.
 4. **Class body — theo block, comment phân tách:**

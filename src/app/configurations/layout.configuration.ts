@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { ISdLayoutConfiguration, SdAuthService } from '@sd-angular/core/modules';
+import { ISdLayoutConfiguration, SdAuthService } from '@sdcorejs/angular/modules';
 
 @Injectable()
 export class LayoutConfiguration implements ISdLayoutConfiguration {

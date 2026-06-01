@@ -9,7 +9,7 @@ Portal Template is a robust Angular-based starter project designed to bootstrap 
 - **Modern Stack**: Built with Angular 20 and TypeScript.
 - **Micro-Frontend Ready (Module Encapsulation)**: Modules are strictly designed to be encapsulated, ensuring they exist independently without relying on the host's global state. This plug-and-play architecture allows modules to be easily imported and reused across any other portals.
 - **UI & Theming**: Integrated with Angular Material and `@ng-matero/extensions` for comprehensive UI components.
-- **Core Library**: Leverages `@sd-angular/core` for shared enterprise features.
+- **Core Library**: Leverages `@sdcorejs/angular` for shared enterprise features.
 - **Code Generation**: Pre-configured `plop` generators to rapidly scaffold modules and entities, saving development time and enforcing consistency.
 - **Formatting & Linting**: Built-in ESLint and Prettier configurations for clean code.
 
@@ -95,7 +95,7 @@ Portal Template là một dự án mẫu nền tảng Angular mạnh mẽ, đư�
 - **Công nghệ hiện đại**: Xây dựng với Angular 20 và TypeScript.
 - **Tính đóng gói Module (Micro-Frontend Ready)**: Các module được thiết kế chặt chẽ theo nguyên tắc đóng gói (encapsulation), đảm bảo có thể hoạt động độc lập mà không can thiệp hay phụ thuộc vào global state của host. Kiến trúc "cắm-là-chạy" (plug-and-play) này cho phép các module dễ dàng được tái sử dụng và nhúng vào bất kỳ ứng dụng portal nào khác.
 - **Giao diện & Theme**: Tích hợp sẵn Angular Material và `@ng-matero/extensions` với vô số các component linh hoạt.
-- **Thư viện lõi (Core Library)**: Sử dụng trực tiếp `@sd-angular/core` cho các tính năng hệ thống chia sẻ cấp doanh nghiệp.
+- **Thư viện lõi (Core Library)**: Sử dụng trực tiếp `@sdcorejs/angular` cho các tính năng hệ thống chia sẻ cấp doanh nghiệp.
 - **Sinh mã tự động (Code Generation)**: Các generator `plop` được cấu hình sẵn để nhanh chóng tạo khung module và entity mẫu, giúp tiết kiệm thời gian và đảm bảo tính đồng nhất source code dự án.
 - **Format & Linting**: Cấu hình ESLint và Prettier sẵn sàng để code luôn sạch đẹp.
 

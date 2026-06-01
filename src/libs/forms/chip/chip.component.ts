@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdChip } from '@sd-angular/core/forms/chip';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
-import { SdSize } from '@sd-angular/core/utilities/models';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdSwitch } from '@sd-angular/core/forms/switch';
-import { SdLabel } from '@sd-angular/core/forms/label';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdChip } from '@sdcorejs/angular/forms/chip';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
+import { SdSize } from '@sdcorejs/angular/utilities/models';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdSwitch } from '@sdcorejs/angular/forms/switch';
+import { SdLabel } from '@sdcorejs/angular/forms/label';
 
 @Component({
   selector: 'app-chip-demo',
@@ -66,7 +66,7 @@ export class ChipDemoComponent {
   });
 
   tsCode = `import { Component } from '@angular/core';
-import { SdChip } from '@sd-angular/core/forms/chip';
+import { SdChip } from '@sdcorejs/angular/forms/chip';
 
 @Component({
   selector: 'app-my-component',

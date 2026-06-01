@@ -2,15 +2,15 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSuffixDefDirective } from '@sd-angular/core/forms/directives';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdLabel } from '@sd-angular/core/forms/label';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdSwitch } from '@sd-angular/core/forms/switch';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
-import { SdSize } from '@sd-angular/core/utilities/models';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSuffixDefDirective } from '@sdcorejs/angular/forms/directives';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdLabel } from '@sdcorejs/angular/forms/label';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdSwitch } from '@sdcorejs/angular/forms/switch';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
+import { SdSize } from '@sdcorejs/angular/utilities/models';
 
 @Component({
   selector: 'app-input-demo',
@@ -102,8 +102,8 @@ export class InputDemoComponent {
   }
 
   tsCode = `import { Component } from '@angular/core';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdSuffixDefDirective } from '@sd-angular/core/forms/directives';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdSuffixDefDirective } from '@sdcorejs/angular/forms/directives';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({

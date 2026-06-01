@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SdLayoutComponent, SdLayoutMenu } from '@sd-angular/core/modules';
-import { SdTabRouterOutletComponent } from '@sd-angular/core/components';
+import { SdLayoutComponent, SdLayoutMenu } from '@sdcorejs/angular/modules';
+import { SdTabRouterOutletComponent } from '@sdcorejs/angular/components';
 import { loadPortalConfig } from '../../configurations';
 @Component({
   selector: 'app-main',

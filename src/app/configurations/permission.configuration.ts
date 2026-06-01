@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ISdPermissionConfiguration } from '@sd-angular/core/modules';
+import { ISdPermissionConfiguration } from '@sdcorejs/angular/modules';
 
 // Nhớ import SdKeycloakService từ đúng đường dẫn Core UI của bạn
 

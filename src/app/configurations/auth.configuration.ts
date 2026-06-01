@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ISdAuthConfiguration } from '@sd-angular/core/modules';
+import { ISdAuthConfiguration } from '@sdcorejs/angular/modules';
 
 @Injectable()
 export class AuthConfiguration implements ISdAuthConfiguration {

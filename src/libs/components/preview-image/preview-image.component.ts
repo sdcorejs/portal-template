@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SdButton } from '@sd-angular/core/components/button';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdModal } from '@sd-angular/core/components/modal';
-import { NormalizedImage, SdPreviewImage, ThumbnailPosition } from '@sd-angular/core/components/preview';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdSwitch } from '@sd-angular/core/forms/switch';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
+import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdModal } from '@sdcorejs/angular/components/modal';
+import { NormalizedImage, SdPreviewImage, ThumbnailPosition } from '@sdcorejs/angular/components/preview';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdSwitch } from '@sdcorejs/angular/forms/switch';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 
 type ImageSet = 'multi' | 'single' | 'empty' | 'broken' | 'mixed';
 
@@ -107,7 +107,7 @@ export class PreviewImageDemoComponent {
   );
 
   // ── Generated TS code ──────────────────────────────────────────────────────
-  tsCode = computed(() => `import { SdPreviewImage } from '@sd-angular/core/components/preview';
+  tsCode = computed(() => `import { SdPreviewImage } from '@sdcorejs/angular/components/preview';
 
 @Component({
   selector: 'app-image-viewer',

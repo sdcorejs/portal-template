@@ -1,11 +1,11 @@
 import { Component, computed, signal, viewChild } from '@angular/core';
-import { SdButton } from '@sd-angular/core/components/button';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSideDrawer } from '@sd-angular/core/components/side-drawer';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdLabel } from '@sd-angular/core/forms/label';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdSwitch } from '@sd-angular/core/forms/switch';
+import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSideDrawer } from '@sdcorejs/angular/components/side-drawer';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdLabel } from '@sdcorejs/angular/forms/label';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdSwitch } from '@sdcorejs/angular/forms/switch';
 
 type ButtonType  = 'fill' | 'light' | 'outline' | 'link';
 type ButtonColor = 'primary' | 'secondary' | 'success' | 'warning' | 'error';

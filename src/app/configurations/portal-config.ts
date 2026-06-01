@@ -1,4 +1,4 @@
-import type { Language } from '@sd-angular/core/models';
+import type { Language } from '@sdcorejs/angular/models';
 
 export type PortalNumberFormat = '1,234,567.89' | '1.234.567,89';
 

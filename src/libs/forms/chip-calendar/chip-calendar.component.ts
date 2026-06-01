@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdChipCalendar } from '@sd-angular/core/forms/chip-calendar';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
-import { SdSize } from '@sd-angular/core/utilities/models';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdSwitch } from '@sd-angular/core/forms/switch';
-import { SdLabel } from '@sd-angular/core/forms/label';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdChipCalendar } from '@sdcorejs/angular/forms/chip-calendar';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
+import { SdSize } from '@sdcorejs/angular/utilities/models';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdSwitch } from '@sdcorejs/angular/forms/switch';
+import { SdLabel } from '@sdcorejs/angular/forms/label';
 
 @Component({
   selector: 'app-chip-calendar-demo',
@@ -62,7 +62,7 @@ export class ChipCalendarDemoComponent {
   });
 
   tsCode = `import { Component, signal } from '@angular/core';
-import { SdChipCalendar } from '@sd-angular/core/forms/chip-calendar';
+import { SdChipCalendar } from '@sdcorejs/angular/forms/chip-calendar';
 
 @Component({
   selector: 'app-my-component',

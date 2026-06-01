@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild, computed, signal } from '@angular/core';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdTooltipDirective } from '@sd-angular/core/directives';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdInputNumber } from '@sd-angular/core/forms/input-number';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdTooltipDirective } from '@sdcorejs/angular/directives';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdInputNumber } from '@sdcorejs/angular/forms/input-number';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 
 type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
 

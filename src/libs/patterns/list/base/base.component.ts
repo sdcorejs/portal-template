@@ -1,9 +1,9 @@
 import { Component, computed, signal, viewChild, viewChildren } from '@angular/core';
-import { SdButton } from '@sd-angular/core/components/button';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSideDrawer } from '@sd-angular/core/components/side-drawer';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
+import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSideDrawer } from '@sdcorejs/angular/components/side-drawer';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 import { DemoButtonComponent } from '../../shared/demo-button/demo-button.component';
 import { DemoTableComponent } from '../../shared/demo-table/demo-table.component';
 
@@ -99,10 +99,10 @@ export class ListBaseComponent {
 
     return [
       `import { Component, inject } from '@angular/core';`,
-      `import { SdPageComponent } from '@sd-angular/core/modules/layout';`,
-      needsBtn ? `import { SdButton } from '@sd-angular/core/components/button';` : null,
-      `import { SdTable } from '@sd-angular/core/components/table';`,
-      `import type { SdTableOption } from '@sd-angular/core/components/table';`,
+      `import { SdPageComponent } from '@sdcorejs/angular/modules/layout';`,
+      needsBtn ? `import { SdButton } from '@sdcorejs/angular/components/button';` : null,
+      `import { SdTable } from '@sdcorejs/angular/components/table';`,
+      `import type { SdTableOption } from '@sdcorejs/angular/components/table';`,
       `import type { Item } from '../../services/item.model';`,
       `import { ItemService } from '../../services/item.service';`,
       ``,

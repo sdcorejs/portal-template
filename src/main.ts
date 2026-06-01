@@ -1,18 +1,18 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter, withComponentInputBinding, withRouterConfig } from '@angular/router';
-import { SD_CORE_CONFIGURATION } from '@sd-angular/core/configurations';
+import { SD_CORE_CONFIGURATION } from '@sdcorejs/angular/configurations';
 import {
   SD_AUTH_CONFIGURATION,
   SD_LAYOUT_CONFIGURATION,
   SD_PERMISSION_CONFIGURATION,
   SdKeycloakInterceptor,
-} from '@sd-angular/core/modules';
+} from '@sdcorejs/angular/modules';
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 import { AuthConfiguration, LayoutConfiguration, PermissionConfiguration, loadPortalConfig } from './app/configurations';
 import { importProvidersFrom } from '@angular/core';
-import { SdApiModule } from '@sd-angular/core/services';
+import { SdApiModule } from '@sdcorejs/angular/services';
 
 // why: load config từ localStorage trước khi bootstrap để cấu hình lib (format số, ngôn ngữ) áp dụng ngay.
 const portalConfig = loadPortalConfig();

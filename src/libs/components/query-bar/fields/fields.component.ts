@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSearchReq } from '@sd-angular/core/forms/models';
-import { SdQueryBar, SdQueryField } from '@sd-angular/core/components/query-bar';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
-import { Filter } from '@sd-angular/core/utilities/models';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSearchReq } from '@sdcorejs/angular/forms/models';
+import { SdQueryBar, SdQueryField } from '@sdcorejs/angular/components/query-bar';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
+import { Filter } from '@sdcorejs/angular/utilities/models';
 
 interface Employee {
   id: number;

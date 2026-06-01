@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SdButton } from '@sd-angular/core/components/button';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdUploadFile } from '@sd-angular/core/components/upload-file';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdInputNumber } from '@sd-angular/core/forms/input-number';
-import { SdLabel } from '@sd-angular/core/forms/label';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdSwitch } from '@sd-angular/core/forms/switch';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
+import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdUploadFile } from '@sdcorejs/angular/components/upload-file';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdInputNumber } from '@sdcorejs/angular/forms/input-number';
+import { SdLabel } from '@sdcorejs/angular/forms/label';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdSwitch } from '@sdcorejs/angular/forms/switch';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 
 @Component({
   selector: 'app-upload-file-demo',
@@ -85,7 +85,7 @@ export class UploadFileDemoComponent {
   });
 
   tsCode = `import { Component } from '@angular/core';
-import { SdUploadFile } from '@sd-angular/core/components/upload-file';
+import { SdUploadFile } from '@sdcorejs/angular/components/upload-file';
 
 @Component({
   standalone: true,

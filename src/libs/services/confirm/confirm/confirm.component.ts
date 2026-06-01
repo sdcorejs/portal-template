@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SdButton } from '@sd-angular/core/components/button';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdConfirmService } from '@sd-angular/core/services/confirm';
-import { SdNotifyService } from '@sd-angular/core/services/notify';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
+import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdConfirmService } from '@sdcorejs/angular/services/confirm';
+import { SdNotifyService } from '@sdcorejs/angular/services/notify';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 
 type ButtonColor = 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info';
 
@@ -59,7 +59,7 @@ export class ConfirmBasicComponent {
     const yesColor = this.yesButtonColor();
     const noColor = this.noButtonColor();
     return `import { Component, inject } from '@angular/core';
-import { SdConfirmService } from '@sd-angular/core/services/confirm';
+import { SdConfirmService } from '@sdcorejs/angular/services/confirm';
 
 @Component({ ... })
 export class MyComponent {

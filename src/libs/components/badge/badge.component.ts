@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SdBadge, SdBadgeType } from '@sd-angular/core/components/badge';
-import { SdCodeEditor } from '@sd-angular/core/components/code-editor';
-import { SdSection } from '@sd-angular/core/components/section';
-import { SdInput } from '@sd-angular/core/forms/input';
-import { SdLabel } from '@sd-angular/core/forms/label';
-import { SdSelect } from '@sd-angular/core/forms/select';
-import { SdSwitch } from '@sd-angular/core/forms/switch';
-import { SdPageComponent } from '@sd-angular/core/modules/layout';
-import { SdColor, SdSize } from '@sd-angular/core/utilities/models';
+import { SdBadge, SdBadgeType } from '@sdcorejs/angular/components/badge';
+import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdLabel } from '@sdcorejs/angular/forms/label';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
+import { SdSwitch } from '@sdcorejs/angular/forms/switch';
+import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
+import { SdColor, SdSize } from '@sdcorejs/angular/utilities/models';
 
 @Component({
   selector: 'app-badge-demo',
@@ -72,7 +72,7 @@ export class BadgeDemoComponent {
 
   // Code TS tĩnh
   tsCode = `import { Component } from '@angular/core';
-import { SdBadge } from '@sd-angular/core/components/badge';
+import { SdBadge } from '@sdcorejs/angular/components/badge';
 
 @Component({
   selector: 'app-my-component',

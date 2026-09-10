@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -13,18 +14,7 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 @Component({
   selector: 'app-modal-slots',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SdButton,
-    SdCodeEditor,
-    SdInput,
-    SdLabel,
-    SdModal,
-    SdPageComponent,
-    SdSection,
-    SdSelect,
-  ],
+  imports: [CommonModule, FormsModule, SdButton, SdCodeEditor, SdInput, SdLabel, SdModal, SdPageComponent, SdSection, SdSelect],
   templateUrl: './slots.component.html',
   styleUrls: ['./slots.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -163,3 +153,5 @@ export class ModalSlotsComponent {
   </div>
 </sd-modal>`;
 }
+
+SdTabComponent({ component: ModalSlotsComponent, name: 'sd-modal — Header / Footer slots', icon: 'widgets' })(ModalSlotsComponent);

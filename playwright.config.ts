@@ -1,0 +1,2 @@
+import {defineConfig} from '@playwright/test';
+export default defineConfig({testDir:'./e2e',timeout:60000,expect:{timeout:20000},workers:1,reporter:[['list'],['html',{open:'never'}]],use:{baseURL:'http://localhost:2208',channel:'chrome',headless:true,viewport:{width:1440,height:1000},trace:'retain-on-failure'},webServer:[{command:'npm start',url:'http://localhost:2208',reuseExistingServer:true,timeout:240000},{command:'npm run storybook -- --ci',url:'http://localhost:6006',reuseExistingServer:true,timeout:240000}]});

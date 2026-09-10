@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -78,13 +79,21 @@ export class TableIndexColumnComponent {
 
   // Bật/tắt cột STT (Số thứ tự) — STT tính theo global index khi phân trang
   // pageIndex * pageSize + i + 1 → trang 2 (pageSize 5) bắt đầu từ 6
-  index: ${enabled ? `{
+  index: ${
+    enabled
+      ? `{
     enabled: true,
     title: '${title}',     // mặc định '#'
     width: '${width}',     // mặc định '50px'
-  }` : `{ enabled: false }`},
-${sel ? `  selector: { visible: true },  // STT render ngay sau selector
-` : ''}
+  }`
+      : `{ enabled: false }`
+  },
+${
+  sel
+    ? `  selector: { visible: true },  // STT render ngay sau selector
+`
+    : ''
+}
   columns: [
     { field: 'code',      title: 'Mã đơn',   type: 'string' },
     { field: 'customer',  title: 'Khách',    type: 'string' },
@@ -143,3 +152,5 @@ ${sel ? `  selector: { visible: true },  // STT render ngay sau selector
     }));
   }
 }
+
+SdTabComponent({ component: TableIndexColumnComponent, name: 'sd-table — Cột STT (index)', icon: 'table_view' })(TableIndexColumnComponent);

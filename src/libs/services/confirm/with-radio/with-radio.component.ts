@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -17,18 +18,7 @@ type ButtonColor = 'primary' | 'secondary' | 'success' | 'error' | 'warning' | '
 @Component({
   selector: 'app-confirm-with-radio',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SdButton,
-    SdCodeEditor,
-    SdPageComponent,
-    SdSection,
-    SdInput,
-    SdLabel,
-    SdSelect,
-    SdSwitch,
-  ],
+  imports: [CommonModule, FormsModule, SdButton, SdCodeEditor, SdPageComponent, SdSection, SdInput, SdLabel, SdSelect, SdSwitch],
   templateUrl: './with-radio.component.html',
   styleUrls: ['./with-radio.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -139,3 +129,7 @@ export class MyComponent {
       });
   }
 }
+
+SdTabComponent({ component: ConfirmWithRadioComponent, name: 'Lựa chọn (.withRadio)', icon: 'settings_suggest' })(
+  ConfirmWithRadioComponent
+);

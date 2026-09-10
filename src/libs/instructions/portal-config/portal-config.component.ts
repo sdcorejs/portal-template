@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -5,7 +6,7 @@ import { SdSection } from '@sdcorejs/angular/components/section';
 import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
-import type { Language } from '@sdcorejs/angular/models';
+import type { Language } from '@sdcorejs/utils/models';
 
 import {
   DEFAULT_PORTAL_CONFIG,
@@ -36,6 +37,12 @@ export class PortalConfigComponent {
   language = signal<Language>(this.initial.language);
   useTabRouter = signal<boolean>(this.initial.useTabRouter);
 
+  sidebarVersion = signal<1 | 2 | 3>(this.initial.sidebarVersion);
+  sidebarOptions = [
+    { id: 1, name: 'Version 1 — Nhóm biểu tượng' },
+    { id: 2, name: 'Version 2 — Điều hướng hai tầng' },
+    { id: 3, name: 'Version 3 — Menu thu gọn' },
+  ];
   numberFormatOptions = [
     { id: '1.234.567,89', name: '1.234.567,89 — VN/EU (dấu chấm phân nhóm, dấu phẩy phần thập phân)' },
     { id: '1,234,567.89', name: '1,234,567.89 — US (dấu phẩy phân nhóm, dấu chấm phần thập phân)' },
@@ -60,7 +67,8 @@ export class PortalConfigComponent {
     () =>
       this.numberFormat() !== this.initial.numberFormat ||
       this.language() !== this.initial.language ||
-      this.useTabRouter() !== this.initial.useTabRouter
+      this.useTabRouter() !== this.initial.useTabRouter ||
+      this.sidebarVersion() !== this.initial.sidebarVersion
   );
 
   onSave(): void {
@@ -68,6 +76,7 @@ export class PortalConfigComponent {
       numberFormat: this.numberFormat(),
       language: this.language(),
       useTabRouter: this.useTabRouter(),
+      sidebarVersion: this.sidebarVersion(),
     };
     savePortalConfig(config);
     window.location.reload();
@@ -79,9 +88,7 @@ export class PortalConfigComponent {
     window.location.reload();
   }
 
-  defaultsCode = `const DEFAULT_PORTAL_CONFIG: PortalConfig = ${JSON.stringify(
-    DEFAULT_PORTAL_CONFIG,
-    null,
-    2
-  )};`;
+  defaultsCode = `const DEFAULT_PORTAL_CONFIG: PortalConfig = ${JSON.stringify(DEFAULT_PORTAL_CONFIG, null, 2)};`;
 }
+
+SdTabComponent({ component: PortalConfigComponent, name: 'Cấu hình Portal', icon: 'menu_book' })(PortalConfigComponent);

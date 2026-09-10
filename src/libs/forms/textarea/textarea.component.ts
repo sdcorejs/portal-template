@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -10,12 +11,24 @@ import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
 import { SdTextarea } from '@sdcorejs/angular/forms/textarea';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
-import { SdSize } from '@sdcorejs/angular/utilities/models';
+import { Size as SdSize } from '@sdcorejs/utils/models';
 
 @Component({
   selector: 'app-textarea-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdTextarea, SdCodeEditor, SdPageComponent, SdSection, SdInput, SdSelect, SdSwitch, SdLabel, SdInputNumber],
+  imports: [
+    CommonModule,
+    FormsModule,
+    SdTextarea,
+    SdCodeEditor,
+    SdPageComponent,
+    SdSection,
+    SdInput,
+    SdSelect,
+    SdSwitch,
+    SdLabel,
+    SdInputNumber,
+  ],
   templateUrl: './textarea.component.html',
   styleUrls: ['./textarea.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -67,3 +80,5 @@ export class MyComponent {
   value = 'Nội dung ghi chú...';
 }`;
 }
+
+SdTabComponent({ component: TextareaDemoComponent, name: 'SdTextarea Component', icon: 'edit_note' })(TextareaDemoComponent);

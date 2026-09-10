@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -77,3 +78,5 @@ export class ModalViewModesComponent {
 // onChildRender chỉ fire 1 lần — ngay lần open đầu tiên.
 // Lần open thứ 2 trở đi không gọi lại — DOM giữ nguyên.`;
 }
+
+SdTabComponent({ component: ModalViewModesComponent, name: 'sd-modal — View modes & Variants', icon: 'widgets' })(ModalViewModesComponent);

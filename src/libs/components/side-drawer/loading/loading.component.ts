@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -103,7 +104,7 @@ export class MyComponent {
 
   openLoadingDrawer(): void {
     this.lastClosedMessage.set('Đang trình diễn loading... chờ 1.8s');
-    
+
     this.drawer().open();
     this.drawer().startLoading();
 
@@ -116,3 +117,5 @@ export class MyComponent {
     this.lastClosedMessage.set('Drawer đã đóng lúc ' + new Date().toLocaleTimeString('vi-VN') + '.');
   }
 }
+
+SdTabComponent({ component: SideDrawerLoadingComponent, name: 'Trạng Thái Loading', icon: 'hourglass_top' })(SideDrawerLoadingComponent);

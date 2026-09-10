@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -82,7 +83,7 @@ export class TableBasicComponent {
       filter: { hideExternalFilterToolbar: true },
     };
     if (this.tableType() === 'server') {
-      return { ...shared, type: 'server', items: (fr, pq) => this.simulateServerCall(fr, pq) };
+      return { ...shared, type: 'server', items: fr => this.simulateServerCall(fr) };
     }
     return { ...shared, type: 'local', items: () => this.getMockData() };
   });
@@ -212,11 +213,7 @@ ${cfg ? `  config:   { visible: true },  // Nút thiết lập hiển thị cộ
   });
 
   // ── Server simulation ────────────────────────────────────────────────────────
-  private simulateServerCall(
-    filterRequest: SdTableFilterRequest<Employee>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    _pagingReq: any
-  ): Promise<{ items: Employee[]; total: number }> {
+  private simulateServerCall(filterRequest: SdTableFilterRequest<Employee>): Promise<{ items: Employee[]; total: number }> {
     const allData = this.getMockData();
     const { pageNumber, pageSize } = filterRequest;
     const items = allData.slice(pageNumber * pageSize, (pageNumber + 1) * pageSize);
@@ -253,3 +250,5 @@ ${cfg ? `  config:   { visible: true },  // Nút thiết lập hiển thị cộ
     }));
   }
 }
+
+SdTabComponent({ component: TableBasicComponent, name: 'sd-table — Cơ bản', icon: 'table_view' })(TableBasicComponent);

@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -37,7 +38,7 @@ export class SideDrawerAdvancedComponent {
   drawer = viewChild.required<SdSideDrawer>('drawer');
 
   pageDescription = signal(
-    'Mở rộng (Full Layout): Sử dụng các ng-content: [sdHeaderLeft], [sdHeaderRight], [sdFooter] để xây dựng giao diện chi tiết.'
+    'Mở rộng (Full Layout): Sử dụng các ng-content: [sdHeaderLeft], [sdHeaderRight], [sdFooterRight] để xây dựng giao diện chi tiết.'
   );
 
   drawerTitle = signal('Chi tiết hóa đơn');
@@ -58,7 +59,7 @@ export class SideDrawerAdvancedComponent {
     const footerBlock = this.showFooterActions()
       ? `
 
-  <div sdFooter>
+  <div sdFooterRight>
     <div class="d-flex justify-content-end gap-8 px-16">
       <sd-button title="Hủy bỏ" type="outline" color="secondary" (click)="drawer.close()"></sd-button>
       <sd-button title="Lưu thông tin" color="primary"></sd-button>
@@ -117,3 +118,5 @@ export class MyComponent {
     this.lastClosedMessage.set('Drawer đã đóng lúc ' + new Date().toLocaleTimeString('vi-VN') + '.');
   }
 }
+
+SdTabComponent({ component: SideDrawerAdvancedComponent, name: 'Đầy đủ header / footer', icon: 'widgets' })(SideDrawerAdvancedComponent);

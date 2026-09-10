@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +9,7 @@ import { SdInput } from '@sdcorejs/angular/forms/input';
 import { SdLabel } from '@sdcorejs/angular/forms/label';
 import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
-import { SdColor } from '@sdcorejs/angular/utilities/models';
+import { Color as SdColor } from '@sdcorejs/utils/models';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 
 @Component({
@@ -32,12 +33,12 @@ export class ButtonDemoComponent {
   suffixIcon = signal<string>('');
 
   // Các danh sách tùy chọn
-  types: SdButtonType[] = ['fill', 'light', 'outline', 'link'];
+  types: SdButtonType[] = ['fill', 'light', 'outline', 'text'];
   typeOptions = [
     { id: 'fill', name: 'Fill' },
     { id: 'light', name: 'Light' },
     { id: 'outline', name: 'Outline' },
-    { id: 'link', name: 'Link' },
+    { id: 'text', name: 'Link' },
   ];
   colors: SdColor[] = ['primary', 'secondary', 'success', 'warning', 'error', 'info'];
   colorOptions = [
@@ -58,7 +59,7 @@ export class ButtonDemoComponent {
   // Code HTML sinh tự động dựa trên trạng thái
   htmlCode = computed(() => {
     const props = [];
-    
+
     if (this.type()) props.push(`[type]="'${this.type()}'"`);
     if (this.color()) props.push(`[color]="'${this.color()}'"`);
     if (this.size()) props.push(`[size]="'${this.size()}'"`);
@@ -67,7 +68,7 @@ export class ButtonDemoComponent {
     if (this.prefixIcon()) props.push(`[prefixIcon]="'${this.prefixIcon()}'"`);
     if (this.suffixIcon()) props.push(`[suffixIcon]="'${this.suffixIcon()}'"`);
     if (this.title()) props.push(`[title]="'${this.title()}'"`);
-    
+
     props.push(`(click)="onClick($event)"`);
 
     // Format đẹp
@@ -99,3 +100,5 @@ export class MyComponent {
     alert('Thao tác click thành công!');
   }
 }
+
+SdTabComponent({ component: ButtonDemoComponent, name: 'SdButton Component', icon: 'widgets' })(ButtonDemoComponent);

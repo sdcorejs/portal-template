@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -6,7 +7,7 @@ import { SdSearchReq } from '@sdcorejs/angular/forms/models';
 import { SdQueryBar, SdQueryField } from '@sdcorejs/angular/components/query-bar';
 import { SdSection } from '@sdcorejs/angular/components/section';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
-import { Filter } from '@sdcorejs/angular/utilities/models';
+import { Filter } from '@sdcorejs/utils/models';
 
 interface Employee {
   id: number;
@@ -179,3 +180,5 @@ export class QueryBarFieldsComponent {
   { type: 'datetime', key: 'lastLogin', label: 'Đăng nhập cuối', operators: true },
 ];`;
 }
+
+SdTabComponent({ component: QueryBarFieldsComponent, name: 'sd-query-bar — 7 type field', icon: 'widgets' })(QueryBarFieldsComponent);

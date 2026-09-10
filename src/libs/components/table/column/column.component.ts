@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild, computed, effect, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -82,21 +83,16 @@ export class TableColumnComponent {
   }
 
   configCode = computed(() => {
-    const nameTitle = this.customTitleName()
-      ? `title: { title: 'Tên', templateRef: this.nameTitleTpl }`
-      : `title: 'Tên'`;
-    const nameCell = this.customCellName() || this.copyEnabled()
-      ? `cell: { ${this.customCellName() ? 'templateRef: this.nameCellTpl' : ''}${this.customCellName() && this.copyEnabled() ? ', ' : ''}${this.copyEnabled() ? 'copiable: true' : ''} }`
-      : '';
-    const noteCell = this.truncateEnabled()
-      ? `cell: { truncate: { enable: true, type: 'tooltip' } }`
-      : '';
+    const nameTitle = this.customTitleName() ? `title: { title: 'Tên', templateRef: this.nameTitleTpl }` : `title: 'Tên'`;
+    const nameCell =
+      this.customCellName() || this.copyEnabled()
+        ? `cell: { ${this.customCellName() ? 'templateRef: this.nameCellTpl' : ''}${this.customCellName() && this.copyEnabled() ? ', ' : ''}${this.copyEnabled() ? 'copiable: true' : ''} }`
+        : '';
+    const noteCell = this.truncateEnabled() ? `cell: { truncate: { enable: true, type: 'tooltip' } }` : '';
     const statusTitle = this.customTitleStatus()
       ? `title: { title: 'Trạng thái', templateRef: this.statusTitleTpl }`
       : `title: 'Trạng thái'`;
-    const statusCell = this.customCellStatus()
-      ? `cell: { templateRef: this.statusCellTpl }`
-      : '';
+    const statusCell = this.customCellStatus() ? `cell: { templateRef: this.statusCellTpl }` : '';
 
     return `columns: SdTableColumn<EmployeeColumnDemo>[] = [
   { field: 'id', title: 'ID', type: 'number', width: '70px', align: 'right' },
@@ -171,9 +167,7 @@ export class TableColumnComponent {
       },
       {
         field: 'fullName',
-        title: this.customTitleName()
-          ? { title: 'Tên', templateRef: this.nameTitleTpl }
-          : 'Tên',
+        title: this.customTitleName() ? { title: 'Tên', templateRef: this.nameTitleTpl } : 'Tên',
         type: 'string',
         width: '220px',
         cell: {
@@ -186,15 +180,11 @@ export class TableColumnComponent {
         title: 'Ghi chú',
         type: 'string',
         width: '260px',
-        cell: this.truncateEnabled()
-          ? { truncate: { enable: true, type: 'tooltip' } }
-          : {},
+        cell: this.truncateEnabled() ? { truncate: { enable: true, type: 'tooltip' } } : {},
       },
       {
         field: 'isActive',
-        title: this.customTitleStatus()
-          ? { title: 'Trạng thái', templateRef: this.statusTitleTpl }
-          : 'Trạng thái',
+        title: this.customTitleStatus() ? { title: 'Trạng thái', templateRef: this.statusTitleTpl } : 'Trạng thái',
         type: 'boolean',
         width: '150px',
         cell: this.customCellStatus() ? { templateRef: this.statusCellTpl } : {},
@@ -223,3 +213,5 @@ export class TableColumnComponent {
     }));
   }
 }
+
+SdTabComponent({ component: TableColumnComponent, name: 'sd-table — Tùy chỉnh cột', icon: 'table_view' })(TableColumnComponent);

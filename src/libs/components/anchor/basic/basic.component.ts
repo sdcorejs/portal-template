@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -125,3 +126,5 @@ import { SdAnchor, SdAnchorItem } from '@sdcorejs/angular/components/anchor';
 })
 export class AnchorDemoComponent {}`;
 }
+
+SdTabComponent({ component: AnchorBasicComponent, name: 'Cơ Bản', icon: 'widgets' })(AnchorBasicComponent);

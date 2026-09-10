@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild, computed, signal } from '@angular/core';
 import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
@@ -133,3 +134,5 @@ onBuyClick(event: MouseEvent): void {
     alert('Đã bấm Mua ngay');
   }
 }
+
+SdTabComponent({ component: TooltipDemoComponent, name: 'sdTooltip Directive', icon: 'construction' })(TooltipDemoComponent);

@@ -43,3 +43,6 @@ Thumbs.db
 
 # Firebase cache
 .firebase/
+/storybook-static
+/playwright-report
+/test-results

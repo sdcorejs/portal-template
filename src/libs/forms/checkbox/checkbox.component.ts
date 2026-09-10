@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -63,3 +64,5 @@ export class MyComponent {
   value = signal<boolean>(true);
 }`;
 }
+
+SdTabComponent({ component: CheckboxDemoComponent, name: 'SdCheckbox Component', icon: 'edit_note' })(CheckboxDemoComponent);

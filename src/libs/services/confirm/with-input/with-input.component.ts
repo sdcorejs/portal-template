@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -114,3 +115,5 @@ export class MyComponent {
       });
   }
 }
+
+SdTabComponent({ component: ConfirmWithInputComponent, name: 'Nhập văn bản (.withInput)', icon: 'edit_note' })(ConfirmWithInputComponent);

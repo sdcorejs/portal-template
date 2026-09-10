@@ -1,3 +1,4 @@
+@use './styles/reference';
 @use '@sdcorejs/angular/assets/scss/themes/default' as sd;
 @use '@angular/material' as mat;
 
@@ -43,18 +44,20 @@ html {
 .demo-config-panel {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
 }
 
 .config-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: stretch;
+  flex-direction: column;
+  justify-content: flex-start;
   gap: 12px;
-  padding: 10px 12px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  padding: 0 0 16px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--sd-border);
+  border-radius: 0;
 
   sd-input,
   sd-select,
@@ -62,7 +65,8 @@ html {
   sd-date,
   sd-datetime,
   sd-textarea {
-    width: 180px;
+    width: 100%;
+    min-width: 0;
     flex-shrink: 0;
   }
 
@@ -86,13 +90,13 @@ html {
   &__title {
     font-size: 12px;
     font-weight: 600;
-    color: #1e293b;
+    color: var(--sd-text);
     font-family: monospace;
   }
 
   &__desc {
     font-size: 11px;
-    color: #64748b;
+    color: var(--sd-text-secondary);
     line-height: 1.4;
   }
 }
@@ -109,7 +113,9 @@ html {
   border-radius: 8px;
   background: #fff;
   cursor: pointer;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 
   &--active {
     border-color: var(--theme-primary-default);

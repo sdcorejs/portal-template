@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -6,7 +7,7 @@ import { SdQueryBar, SdQueryField } from '@sdcorejs/angular/components/query-bar
 import { SdSection } from '@sdcorejs/angular/components/section';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
-import { Filter } from '@sdcorejs/angular/utilities/models';
+import { Filter } from '@sdcorejs/utils/models';
 
 interface Employee {
   id: number;
@@ -93,7 +94,7 @@ export class QueryBarBasicComponent {
   }
 
   tsCode = `import { SdQueryBar, SdQueryField } from '@sdcorejs/angular/components/query-bar';
-import { Filter } from '@sdcorejs/angular/utilities/models';
+import { Filter } from '@sdcorejs/utils/models';
 
 @Component({
   selector: 'app-employee-list',
@@ -126,3 +127,5 @@ export class EmployeeListComponent {
   }
 }`;
 }
+
+SdTabComponent({ component: QueryBarBasicComponent, name: 'sd-query-bar — Cơ bản', icon: 'widgets' })(QueryBarBasicComponent);

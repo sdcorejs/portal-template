@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -40,23 +41,22 @@ export class PreviewImageDemoComponent {
   // ── Data sets ──────────────────────────────────────────────────────────────
   readonly imageSets: Record<ImageSet, string[]> = {
     multi: [
-      'https://picsum.photos/seed/sd1/1600/1000',
-      'https://picsum.photos/seed/sd2/1200/1600',
-      'https://picsum.photos/seed/sd3/2000/1200',
-      'https://picsum.photos/seed/sd4/1400/1400',
-      'https://picsum.photos/seed/sd5/1800/900',
-      'https://picsum.photos/seed/sd6/1000/1500',
+      'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221600%22%20height%3D%221000%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23e8f0fa%22%2F%3E%3Ccircle%20cx%3D%2250%25%22%20cy%3D%2242%25%22%20r%3D%22200%22%20fill%3D%22%238eb9dd%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2275%25%22%20text-anchor%3D%22middle%22%20font-size%3D%2270%22%20fill%3D%22%23234567%22%3ESample%20sd1%3C%2Ftext%3E%3C%2Fsvg%3E',
+      'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%221600%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23e8f0fa%22%2F%3E%3Ccircle%20cx%3D%2250%25%22%20cy%3D%2242%25%22%20r%3D%22200%22%20fill%3D%22%238eb9dd%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2275%25%22%20text-anchor%3D%22middle%22%20font-size%3D%2270%22%20fill%3D%22%23234567%22%3ESample%20sd2%3C%2Ftext%3E%3C%2Fsvg%3E',
+      'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%222000%22%20height%3D%221200%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23e8f0fa%22%2F%3E%3Ccircle%20cx%3D%2250%25%22%20cy%3D%2242%25%22%20r%3D%22200%22%20fill%3D%22%238eb9dd%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2275%25%22%20text-anchor%3D%22middle%22%20font-size%3D%2270%22%20fill%3D%22%23234567%22%3ESample%20sd3%3C%2Ftext%3E%3C%2Fsvg%3E',
+      'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221400%22%20height%3D%221400%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23e8f0fa%22%2F%3E%3Ccircle%20cx%3D%2250%25%22%20cy%3D%2242%25%22%20r%3D%22200%22%20fill%3D%22%238eb9dd%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2275%25%22%20text-anchor%3D%22middle%22%20font-size%3D%2270%22%20fill%3D%22%23234567%22%3ESample%20sd4%3C%2Ftext%3E%3C%2Fsvg%3E',
+      'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221800%22%20height%3D%22900%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23e8f0fa%22%2F%3E%3Ccircle%20cx%3D%2250%25%22%20cy%3D%2242%25%22%20r%3D%22200%22%20fill%3D%22%238eb9dd%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2275%25%22%20text-anchor%3D%22middle%22%20font-size%3D%2270%22%20fill%3D%22%23234567%22%3ESample%20sd5%3C%2Ftext%3E%3C%2Fsvg%3E',
+      'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221000%22%20height%3D%221500%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23e8f0fa%22%2F%3E%3Ccircle%20cx%3D%2250%25%22%20cy%3D%2242%25%22%20r%3D%22200%22%20fill%3D%22%238eb9dd%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2275%25%22%20text-anchor%3D%22middle%22%20font-size%3D%2270%22%20fill%3D%22%23234567%22%3ESample%20sd6%3C%2Ftext%3E%3C%2Fsvg%3E',
     ],
-    single: ['https://picsum.photos/seed/single/1920/1080'],
+    single: [
+      'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221920%22%20height%3D%221080%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23e8f0fa%22%2F%3E%3Ccircle%20cx%3D%2250%25%22%20cy%3D%2242%25%22%20r%3D%22200%22%20fill%3D%22%238eb9dd%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2275%25%22%20text-anchor%3D%22middle%22%20font-size%3D%2270%22%20fill%3D%22%23234567%22%3ESample%20single%3C%2Ftext%3E%3C%2Fsvg%3E',
+    ],
     empty: [],
-    broken: [
-      'https://example.invalid/not-a-real-image-1.jpg',
-      'https://example.invalid/not-a-real-image-2.jpg',
-    ],
+    broken: ['https://example.invalid/not-a-real-image-1.jpg', 'https://example.invalid/not-a-real-image-2.jpg'],
     mixed: [
-      'https://picsum.photos/seed/mix1/1600/1000',
+      'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221600%22%20height%3D%221000%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23e8f0fa%22%2F%3E%3Ccircle%20cx%3D%2250%25%22%20cy%3D%2242%25%22%20r%3D%22200%22%20fill%3D%22%238eb9dd%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2275%25%22%20text-anchor%3D%22middle%22%20font-size%3D%2270%22%20fill%3D%22%23234567%22%3ESample%20mix1%3C%2Ftext%3E%3C%2Fsvg%3E',
       'https://example.invalid/broken.jpg',
-      'https://picsum.photos/seed/mix3/1200/800',
+      'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22800%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23e8f0fa%22%2F%3E%3Ccircle%20cx%3D%2250%25%22%20cy%3D%2242%25%22%20r%3D%22200%22%20fill%3D%22%238eb9dd%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2275%25%22%20text-anchor%3D%22middle%22%20font-size%3D%2270%22%20fill%3D%22%23234567%22%3ESample%20mix3%3C%2Ftext%3E%3C%2Fsvg%3E',
     ],
   };
 
@@ -107,7 +107,8 @@ export class PreviewImageDemoComponent {
   );
 
   // ── Generated TS code ──────────────────────────────────────────────────────
-  tsCode = computed(() => `import { SdPreviewImage } from '@sdcorejs/angular/components/preview';
+  tsCode = computed(
+    () => `import { SdPreviewImage } from '@sdcorejs/angular/components/preview';
 
 @Component({
   selector: 'app-image-viewer',
@@ -142,7 +143,8 @@ export class ImageViewerComponent {
   onActiveIndex(i: number) {}
   onDownload(e: { index: number; item: NormalizedImage }) {}
   onError(e: { index: number; reason: string }) {}
-}`);
+}`
+  );
 
   // ── Event handlers ─────────────────────────────────────────────────────────
   onClose(): void {
@@ -170,3 +172,5 @@ export class ImageViewerComponent {
     this.onClose();
   }
 }
+
+SdTabComponent({ component: PreviewImageDemoComponent, name: 'sd-preview-image — Viewer ảnh', icon: 'widgets' })(PreviewImageDemoComponent);

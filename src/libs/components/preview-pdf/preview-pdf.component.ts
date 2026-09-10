@@ -1,17 +1,11 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SdButton } from '@sdcorejs/angular/components/button';
 import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
 import { SdModal } from '@sdcorejs/angular/components/modal';
-import {
-  PdfErrorEvent,
-  PdfLoadEvent,
-  PdfSidebarMode,
-  PdfSource,
-  PdfZoomMode,
-  SdPreviewPdf,
-} from '@sdcorejs/angular/components/preview';
+import { PdfErrorEvent, PdfLoadEvent, PdfSidebarMode, PdfSource, PdfZoomMode, SdPreviewPdf } from '@sdcorejs/angular/components/preview';
 import { SdSection } from '@sdcorejs/angular/components/section';
 import { SdInput } from '@sdcorejs/angular/forms/input';
 import { SdSelect } from '@sdcorejs/angular/forms/select';
@@ -45,8 +39,10 @@ export class PreviewPdfDemoComponent {
 
   // ── Data sets ──────────────────────────────────────────────────────────────
   readonly pdfSets: Record<PdfSet, PdfSource | null> = {
-    sample: 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf',
-    small: 'https://raw.githubusercontent.com/mozilla/pdf.js/master/test/pdfs/basicapi.pdf',
+    sample:
+      'data:application/pdf;base64,JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9Db3VudCAzIC9LaWRzIFs0IDAgUiA2IDAgUiA4IDAgUl0gPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL0ZvbnQgL1N1YnR5cGUgL1R5cGUxIC9CYXNlRm9udCAvSGVsdmV0aWNhID4+CmVuZG9iago0IDAgb2JqCjw8IC9UeXBlIC9QYWdlIC9QYXJlbnQgMiAwIFIgL01lZGlhQm94IFswIDAgNTk1IDg0Ml0gL1Jlc291cmNlcyA8PCAvRm9udCA8PCAvRjEgMyAwIFIgPj4gPj4gL0NvbnRlbnRzIDUgMCBSID4+CmVuZG9iago1IDAgb2JqCjw8IC9MZW5ndGggNTMgPj4Kc3RyZWFtCkJUIC9GMSAyNCBUZiA2MCA3NTAgVGQgKFBvcnRhbCBzYW1wbGUgLSBwYWdlIDEpIFRqIEVUCmVuZHN0cmVhbQplbmRvYmoKNiAwIG9iago8PCAvVHlwZSAvUGFnZSAvUGFyZW50IDIgMCBSIC9NZWRpYUJveCBbMCAwIDU5NSA4NDJdIC9SZXNvdXJjZXMgPDwgL0ZvbnQgPDwgL0YxIDMgMCBSID4+ID4+IC9Db250ZW50cyA3IDAgUiA+PgplbmRvYmoKNyAwIG9iago8PCAvTGVuZ3RoIDUzID4+CnN0cmVhbQpCVCAvRjEgMjQgVGYgNjAgNzUwIFRkIChQb3J0YWwgc2FtcGxlIC0gcGFnZSAyKSBUaiBFVAplbmRzdHJlYW0KZW5kb2JqCjggMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA1OTUgODQyXSAvUmVzb3VyY2VzIDw8IC9Gb250IDw8IC9GMSAzIDAgUiA+PiA+PiAvQ29udGVudHMgOSAwIFIgPj4KZW5kb2JqCjkgMCBvYmoKPDwgL0xlbmd0aCA1MyA+PgpzdHJlYW0KQlQgL0YxIDI0IFRmIDYwIDc1MCBUZCAoUG9ydGFsIHNhbXBsZSAtIHBhZ2UgMykgVGogRVQKZW5kc3RyZWFtCmVuZG9iagp4cmVmCjAgMTAKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAwNTggMDAwMDAgbiAKMDAwMDAwMDEyNyAwMDAwMCBuIAowMDAwMDAwMTk3IDAwMDAwIG4gCjAwMDAwMDAzMjMgMDAwMDAgbiAKMDAwMDAwMDQyNiAwMDAwMCBuIAowMDAwMDAwNTUyIDAwMDAwIG4gCjAwMDAwMDA2NTUgMDAwMDAgbiAKMDAwMDAwMDc4MSAwMDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDEwIC9Sb290IDEgMCBSID4+CnN0YXJ0eHJlZgo4ODQKJSVFT0Y=',
+    small:
+      'data:application/pdf;base64,JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9Db3VudCAxIC9LaWRzIFs0IDAgUl0gPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL0ZvbnQgL1N1YnR5cGUgL1R5cGUxIC9CYXNlRm9udCAvSGVsdmV0aWNhID4+CmVuZG9iago0IDAgb2JqCjw8IC9UeXBlIC9QYWdlIC9QYXJlbnQgMiAwIFIgL01lZGlhQm94IFswIDAgNTk1IDg0Ml0gL1Jlc291cmNlcyA8PCAvRm9udCA8PCAvRjEgMyAwIFIgPj4gPj4gL0NvbnRlbnRzIDUgMCBSID4+CmVuZG9iago1IDAgb2JqCjw8IC9MZW5ndGggNTMgPj4Kc3RyZWFtCkJUIC9GMSAyNCBUZiA2MCA3NTAgVGQgKFBvcnRhbCBzYW1wbGUgLSBwYWdlIDEpIFRqIEVUCmVuZHN0cmVhbQplbmRvYmoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAwNTggMDAwMDAgbiAKMDAwMDAwMDExNSAwMDAwMCBuIAowMDAwMDAwMTg1IDAwMDAwIG4gCjAwMDAwMDAzMTEgMDAwMDAgbiAKdHJhaWxlcgo8PCAvU2l6ZSA2IC9Sb290IDEgMCBSID4+CnN0YXJ0eHJlZgo0MTQKJSVFT0Y=',
     empty: null,
     broken: 'https://example.invalid/not-a-real.pdf',
   };
@@ -119,7 +115,8 @@ export class PreviewPdfDemoComponent {
   });
 
   // ── Generated TS code ──────────────────────────────────────────────────────
-  tsCode = computed(() => `import { SdPreviewPdf, PdfLoadEvent, PdfErrorEvent } from '@sdcorejs/angular/components/preview';
+  tsCode = computed(
+    () => `import { SdPreviewPdf, PdfLoadEvent, PdfErrorEvent } from '@sdcorejs/angular/components/preview';
 
 @Component({
   selector: 'app-pdf-viewer',
@@ -156,7 +153,8 @@ export class PdfViewerComponent {
   onDownload(e: { filename }) {}
   onError(e: PdfErrorEvent)    { /* reason: invalid|password|network|unknown */ }
   onClose()                    {}
-}`);
+}`
+  );
 
   // ── Event handlers ─────────────────────────────────────────────────────────
   onFilePick(event: Event): void {
@@ -202,3 +200,5 @@ export class PdfViewerComponent {
     this.onClose();
   }
 }
+
+SdTabComponent({ component: PreviewPdfDemoComponent, name: 'sd-preview-pdf — Viewer PDF', icon: 'widgets' })(PreviewPdfDemoComponent);

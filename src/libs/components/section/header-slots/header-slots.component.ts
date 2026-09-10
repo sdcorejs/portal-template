@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -12,18 +13,7 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 @Component({
   selector: 'app-section-header-slots',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SdSection,
-    SdSectionItem,
-    SdButton,
-    SdCodeEditor,
-    SdPageComponent,
-    SdInput,
-    SdSwitch,
-    SdLabel,
-  ],
+  imports: [CommonModule, FormsModule, SdSection, SdSectionItem, SdButton, SdCodeEditor, SdPageComponent, SdInput, SdSwitch, SdLabel],
   templateUrl: './header-slots.component.html',
   styleUrls: ['./header-slots.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,7 +30,7 @@ export class SectionHeaderSlotsComponent {
   showEditBtn = signal(true);
   showDeleteBtn = signal(false);
   showStatusBadge = signal(true);
-  collapsable = signal(false);
+  collapsible = signal(false);
 
   // ── Config cho playground sdHeaderLeft ───────────────────────────────────
   customIcon = signal('💼');
@@ -49,20 +39,16 @@ export class SectionHeaderSlotsComponent {
 
   // ── Auto-generated code cho sdHeaderRight ────────────────────────────────
   htmlHeaderRightCode = computed(() => {
-    const btnEdit = this.showEditBtn()
-      ? `\n    <sd-button title="Chỉnh sửa" type="light" size="sm" prefixIcon="edit"></sd-button>`
-      : '';
+    const btnEdit = this.showEditBtn() ? `\n    <sd-button title="Chỉnh sửa" type="light" size="sm" prefixIcon="edit"></sd-button>` : '';
     const btnDelete = this.showDeleteBtn()
       ? `\n    <sd-button title="Xoá" type="light" size="sm" prefixIcon="delete" [color]="'error'"></sd-button>`
       : '';
-    const badge = this.showStatusBadge()
-      ? `\n    <span class="c-status-badge">Đang hiệu lực</span>`
-      : '';
-    const collapsableAttr = this.collapsable() ? `\n  collapsable` : '';
+    const badge = this.showStatusBadge() ? `\n    <span class="c-status-badge">Đang hiệu lực</span>` : '';
+    const collapsibleAttr = this.collapsible() ? `\n  collapsible` : '';
 
     return `<sd-section
   title="${this.sectionTitle()}"
-  icon="description"${collapsableAttr}>
+  icon="description"${collapsibleAttr}>
 
   <!-- [sdHeaderRight]: nội dung nằm ở phần phải header -->
   <div sdHeaderRight class="d-flex align-items-center gap-8">${badge}${btnEdit}${btnDelete}
@@ -105,7 +91,7 @@ export class MyComponent {
 }`;
 
   htmlCombinedCode = `<!-- Kết hợp cả hai slot: sdHeaderLeft + sdHeaderRight -->
-<sd-section collapsable>
+<sd-section collapsible>
 
   <!-- Tuỳ biến hoàn toàn phần trái header -->
   <div sdHeaderLeft class="d-flex align-items-center gap-12">
@@ -125,3 +111,5 @@ export class MyComponent {
   <p>Nội dung chi tiết hợp đồng...</p>
 </sd-section>`;
 }
+
+SdTabComponent({ component: SectionHeaderSlotsComponent, name: 'Tùy Chỉnh Header', icon: 'widgets' })(SectionHeaderSlotsComponent);

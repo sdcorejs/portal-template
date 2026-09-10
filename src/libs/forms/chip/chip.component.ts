@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -6,7 +7,7 @@ import { SdSection } from '@sdcorejs/angular/components/section';
 import { SdChip } from '@sdcorejs/angular/forms/chip';
 import { SdInput } from '@sdcorejs/angular/forms/input';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
-import { SdSize } from '@sdcorejs/angular/utilities/models';
+import { Size as SdSize } from '@sdcorejs/utils/models';
 import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
 import { SdLabel } from '@sdcorejs/angular/forms/label';
@@ -78,3 +79,5 @@ export class MyComponent {
   chipValue: (string | number)[] = ['JavaScript', 'TypeScript', 'Angular'];
 }`;
 }
+
+SdTabComponent({ component: ChipDemoComponent, name: 'SdChip Component', icon: 'edit_note' })(ChipDemoComponent);

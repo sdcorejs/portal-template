@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +8,7 @@ import { SdSection } from '@sdcorejs/angular/components/section';
 import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
-import { Filter } from '@sdcorejs/angular/utilities/models';
+import { Filter } from '@sdcorejs/utils/models';
 
 interface Employee {
   id: number;
@@ -22,16 +23,7 @@ interface Employee {
 @Component({
   selector: 'app-query-bar-modes',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SdCodeEditor,
-    SdPageComponent,
-    SdQueryBar,
-    SdSection,
-    SdSelect,
-    SdSwitch,
-  ],
+  imports: [CommonModule, FormsModule, SdCodeEditor, SdPageComponent, SdQueryBar, SdSection, SdSelect, SdSwitch],
   templateUrl: './modes.component.html',
   styleUrls: ['./modes.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -116,7 +108,8 @@ export class QueryBarModesComponent {
     this.applyCount.update(n => n + 1);
   }
 
-  tsCode = computed(() => `<sd-query-bar
+  tsCode = computed(
+    () => `<sd-query-bar
   [fields]="fields"
   [(filters)]="filters"
   [(logic)]="logic"
@@ -143,5 +136,8 @@ export class QueryBarModesComponent {
  * showOperatorOnChip: in operator label lên mặt chip (mặc định ẩn, chỉ trong popover).
  * showClearAll:      nút "Xoá hết" khi có filter active.
  * showSearch:        free-text search box bên trái.
- */`);
+ */`
+  );
 }
+
+SdTabComponent({ component: QueryBarModesComponent, name: 'sd-query-bar — Modes & Density', icon: 'widgets' })(QueryBarModesComponent);

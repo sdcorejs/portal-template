@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -9,7 +10,7 @@ import { SdLabel } from '@sdcorejs/angular/forms/label';
 import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
-import { SdSize } from '@sdcorejs/angular/utilities/models';
+import { Size as SdSize } from '@sdcorejs/utils/models';
 
 @Component({
   selector: 'app-date-demo',
@@ -66,3 +67,5 @@ export class MyComponent {
   value = '1990/01/01'; // YYYY/MM/DD
 }`;
 }
+
+SdTabComponent({ component: DateDemoComponent, name: 'SdDate Component', icon: 'calendar_month' })(DateDemoComponent);

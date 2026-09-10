@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -10,12 +11,24 @@ import { SdLabel } from '@sdcorejs/angular/forms/label';
 import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
-import { SdSize } from '@sdcorejs/angular/utilities/models';
+import { Size as SdSize } from '@sdcorejs/utils/models';
 
 @Component({
   selector: 'app-input-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, SdInput, SdCodeEditor, SdPageComponent, SdSection, SdSelect, SdSwitch, SdLabel, SdSuffixDefDirective],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatIconModule,
+    SdInput,
+    SdCodeEditor,
+    SdPageComponent,
+    SdSection,
+    SdSelect,
+    SdSwitch,
+    SdLabel,
+    SdSuffixDefDirective,
+  ],
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -56,11 +69,7 @@ export class InputDemoComponent {
   );
 
   suffixPlaceholder = computed(() =>
-    this.suffixMode() === 'icon'
-      ? 'Ví dụ: search, person'
-      : this.suffixMode() === 'text'
-        ? 'Ví dụ: .vn, kg'
-        : 'Không sử dụng'
+    this.suffixMode() === 'icon' ? 'Ví dụ: search, person' : this.suffixMode() === 'text' ? 'Ví dụ: .vn, kg' : 'Không sử dụng'
   );
 
   suffixPreviewLabel = computed(() => {
@@ -116,3 +125,5 @@ export class MyComponent {
   value = 'Nguyễn Văn A';
 }`;
 }
+
+SdTabComponent({ component: InputDemoComponent, name: 'SdInput Component', icon: 'edit_note' })(InputDemoComponent);

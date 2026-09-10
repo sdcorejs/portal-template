@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -21,7 +22,9 @@ type SwitchColor = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'e
 })
 export class SwitchDemoComponent {
   // Tokens
-  pageDescription = signal<string>('Công tắc nhị phân qua sd-switch: nhận giá trị boolean, hỗ trợ nhiều bộ màu Color, disabled, required, ẩn inline-error.');
+  pageDescription = signal<string>(
+    'Công tắc nhị phân qua sd-switch: nhận giá trị boolean, hỗ trợ nhiều bộ màu Color, disabled, required, ẩn inline-error.'
+  );
   label = signal<string>('Nhận thông báo qua email');
   modelValue = signal<boolean>(true);
   color = signal<SwitchColor>('primary');
@@ -64,3 +67,5 @@ export class MyComponent {
   value = signal<boolean>(true);
 }`;
 }
+
+SdTabComponent({ component: SwitchDemoComponent, name: 'SdSwitch Component', icon: 'edit_note' })(SwitchDemoComponent);

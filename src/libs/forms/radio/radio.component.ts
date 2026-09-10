@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -34,7 +35,9 @@ export class RadioDemoComponent {
   ];
 
   // Tokens
-  pageDescription = signal<string>('Lựa chọn đơn từ danh sách option qua sd-radio. Có 2 layout row/column, hỗ trợ disabled, required và view-only.');
+  pageDescription = signal<string>(
+    'Lựa chọn đơn từ danh sách option qua sd-radio. Có 2 layout row/column, hỗ trợ disabled, required và view-only.'
+  );
   label = signal<string>('Giới tính');
   modelValue = signal<string | number | boolean | null | undefined>('male');
   display = signal<'row' | 'column'>('row');
@@ -87,3 +90,5 @@ export class MyComponent {
   ];
 }`;
 }
+
+SdTabComponent({ component: RadioDemoComponent, name: 'SdRadio Component', icon: 'edit_note' })(RadioDemoComponent);

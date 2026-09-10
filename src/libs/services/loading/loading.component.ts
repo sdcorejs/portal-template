@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { DemoHarness } from '../../shared/demo-harness';
 import { SdButton } from '@sdcorejs/angular/components/button';
 import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
 import { SdSection } from '@sdcorejs/angular/components/section';
@@ -17,6 +19,10 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 })
 export class LoadingDemoComponent {
   readonly #loadingService = inject(SdLoadingService);
+  readonly #harness = new DemoHarness();
+  constructor() {
+    inject(DestroyRef).onDestroy(() => this.#harness.destroy());
+  }
 
   pageDescription = signal<string>('Dịch vụ hiển thị overlay loading, hỗ trợ gắn vào bất kỳ phần tử DOM nào.');
 
@@ -61,10 +67,12 @@ export class MyComponent {
     this.isRunning.set(true);
     this.#loadingService.start(selector);
 
-    setTimeout(() => {
+    const timer = setTimeout(() => release(), this.duration());
+    const release = this.#harness.own(() => {
+      clearTimeout(timer);
       this.#loadingService.stop(selector);
       this.isRunning.set(false);
-    }, this.duration());
+    });
   }
 
   stopLoading() {
@@ -72,3 +80,5 @@ export class MyComponent {
     this.isRunning.set(false);
   }
 }
+
+SdTabComponent({ component: LoadingDemoComponent, name: 'SdLoadingService', icon: 'hourglass_top' })(LoadingDemoComponent);

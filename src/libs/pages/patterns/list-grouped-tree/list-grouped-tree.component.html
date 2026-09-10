@@ -1,0 +1,26 @@
+<div class="list-shell" [hidden]="view() === 'create' || view() === 'detail'">
+  <sd-page title="Danh mục sản phẩm"
+    ><sd-button headerRight title="Tạo mới" type="fill" color="primary" prefixIcon="add" (click)="create()" />
+    <div class="list-content">
+      <sd-table autoId="list-grouped-tree" [option]="treeOption()">
+        <ng-template sdTableCellDef="code" let-row="item">
+          <a [href]="navigation.href('detail', row.id)" class="record-link" (click)="navigation.openLink($event, row.id)">{{ row.code }}</a>
+        </ng-template>
+      </sd-table>
+    </div></sd-page
+  >
+</div>
+@if (view() === 'create') {
+  @if (store.kind === 'order') {
+    <app-form-line-items [embedded]="true" (done)="back()" />
+  } @else {
+    <app-form-sections [embedded]="true" (done)="back()" />
+  }
+}
+@if (view() === 'detail') {
+  @if (store.kind === 'order') {
+    <app-detail-related-records [embedded]="true" (done)="back()" />
+  } @else {
+    <app-detail-overview [embedded]="true" (done)="back()" />
+  }
+}

@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,23 +9,12 @@ import { SdLabel } from '@sdcorejs/angular/forms/label';
 import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
-import { SdColor } from '@sdcorejs/angular/utilities/models';
+import { Color as SdColor } from '@sdcorejs/utils/models';
 
 @Component({
   selector: 'app-section-basic',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SdSection,
-    SdSectionItem,
-    SdCodeEditor,
-    SdPageComponent,
-    SdInput,
-    SdSelect,
-    SdSwitch,
-    SdLabel,
-  ],
+  imports: [CommonModule, FormsModule, SdSection, SdSectionItem, SdCodeEditor, SdPageComponent, SdInput, SdSelect, SdSwitch, SdLabel],
   templateUrl: './basic.component.html',
   styleUrls: ['./basic.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,10 +29,9 @@ export class SectionBasicComponent {
   subTitle = signal('Thông tin cơ bản');
   icon = signal('person');
   iconColor = signal<SdColor>('primary');
-  collapsable = signal(false);
+  collapsible = signal(false);
   collapsed = signal(false);
   hideHeader = signal(false);
-  noPaddingBody = signal(false);
 
   iconColorOptions = [
     { id: 'primary', name: 'Primary (xanh chính)' },
@@ -60,17 +49,11 @@ export class SectionBasicComponent {
     if (this.subTitle()) props.push(`subTitle="${this.subTitle()}"`);
     if (this.icon()) props.push(`icon="${this.icon()}"`);
     if (this.iconColor() !== 'primary') props.push(`[iconColor]="'${this.iconColor()}'"`);
-    if (this.collapsable()) props.push(`collapsable`);
+    if (this.collapsible()) props.push(`collapsible`);
     if (this.collapsed()) props.push(`[(collapsed)]="isCollapsed"`);
     if (this.hideHeader()) props.push(`hideHeader`);
-    if (this.noPaddingBody()) props.push(`noPaddingBody`);
 
-    const propsStr =
-      props.length > 3
-        ? `\n  ${props.join('\n  ')}`
-        : props.length > 0
-          ? ` ${props.join(' ')}`
-          : '';
+    const propsStr = props.length > 3 ? `\n  ${props.join('\n  ')}` : props.length > 0 ? ` ${props.join(' ')}` : '';
 
     return `<sd-section${propsStr}>
   <p>Nội dung hiển thị trong body của section.</p>
@@ -90,3 +73,5 @@ export class MyComponent {
   isCollapsed = false;
 }`;
 }
+
+SdTabComponent({ component: SectionBasicComponent, name: 'Cơ Bản', icon: 'widgets' })(SectionBasicComponent);

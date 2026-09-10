@@ -20,7 +20,9 @@
             "outputPath": "dist/portal-template",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -28,18 +30,23 @@
                 "glob": "**/*",
                 "input": "public"
               },
-              "src/logo.png",
               "src/assets",
-              "src/silent-check-sso.html",
-              "src/auth-service-error.html",
               {
                 "glob": "**/*",
                 "input": "node_modules/ngx-extended-pdf-viewer/assets/",
                 "output": "assets/"
               }
             ],
-            "styles": ["./node_modules/@sdcorejs/angular/assets/scss/sd-core.scss", "src/styles.scss"],
-            "scripts": []
+            "styles": [
+              "./node_modules/@sdcorejs/angular/assets/scss/sd-core.scss",
+              "src/styles.scss"
+            ],
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -71,7 +78,7 @@
                 }
               ],
               "optimization": {
-                "scripts": false,
+                "scripts": true,
                 "styles": true
               },
               "sourceMap": {
@@ -122,6 +129,10 @@
                   "with": "src/environments/environment.qc.ts"
                 }
               ]
+            },
+            "storybook": {
+              "optimization": false,
+              "sourceMap": false
             }
           },
           "defaultConfiguration": "production"
@@ -147,7 +158,10 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -156,21 +170,48 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "browserTarget": "portal-template:build:storybook",
+            "port": 6006,
+            "compodoc": false,
+            "tsConfig": ".storybook/tsconfig.json"
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "browserTarget": "portal-template:build:storybook",
+            "outputDir": "storybook-static",
+            "compodoc": false,
+            "tsConfig": ".storybook/tsconfig.json"
           }
         }
       }
     }
   },
   "cli": {
-    "schematicCollections": ["angular-eslint"],
+    "schematicCollections": [
+      "angular-eslint"
+    ],
     "analytics": "25b0c87d-1882-437c-a88f-4f97b6bec23d"
   },
   "schematics": {
@@ -200,4 +241,3 @@
     }
   }
 }
-

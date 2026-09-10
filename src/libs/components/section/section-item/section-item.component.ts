@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -11,17 +12,7 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 @Component({
   selector: 'app-section-item-demo',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SdSection,
-    SdSectionItem,
-    SdCodeEditor,
-    SdPageComponent,
-    SdInput,
-    SdSwitch,
-    SdLabel,
-  ],
+  imports: [CommonModule, FormsModule, SdSection, SdSectionItem, SdCodeEditor, SdPageComponent, SdInput, SdSwitch, SdLabel],
   templateUrl: './section-item.component.html',
   styleUrls: ['./section-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,17 +20,16 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 export class SectionItemDemoComponent {
   pageDescription = signal(
     'SdSectionItem dùng bên trong sd-section để trình bày dữ liệu theo dạng nhãn–giá trị. ' +
-      'Luôn bật noPaddingBody trên sd-section để border giữa các item hiển thị liền mạch hết chiều rộng. ' +
+      'Core 22 giữ body không padding để border giữa các item liền mạch. ' +
       'Tùy chỉnh độ rộng cột nhãn qua labelWidth (mặc định 150px).'
   );
 
   // ── Interactive config ────────────────────────────────────────────────────
-  noPaddingBody = signal(true);
   labelWidth = signal('150px');
 
   // ── Static code examples ──────────────────────────────────────────────────
-  htmlGoodCode = `<!-- ✅ Đúng: noPaddingBody + sd-section-item -->
-<sd-section title="Thông tin khách hàng" icon="person" noPaddingBody>
+  htmlGoodCode = `<!-- ✅ Đúng: sd-section-item -->
+<sd-section title="Thông tin khách hàng" icon="person">
   <sd-section-item label="Họ và tên">Nguyễn Văn A</sd-section-item>
   <sd-section-item label="Email">nguyen.van.a@email.com</sd-section-item>
   <sd-section-item label="Số điện thoại">0901 234 567</sd-section-item>
@@ -47,7 +37,7 @@ export class SectionItemDemoComponent {
 </sd-section>`;
 
   htmlLabelWidthCode = `<!-- Tuỳ chỉnh labelWidth cho từng item hoặc đồng bộ toàn bộ -->
-<sd-section title="Thông tin hợp đồng" icon="description" noPaddingBody>
+<sd-section title="Thông tin hợp đồng" icon="description">
   <!-- labelWidth mặc định: 150px -->
   <sd-section-item label="Số hợp đồng">HD-2025-001</sd-section-item>
 
@@ -73,3 +63,5 @@ import { SdSection, SdSectionItem } from '@sdcorejs/angular/components/section';
 })
 export class MyComponent {}`;
 }
+
+SdTabComponent({ component: SectionItemDemoComponent, name: 'Kết Hợp SdSectionItem', icon: 'widgets' })(SectionItemDemoComponent);

@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -35,7 +36,7 @@ export class SideDrawerBasicComponent {
   drawer = viewChild.required<SdSideDrawer>('drawer');
 
   pageDescription = signal(
-    'Mặc định (Content thuần): Sử dụng nội dung truyền trực tiếp vào body (thẻ <ng-content> default), không sử dụng sdHeaderLeft, sdHeaderRight, hay sdFooter.'
+    'Mặc định (Content thuần): Sử dụng nội dung truyền trực tiếp vào body (thẻ <ng-content> default), không sử dụng sdHeaderLeft, sdHeaderRight, hay sdFooterRight.'
   );
 
   drawerTitle = signal('Ghi chú đơn giản');
@@ -92,3 +93,5 @@ export class MyComponent {
     this.lastClosedMessage.set('Drawer đã đóng lúc ' + new Date().toLocaleTimeString('vi-VN') + '.');
   }
 }
+
+SdTabComponent({ component: SideDrawerBasicComponent, name: 'Cơ Bản (Content Thuần)', icon: 'widgets' })(SideDrawerBasicComponent);

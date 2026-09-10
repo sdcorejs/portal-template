@@ -1,0 +1,42 @@
+<div class="row">
+  <div [class]="extended() ? 'col-12 col-md-6 mb-16' : 'col-12 mb-16'">
+    <sd-section title="Thông tin chung"
+      ><div class="p-24 d-flex flex-column gap-16">
+        <sd-input label="Mã hồ sơ" name="code" [form]="form()" [model]="seed().code" [disabled]="editing()" required /><sd-input
+          label="Tên hồ sơ"
+          name="name"
+          [form]="form()"
+          [model]="seed().name"
+          required
+          [maxlength]="160" /><sd-select
+          label="Trạng thái"
+          name="status"
+          [form]="form()"
+          [model]="seed().status"
+          [items]="statuses"
+          valueField="id"
+          displayField="name"
+          required /></div
+    ></sd-section>
+  </div>
+  @if (extended()) {
+    <div class="col-12 col-md-6 mb-16">
+      <sd-section title="Thông tin phối hợp"
+        ><div class="p-24 d-flex flex-column gap-16">
+          <sd-input label="Email liên hệ" name="email" type="email" [form]="form()" [model]="seed().email" /><sd-select
+            label="Khu vực"
+            name="group"
+            [form]="form()"
+            [model]="seed().group"
+            [items]="groups"
+            valueField="id"
+            displayField="name" /><sd-input-number
+            label="Giá trị (VND)"
+            name="amount"
+            [form]="form()"
+            [model]="seed().amount"
+            [min]="0" /><sd-textarea label="Ghi chú phối hợp" name="description" [form]="form()" [model]="seed().description" /></div
+      ></sd-section>
+    </div>
+  }
+</div>

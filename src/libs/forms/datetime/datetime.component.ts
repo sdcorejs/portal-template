@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -10,7 +11,7 @@ import { SdLabel } from '@sdcorejs/angular/forms/label';
 import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
-import { SdSize } from '@sdcorejs/angular/utilities/models';
+import { Size as SdSize } from '@sdcorejs/utils/models';
 
 @Component({
   selector: 'app-datetime-demo',
@@ -32,7 +33,7 @@ export class DatetimeDemoComponent {
   viewed = signal<boolean>(false);
   min = signal<string>('');
   max = signal<string>('');
-  
+
   sizes: SdSize[] = ['sm', 'md', 'lg'];
   sizeOptions = [
     { id: 'sm', name: 'Small' },
@@ -67,3 +68,5 @@ export class MyComponent {
   value = '2024/04/02 14:30';
 }`;
 }
+
+SdTabComponent({ component: DatetimeDemoComponent, name: 'SdDatetime Component', icon: 'calendar_month' })(DatetimeDemoComponent);

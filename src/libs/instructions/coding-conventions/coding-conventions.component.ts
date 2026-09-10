@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
@@ -14,8 +15,8 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
         <div class="d-flex flex-column gap-16">
           <sd-section title="Mục tiêu" icon="rule">
             <div class="guide-note">
-              Module này dành riêng cho dev, dùng để thống nhất cách viết CSS/SCSS trong dự án. Mục tiêu chính là:
-              giảm xung đột global style, tăng khả năng tái sử dụng, và dễ maintain khi codebase lớn dần.
+              Module này dành riêng cho dev, dùng để thống nhất cách viết CSS/SCSS trong dự án. Mục tiêu chính là: giảm xung đột global
+              style, tăng khả năng tái sử dụng, và dễ maintain khi codebase lớn dần.
             </div>
           </sd-section>
 
@@ -34,7 +35,10 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
             <div class="rule-explain mt-12">
               <div><strong>Diễn giải:</strong> Không dùng id và không đặt tên class quá chung chung ở cấp global.</div>
               <div>Hãy đặt prefix <strong>.c-</strong> cho root class của component để nhìn vào là biết style thuộc component nào.</div>
-              <div>Những class phổ biến như <strong>.action</strong>, <strong>.title</strong> vẫn được phép dùng ở bên trong root class đã có prefix.</div>
+              <div>
+                Những class phổ biến như <strong>.action</strong>, <strong>.title</strong> vẫn được phép dùng ở bên trong root class đã có
+                prefix.
+              </div>
             </div>
           </sd-section>
 
@@ -71,7 +75,10 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 
             <div class="rule-explain mt-12">
               <div><strong>Diễn giải:</strong> Không override style component con bằng SCSS global vì dễ leak style sang nơi khác.</div>
-              <div>Khi cần override sâu, ưu tiên phạm vi host với <strong>:host ::ng-deep</strong> để giới hạn ảnh hưởng trong component hiện tại.</div>
+              <div>
+                Khi cần override sâu, ưu tiên phạm vi host với <strong>:host ::ng-deep</strong> để giới hạn ảnh hưởng trong component hiện
+                tại.
+              </div>
               <div>Rule này đặc biệt quan trọng với màn hình phức tạp có nested component và style từ thư viện core.</div>
             </div>
           </sd-section>
@@ -145,8 +152,7 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CodingConventionsComponent {
-  pageDescription =
-    'Tài liệu quy ước coding cho dev: naming CSS/SCSS, tái sử dụng giao diện, và nguyên tắc override style component con.';
+  pageDescription = 'Tài liệu quy ước coding cho dev: naming CSS/SCSS, tái sử dụng giao diện, và nguyên tắc override style component con.';
 
   cssNamingDont = `/* Không nên sử dụng id */
 #header {
@@ -202,3 +208,5 @@ export class CodingConventionsComponent {
   }
 }`;
 }
+
+SdTabComponent({ component: CodingConventionsComponent, name: 'Coding Conventions', icon: 'menu_book' })(CodingConventionsComponent);

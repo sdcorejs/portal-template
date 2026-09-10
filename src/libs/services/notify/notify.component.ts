@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -17,7 +18,19 @@ export type ToastType = 'success' | 'info' | 'warning' | 'error';
 @Component({
   selector: 'app-notify-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdButton, SdCodeEditor, SdPageComponent, SdSection, SdInput, SdInputNumber, SdSelect, SdSwitch, SdLabel],
+  imports: [
+    CommonModule,
+    FormsModule,
+    SdButton,
+    SdCodeEditor,
+    SdPageComponent,
+    SdSection,
+    SdInput,
+    SdInputNumber,
+    SdSelect,
+    SdSwitch,
+    SdLabel,
+  ],
   templateUrl: './notify.component.html',
   styleUrls: ['./notify.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -56,9 +69,7 @@ export class NotifyDemoComponent {
       opts.push(`onAction: () => console.log('Action clicked')`);
     }
 
-    const optionsString = opts.length > 0 
-      ? `, {\n      ${opts.join(',\n      ')}\n    }` 
-      : '';
+    const optionsString = opts.length > 0 ? `, {\n      ${opts.join(',\n      ')}\n    }` : '';
 
     return `import { Component, inject } from '@angular/core';
 import { SdNotifyService } from '@sdcorejs/angular/services/notify';
@@ -85,7 +96,9 @@ export class MyComponent {
       ...(this.title() && { title: this.title() }),
       ...(this.actionLabel() && {
         actionLabel: this.actionLabel(),
-        onAction: () => { alert('Action clicked!'); },
+        onAction: () => {
+          alert('Action clicked!');
+        },
       }),
     };
 
@@ -105,5 +118,6 @@ export class MyComponent {
       },
     });
   }
-
 }
+
+SdTabComponent({ component: NotifyDemoComponent, name: 'Notify Service', icon: 'notifications' })(NotifyDemoComponent);

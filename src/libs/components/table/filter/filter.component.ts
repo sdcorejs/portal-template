@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -72,9 +73,7 @@ export class TableFilterComponent {
         title: 'Họ và tên',
         type: 'string',
         width: '200px',
-        filter: this.enableNameOperator()
-          ? { operator: { enable: true, list: ['CONTAIN', 'EQUAL', 'START_WITH'] } }
-          : undefined,
+        filter: this.enableNameOperator() ? { operator: { enable: true, list: ['CONTAIN', 'EQUAL', 'START_WITH'] } } : undefined,
       },
       { field: 'email', title: 'Email', type: 'string', width: '220px' },
       {
@@ -115,11 +114,17 @@ export class TableFilterComponent {
         ? [
             { field: 'fullName', title: 'Họ và tên', type: 'string', defaultShowing: true },
             {
-              field: 'department', title: 'Phòng ban', type: 'values', defaultShowing: true,
+              field: 'department',
+              title: 'Phòng ban',
+              type: 'values',
+              defaultShowing: true,
               option: { items: DEPARTMENT_OPTIONS, valueField: 'id', displayField: 'name', selection: 'MULTIPLE' },
             },
             {
-              field: 'level', title: 'Cấp độ', type: 'values', defaultShowing: true,
+              field: 'level',
+              title: 'Cấp độ',
+              type: 'values',
+              defaultShowing: true,
               option: { items: LEVEL_OPTIONS, valueField: 'id', displayField: 'name', selection: 'MULTIPLE' },
             },
             { field: 'salary', title: 'Mức lương (VNĐ)', type: 'number', defaultShowing: true },
@@ -202,8 +207,16 @@ export class TableFilterComponent {
 
   private getMockData(): Employee[] {
     const firstNames = [
-      'Văn An', 'Thị Bình', 'Hoàng Cường', 'Thu Dung', 'Minh Đức',
-      'Thị Lan', 'Văn Hùng', 'Thị Mai', 'Quang Nam', 'Thị Oanh',
+      'Văn An',
+      'Thị Bình',
+      'Hoàng Cường',
+      'Thu Dung',
+      'Minh Đức',
+      'Thị Lan',
+      'Văn Hùng',
+      'Thị Mai',
+      'Quang Nam',
+      'Thị Oanh',
     ];
     const lastNames = ['Nguyễn', 'Trần', 'Lê', 'Phạm', 'Hoàng', 'Vũ', 'Đặng', 'Bùi', 'Đỗ', 'Ngô'];
     const depts = ['IT', 'HR', 'FIN', 'MKT', 'OPS'];
@@ -220,3 +233,5 @@ export class TableFilterComponent {
     }));
   }
 }
+
+SdTabComponent({ component: TableFilterComponent, name: 'sd-table — Bộ lọc', icon: 'table_view' })(TableFilterComponent);

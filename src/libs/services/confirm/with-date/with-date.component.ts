@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -17,18 +18,7 @@ type ButtonColor = 'primary' | 'secondary' | 'success' | 'error' | 'warning' | '
 @Component({
   selector: 'app-confirm-with-date',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SdButton,
-    SdCodeEditor,
-    SdPageComponent,
-    SdSection,
-    SdInput,
-    SdLabel,
-    SdSelect,
-    SdSwitch,
-  ],
+  imports: [CommonModule, FormsModule, SdButton, SdCodeEditor, SdPageComponent, SdSection, SdInput, SdLabel, SdSelect, SdSwitch],
   templateUrl: './with-date.component.html',
   styleUrls: ['./with-date.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -112,3 +102,5 @@ export class MyComponent {
       });
   }
 }
+
+SdTabComponent({ component: ConfirmWithDateComponent, name: 'Chọn ngày (.withDate)', icon: 'calendar_month' })(ConfirmWithDateComponent);

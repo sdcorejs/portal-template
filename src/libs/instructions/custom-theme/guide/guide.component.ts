@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
 import { SdSection } from '@sdcorejs/angular/components/section';
@@ -95,3 +96,7 @@ $custom-theme: mat.m2-define-light-theme((
   }
 }`;
 }
+
+SdTabComponent({ component: CustomThemeGuideComponent, name: 'Hướng dẫn tùy chỉnh Theme cho Portal', icon: 'menu_book' })(
+  CustomThemeGuideComponent
+);

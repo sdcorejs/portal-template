@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -11,12 +12,25 @@ import { SdLabel } from '@sdcorejs/angular/forms/label';
 import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
-import { SdSize } from '@sdcorejs/angular/utilities/models';
+import { Size as SdSize } from '@sdcorejs/utils/models';
 
 @Component({
   selector: 'app-input-number-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, SdInputNumber, SdCodeEditor, SdPageComponent, SdSection, SdInput, SdSelect, SdSwitch, SdLabel, SdSuffixDefDirective],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatIconModule,
+    SdInputNumber,
+    SdCodeEditor,
+    SdPageComponent,
+    SdSection,
+    SdInput,
+    SdSelect,
+    SdSwitch,
+    SdLabel,
+    SdSuffixDefDirective,
+  ],
   templateUrl: './input-number.component.html',
   styleUrls: ['./input-number.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -58,11 +72,7 @@ export class InputNumberDemoComponent {
   );
 
   suffixPlaceholder = computed(() =>
-    this.suffixMode() === 'icon'
-      ? 'Ví dụ: payments, calculate'
-      : this.suffixMode() === 'text'
-        ? 'Ví dụ: VNĐ, kg, %'
-        : 'Không sử dụng'
+    this.suffixMode() === 'icon' ? 'Ví dụ: payments, calculate' : this.suffixMode() === 'text' ? 'Ví dụ: VNĐ, kg, %' : 'Không sử dụng'
   );
 
   suffixPreviewLabel = computed(() => {
@@ -119,3 +129,5 @@ export class MyComponent {
   value = 1500000;
 }`;
 }
+
+SdTabComponent({ component: InputNumberDemoComponent, name: 'SdInputNumber Component', icon: 'edit_note' })(InputNumberDemoComponent);

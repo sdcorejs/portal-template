@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -6,7 +7,7 @@ import { SdSection } from '@sdcorejs/angular/components/section';
 import { SdChipCalendar } from '@sdcorejs/angular/forms/chip-calendar';
 import { SdInput } from '@sdcorejs/angular/forms/input';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
-import { SdSize } from '@sdcorejs/angular/utilities/models';
+import { Size as SdSize } from '@sdcorejs/utils/models';
 import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
 import { SdLabel } from '@sdcorejs/angular/forms/label';
@@ -32,7 +33,9 @@ import { SdLabel } from '@sdcorejs/angular/forms/label';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChipCalendarDemoComponent {
-  pageDescription = signal<string>('Thành phần chọn danh sách ngày tháng từ calendar popup, hỗ trợ thêm/xóa ngày và quản lý danh sách ngày (Định dạng: yyyy/MM/dd).');
+  pageDescription = signal<string>(
+    'Thành phần chọn danh sách ngày tháng từ calendar popup, hỗ trợ thêm/xóa ngày và quản lý danh sách ngày (Định dạng: yyyy/MM/dd).'
+  );
 
   // Configuration signals
   label = signal<string>('Chọn các ngày');
@@ -75,3 +78,7 @@ export class MyComponent {
   selectedDates = signal<string[]>(['2026/04/17', '2026/04/18', '2026/04/20']);
 }`;
 }
+
+SdTabComponent({ component: ChipCalendarDemoComponent, name: 'SdChipCalendar Component', icon: 'calendar_month' })(
+  ChipCalendarDemoComponent
+);

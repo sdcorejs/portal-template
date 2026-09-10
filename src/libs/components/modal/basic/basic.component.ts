@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -13,18 +14,7 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 @Component({
   selector: 'app-modal-basic',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SdButton,
-    SdCodeEditor,
-    SdInput,
-    SdModal,
-    SdPageComponent,
-    SdSection,
-    SdSelect,
-    SdSwitch,
-  ],
+  imports: [CommonModule, FormsModule, SdButton, SdCodeEditor, SdInput, SdModal, SdPageComponent, SdSection, SdSelect, SdSwitch],
   templateUrl: './basic.component.html',
   styleUrls: ['./basic.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -57,7 +47,8 @@ export class ModalBasicComponent {
 
   lastClosedAt = signal('—');
 
-  htmlCode = computed(() => `<sd-button title="Mở modal" (click)="modal.open()"></sd-button>
+  htmlCode = computed(
+    () => `<sd-button title="Mở modal" (click)="modal.open()"></sd-button>
 
 <sd-modal
   #modal
@@ -73,7 +64,8 @@ export class ModalBasicComponent {
   <div sdFooter>
     <sd-button title="Đóng" type="outline" (click)="modal.close()"></sd-button>
   </div>
-</sd-modal>`);
+</sd-modal>`
+  );
 
   tsCode = `import { viewChild } from '@angular/core';
 import { SdModal } from '@sdcorejs/angular/components/modal';
@@ -107,3 +99,5 @@ export class MyComponent {
     this.lastClosedAt.set(new Date().toLocaleTimeString('vi-VN'));
   }
 }
+
+SdTabComponent({ component: ModalBasicComponent, name: 'sd-modal — Cơ bản', icon: 'widgets' })(ModalBasicComponent);

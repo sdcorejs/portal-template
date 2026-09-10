@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
@@ -11,43 +12,36 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 @Component({
   selector: 'app-validation-demo',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SdPageComponent,
-    SdSection,
-    SdInput,
-    SdSelect,
-    SdButton,
-    SdCodeEditor,
-  ],
+  imports: [CommonModule, FormsModule, SdPageComponent, SdSection, SdInput, SdSelect, SdButton, SdCodeEditor],
   templateUrl: './validation.component.html',
   styleUrls: ['./validation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ValidationDemoComponent {
-  pageDescription = signal<string>('Demo cách hiển thị lỗi validation mặc định và cách dùng hideInlineError trong bối cảnh ô nhập nằm trong cell table.');
+  pageDescription = signal<string>(
+    'Demo cách hiển thị lỗi validation mặc định và cách dùng hideInlineError trong bối cảnh ô nhập nằm trong cell table.'
+  );
 
   formValidation = new FormGroup({});
   tableInlineForm = new FormGroup({});
   tableHideForm = new FormGroup({});
   formPattern = new FormGroup({});
 
-  basicInput = signal<any>(null);
-  basicPattern = signal<any>(null);
-  basicSelect = signal<any>(null);
+  basicInput = signal<string | number | boolean | (string | number)[] | null>(null);
+  basicPattern = signal<string | number | boolean | (string | number)[] | null>(null);
+  basicSelect = signal<string | number | boolean | (string | number)[] | null>(null);
 
-  tableInlineName = signal<any>(null);
-  tableInlineDepartment = signal<any>(null);
+  tableInlineName = signal<string | number | boolean | (string | number)[] | null>(null);
+  tableInlineDepartment = signal<string | number | boolean | (string | number)[] | null>(null);
 
-  tableHideName = signal<any>(null);
-  tableHideDepartment = signal<any>(null);
+  tableHideName = signal<string | number | boolean | (string | number)[] | null>(null);
+  tableHideDepartment = signal<string | number | boolean | (string | number)[] | null>(null);
 
-  patternEmail       = signal<any>(null);
-  patternPhone       = signal<any>(null);
-  patternPhoneVn     = signal<any>(null);
-  patternIdOrPass    = signal<any>(null);
-  patternTime        = signal<any>(null);
+  patternEmail = signal<string | number | boolean | (string | number)[] | null>(null);
+  patternPhone = signal<string | number | boolean | (string | number)[] | null>(null);
+  patternPhoneVn = signal<string | number | boolean | (string | number)[] | null>(null);
+  patternIdOrPass = signal<string | number | boolean | (string | number)[] | null>(null);
+  patternTime = signal<string | number | boolean | (string | number)[] | null>(null);
 
   departments = [
     { id: 'hr', name: 'Nhân sự' },
@@ -55,7 +49,8 @@ export class ValidationDemoComponent {
     { id: 'sales', name: 'Kinh doanh' },
   ];
 
-  htmlCode = computed(() => `<!-- 1. Validation cơ bản với regex tùy chỉnh -->
+  htmlCode = computed(
+    () => `<!-- 1. Validation cơ bản với regex tùy chỉnh -->
 <sd-input
   label="Mã nhân viên"
   [(model)]="employeeCode"
@@ -78,7 +73,8 @@ export class ValidationDemoComponent {
   [form]="tableForm"
   required
   hideInlineError>
-</sd-input>`);
+</sd-input>`
+  );
 
   validateBasic(): void {
     this.formValidation.markAllAsTouched();
@@ -128,3 +124,5 @@ export class ValidationDemoComponent {
     this.patternTime.set(null);
   }
 }
+
+SdTabComponent({ component: ValidationDemoComponent, name: 'Validation & hideInlineError', icon: 'edit_note' })(ValidationDemoComponent);

@@ -21,8 +21,8 @@ interface TsRule {
         <div class="d-flex flex-column gap-16">
           <sd-section title="Mục tiêu" icon="rule">
             <div class="guide-note">
-              Quy ước TypeScript dành cho dev nhằm giảm any, đặt tên rõ nghĩa, và tạo code dễ đọc/dễ bảo trì.
-              Mỗi quy tắc dưới đây được trình bày theo cặp Don\'t / Do và có diễn giải ngắn gọn.
+              Quy ước TypeScript dành cho dev nhằm giảm any, đặt tên rõ nghĩa, và tạo code dễ đọc/dễ bảo trì. Mỗi quy tắc dưới đây được
+              trình bày theo cặp Don't / Do và có diễn giải ngắn gọn.
             </div>
           </sd-section>
 
@@ -116,22 +116,19 @@ export class CodingConventionsTypescriptComponent {
       title: '1) Khai báo name cho output() của component',
       dont: `onSave = output<void>();\nclick = output<void>(); // Không sử dụng các native name`,
       do: `save = output<void>();`,
-      explain:
-        'Tên output nên là hành động ngắn gọn (save, submit, close...) và tránh trùng tên native event như click, change, input.',
+      explain: 'Tên output nên là hành động ngắn gọn (save, submit, close...) và tránh trùng tên native event như click, change, input.',
     },
     {
       title: '2) Tên hàm được trigger bởi sự kiện output()',
       dont: `save = () => { }`,
       do: `onSave = () => { }`,
-      explain:
-        'Handler function nên có prefix on để đọc là biết đây là callback được trigger bởi event/output.',
+      explain: 'Handler function nên có prefix on để đọc là biết đây là callback được trigger bởi event/output.',
     },
     {
       title: '3) Khai báo biến (tránh any)',
       dont: `order: any;\norder = {};\norders: any[];\norders = [];`,
       do: `order: Order = {}; // hoặc Partial<Order>\norders: Order[] = [];\ndonVi: DonVi;\ndsDonVi: DonVi[];`,
-      explain:
-        'Ưu tiên khai báo type rõ ràng, tránh any. Được phép đặt tên tiếng Việt nếu không có từ tiếng Anh tương đương rõ nghĩa.',
+      explain: 'Ưu tiên khai báo type rõ ràng, tránh any. Được phép đặt tên tiếng Việt nếu không có từ tiếng Anh tương đương rõ nghĩa.',
     },
     {
       title: '4) Khai báo hàm có type tham số',
@@ -150,22 +147,19 @@ export class CodingConventionsTypescriptComponent {
       title: '6) Tên biến số nhiều',
       dont: `order: Order[];\nid: string[];\nitemSelecteds: Item[];\nstatus: Status[];\norders: [];`,
       do: `orders: Order[]; // hoặc listOrder\nids: string[]; // hoặc listId\nselectedItems: Item[]; // hoặc selectedItemList\nstatusList: Status[];`,
-      explain:
-        'Biến mảng nên thể hiện tính chất số nhiều rõ ràng: ids, orders, selectedItems, ... tránh đặt tên mơ hồ.',
+      explain: 'Biến mảng nên thể hiện tính chất số nhiều rõ ràng: ids, orders, selectedItems, ... tránh đặt tên mơ hồ.',
     },
     {
       title: '7) Tên biến bool',
       dont: `select: bool;\nstock: bool;\navailable: bool;`,
       do: `isSelected: bool;\nhasStock: bool;\nisAvailable: bool;`,
-      explain:
-        'Bool nên dùng tính từ và thường có prefix is/has để đọc code tự nhiên hơn trong điều kiện if/return.',
+      explain: 'Bool nên dùng tính từ và thường có prefix is/has để đọc code tự nhiên hơn trong điều kiện if/return.',
     },
     {
       title: '8) Tên biến ngày/tháng',
       dont: `dateCreate: string | Date;\ndateOff: string | Date;\ndateOn: string | Date;`,
       do: `createdDate: string | Date;\noffDate: string | Date;\nonDate: string | Date;`,
-      explain:
-        'Date nên để ở suffix (createdDate, updatedDate...). Rule này có thể linh hoạt với field model từ server trả về.',
+      explain: 'Date nên để ở suffix (createdDate, updatedDate...). Rule này có thể linh hoạt với field model từ server trả về.',
     },
     {
       title: '9) Hàm chỉ dùng nội bộ file component',
@@ -183,15 +177,13 @@ export class CodingConventionsTypescriptComponent {
       title: '11) Biến chỉ dùng nội bộ trong hàm',
       dont: `shipments: Shipment[];\n#init = async () => {\n  this.#shipments = await ...\n  ...\n}`,
       do: `#init = async () => {\n  const shipments = await ...\n  ...\n}`,
-      explain:
-        'Nếu biến chỉ phục vụ logic trong 1 hàm, ưu tiên const local thay vì nâng cấp thành state cấp class.',
+      explain: 'Nếu biến chỉ phục vụ logic trong 1 hàm, ưu tiên const local thay vì nâng cấp thành state cấp class.',
     },
     {
       title: '12) Hàm callback chỉ dùng 1 chỗ và ngắn (< 50 dòng)',
       dont: `#init = async () => {\n  this.gridOption = {\n    commands: [{\n      icon: 'edit',\n      click: this.#onClick\n    }]\n  }\n}\n\n#onClick = (value: <type>, rowData: <type>) => {\n  ...\n}`,
       do: `#init = async () => {\n  this.gridOption = {\n    commands: [{\n      icon: 'edit',\n      click: (value, rowData) => {\n        ...\n      }\n    }]\n  }\n}`,
-      explain:
-        'Với callback ngắn và chỉ dùng 1 nơi, inline sẽ dễ theo dõi context hơn và thường được suy diễn type từ config gốc.',
+      explain: 'Với callback ngắn và chỉ dùng 1 nơi, inline sẽ dễ theo dõi context hơn và thường được suy diễn type từ config gốc.',
     },
     {
       title: '13) Naming Request/Response cho service API',

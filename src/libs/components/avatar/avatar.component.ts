@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -12,17 +13,7 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 @Component({
   selector: 'app-avatar-demo',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SdCodeEditor,
-    SdPageComponent,
-    SdSection,
-    SdAvatar,
-    SdInput,
-    SdInputNumber,
-    SdLabel,
-  ],
+  imports: [CommonModule, FormsModule, SdCodeEditor, SdPageComponent, SdSection, SdAvatar, SdInput, SdInputNumber, SdLabel],
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -70,3 +61,5 @@ export class MyComponent {
     this.src.set('Nguyen Van A');
   }
 }
+
+SdTabComponent({ component: AvatarDemoComponent, name: 'SdAvatar Component', icon: 'widgets' })(AvatarDemoComponent);

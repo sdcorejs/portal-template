@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -34,9 +35,7 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 export class SideDrawerCustomComponent {
   drawer = viewChild.required<SdSideDrawer>('drawer');
 
-  pageDescription = signal(
-    'Tùy biến Custom Style: Ghi đè class css toàn cục cho tính linh hoạt cao nhất thông qua drawerClass property.'
-  );
+  pageDescription = signal('Tùy biến Custom Style: Ghi đè class css toàn cục cho tính linh hoạt cao nhất thông qua drawerClass property.');
 
   drawerTitle = signal('Cài đặt hệ thống');
   width = signal('460px');
@@ -64,7 +63,7 @@ export class SideDrawerCustomComponent {
     <p>Thuộc tính custom.</p>
   </div>
 
-  <div sdFooter>
+  <div sdFooterRight>
     <div class="d-flex justify-content-end gap-8 px-16">
       <sd-button title="Hủy bỏ" type="outline" color="secondary" (click)="drawer.close()"></sd-button>
       <sd-button title="Tiếp tục" color="primary"></sd-button>
@@ -126,3 +125,5 @@ export class MyComponent {
     this.lastClosedMessage.set('Drawer custom đã đóng lúc ' + new Date().toLocaleTimeString('vi-VN') + '.');
   }
 }
+
+SdTabComponent({ component: SideDrawerCustomComponent, name: 'Tùy biến Css (drawerClass)', icon: 'widgets' })(SideDrawerCustomComponent);

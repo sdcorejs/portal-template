@@ -1,3 +1,4 @@
+import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -102,6 +103,7 @@ export class TableTreeComponent {
     type: 'local',
     key: 'table-tree-demo',
     tree: {
+      loadType: 'static',
       childrenKey: 'children',
       maxDepth: this.maxDepth(),
       defaultExpanded: this.resolveDefaultExpanded(),
@@ -133,10 +135,7 @@ export class TableTreeComponent {
 
   // ── Generated TS snippet ───────────────────────────────────────────────────
   tsCode = computed(() => {
-    const expanded =
-      this.defaultExpandedMode() === 'level'
-        ? this.expandLevel()
-        : this.defaultExpandedMode();
+    const expanded = this.defaultExpandedMode() === 'level' ? this.expandLevel() : this.defaultExpandedMode();
     return `interface BudgetItem {
   id: string;
   stt: string;
@@ -152,6 +151,7 @@ tableOption: SdTableOption<BudgetItem> = {
 
   // ─── TREE CONFIG ──────────────────────────────────────────────
   tree: {
+      loadType: 'static',
     childrenKey: 'children',     // tên field chứa mảng con (mặc định)
     maxDepth: ${this.maxDepth()},                  // giới hạn độ sâu render
     defaultExpanded: ${typeof expanded === 'number' ? expanded : expanded},   // false | true | số cấp
@@ -227,3 +227,5 @@ tableOption: SdTableOption<BudgetItem> = {
     ];
   }
 }
+
+SdTabComponent({ component: TableTreeComponent, name: 'sd-table — Tree (cây)', icon: 'table_view' })(TableTreeComponent);

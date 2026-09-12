@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { DEMO_INVENTORY } from '../src/libs/shared/demo-inventory';
+import { DEMO_INVENTORY } from '../src/shared/demo-inventory';
 test('[case-ac-002 case-ac-003 case-ac-012] CASE-STORYBOOK: components/forms/services are indexed and interactive', async ({
   page,
   request,

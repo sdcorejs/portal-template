@@ -1,10 +1,39 @@
-# Portal Template — Core 22.2.7
+# Portal Template — Core 22.2.8
 
-Portal Angular gồm thư viện Components/Forms/Services và 12 trang nghiệp vụ tương tác để consumer/AI tham khảo.
+Portal Angular gồm thư viện Components/Forms/Services, 14 page nghiệp vụ tương tác và 17 bài Instructions để developer/consumer/AI tham khảo.
+
+## Instructions — 6 nhóm, 17 bài
+
+Mở [Instructions](http://localhost:2208/instructions/getting-started/overview). Mỗi bài có sơ đồ đầu trang (phóng to được), mục tiêu, các bước với file/code/kết quả, ví dụ tương tác mặc định, Reset, code copy, checklist và nguồn Confluence.
+
+| Nhóm | Bài viết |
+| --- | --- |
+| Bắt đầu | Tổng quan Portal & Core; Cài đặt và chạy dự án |
+| Kiến trúc & tích hợp | Module & Feature; Routing & Public API; Configuration & API; Tích hợp module vào Portal |
+| Angular hiện đại | Dependency Injection; Signals & Component APIs |
+| Phân quyền | Permission, Group & Role; Menu, Route & Action; Quyền dữ liệu & Assignment Context |
+| Coding Conventions | TypeScript & Naming; CSS/SCSS & UI Spacing; Chất lượng code & Accessibility |
+| Công cụ & cấu hình | Git & Submodules; Theme & Design Tokens; Cấu hình Portal |
+
+Permission bắt buộc theo `MODULE_ENTITY_TYPE_ACTION`: `CRM_CUSTOMER_C_CREATE` (FE), `CRM_CUSTOMER_A_CREATE` (BE), `CRM_CUSTOMER_G_CREATE` (nhóm nghiệp vụ). UI gán Role chỉ chọn nhóm G với nhãn nghiệp vụ. Demo phân giải hợp quyền, giữ quyền giao nhau khi bỏ một nhóm và kiểm tra assignment theo user/record. Các tình huống API/quyền/Git được ghi rõ là mô phỏng; DI và signal APIs là Angular thật.
+
+Core UI công khai; không có bước cấp khóa kích hoạt. Công cụ palette tại `/instructions/custom-theme/tool` và bài trình bày `/instructions/instroduction` được giữ lại. Cấu hình Portal lưu localStorage và áp dụng sau reload; Reset ví dụ chỉ bỏ draft, “Khôi phục mặc định” mới xóa cấu hình đã lưu.
+
+Nội dung và navigation metadata nằm ở `src/modules/instructions/catalog`; mỗi bài có loader riêng, demo nằm trong `features`, shell nằm trong `components`. Registry không import demo. 17 SVG cùng ảnh UI thực tế nằm trong `src/assets/instructions`. Khi thêm bài, cập nhật registry, article/loader và asset; không hard-code thêm một cây menu khác.
+
+Kiểm tra Instructions và các route liên quan, chỉ cần dev server Portal:
+
+```sh
+npx playwright test --config playwright.instructions.config.ts
+```
+
+Phạm vi kế hoạch và nguồn: [instructions-plan.md](docs/instructions-plan.md). Kết quả chạy thực tế: [verification.md](docs/verification.md).
+
+
 
 ## Chạy dự án
 
-Dùng Node **24.15+** (đã kiểm tra với 24.19.0), hoặc Node 22.22.3+. Node 22.14 và Node 18 không phù hợp Angular 22. Các phiên bản chính được pin trong package.json và package-lock.json: Core 22.2.7, Angular 22.1.6, CLI 22.1.7, TypeScript 6.0.3, Storybook 10.6.0.
+Dùng Node **24.15+** (đã kiểm tra với 24.19.0), hoặc Node 22.22.3+. Node 22.14 và Node 18 không phù hợp Angular 22. Các phiên bản chính được pin trong package.json và package-lock.json: Core 22.2.8, Angular 22.1.6, CLI 22.1.7, TypeScript 6.0.3, Storybook 10.6.0.
 
 ```sh
 npm ci
@@ -50,9 +79,13 @@ Header detail: **Chi tiết công ty #CUS-0001**, mã màu primary, tên công t
 
 URL là nguồn trạng thái qua Angular Router và PageNavigation, không dùng Location.go để đổi URL giả. Cùng route instance được giữ để bảo toàn bộ lọc list; runGuardsAndResolvers always và canDeactivate bảo vệ cả đổi ID/view lẫn browser Back. Form được tạo lại khi ID/view đổi. Lưu lỗi hoặc validation lỗi giữ nguyên URL và bản nháp; lưu thành công về detail. Link mã có href thật để mở trực tiếp hoặc mở tab khác.
 
+## Khoảng cách trong page mẫu
+
+Thân sd-section dùng p-20. Create/update giữ inline error của Core và dùng gap-8 giữa các control/hàng; lưới nhiều cột dùng row-sm gap-y-8 để không cộng gap ngang vào chiều rộng cột. Detail dùng gap-y-16 giữa các hàng thông tin. Áp dụng cùng quy ước cho page và side drawer; tránh thêm margin cuối cột làm khoảng cách bị cộng dồn.
+
 ## Bố cục list và bộ lọc Core
 
-List dùng trọn chiều cao vùng làm việc: header chỉ có tiêu đề/hành động, bảng cuộn nội bộ và phân trang ở đáy. Các mẫu tham khảo bố cục XNĐK/HĐMB của sales-platform và dùng API Core 22.2.7 đang cài.
+List dùng trọn chiều cao vùng làm việc: header chỉ có tiêu đề/hành động, bảng cuộn nội bộ và phân trang ở đáy. Các mẫu tham khảo bố cục XNĐK/HĐMB của sales-platform và dùng API Core 22.2.8 đang cài.
 
 | Màn | Bộ lọc | Score card |
 | --- | --- | --- |
@@ -73,6 +106,8 @@ Ví dụ: dữ liệu phẳng có mã/tên/trạng thái → list-standard; dữ
 
 Sau khi sửa pattern/registry, chạy npm run export:catalog. Catalog được đọc mà không bootstrap Angular. npm run check:catalog phát hiện source/guide đã cũ.
 
+Hai mẫu Role tại `/pages/list/roles-matrix` và `/pages/list/roles-tree` minh họa gán quyền theo tab module bằng ma trận CRUD/Other hoặc bảng cha–con. Xem [hướng dẫn Role](docs/role-pages.md) để tái sử dụng component, store và quy tắc chọn quyền.
+
 ## Kiểm tra và build
 
 ```sh
@@ -87,4 +122,31 @@ npm run build-storybook
 
 Browser test dùng Google Chrome qua Playwright channel chrome; cài Chrome trên máy chạy test. Playwright tự khởi động hoặc dùng lại portal:2208 và Storybook:6006. Static Storybook ở storybook-static/, portal build ở dist/. Các target dev/qc/uat/prod hiện có giữ nguyên cấu hình môi trường và budget.
 
-Xem [Storybook inventory](docs/storybook.md) và [bằng chứng kiểm tra](docs/verification.md). Các generator plop:module và plop:entity hiện có vẫn giữ nguyên.
+Xem [Storybook inventory](docs/storybook.md) và [bằng chứng kiểm tra](docs/verification.md).
+
+## Kiến trúc module / feature
+
+Trang **Instructions → Kiến trúc & tích hợp → Module & Feature** tại `/instructions/architecture` có infographic và cây thư mục chuyển giữa blueprint nghiệp vụ/source hiện tại. Routing, cấu hình, tích hợp và phân quyền có bài riêng với liên kết liên quan.
+
+```text
+src/
+├── app/                     # Host: menu, layout, cấu hình
+├── modules/                 # Trước đây là src/libs
+│   └── <module>/
+│       ├── features/        # Entity hoặc nhóm demo
+│       │   └── <entity>/
+│       │       ├── pages/
+│       │       ├── components/
+│       │       ├── services/  # <entity>.model.ts + <entity>.service.ts
+│       │       └── routes.ts
+│       ├── configurations/
+│       ├── services/        # Dùng chung trong module
+│       ├── guards/
+│       ├── routes.ts
+│       └── index.ts         # Public API
+└── shared/                  # Demo inventory và Storybook helpers
+```
+
+Các nhóm demo Components, Forms, Instructions, Services, Utilities nằm trong `features/` của module tương ứng. Pages đổi `patterns/` thành `features/`; `components`, `data`, `catalog`, `reference` giữ ở cấp module vì dùng chung giữa các mẫu. Chỉ tạo các thư mục tùy chọn khi có nội dung. URL Portal và ID Storybook được giữ nguyên.
+
+Khi tạo module/entity, tham khảo cây thư mục và các page mẫu hiện có. Entity routes dùng `''`, `create`, `:id/detail`, `:id/update`. Module công bố cấu hình và routes qua `index.ts`; Portal không deep import feature.

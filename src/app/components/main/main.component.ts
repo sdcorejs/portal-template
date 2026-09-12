@@ -1,4 +1,5 @@
-import { PAGE_EXAMPLES } from '../../../libs/pages/catalog/page-examples';
+import { INSTRUCTIONS, INSTRUCTION_GROUPS } from '../../../modules/instructions';
+import { PAGE_EXAMPLES, ROLE_EXAMPLES } from '../../../modules/pages';
 import { SD_PERMISSION_PUBLIC } from '@sdcorejs/angular/modules/permission';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { SdLayoutComponent, SdLayoutMenu } from '@sdcorejs/angular/modules';
@@ -31,36 +32,14 @@ export class MainComponent {
     {
       icon: 'school',
       title: 'Instructions',
-      children: [
-        {
-          path: '/instructions/instroduction',
+      children: INSTRUCTION_GROUPS.map(group => ({
+        title: group,
+        children: INSTRUCTIONS.filter(article => article.group === group).map(article => ({
+          title: article.title,
+          path: `/instructions/${article.path}`,
           permission: SD_PERMISSION_PUBLIC,
-          title: 'Instroduction',
-        },
-        {
-          path: '/instructions/custom-theme',
-          permission: SD_PERMISSION_PUBLIC,
-          title: 'Tùy chỉnh Theme',
-          children: [
-            { path: '/instructions/custom-theme/guide', permission: SD_PERMISSION_PUBLIC, title: 'Hướng dẫn' },
-            { path: '/instructions/custom-theme/tool', permission: SD_PERMISSION_PUBLIC, title: 'Công cụ' },
-          ],
-        },
-        {
-          path: '/instructions/coding-convention',
-          permission: SD_PERMISSION_PUBLIC,
-          title: 'Coding Conventions',
-          children: [
-            { path: '/instructions/coding-convention/scss', permission: SD_PERMISSION_PUBLIC, title: 'CSS/SCSS' },
-            { path: '/instructions/coding-convention/typescript', permission: SD_PERMISSION_PUBLIC, title: 'TypeScript' },
-          ],
-        },
-        {
-          path: '/instructions/portal-config',
-          permission: SD_PERMISSION_PUBLIC,
-          title: 'Cấu hình Portal',
-        },
-      ],
+        })),
+      })),
     },
     {
       icon: 'widgets',
@@ -225,12 +204,14 @@ export class MainComponent {
         {
           title: 'List',
           icon: 'view_list',
-          children: PAGE_EXAMPLES.filter(x => x.group === 'list').map(x => ({
-            path: '/pages/list/' + x.id,
-            title: x.title,
-            icon: x.icon,
-            permission: SD_PERMISSION_PUBLIC,
-          })),
+          children: [...PAGE_EXAMPLES, ...ROLE_EXAMPLES]
+            .filter(x => x.group === 'list')
+            .map(x => ({
+              path: '/pages/list/' + x.id,
+              title: x.title,
+              icon: x.icon,
+              permission: SD_PERMISSION_PUBLIC,
+            })),
         },
         {
           title: 'Detail',

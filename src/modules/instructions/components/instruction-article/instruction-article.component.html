@@ -1,0 +1,143 @@
+@if (article(); as content) {
+  <sd-page [title]="meta().title" [description]="meta().description">
+    <main class="article-layout">
+      <article>
+        <h1 class="sr-only">{{ meta().title }}</h1>
+        <div class="article-meta">
+          <span>{{ meta().group }} · {{ meta().order }} / 17</span><span>Angular 22 · Core 22.2.8</span>
+        </div>
+        <figure class="hero">
+          <button
+            #imageTrigger
+            type="button"
+            class="image-trigger"
+            (click)="openImage()"
+            [attr.aria-label]="'Phóng to sơ đồ ' + meta().title">
+            <img [src]="imagePath()" [alt]="content.caption" width="1120" height="430" />
+            <span class="zoom-label">↗ Phóng to sơ đồ</span>
+          </button>
+          <figcaption>{{ content.caption }}</figcaption>
+        </figure>
+        @if (content.screenshot; as screenshot) {
+          <details class="ui-evidence">
+            <summary>Ảnh giao diện thật · Core 22.2.8</summary>
+            <figure>
+              <a [href]="screenshot.src" target="_blank" rel="noopener" aria-label="Mở ảnh giao diện đầy đủ">
+                <img [src]="screenshot.src" [alt]="screenshot.alt" loading="lazy" />
+              </a>
+              <figcaption>{{ screenshot.alt }} Chụp từ demo ngày 12/09/2026; phần Thử ngay bên dưới luôn là ví dụ trực tiếp.</figcaption>
+            </figure>
+          </details>
+        }
+        <details class="mobile-toc">
+          <summary>Trong trang này</summary>
+          @for (section of sections; track section.id) {
+            <button type="button" (click)="jump(section.id)">{{ section.title }}</button>
+          }
+        </details>
+        <section id="goals" tabindex="-1">
+          <sd-section title="Mục tiêu & chuẩn bị" icon="flag"
+            ><div class="section-body">
+              <ul>
+                @for (goal of content.goals; track goal) {
+                  <li>{{ goal }}</li>
+                }
+              </ul>
+              <p class="note"><strong>Chuẩn bị:</strong> {{ content.prerequisites }}</p>
+            </div></sd-section
+          >
+        </section>
+        <section id="steps" tabindex="-1">
+          <h2>Hướng dẫn thực hiện</h2>
+          @for (step of content.steps; track step.title; let index = $index) {
+            <sd-section [title]="index + 1 + '. ' + step.title" icon="task_alt"
+              ><div class="section-body">
+                <p>{{ step.text }}</p>
+                <div class="file-label">{{ step.file }}</div>
+                <pre tabindex="0" [attr.aria-label]="'Code: ' + step.title"><code>{{ step.code }}</code></pre>
+                <p class="result"><strong>Kết quả:</strong> {{ step.result }}</p>
+              </div></sd-section
+            >
+          }
+        </section>
+        <section id="example" tabindex="-1">
+          <sd-section title="Thử ngay" icon="play_circle"
+            ><div class="section-body">
+              @for (key of [meta().id]; track key) {
+                <app-instruction-example
+                  [demo]="content.demo"
+                  [code]="content.exampleCode"
+                  [exercise]="content.exercise"
+                  [expected]="content.expected" />
+              }</div
+          ></sd-section>
+        </section>
+        <section id="review" tabindex="-1">
+          <sd-section title="Lỗi thường gặp & checklist" icon="fact_check"
+            ><div class="section-body review-grid">
+              <div>
+                <h3>Tránh các lỗi này</h3>
+                <ul>
+                  @for (pitfall of content.pitfalls; track pitfall) {
+                    <li>{{ pitfall }}</li>
+                  }
+                </ul>
+              </div>
+              <div>
+                <h3>Trước khi bàn giao</h3>
+                @for (check of content.checklist; track check) {
+                  <label class="check"><input type="checkbox" />{{ check }}</label>
+                }
+              </div>
+            </div></sd-section
+          >
+        </section>
+        <section id="sources" tabindex="-1">
+          <sd-section title="Nguồn & bài liên quan" icon="library_books"
+            ><div class="section-body">
+              <p>
+                Biên tập từ Confluence; ví dụ được điều chỉnh theo source hiện tại và quy ước đã thống nhất. Link nguồn có thể cần tài khoản
+                One Mount.
+              </p>
+              <ul>
+                @for (source of content.sources; track source.url) {
+                  <li>
+                    <a [href]="source.url" target="_blank" rel="noopener noreferrer">{{ source.title }} ↗</a>
+                  </li>
+                }
+              </ul>
+              <div class="related">
+                @for (item of related(); track item.id) {
+                  <a [routerLink]="'/instructions/' + item.path">{{ item.title }} →</a>
+                }
+              </div>
+            </div></sd-section
+          >
+        </section>
+        <nav class="pagination" aria-label="Bài trước và tiếp theo">
+          @if (previous(); as item) {
+            <a [routerLink]="'/instructions/' + item.path">← {{ item.title }}</a>
+          }
+          @if (next(); as item) {
+            <a [routerLink]="'/instructions/' + item.path">{{ item.title }} →</a>
+          }
+        </nav>
+      </article>
+      <aside aria-label="Mục lục bài viết">
+        <strong>TRONG TRANG NÀY</strong>
+        @for (section of sections; track section.id) {
+          <button type="button" (click)="jump(section.id)">{{ section.title }}</button>
+        }
+        <p>Đọc → Thử → Đối chiếu code → Review</p>
+      </aside>
+    </main>
+  </sd-page>
+  <dialog #zoom (close)="restoreFocus()" aria-label="Sơ đồ phóng to">
+    <div class="dialog-toolbar">
+      <strong>{{ meta().title }}</strong
+      ><button type="button" (click)="closeImage()">Đóng sơ đồ</button>
+    </div>
+    <div class="zoom-scroll"><img [src]="imagePath()" [alt]="content.caption" /></div>
+    <p>{{ content.caption }}</p>
+  </dialog>
+}

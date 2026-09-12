@@ -32,7 +32,8 @@ test('CASE-CREATE-URL: header actions validate and save to a new record detail U
   await expect(page.getByTestId('form-error')).toContainText('Mã hồ sơ');
   await expect(page).toHaveURL(new RegExp('/create$'));
   await page.getByRole('textbox', { name: 'Mã hồ sơ', exact: true }).fill('CUS-NEW');
-  await page.getByRole('textbox', { name: 'Tên hồ sơ', exact: true }).fill('Công ty mẫu mới');
+  // Core ignores repeat clicks within 300 ms; type as a user before submitting again.
+  await page.getByRole('textbox', { name: 'Tên hồ sơ', exact: true }).pressSequentially('Công ty mẫu mới', { delay: 30 });
   await page.screenshot({ path: info.outputPath('create.png') });
   await save.click();
   await expect(page).toHaveURL(new RegExp('/customer-31/detail$'));

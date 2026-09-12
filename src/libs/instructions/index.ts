@@ -1,1 +1,0 @@
-export { instructionsRoutes } from './routes';

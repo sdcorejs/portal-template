@@ -3,13 +3,13 @@ import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import ts from 'typescript';
 export async function loadCatalog() {
-  const source = readFileSync('src/libs/pages/catalog/pattern-registry.ts', 'utf8');
+  const source = readFileSync('src/modules/pages/catalog/pattern-registry.ts', 'utf8');
   const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ES2022 } }).outputText;
   const { PAGE_PATTERNS } = await import('data:text/javascript;base64,' + Buffer.from(js).toString('base64'));
-  return { schemaVersion: 1, coreVersion: '22.2.7', patterns: structuredClone(PAGE_PATTERNS) };
+  return { schemaVersion: 1, coreVersion: '22.2.8', patterns: structuredClone(PAGE_PATTERNS) };
 }
 export function validateCatalog(catalog) {
-  if (catalog.schemaVersion !== 1 || catalog.coreVersion !== '22.2.7' || catalog.patterns.length !== 12)
+  if (catalog.schemaVersion !== 1 || catalog.coreVersion !== '22.2.8' || catalog.patterns.length !== 14)
     throw new Error('Catalog version/count mismatch');
   const ids = new Set();
   for (const p of catalog.patterns) {
@@ -21,10 +21,13 @@ export function validateCatalog(catalog) {
       p.recordRoutes?.update !== p.route + '/:id/update'
     )
       throw new Error('Record URL contract mismatch');
-    if (p.route !== '/pages/' + (p.id.startsWith('list-') ? 'list/' : 'detail/') + p.id || p.coreVersion !== catalog.coreVersion)
+    if (
+      p.route !== '/pages/' + (p.id.startsWith('list-') || p.entityKind === 'role' ? 'list/' : 'detail/') + p.id ||
+      p.coreVersion !== catalog.coreVersion
+    )
       throw new Error('Pattern identity mismatch');
     for (const path of [...p.sourceFiles, p.dataContract, p.fixtures]) {
-      if (path.includes('..') || !path.startsWith('src/libs/pages/') || !existsSync(path)) throw new Error('Invalid source ' + path);
+      if (path.includes('..') || !path.startsWith('src/modules/pages/') || !existsSync(path)) throw new Error('Invalid source ' + path);
     }
     if (!p.suitableWhen || !p.avoidWhen || !p.requiredFields.length) throw new Error('Missing selection guidance');
   }
@@ -42,10 +45,10 @@ export async function renderArtifacts() {
         sources.files[path] = readFileSync(path, 'utf8');
     }
   }
-  collect('src/libs/pages');
+  collect('src/modules/pages');
   sources.files['src/styles/reference.scss'] = readFileSync('src/styles/reference.scss', 'utf8');
   const markdown =
-    '# Page patterns — Core 22.2.7\n\nGenerated from the pattern registry. Demo data is synthetic and scoped to one mounted reference; replace the service boundary for production.\n\n' +
+    '# Page patterns — Core 22.2.8\n\nGenerated from the pattern registry. Demo data is synthetic and scoped to one mounted reference; replace the service boundary for production.\n\n' +
     catalog.patterns
       .map(
         p =>
@@ -93,5 +96,5 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
       writeFileSync(path, content);
     }
   }
-  console.log('Catalog: 12 patterns; source and guide consistent.');
+  console.log('Catalog: 14 patterns; source and guide consistent.');
 }

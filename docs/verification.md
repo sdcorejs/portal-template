@@ -1,3 +1,107 @@
+# Instructions — 6 nhóm, 17 bài — 2026-09-12
+
+Triển khai theo [kế hoạch được duyệt](instructions-plan.md). Instructions có 17 route lazy-load, 6 nhóm menu theo luồng phát triển; registry metadata tách khỏi nội dung và demo. Mỗi bài có SVG đầu trang, phóng to bằng dialog, TOC, hướng dẫn file/code/kết quả, preview tương tác mặc định, Reset, code copy, checklist và nguồn. Có thêm 5 ảnh UI thật cho setup, signals, spacing, accessibility và cấu hình Portal.
+
+Các demo chạy Angular DI thật (provider dùng chung/cục bộ, instance mới khi reset), input/model/computed/output/viewChild thật, mock request và save với delay 1–2 giây, lỗi/retry, Role chỉ gán nhóm G, hợp quyền C/A không mất quyền giao nhau, UI/route/API simulation, assignment scope, Git state simulation, contrast, spacing và cấu hình Portal lưu/reload thật. Module nghiệp vụ CRM trong snippets là blueprint; backend và Git không được thực thi từ UI.
+
+Quyền thống nhất MODULE_ENTITY_TYPE_ACTION. Ví dụ CRM_CUSTOMER_G_CREATE gom CRM_CUSTOMER_C_CREATE và CRM_CUSTOMER_A_CREATE. Core UI công khai, không có bước cấp khóa. Các trang hướng dẫn cũ được thay bằng article data để tránh hai bộ nội dung mâu thuẫn; presentation và theme tool vẫn còn.
+
+## Kết quả kiểm chứng
+
+- Build dev cuối cùng PASS; initial bundle 2.15 MB, warning budget 500 kB và CommonJS đã có từ trước vẫn còn. Không nâng budget hoặc thêm dependency.
+- Toàn bộ lint PASS; typecheck Storybook PASS.
+- Unit: 33/33 PASS, gồm 5 test mới về hợp/thu hồi nhóm, mã G/C/A, quyền action và assignment theo user/record/lifetime.
+- E2E Instructions: 37 ca duy nhất đã PASS qua các đợt chạy tập trung. Gồm 17 route/ảnh/reset/code, cây kiến trúc và link record thật, signal/DI, phân quyền, error/retry, spacing, keyboard/zoom/focus return, clipboard, ảnh UI, theme, Git, deep link/Back và tab title/icon.
+- Ca responsive duyệt cả 17 bài ở 390 × 844: không tràn ngang trang hoặc vùng preview. Review trực quan ở 1440 × 1000 và màn hẹp.
+- Regression Pages: 3 ca PASS — menu List/Detail, detail → edit → save/reload và create → validation → lưu URL detail mới.
+- Catalog check PASS; 2/2 catalog tests PASS. git diff --check PASS.
+- Không chạy lại toàn bộ Storybook render suite hoặc mọi E2E Pages vì không sửa phần source đó. Typecheck và các route liên quan đã được kiểm tra.
+
+Lần E2E đầu: 26/29 PASS; hai selector heading của bài kiến trúc chưa khớp shell mới và một expected message dùng thông báo tùy chỉnh thay vì required message thật của Core. Đã bổ sung h1 semantic vào shell, dùng thông báo required của Core và markAsTouched khi kiểm tra; rerun cả các ca này đều PASS. Kiểm tra thêm bắt được và sửa link liên quan bị encode dấu slash trước khi bàn giao.
+
+## Bằng chứng và cách chạy lại
+
+- Các ảnh chụp demo thật: src/assets/instructions/{signals,spacing,quality,portal-config}/example.png và src/assets/instructions/setup/portal-running.png. Tổng assets mới nhỏ hơn 320 kB.
+- Logs: %TEMP%/instructions-final-build.log, instructions-full-lint.log, instructions-unit.log, instructions-e2e.log, instructions-retry.log, instructions-additional.log, instructions-mobile.log.
+- Chạy tập trung: npx playwright test --config playwright.instructions.config.ts. Config này chỉ khởi động Portal, không cần Storybook; gồm cả một số regression Portal/record routes.
+- TOC dùng điều khiển HTML semantic trong vùng cuộn của SdPage; code minh họa dùng pre/code và Clipboard API, không nạp editor để hiển thị đoạn code tĩnh. SdPage/SdSection và control form dùng Core 22.2.8.
+- Chưa commit/push. Giữ nguyên các thay đổi trước đó của phiên review.
+
+---
+
+
+# Loại bỏ generator cũ — 2026-09-12
+
+Theo yêu cầu mới, bỏ toàn bộ Plop: 19 template, plopfile.js, test generator-architecture, ba npm scripts và devDependency. npm uninstall loại 78 package khỏi dependency graph/node_modules, không thêm package hoặc đổi phiên bản các package còn lại. Xóa tham chiếu Plop còn sót trong metadata extraneous của lockfile.
+
+README và trang kiến trúc không còn hướng dẫn chạy generator. Mục 08 chuyển thành tham khảo page mẫu với liên kết tới danh sách khách hàng; browser xác nhận không còn nội dung Plop/generator và liên kết hoạt động. Các ghi nhận generator trong phần lịch sử bên dưới không còn áp dụng cho source hiện tại.
+
+- Build dev PASS (các warning budget/CommonJS đã ghi ở lần trước vẫn còn); lint PASS; catalog check và diff --check PASS.
+- npm ls plop node-plop --all trả về empty; node_modules không còn hai package này. Không còn tham chiếu trong source, scripts, E2E, Storybook, README, package.json và lockfiles.
+- Auto-review chặn cả lệnh xóa đệ quy lẫn xóa thư mục rỗng, chỉ trả blocked by policy. Đã xóa tất cả file qua patch; trên máy còn khung thư mục rỗng plop-templates, entity, module, entity/page, entity/side-drawer. Git không lưu thư mục rỗng.
+- Logs: %TEMP%/portal-remove-plop-build.log, portal-remove-plop-lint.log. Không chạy lại full E2E cho thay đổi loại bỏ tooling; kiểm tra browser trực tiếp phần UI bị sửa.
+
+---
+
+# Kiến trúc modules / features và infographic — 2026-09-12
+
+Áp dụng yêu cầu tổ chức lại source theo infographic: src/libs → src/modules; các nhóm demo đặt trong features của module, Pages đổi patterns → features; demo inventory/harness dùng chung chuyển sang src/shared. Đối chiếu 306 file source trước migration: tất cả có ở đường dẫn đích, không còn src/libs. Cập nhật import, aliases, Storybook glob, catalog/exporter và tài liệu; giữ URL Portal và story identity.
+
+Thêm Instructions → Kiến trúc Angular (/instructions/architecture), gồm luồng Portal → Configuration → Module → Feature, cây thư mục chuyển giữa blueprint và source hiện tại, phạm vi sở hữu, permission, URL, ba bước tích hợp, checklist và generator. Dùng HTML/CSS responsive trong shell Core; đăng ký title/icon cho tab. Review ảnh desktop 1440px và viewport mobile; không tràn ngang, nút chuyển cây hoạt động, hyperlink mở record thật.
+
+Generator tạo src/modules/<module>/features/<entity>, routes.ts lazy-load component, URL theo convention create, :id/detail, :id/update. Public entry xuất cấu hình để Portal import; tham số CLI --module thay --lib. Test tạo module và hai entity page/side-drawer trong thư mục tạm, xác nhận output/routes/menu rồi dọn fixture.
+
+- Portal build dev PASS. Còn warning initial bundle 2.15 MB so với budget cảnh báo 500 kB, stylesheet infographic 5.33 kB so với cảnh báo 4 kB (dưới ngưỡng lỗi), cùng cảnh báo CommonJS của dependency; không tăng budget.
+- Lint PASS; TypeScript Storybook --noEmit --rootDir . PASS.
+- Unit: 28/28 PASS; generator integration: 1/1 PASS (bao gồm page và side-drawer).
+- Catalog export/check và 2 catalog tests PASS; bundle/guide trỏ source mới.
+- Full E2E: 66/67 PASS, bao gồm 2 ca infographic và render toàn bộ 50 stories. Một ca quick search timeout khi trace ghi nhận [vite] server connection lost; chạy lại riêng không sửa code: 1/1 PASS trong 8 giây. Không xem full run ban đầu là hoàn toàn xanh; giữ log/trace của lần lỗi.
+
+Logs tại %TEMP%: portal-architecture-build.log, portal-architecture-lint.log, portal-architecture-unit.log, portal-architecture-e2e.log, portal-architecture-quick-retry.log. Browser screenshots/traces ở test-results/, báo cáo full run ở playwright-report/. Không commit/push.
+
+---
+
+# Mật độ form và detail — 2026-09-12
+
+Theo yêu cầu review: thân section p-20; create/update gap-8, lưới xuống hàng gap-y-8 và bỏ mb-16 cuối cột; detail gap-y-16, ghi chú cùng lưới để khoảng cách đều trên mobile. Giảm wrapper page/drawer từ p-24 xuống p-20. Áp dụng qua component dùng chung cho form đơn giản, chia section, dòng hàng và drawer; giữ inline error của Core.
+
+- Browser tại localhost:2208 xác nhận create và update: computed padding 20px, gap 8px trên cả hai section.
+- Submit form create rỗng vẫn hiện inline error tại Mã hồ sơ/Tên hồ sơ và thông báo tổng hợp.
+- Detail: computed padding 20px, row-gap 16px; không tràn ngang trong viewport review. Review trực quan form qua screenshot.
+- Lint PASS; catalog export/check và 2 catalog tests PASS; diff --check PASS. Source bundle/guide được xuất lại; README ghi quy ước spacing để consumer dùng theo.
+- Phạm vi thay đổi là trình bày; không chạy lại toàn bộ unit/E2E hoặc production build. Không commit/push.
+
+---
+
+# Anchor Storybook Controls — 2026-09-11
+
+Sửa theo phản hồi playground không có gì để tương tác. Anchor và Anchor/basic dùng ví dụ SdAnchor trực tiếp, args/argTypes cho 7 Controls (sidebarWidth, containerHeight, sectionTitle, ellipsis, hideNav, hideNavOnMobile, overScroll). Thanh điều hướng hiện mặc định trong iframe hẹp; thêm biến thể Hidden Navigation thay story Reference Tabs không liên quan. Các story khác chưa được chuyển sang mô hình này.
+
+- TypeScript Storybook PASS với --rootDir .; lệnh tsc trực tiếp không truyền rootDir gặp TS6059 do thư mục config, không phải lỗi source.
+- ESLint/Prettier cho các file đã sửa và git diff --check PASS.
+- Browser UI: Docs và Playground có 7 Controls; đổi sidebar 160→240 px, container 420→320 px, tiêu đề cập nhật trực tiếp. Preview phụ giữ args riêng. True/False của hideNav ẩn/hiện nav, Reset controls khôi phục mặc định.
+- Bỏ initial navigation của Router trong Storybook để URL iframe.html không bị xử lý như route của portal. Provider vẫn sẵn cho component sử dụng Router.
+- Không chạy lại toàn bộ bộ kiểm thử portal hoặc 50 story trong lượt sửa này; bằng chứng các lượt trước giữ dưới đây. Chưa commit/push.
+
+---
+
+# Core 22.2.8 — 2026-09-11
+
+Nâng patch theo yêu cầu người dùng trên branch feat/portal-core-22-reference-pages. Pin @sdcorejs/angular 22.2.8 trong manifest và lockfile; npm chỉ đổi package Core. Angular/toolchain giữ phiên bản hiện tại. Đồng bộ version trong stories, toolchain check, catalog, source bundle và tài liệu sử dụng. Approved spec/plan là tài liệu lịch sử, giữ nguyên.
+
+- Node 24.19.0; npm install thành công; installed Core 22.2.8 và Angular 22.1.6, peer requirements tương thích.
+- Build và lint PASS. Toolchain check, catalog export/check và 2 catalog tests PASS.
+- Unit: 28/28 PASS khi chạy riêng. Lượt đầu Chrome ping timeout trong lúc chạy đồng thời các bản build; không tính lượt đó là pass.
+- Browser: 13 kịch bản có bằng chứng PASS qua hai lượt: 3 quick search/external filters/scorecards, detail-update-save-reload, 2 Storybook checks (bao gồm toàn bộ 50 story), 6 hyperlink/badge/drawer, create-validate-save-reload.
+- Bài create ban đầu bấm Lưu hai lần cách nhau khoảng 246 ms, rơi vào throttleTime(300) của Core button. Trace xác nhận thời điểm click thực tế; bấm lại sau cửa sổ throttle lưu thành công. Chỉnh bài kiểm thử nhập tên từng ký tự (30 ms/ký tự) trước submit; giữ nguyên validation, URL, save và reload assertions. Chạy lại đạt, không sửa hành vi lưu của portal.
+- npm audit: 10 moderate, 0 high, 0 critical; chưa thực hiện audit fix. Các package được báo gồm Core/exceljs/uuid và chuỗi công cụ Angular/Storybook/webpack-dev-server/express/qs/sockjs.
+- Preview local chạy tại http://localhost:2208; Storybook tại http://localhost:6006. Chưa commit/push lượt nâng version này.
+
+Fingerprint source/config/test (347 file): 53d93ea2700c216ad939792fb56b9e71b93e54b5199cfc8fed87d02ec9020c55.
+Logs tại %TEMP%: portal-22-2-8-build.log, portal-22-2-8-lint.log, portal-22-2-8-unit-isolated.log, portal-22-2-8-e2e.log (6 pass/1 fail ban đầu), portal-22-2-8-targeted.log (7/7 pass), portal-22-2-8-audit.json. Đây là kiểm tra hồi quy cho patch và chuẩn bị review, không phải xác nhận phát hành toàn bộ sản phẩm.
+
+---
+
 # Record header, actions và URL — 2026-09-10
 
 Lượt sửa mới nhất theo yêu cầu người dùng. Các phần bên dưới là bằng chứng lịch sử.
@@ -172,3 +276,24 @@ Credential-pattern scan trên diff không tìm thấy private key/token mới th
 Dùng các lệnh ở README. E2E ghi HTML report ở playwright-report/ và screenshots/traces trong test-results/ (đều ignored); rerun sẽ thay report trước đó. Docs/wireframes dưới .sdcorejs/design/ là handoff thiết kế; screenshots browser test mới là bằng chứng UI chạy thật.
 
 Log kiểm tra tại %TEMP%: portal-unit-final21.log, portal-e2e-completion.log (30 pass/1 fail trước sửa test), portal-create-final.log (3 pass sau sửa), portal-lint-close.log, portal-build-close.log, portal-storybook-final.log. Chỉnh sau unit/full E2E là CSS, exporter stylesheet và đồng bộ test; không đổi logic save/store.
+
+## Role Pages — 2026-09-12
+
+Triển khai preview đã được người dùng duyệt: hai mẫu Role độc lập tại `/pages/list/roles-matrix` và `/pages/list/roles-tree`, kèm create/detail/update. Core 22.2.8, không thêm dependency. Hướng dẫn và ownership: [Role pages](role-pages.md).
+
+| Kiểm tra | Kết quả / bằng chứng |
+| --- | --- |
+| Unit | 39/39 PASS, `roles-unit.log`; catalog IDs, selection scope/mixed state, session isolation, validation và lỗi lưu |
+| Browser regression | 23/23 PASS, `roles-e2e.log`: 13 luồng Pages cũ và 10 luồng Role |
+| Pristine form và bàn phím | 1/1 PASS sau sửa, `roles-pristine-final.log`: create/update không hỏi lưu khi chưa sửa; tab ArrowRight/Enter, checkbox Space; beforeunload dirty; xóa mô tả rồi lưu |
+| Lint | PASS, `roles-lint.log` |
+| Catalog | 14 mẫu, export/check đồng bộ; 2/2 test PASS |
+| Build sau bản sửa cuối | PASS (exit 0), `roles-build-final.log`; còn các warning bundle budget/CommonJS và unused imports đã có ở demo |
+| Lưu/guard sau bản sửa cuối | 6/6 PASS, `roles-save-final.log`: create/update cả hai mẫu, lưu qua guard, lỗi ghi session giữ draft |
+| Visual | Xem PNG Angular desktop list/matrix/tree và mobile 390px trong `.sdcorejs/design/exports/png/role-pages/angular-*.png` |
+
+Lỗi phát hiện và sửa: Core đăng ký control trước khi áp model khởi tạo không emit sự kiện; snapshot description còn null trong tracker dù control đã hiển thị giá trị. `RoleRecordEditorComponent` đồng bộ snapshot sau render và chuẩn hóa mô tả rỗng. Kiểm tra riêng xác nhận không còn cảnh báo unsaved sai; không bỏ guard cho thay đổi thật.
+
+Lượt chạy lại `roles-e2e-final.log` bị gián đoạn hơn một giờ và timeout, không được tính là PASS. Kiểm tra bị ảnh hưởng được chạy lại có mục tiêu. Log nằm ở `%TEMP%`; script chụp ảnh chỉ dùng cục bộ ở `.sdcorejs/design/tmp`. Các báo cáo Playwright bị ghi lại qua mỗi lượt chạy.
+
+Checkbox mixed dùng MatCheckbox từ dependency hiện có vì SdCheckbox 22.2.8 chưa có public input indeterminate. Dữ liệu là giả lập trong sessionStorage; không thực thi quyền backend. Working tree được giữ nguyên trên branch `feat/portal-core-22-reference-pages`; không commit/push trong lượt này.

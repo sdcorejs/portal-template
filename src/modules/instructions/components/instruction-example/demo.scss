@@ -1,0 +1,148 @@
+:host {
+  display: block;
+  min-width: 0;
+  color: #223249;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+button,
+.demo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 7px 12px;
+  border: 1px solid #cdd9e8;
+  border-radius: 6px;
+  color: #005cca;
+  background: white;
+  cursor: pointer;
+  font: inherit;
+  text-decoration: none;
+}
+button[aria-pressed='true'],
+button.primary {
+  color: white;
+  background: #005cca;
+  border-color: #005cca;
+}
+button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #005cca;
+  outline-offset: 3px;
+}
+label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+input:not([type='checkbox']):not([type='color']),
+select {
+  padding: 8px;
+  border: 1px solid #bfccdd;
+  border-radius: 5px;
+  max-width: 100%;
+  background: #fff;
+  color: #223249;
+  min-width: 0;
+}
+input[type='checkbox'] {
+  accent-color: #005cca;
+}
+input[type='number'] {
+  width: 130px;
+}
+p {
+  line-height: 1.65;
+  margin: 12px 0;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 12px;
+}
+.card {
+  border: 1px solid #dce5ef;
+  border-radius: 8px;
+  background: #fff;
+  padding: 16px;
+  min-width: 0;
+}
+h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+pre {
+  overflow: auto;
+  max-width: 100%;
+  padding: 16px;
+  border: 1px solid #dce5ef;
+  background: #fff;
+  border-radius: 6px;
+  line-height: 1.7;
+  font-size: 12px;
+}
+code {
+  overflow-wrap: anywhere;
+}
+.status {
+  padding: 12px;
+  background: #eaf4f0;
+  border-left: 3px solid #167457;
+  border-radius: 4px;
+}
+.error {
+  background: #fff0ed;
+  border-color: #bd3824;
+  color: #973321;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+caption {
+  text-align: left;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+td,
+th {
+  text-align: left;
+  border-bottom: 1px solid #dce5ef;
+  padding: 12px;
+}
+details {
+  margin-top: 16px;
+}
+summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.badge {
+  display: inline-block;
+  background: #e6f4ec;
+  color: #126544;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 12px;
+}
+strong.value {
+  display: block;
+  font-size: 24px;
+  color: #005cca;
+  margin: 8px 0;
+}

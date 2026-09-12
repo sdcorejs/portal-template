@@ -1,0 +1,12 @@
+<sd-section title="Thông tin hồ sơ"
+  ><div class="p-20">
+    <div class="row gap-y-16">
+      <div class="col-12 col-md-6"><sd-view label="Khu vực" [display]="group()" /></div>
+      <div class="col-12 col-md-6">
+        <sd-view label="Giá trị (VND)" [display]="entity().amount | currency: 'VND' : 'symbol' : '1.0-0'" />
+      </div>
+      <div class="col-12 col-md-6"><sd-view label="Email liên hệ" [display]="entity().email" /></div>
+      <div class="col-12 col-md-6"><sd-view label="Cập nhật gần nhất" [display]="entity().updatedAt | date: 'dd/MM/yyyy'" /></div>
+      <div class="col-12"><sd-view label="Ghi chú phối hợp" [display]="entity().description" /></div>
+    </div></div
+></sd-section>

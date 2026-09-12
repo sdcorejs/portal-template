@@ -16,16 +16,16 @@
     "target": "ES2022",
     "module": "ES2022",
     "paths": {
-      "@components": ["./src/libs/components"],
-      "@components/*": ["./src/libs/components/*"],
-      "@services": ["./src/libs/services"],
-      "@services/*": ["./src/libs/services/*"],
-      "@forms": ["./src/libs/forms"],
-      "@forms/*": ["./src/libs/forms/*"],
-      "@instructions": ["./src/libs/instructions"],
-      "@instructions/*": ["./src/libs/instructions/*"],
-      "@utilities": ["./src/libs/utilities"],
-      "@utilities/*": ["./src/libs/utilities/*"]
+      "@components": ["./src/modules/components"],
+      "@components/*": ["./src/modules/components/*"],
+      "@services": ["./src/modules/services"],
+      "@services/*": ["./src/modules/services/*"],
+      "@forms": ["./src/modules/forms"],
+      "@forms/*": ["./src/modules/forms/*"],
+      "@instructions": ["./src/modules/instructions"],
+      "@instructions/*": ["./src/modules/instructions/*"],
+      "@utilities": ["./src/modules/utilities"],
+      "@utilities/*": ["./src/modules/utilities/*"]
     }
   },
   "angularCompilerOptions": {

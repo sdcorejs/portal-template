@@ -1,0 +1,50 @@
+<sd-section title="Dòng hàng — lưu cùng đơn hàng"
+  ><div class="p-20 d-flex flex-column gap-8">
+    @for (row of rows(); track row; let i = $index) {
+      <sd-section [title]="'Dòng ' + (i + 1)"
+        ><div class="p-20">
+          <div class="row row-sm gap-y-8">
+            <div class="col-12 col-md-6">
+              <sd-input
+                label="Sản phẩm / dịch vụ"
+                name="name"
+                [form]="row"
+                [model]="row.seed.name"
+                required
+                size="sm"
+                (sdChange)="update()" />
+            </div>
+            <div class="col-6 col-md-3">
+              <sd-input-number
+                label="Số lượng"
+                name="quantity"
+                [form]="row"
+                [model]="row.seed.quantity"
+                [min]="1"
+                required
+                size="sm"
+                (sdChange)="update()" />
+            </div>
+            <div class="col-6 col-md-3">
+              <sd-input-number
+                label="Đơn giá (VND)"
+                name="unitPrice"
+                [form]="row"
+                [model]="row.seed.unitPrice"
+                [min]="0"
+                required
+                size="sm"
+                (sdChange)="update()" />
+            </div>
+          </div>
+        </div>
+        <sd-button sdFooterRight title="Xóa dòng" type="text" color="error" (click)="remove(i)"
+      /></sd-section>
+    }
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-8">
+      <sd-button title="Thêm dòng" prefixIcon="add" type="outline" (click)="add()" /><span class="T16M"
+        >Tổng tạm tính: {{ total() | currency: 'VND' : 'symbol' : '1.0-0' }}</span
+      >
+    </div>
+  </div></sd-section
+>

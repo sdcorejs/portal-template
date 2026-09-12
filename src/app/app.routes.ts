@@ -30,7 +30,7 @@ export const routes: Routes = [
           {
             path: 'pages',
             data: { permission: SD_PERMISSION_PUBLIC },
-            loadChildren: () => import('../libs/pages').then(m => m.pagesRoutes),
+            loadChildren: () => import('../modules/pages').then(m => m.pagesRoutes),
           },
           {
             path: 'components',

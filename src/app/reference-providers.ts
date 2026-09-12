@@ -10,7 +10,6 @@ export function provideReferenceUi(): Provider[] {
     {
       provide: SD_CORE_CONFIGURATION,
       useValue: {
-        licenseKey: 'OTYyMDUwNzg2c2lnbmVk',
         format: { number: portalConfig.numberFormat },
         language: portalConfig.language,
       },

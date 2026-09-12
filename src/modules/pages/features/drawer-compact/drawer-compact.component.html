@@ -1,0 +1,51 @@
+<sd-page title="Danh mục">
+  <sd-button headerRight title="Tạo mới" type="fill" color="primary" prefixIcon="add" (click)="open('create')" />
+  <div class="list-content">
+    <sd-table [option]="option()">
+      <ng-template sdTableCellDef="code" let-row="item">
+        <a [href]="navigation.href('detail', row.id)" class="record-link" (click)="openLink($event, row)">{{ row.code }}</a>
+      </ng-template>
+    </sd-table>
+  </div>
+</sd-page>
+<sd-side-drawer [title]="title()" width="600px" [beforeClose]="beforeClose" (sdClosed)="onClosed()">
+  <app-record-header sdHeaderLeft [kind]="store.kind" [mode]="store.mode()" [entity]="store.mode() === 'create' ? undefined : entity()" />
+  <div sdHeaderRight class="record-actions">
+    <sd-button title="Quay lại" type="text" prefixIcon="arrow_back" [disabled]="store.saving() || !!store.operation()" (click)="back()" />
+    @if (store.mode() === 'detail') {
+      @if (entity(); as row) {
+        <sd-button
+          title="Cập nhật"
+          type="fill"
+          color="primary"
+          prefixIcon="edit"
+          [disabled]="!!store.operation()"
+          (click)="open('update', row)" />
+      }
+    } @else {
+      @if (store.mode() === 'create' || entity()) {
+        <sd-button
+          title="Lưu"
+          type="fill"
+          color="primary"
+          prefixIcon="save"
+          [loading]="store.saving()"
+          [disabled]="store.saving() || !!store.operation()"
+          (click)="save()" />
+      }
+    }
+  </div>
+  @if (opened()) {
+    @for (key of [store.mode() + ':' + store.selectedId()]; track key) {
+      @if (store.mode() === 'detail') {
+        @if (entity(); as row) {
+          <div class="p-20"><app-entity-facts [entity]="row" /></div>
+        } @else {
+          <div class="p-20"><sd-data-state state="error" title="Không tìm thấy hồ sơ" /></div>
+        }
+      } @else {
+        <app-form-simple #editor [embedded]="true" [inDrawer]="true" />
+      }
+    }
+  }
+</sd-side-drawer>

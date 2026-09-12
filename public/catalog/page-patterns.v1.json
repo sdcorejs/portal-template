@@ -1,12 +1,156 @@
 {
   "schemaVersion": 1,
-  "coreVersion": "22.2.7",
+  "coreVersion": "22.2.8",
   "patterns": [
+    {
+      "id": "roles-matrix",
+      "name": "Role / Ma trận quyền",
+      "route": "/pages/list/roles-matrix",
+      "recordRoutes": {
+        "create": "/pages/list/roles-matrix/create",
+        "detail": "/pages/list/roles-matrix/:id/detail",
+        "update": "/pages/list/roles-matrix/:id/update"
+      },
+      "coreVersion": "22.2.8",
+      "entityKind": "role",
+      "entityLabel": "Vai trò",
+      "purpose": "Quản lý vai trò và gán quyền nhóm theo module bằng ma trận CRUD và Other.",
+      "dataShape": "permission-matrix",
+      "density": "compact",
+      "container": "page",
+      "requiredFields": [
+        "code",
+        "name",
+        "status"
+      ],
+      "relationships": [
+        "module → entity → permission group"
+      ],
+      "interactions": [
+        "code-link",
+        "search",
+        "filter",
+        "paginate",
+        "create",
+        "detail",
+        "update",
+        "module-tabs",
+        "scoped-selection",
+        "indeterminate",
+        "session-storage",
+        "unsaved-guard"
+      ],
+      "suitableWhen": "So sánh nhanh CRUD theo chức năng; các hành động bổ sung nằm trong Other.",
+      "avoidWhen": "Cần cấp quyền người dùng thực hoặc thực thi phân quyền backend.",
+      "components": [
+        "SdPageComponent",
+        "SdTable",
+        "SdTableCellDefDirective",
+        "SdSection",
+        "SdTabGroup",
+        "SdTab",
+        "SdInput",
+        "SdSelect",
+        "MatCheckbox"
+      ],
+      "sourceFiles": [
+        "src/modules/pages/features/roles/pages/role-list-page.component.ts",
+        "src/modules/pages/features/roles/pages/role-record-editor.component.ts",
+        "src/modules/pages/features/roles/components/role-permission-editor.component.ts",
+        "src/modules/pages/features/roles/components/permission-matrix.component.ts",
+        "src/modules/pages/features/roles/data/role-session.store.ts"
+      ],
+      "dataContract": "src/modules/pages/features/roles/data/role.model.ts",
+      "fixtures": "src/modules/pages/features/roles/data/role.fixtures.ts",
+      "responsive": "List chiếm chiều cao vùng làm việc; form thu về một cột, bảng quyền cuộn ngang và giữ cột chức năng.",
+      "states": [
+        "data",
+        "loading",
+        "empty",
+        "no-results",
+        "error",
+        "saving",
+        "invalid",
+        "unsaved"
+      ]
+    },
+    {
+      "id": "roles-tree",
+      "name": "Role / Quyền phân cấp",
+      "route": "/pages/list/roles-tree",
+      "recordRoutes": {
+        "create": "/pages/list/roles-tree/create",
+        "detail": "/pages/list/roles-tree/:id/detail",
+        "update": "/pages/list/roles-tree/:id/update"
+      },
+      "coreVersion": "22.2.8",
+      "entityKind": "role",
+      "entityLabel": "Vai trò",
+      "purpose": "Quản lý vai trò và gán quyền nhóm theo module bằng bảng cha–con.",
+      "dataShape": "permission-tree",
+      "density": "compact",
+      "container": "page",
+      "requiredFields": [
+        "code",
+        "name",
+        "status"
+      ],
+      "relationships": [
+        "module → entity → permission group"
+      ],
+      "interactions": [
+        "code-link",
+        "search",
+        "filter",
+        "paginate",
+        "create",
+        "detail",
+        "update",
+        "module-tabs",
+        "scoped-selection",
+        "indeterminate",
+        "session-storage",
+        "unsaved-guard"
+      ],
+      "suitableWhen": "Duyệt nhiều quyền với tên dài; cần thu gọn hoặc mở rộng từng chức năng.",
+      "avoidWhen": "Cần cấp quyền người dùng thực hoặc thực thi phân quyền backend.",
+      "components": [
+        "SdPageComponent",
+        "SdTable",
+        "SdTableCellDefDirective",
+        "SdSection",
+        "SdTabGroup",
+        "SdTab",
+        "SdInput",
+        "SdSelect",
+        "MatCheckbox"
+      ],
+      "sourceFiles": [
+        "src/modules/pages/features/roles/pages/role-list-page.component.ts",
+        "src/modules/pages/features/roles/pages/role-record-editor.component.ts",
+        "src/modules/pages/features/roles/components/role-permission-editor.component.ts",
+        "src/modules/pages/features/roles/components/permission-tree.component.ts",
+        "src/modules/pages/features/roles/data/role-session.store.ts"
+      ],
+      "dataContract": "src/modules/pages/features/roles/data/role.model.ts",
+      "fixtures": "src/modules/pages/features/roles/data/role.fixtures.ts",
+      "responsive": "List chiếm chiều cao vùng làm việc; form thu về một cột, bảng quyền cuộn ngang và giữ cột chức năng.",
+      "states": [
+        "data",
+        "loading",
+        "empty",
+        "no-results",
+        "error",
+        "saving",
+        "invalid",
+        "unsaved"
+      ]
+    },
     {
       "id": "list-standard",
       "name": "List / Standard",
       "route": "/pages/list/list-standard",
-      "coreVersion": "22.2.7",
+      "coreVersion": "22.2.8",
       "entityKind": "customer",
       "entityLabel": "Khách hàng doanh nghiệp",
       "purpose": "Tra cứu khách hàng bằng quickSearch, từ khóa và trạng thái trên một hàng gọn.",
@@ -44,14 +188,14 @@
         "SdTable"
       ],
       "sourceFiles": [
-        "src/libs/pages/components/status-badge.ts",
-        "src/libs/pages/patterns/list-standard/list-standard.component.ts",
-        "src/libs/pages/patterns/list-standard/list-standard.component.html",
-        "src/libs/pages/reference/page-navigation.ts",
-        "src/libs/pages/components/record-header.component.ts"
+        "src/modules/pages/components/status-badge.ts",
+        "src/modules/pages/features/list-standard/list-standard.component.ts",
+        "src/modules/pages/features/list-standard/list-standard.component.html",
+        "src/modules/pages/reference/page-navigation.ts",
+        "src/modules/pages/components/record-header.component.ts"
       ],
-      "dataContract": "src/libs/pages/data/models.ts",
-      "fixtures": "src/libs/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/pages/data/models.ts",
+      "fixtures": "src/modules/pages/data/fixture-factories.ts",
       "responsive": "Chiếm 100% chiều cao vùng làm việc; bảng cuộn nội bộ, phân trang ở đáy khi đủ số dòng.",
       "states": [
         "data",
@@ -70,7 +214,7 @@
       "id": "list-advanced-filter",
       "name": "List / Advanced filter",
       "route": "/pages/list/list-advanced-filter",
-      "coreVersion": "22.2.7",
+      "coreVersion": "22.2.8",
       "entityKind": "order",
       "entityLabel": "Đơn hàng",
       "purpose": "Quản lý đơn hàng với quickSearch, externalFilters và score card theo dữ liệu phiên.",
@@ -109,15 +253,15 @@
         "SdTable"
       ],
       "sourceFiles": [
-        "src/libs/pages/components/status-badge.ts",
-        "src/libs/pages/data/table-query.ts",
-        "src/libs/pages/patterns/list-advanced-filter/list-advanced-filter.component.ts",
-        "src/libs/pages/patterns/list-advanced-filter/list-advanced-filter.component.html",
-        "src/libs/pages/reference/page-navigation.ts",
-        "src/libs/pages/components/record-header.component.ts"
+        "src/modules/pages/components/status-badge.ts",
+        "src/modules/pages/data/table-query.ts",
+        "src/modules/pages/features/list-advanced-filter/list-advanced-filter.component.ts",
+        "src/modules/pages/features/list-advanced-filter/list-advanced-filter.component.html",
+        "src/modules/pages/reference/page-navigation.ts",
+        "src/modules/pages/components/record-header.component.ts"
       ],
-      "dataContract": "src/libs/pages/data/models.ts",
-      "fixtures": "src/libs/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/pages/data/models.ts",
+      "fixtures": "src/modules/pages/data/fixture-factories.ts",
       "responsive": "Chiếm 100% chiều cao vùng làm việc; bảng cuộn nội bộ, phân trang ở đáy khi đủ số dòng.",
       "states": [
         "data",
@@ -136,7 +280,7 @@
       "id": "list-grouped-tree",
       "name": "List / Grouped tree",
       "route": "/pages/list/list-grouped-tree",
-      "coreVersion": "22.2.7",
+      "coreVersion": "22.2.8",
       "entityKind": "product",
       "entityLabel": "Nhóm hàng và sản phẩm",
       "purpose": "Tra cứu danh mục phân cấp với externalFilters của Core.",
@@ -175,15 +319,15 @@
         "SdTable"
       ],
       "sourceFiles": [
-        "src/libs/pages/components/status-badge.ts",
-        "src/libs/pages/data/table-query.ts",
-        "src/libs/pages/patterns/list-grouped-tree/list-grouped-tree.component.ts",
-        "src/libs/pages/patterns/list-grouped-tree/list-grouped-tree.component.html",
-        "src/libs/pages/reference/page-navigation.ts",
-        "src/libs/pages/components/record-header.component.ts"
+        "src/modules/pages/components/status-badge.ts",
+        "src/modules/pages/data/table-query.ts",
+        "src/modules/pages/features/list-grouped-tree/list-grouped-tree.component.ts",
+        "src/modules/pages/features/list-grouped-tree/list-grouped-tree.component.html",
+        "src/modules/pages/reference/page-navigation.ts",
+        "src/modules/pages/components/record-header.component.ts"
       ],
-      "dataContract": "src/libs/pages/data/models.ts",
-      "fixtures": "src/libs/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/pages/data/models.ts",
+      "fixtures": "src/modules/pages/data/fixture-factories.ts",
       "responsive": "Chiếm 100% chiều cao vùng làm việc; bảng cuộn nội bộ, phân trang ở đáy khi đủ số dòng.",
       "states": [
         "data",
@@ -202,7 +346,7 @@
       "id": "list-master-detail",
       "name": "List / Master–Detail",
       "route": "/pages/list/list-master-detail",
-      "coreVersion": "22.2.7",
+      "coreVersion": "22.2.8",
       "entityKind": "ticket",
       "entityLabel": "Yêu cầu hỗ trợ",
       "purpose": "Xử lý yêu cầu với quickSearch, score card và vùng chi tiết độc lập bên cạnh.",
@@ -241,14 +385,14 @@
         "SdTable"
       ],
       "sourceFiles": [
-        "src/libs/pages/components/status-badge.ts",
-        "src/libs/pages/patterns/list-master-detail/list-master-detail.component.ts",
-        "src/libs/pages/patterns/list-master-detail/list-master-detail.component.html",
-        "src/libs/pages/reference/page-navigation.ts",
-        "src/libs/pages/components/record-header.component.ts"
+        "src/modules/pages/components/status-badge.ts",
+        "src/modules/pages/features/list-master-detail/list-master-detail.component.ts",
+        "src/modules/pages/features/list-master-detail/list-master-detail.component.html",
+        "src/modules/pages/reference/page-navigation.ts",
+        "src/modules/pages/components/record-header.component.ts"
       ],
-      "dataContract": "src/libs/pages/data/models.ts",
-      "fixtures": "src/libs/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/pages/data/models.ts",
+      "fixtures": "src/modules/pages/data/fixture-factories.ts",
       "responsive": "Chiếm 100% chiều cao vùng làm việc; bảng cuộn nội bộ, phân trang ở đáy khi đủ số dòng.",
       "states": [
         "data",
@@ -267,7 +411,7 @@
       "id": "detail-overview",
       "name": "Detail / Overview",
       "route": "/pages/detail/detail-overview",
-      "coreVersion": "22.2.7",
+      "coreVersion": "22.2.8",
       "entityKind": "customer",
       "entityLabel": "Khách hàng",
       "purpose": "Xem thông tin chính và một vài nhóm thuộc tính.",
@@ -295,13 +439,13 @@
         "SdSection"
       ],
       "sourceFiles": [
-        "src/libs/pages/patterns/detail-overview/detail-overview.component.ts",
-        "src/libs/pages/patterns/detail-overview/detail-overview.component.html",
-        "src/libs/pages/reference/page-navigation.ts",
-        "src/libs/pages/components/record-header.component.ts"
+        "src/modules/pages/features/detail-overview/detail-overview.component.ts",
+        "src/modules/pages/features/detail-overview/detail-overview.component.html",
+        "src/modules/pages/reference/page-navigation.ts",
+        "src/modules/pages/components/record-header.component.ts"
       ],
-      "dataContract": "src/libs/pages/data/models.ts",
-      "fixtures": "src/libs/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/pages/data/models.ts",
+      "fixtures": "src/modules/pages/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -320,7 +464,7 @@
       "id": "detail-tabbed",
       "name": "Detail / Tabbed",
       "route": "/pages/detail/detail-tabbed",
-      "coreVersion": "22.2.7",
+      "coreVersion": "22.2.8",
       "entityKind": "contract",
       "entityLabel": "Hợp đồng",
       "purpose": "Tách nhóm nội dung và dữ liệu liên quan theo tác vụ đọc.",
@@ -350,13 +494,13 @@
         "SdSection"
       ],
       "sourceFiles": [
-        "src/libs/pages/patterns/detail-tabbed/detail-tabbed.component.ts",
-        "src/libs/pages/patterns/detail-tabbed/detail-tabbed.component.html",
-        "src/libs/pages/reference/page-navigation.ts",
-        "src/libs/pages/components/record-header.component.ts"
+        "src/modules/pages/features/detail-tabbed/detail-tabbed.component.ts",
+        "src/modules/pages/features/detail-tabbed/detail-tabbed.component.html",
+        "src/modules/pages/reference/page-navigation.ts",
+        "src/modules/pages/components/record-header.component.ts"
       ],
-      "dataContract": "src/libs/pages/data/models.ts",
-      "fixtures": "src/libs/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/pages/data/models.ts",
+      "fixtures": "src/modules/pages/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -375,7 +519,7 @@
       "id": "detail-related-records",
       "name": "Detail / Related records",
       "route": "/pages/detail/detail-related-records",
-      "coreVersion": "22.2.7",
+      "coreVersion": "22.2.8",
       "entityKind": "order",
       "entityLabel": "Đơn hàng",
       "purpose": "Đọc bản ghi chính cùng các dòng hàng để đối chiếu.",
@@ -405,13 +549,13 @@
         "SdSection"
       ],
       "sourceFiles": [
-        "src/libs/pages/patterns/detail-related-records/detail-related-records.component.ts",
-        "src/libs/pages/patterns/detail-related-records/detail-related-records.component.html",
-        "src/libs/pages/reference/page-navigation.ts",
-        "src/libs/pages/components/record-header.component.ts"
+        "src/modules/pages/features/detail-related-records/detail-related-records.component.ts",
+        "src/modules/pages/features/detail-related-records/detail-related-records.component.html",
+        "src/modules/pages/reference/page-navigation.ts",
+        "src/modules/pages/components/record-header.component.ts"
       ],
-      "dataContract": "src/libs/pages/data/models.ts",
-      "fixtures": "src/libs/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/pages/data/models.ts",
+      "fixtures": "src/modules/pages/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -430,7 +574,7 @@
       "id": "form-simple",
       "name": "Form / Simple",
       "route": "/pages/detail/form-simple",
-      "coreVersion": "22.2.7",
+      "coreVersion": "22.2.8",
       "entityKind": "category",
       "entityLabel": "Danh mục",
       "purpose": "Nhập nhanh một nhóm trường có cùng ý nghĩa.",
@@ -461,13 +605,13 @@
         "SdSection"
       ],
       "sourceFiles": [
-        "src/libs/pages/patterns/form-simple/form-simple.component.ts",
-        "src/libs/pages/patterns/form-simple/form-simple.component.html",
-        "src/libs/pages/reference/page-navigation.ts",
-        "src/libs/pages/components/record-header.component.ts"
+        "src/modules/pages/features/form-simple/form-simple.component.ts",
+        "src/modules/pages/features/form-simple/form-simple.component.html",
+        "src/modules/pages/reference/page-navigation.ts",
+        "src/modules/pages/components/record-header.component.ts"
       ],
-      "dataContract": "src/libs/pages/data/models.ts",
-      "fixtures": "src/libs/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/pages/data/models.ts",
+      "fixtures": "src/modules/pages/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -486,7 +630,7 @@
       "id": "form-sections",
       "name": "Form / Sections",
       "route": "/pages/detail/form-sections",
-      "coreVersion": "22.2.7",
+      "coreVersion": "22.2.8",
       "entityKind": "partner",
       "entityLabel": "Đối tác",
       "purpose": "Chia nhóm trường theo nội dung và thứ tự làm việc.",
@@ -517,13 +661,13 @@
         "SdSection"
       ],
       "sourceFiles": [
-        "src/libs/pages/patterns/form-sections/form-sections.component.ts",
-        "src/libs/pages/patterns/form-sections/form-sections.component.html",
-        "src/libs/pages/reference/page-navigation.ts",
-        "src/libs/pages/components/record-header.component.ts"
+        "src/modules/pages/features/form-sections/form-sections.component.ts",
+        "src/modules/pages/features/form-sections/form-sections.component.html",
+        "src/modules/pages/reference/page-navigation.ts",
+        "src/modules/pages/components/record-header.component.ts"
       ],
-      "dataContract": "src/libs/pages/data/models.ts",
-      "fixtures": "src/libs/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/pages/data/models.ts",
+      "fixtures": "src/modules/pages/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -542,7 +686,7 @@
       "id": "form-line-items",
       "name": "Form / Line items",
       "route": "/pages/detail/form-line-items",
-      "coreVersion": "22.2.7",
+      "coreVersion": "22.2.8",
       "entityKind": "order",
       "entityLabel": "Đơn hàng",
       "purpose": "Lưu header và các dòng con trong một giao dịch.",
@@ -575,13 +719,13 @@
         "SdSection"
       ],
       "sourceFiles": [
-        "src/libs/pages/patterns/form-line-items/form-line-items.component.ts",
-        "src/libs/pages/patterns/form-line-items/form-line-items.component.html",
-        "src/libs/pages/reference/page-navigation.ts",
-        "src/libs/pages/components/record-header.component.ts"
+        "src/modules/pages/features/form-line-items/form-line-items.component.ts",
+        "src/modules/pages/features/form-line-items/form-line-items.component.html",
+        "src/modules/pages/reference/page-navigation.ts",
+        "src/modules/pages/components/record-header.component.ts"
       ],
-      "dataContract": "src/libs/pages/data/models.ts",
-      "fixtures": "src/libs/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/pages/data/models.ts",
+      "fixtures": "src/modules/pages/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -600,7 +744,7 @@
       "id": "drawer-compact",
       "name": "Drawer / Compact",
       "route": "/pages/detail/drawer-compact",
-      "coreVersion": "22.2.7",
+      "coreVersion": "22.2.8",
       "entityKind": "category",
       "entityLabel": "Danh mục",
       "purpose": "Xem và sửa ngắn tại danh sách, giữ ngữ cảnh phía sau.",
@@ -636,15 +780,15 @@
         "SdSideDrawer"
       ],
       "sourceFiles": [
-        "src/libs/pages/components/status-badge.ts",
-        "src/libs/pages/patterns/drawer-compact/drawer-compact.component.ts",
-        "src/libs/pages/patterns/drawer-compact/drawer-compact.component.html",
-        "src/libs/pages/reference/page-navigation.ts",
-        "src/libs/pages/components/record-header.component.ts",
-        "src/libs/pages/patterns/drawer-pattern-base.ts"
+        "src/modules/pages/components/status-badge.ts",
+        "src/modules/pages/features/drawer-compact/drawer-compact.component.ts",
+        "src/modules/pages/features/drawer-compact/drawer-compact.component.html",
+        "src/modules/pages/reference/page-navigation.ts",
+        "src/modules/pages/components/record-header.component.ts",
+        "src/modules/pages/features/drawer-pattern-base.ts"
       ],
-      "dataContract": "src/libs/pages/data/models.ts",
-      "fixtures": "src/libs/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/pages/data/models.ts",
+      "fixtures": "src/modules/pages/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -663,7 +807,7 @@
       "id": "drawer-sections",
       "name": "Drawer / Sections",
       "route": "/pages/detail/drawer-sections",
-      "coreVersion": "22.2.7",
+      "coreVersion": "22.2.8",
       "entityKind": "contact",
       "entityLabel": "Liên hệ",
       "purpose": "Chỉnh sửa vài nhóm thông tin trong ngữ cảnh danh sách.",
@@ -699,15 +843,15 @@
         "SdSideDrawer"
       ],
       "sourceFiles": [
-        "src/libs/pages/components/status-badge.ts",
-        "src/libs/pages/patterns/drawer-sections/drawer-sections.component.ts",
-        "src/libs/pages/patterns/drawer-sections/drawer-sections.component.html",
-        "src/libs/pages/reference/page-navigation.ts",
-        "src/libs/pages/components/record-header.component.ts",
-        "src/libs/pages/patterns/drawer-pattern-base.ts"
+        "src/modules/pages/components/status-badge.ts",
+        "src/modules/pages/features/drawer-sections/drawer-sections.component.ts",
+        "src/modules/pages/features/drawer-sections/drawer-sections.component.html",
+        "src/modules/pages/reference/page-navigation.ts",
+        "src/modules/pages/components/record-header.component.ts",
+        "src/modules/pages/features/drawer-pattern-base.ts"
       ],
-      "dataContract": "src/libs/pages/data/models.ts",
-      "fixtures": "src/libs/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/pages/data/models.ts",
+      "fixtures": "src/modules/pages/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",

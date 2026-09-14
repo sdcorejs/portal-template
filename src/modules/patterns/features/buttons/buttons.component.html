@@ -1,0 +1,56 @@
+@switch (variant()) {
+  @case ('crud') {
+    <div class="actions">
+      <sd-button title="Tạo liên hệ" type="fill" color="primary" routerLink="/patterns/drawers/create" /><sd-button
+        title="Lưu thay đổi"
+        type="outline"
+        routerLink="/patterns/drawers/update" /><sd-button title="Chỉnh sửa" type="text" routerLink="/patterns/drawers/update" /><sd-button
+        title="Xem chi tiết"
+        type="text"
+        routerLink="/patterns/drawers/detail" />
+    </div>
+    <p class="muted">Mở đúng mẫu create/update/detail để thử hành động. Detail dùng Đóng; update dùng Lưu thay đổi.</p>
+  }
+  @case ('query') {
+    <div class="actions">
+      <sd-button title="Tìm kiếm" type="fill" color="primary" routerLink="/patterns/tables/filter" /><sd-button
+        title="Áp dụng bộ lọc"
+        type="outline"
+        routerLink="/patterns/compositions/listing" /><sd-button
+        title="Xóa bộ lọc"
+        type="text"
+        (click)="message.set('Đưa các điều kiện về mặc định; thử query thật trong mẫu Listing.')" />
+    </div>
+  }
+  @case ('workflow') {
+    <div class="actions">
+      <sd-button title="Gửi duyệt" type="fill" color="primary" (click)="message.set('Đã gửi đơn hàng mẫu để chờ duyệt.')" /><sd-button
+        title="Duyệt đơn hàng"
+        type="outline"
+        (click)="message.set('Đã duyệt đơn hàng mẫu.')" /><sd-button
+        title="Từ chối"
+        type="text"
+        (click)="message.set('Đã từ chối đơn hàng mẫu.')" />
+    </div>
+    <p class="muted">Tham khảo câu chữ; thao tác chuyển trạng thái bản ghi nằm ở Hàng đợi xử lý.</p>
+  }
+  @case ('danger') {
+    @if (!deleted()) {
+      <p>Đơn hàng mẫu DH-1024 · An Phát</p>
+      <sd-button title="Xóa đơn hàng" color="error" type="fill" (click)="remove()" />
+    } @else {
+      <sd-button title="Khôi phục dữ liệu mẫu" (click)="deleted.set(false); message.set('')" />
+    }
+  }
+  @case ('async') {
+    <sd-button
+      [title]="saving() ? 'Đang lưu…' : attempt() === 1 ? 'Thử lại' : 'Lưu thay đổi'"
+      type="fill"
+      color="primary"
+      [disabled]="saving()"
+      [loading]="saving()"
+      (click)="save()" />
+    <p class="muted">Lần lưu đầu mô phỏng lỗi; thử lại thành công. Không gửi lặp khi pending.</p>
+  }
+}
+<p role="status">{{ message() }}</p>

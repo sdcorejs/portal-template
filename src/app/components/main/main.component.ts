@@ -1,5 +1,6 @@
 import { INSTRUCTIONS, INSTRUCTION_GROUPS } from '../../../modules/instructions';
 import { PAGE_EXAMPLES, ROLE_EXAMPLES } from '../../../modules/pages';
+import { PATTERN_GROUPS } from '../../../modules/patterns/catalog/pattern-catalog';
 import { SD_PERMISSION_PUBLIC } from '@sdcorejs/angular/modules/permission';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { SdLayoutComponent, SdLayoutMenu } from '@sdcorejs/angular/modules';
@@ -26,9 +27,21 @@ export class MainComponent {
     { initialValue: this.router.getCurrentNavigation()?.finalUrl?.toString() ?? this.router.url }
   );
   // Pages owns route-scoped drafts; retain the actual RouterOutlet for CanDeactivate.
-  readonly useTabRouter = computed(() => this.portalConfig.useTabRouter && !this.currentUrl().startsWith('/pages'));
+  readonly useTabRouter = computed(
+    () => this.portalConfig.useTabRouter && !this.currentUrl().startsWith('/pages') && !this.currentUrl().startsWith('/patterns')
+  );
 
   menus: SdLayoutMenu[] = [
+    {
+      icon: 'dashboard_customize',
+      title: 'Patterns',
+      children: Object.entries(PATTERN_GROUPS).map(([id, group]) => ({
+        path: '/patterns/' + id,
+        title: group.name,
+        icon: id === 'scores' ? 'analytics' : 'widgets',
+        permission: SD_PERMISSION_PUBLIC,
+      })),
+    },
     {
       icon: 'school',
       title: 'Instructions',

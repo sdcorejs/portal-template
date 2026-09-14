@@ -23,6 +23,11 @@ export const routes: Routes = [
         canActivate: [SdPortalGuard],
         children: [
           {
+            path: 'patterns',
+            data: { permission: SD_PERMISSION_PUBLIC },
+            loadChildren: () => import('../modules/patterns').then(m => m.patternsRoutes),
+          },
+          {
             path: 'layout',
             data: { permission: SD_PERMISSION_PUBLIC },
             loadChildren: () => import('@sdcorejs/angular/modules/layout').then(m => m.SdLayoutModule),

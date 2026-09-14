@@ -1,0 +1,112 @@
+<div class="actions" style="justify-content: space-between; margin-bottom: 18px">
+  <div class="actions">
+    @for (layout of ['listing', 'cards', 'queue', 'overview']; track layout) {
+      <button class="tag" [attr.aria-pressed]="view() === layout" (click)="setView(layout)">
+        {{ layout === 'listing' ? 'Danh sách' : layout === 'cards' ? 'Thẻ hồ sơ' : layout === 'queue' ? 'Hàng đợi' : 'Tổng quan' }}
+      </button>
+    }
+  </div>
+  <label class="field"
+    >Trạng thái demo<select [ngModel]="state()" (ngModelChange)="state.set($event); page.set(0)">
+      <option value="data">Có dữ liệu</option>
+      <option value="loading">Đang tải</option>
+      <option value="empty">Chưa có dữ liệu</option>
+      <option value="error">Lỗi tải</option>
+    </select></label
+  >
+</div>
+@if (state() === 'loading' || state() === 'error') {
+  <sd-data-state
+    [state]="state() === 'error' ? 'error' : 'loading'"
+    [title]="state() === 'error' ? 'Không thể tải đơn hàng' : 'Đang tải đơn hàng…'" />
+  @if (state() === 'error') {
+    <sd-button title="Thử lại" (click)="state.set('data')" />
+  }
+} @else {
+  <p class="muted">Thống kê toàn bộ {{ records().length }} đơn hàng · Không đổi theo bộ lọc</p>
+  @if (view() === 'overview') {
+    <app-pattern-scorecards [cards]="metrics()" iconLayout="tile" />
+    <div class="overview">
+      <section class="surface">
+        <h3>Phân bố theo trạng thái</h3>
+        @for (status of statuses; track status) {
+          <p>
+            <button class="record-link" (click)="drill(status)">{{ labels[$any(status)] }} · {{ count(status) }} đơn →</button>
+          </p>
+        }
+      </section>
+      <section class="surface">
+        <h3>Cần xử lý trước</h3>
+        @for (row of attention(); track row.id) {
+          <p>
+            <button class="record-link" (click)="detail.open(row)">{{ row.code }} · {{ row.name }}</button> —
+            {{ row.amount.toLocaleString('vi-VN') }} ₫
+          </p>
+        } @empty {
+          <p>Không có đơn chờ xử lý.</p>
+        }
+      </section>
+    </div>
+  } @else {
+    <app-pattern-scorecards
+      [cards]="cards()"
+      [selected]="query().status"
+      [interactive]="true"
+      iconLayout="inline"
+      (selection)="select($event)" />
+    <app-pattern-query [query]="query()" (changed)="change($event)" />
+    <div class="actions">
+      @if (query().status) {
+        <button class="tag" (click)="select('')">{{ labels[$any(query().status)] }} ×</button>
+      }
+      @if (query().search) {
+        <button class="tag" (click)="change({ search: '', status: query().status, region: query().region, sort: query().sort })">
+          Tìm: {{ query().search }} ×
+        </button>
+      }
+      @if (query().region) {
+        <button class="tag" (click)="change({ search: query().search, status: query().status, region: '', sort: query().sort })">
+          {{ query().region }} ×
+        </button>
+      }
+    </div>
+    <p role="status">{{ rows().length }} kết quả phù hợp / {{ records().length }} đơn hàng</p>
+    @if (!rows().length) {
+      <sd-data-state state="empty" [title]="records().length ? 'Không có kết quả phù hợp' : 'Chưa có dữ liệu mẫu'" /><sd-button
+        [title]="records().length ? 'Xóa bộ lọc' : 'Khôi phục dữ liệu'"
+        (click)="state.set('data'); change({ search: '', status: '', region: '', sort: 'code' })" />
+    } @else if (view() === 'listing') {
+      <app-pattern-results [rows]="rows()" (openRecord)="detail.open($event)" />
+    } @else {
+      <app-pattern-collection
+        [rows]="view() === 'cards' ? paged() : rows()"
+        [layout]="view()"
+        [pending]="store.pending()"
+        (openRecord)="detail.open($event)"
+        (transition)="store.transition([$event.id], $event.status)" />
+      @if (view() === 'cards') {
+        <div class="pager">
+          <label class="field"
+            >Số dòng<select [ngModel]="pageSize()" (ngModelChange)="pageSize.set(+$event); page.set(0)">
+              <option [ngValue]="6">6</option>
+              <option [ngValue]="12">12</option>
+              <option [ngValue]="24">24</option>
+            </select></label
+          >
+          <div class="actions">
+            <sd-button title="Trang trước" [disabled]="page() === 0" (click)="page.set(page() - 1)" /><span>Trang {{ page() + 1 }}</span
+            ><sd-button title="Trang sau" [disabled]="(page() + 1) * pageSize() >= rows().length" (click)="page.set(page() + 1)" />
+          </div>
+        </div>
+      }
+    }
+    @if (view() === 'queue') {
+      <label class="actions muted" style="margin-top: 12px"
+        ><input type="checkbox" [ngModel]="store.simulateError()" (ngModelChange)="store.simulateError.set($event)" /> Mô phỏng lỗi cập
+        nhật</label
+      >
+    }
+  }
+}
+<p role="status">{{ store.message() }}</p>
+<app-pattern-order-detail #detail />

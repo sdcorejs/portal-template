@@ -1,0 +1,7 @@
+<div class="table-region">
+  <sd-table autoId="pattern-results" [option]="option()" style="height: 480px">
+    <ng-template sdTableCellDef="code" let-row="item"
+      ><button type="button" class="record-link" (click)="openRecord.emit(row)">{{ row.code }}</button></ng-template
+    >
+  </sd-table>
+</div>

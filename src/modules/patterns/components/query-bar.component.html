@@ -1,0 +1,25 @@
+<div class="query-bar">
+  <label class="field search"
+    >Tìm nhanh<input
+      type="search"
+      placeholder="Mã đơn hoặc tên khách hàng"
+      [ngModel]="query().search"
+      (ngModelChange)="change({ search: $event })"
+  /></label>
+  <label class="field"
+    >Khu vực<select [ngModel]="query().region" (ngModelChange)="change({ region: $event })">
+      <option value="">Tất cả khu vực</option>
+      @for (region of regions; track region) {
+        <option>{{ region }}</option>
+      }
+    </select></label
+  >
+  <label class="field"
+    >Sắp xếp<select [ngModel]="query().sort" (ngModelChange)="change({ sort: $event })">
+      <option value="code">Mã đơn tăng dần</option>
+      <option value="amount-desc">Giá trị giảm dần</option>
+      <option value="amount-asc">Giá trị tăng dần</option>
+    </select></label
+  >
+  <sd-button title="Xóa bộ lọc" type="outline" (click)="clear()" />
+</div>

@@ -21,7 +21,13 @@
     "export:catalog": "node scripts/export-page-catalog.mjs",
     "check:catalog": "node scripts/export-page-catalog.mjs --check",
     "test:catalog": "node --test scripts/export-page-catalog.test.mjs",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "export:patterns": "node scripts/export-patterns.mjs",
+    "check:patterns": "node scripts/export-patterns.mjs --check",
+    "test:patterns": "node --test scripts/test-patterns.mjs",
+    "test:e2e:patterns": "playwright test --config playwright.patterns.config.ts",
+    "prestart": "npm run export:patterns",
+    "prebuild": "npm run export:patterns"
   },
   "private": true,
   "dependencies": {

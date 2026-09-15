@@ -1,5 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
-const root = (layout: string) => '/pages/list/roles-' + layout;
+const root = (layout: string) => '/page/list/roles-' + layout;
 const checkbox = (page: Page, name: string) => page.getByRole('checkbox', { name, exact: true });
 const button = (page: Page, name: string) => page.getByRole('button', { name, exact: true });
 const refreshIsGuarded = (page: Page) =>

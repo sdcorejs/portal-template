@@ -5,11 +5,11 @@
     {
       "id": "roles-matrix",
       "name": "Role / Ma trận quyền",
-      "route": "/pages/list/roles-matrix",
+      "route": "/page/list/roles-matrix",
       "recordRoutes": {
-        "create": "/pages/list/roles-matrix/create",
-        "detail": "/pages/list/roles-matrix/:id/detail",
-        "update": "/pages/list/roles-matrix/:id/update"
+        "create": "/page/list/roles-matrix/create",
+        "detail": "/page/list/roles-matrix/:id/detail",
+        "update": "/page/list/roles-matrix/:id/update"
       },
       "coreVersion": "22.2.8",
       "entityKind": "role",
@@ -54,14 +54,14 @@
         "MatCheckbox"
       ],
       "sourceFiles": [
-        "src/modules/pages/features/roles/pages/role-list-page.component.ts",
-        "src/modules/pages/features/roles/pages/role-record-editor.component.ts",
-        "src/modules/pages/features/roles/components/role-permission-editor.component.ts",
-        "src/modules/pages/features/roles/components/permission-matrix.component.ts",
-        "src/modules/pages/features/roles/data/role-session.store.ts"
+        "src/modules/page/features/role/pages/role-list-page.component.ts",
+        "src/modules/page/features/role/pages/role-record-editor.component.ts",
+        "src/modules/page/features/role/components/role-permission-editor.component.ts",
+        "src/modules/page/features/role/components/permission-matrix.component.ts",
+        "src/modules/page/features/role/data/role-session.store.ts"
       ],
-      "dataContract": "src/modules/pages/features/roles/data/role.model.ts",
-      "fixtures": "src/modules/pages/features/roles/data/role.fixtures.ts",
+      "dataContract": "src/modules/page/features/role/data/role.model.ts",
+      "fixtures": "src/modules/page/features/role/data/role.fixtures.ts",
       "responsive": "List chiếm chiều cao vùng làm việc; form thu về một cột, bảng quyền cuộn ngang và giữ cột chức năng.",
       "states": [
         "data",
@@ -77,11 +77,11 @@
     {
       "id": "roles-tree",
       "name": "Role / Quyền phân cấp",
-      "route": "/pages/list/roles-tree",
+      "route": "/page/list/roles-tree",
       "recordRoutes": {
-        "create": "/pages/list/roles-tree/create",
-        "detail": "/pages/list/roles-tree/:id/detail",
-        "update": "/pages/list/roles-tree/:id/update"
+        "create": "/page/list/roles-tree/create",
+        "detail": "/page/list/roles-tree/:id/detail",
+        "update": "/page/list/roles-tree/:id/update"
       },
       "coreVersion": "22.2.8",
       "entityKind": "role",
@@ -126,14 +126,14 @@
         "MatCheckbox"
       ],
       "sourceFiles": [
-        "src/modules/pages/features/roles/pages/role-list-page.component.ts",
-        "src/modules/pages/features/roles/pages/role-record-editor.component.ts",
-        "src/modules/pages/features/roles/components/role-permission-editor.component.ts",
-        "src/modules/pages/features/roles/components/permission-tree.component.ts",
-        "src/modules/pages/features/roles/data/role-session.store.ts"
+        "src/modules/page/features/role/pages/role-list-page.component.ts",
+        "src/modules/page/features/role/pages/role-record-editor.component.ts",
+        "src/modules/page/features/role/components/role-permission-editor.component.ts",
+        "src/modules/page/features/role/components/permission-tree.component.ts",
+        "src/modules/page/features/role/data/role-session.store.ts"
       ],
-      "dataContract": "src/modules/pages/features/roles/data/role.model.ts",
-      "fixtures": "src/modules/pages/features/roles/data/role.fixtures.ts",
+      "dataContract": "src/modules/page/features/role/data/role.model.ts",
+      "fixtures": "src/modules/page/features/role/data/role.fixtures.ts",
       "responsive": "List chiếm chiều cao vùng làm việc; form thu về một cột, bảng quyền cuộn ngang và giữ cột chức năng.",
       "states": [
         "data",
@@ -149,7 +149,7 @@
     {
       "id": "list-standard",
       "name": "List / Standard",
-      "route": "/pages/list/list-standard",
+      "route": "/page/list/list-standard",
       "coreVersion": "22.2.8",
       "entityKind": "customer",
       "entityLabel": "Khách hàng doanh nghiệp",
@@ -188,14 +188,14 @@
         "SdTable"
       ],
       "sourceFiles": [
-        "src/modules/pages/components/status-badge.ts",
-        "src/modules/pages/features/list-standard/list-standard.component.ts",
-        "src/modules/pages/features/list-standard/list-standard.component.html",
-        "src/modules/pages/reference/page-navigation.ts",
-        "src/modules/pages/components/record-header.component.ts"
+        "src/modules/page/components/status-badge.ts",
+        "src/modules/page/features/list-standard/list-standard.component.ts",
+        "src/modules/page/features/list-standard/list-standard.component.html",
+        "src/modules/page/reference/page-navigation.ts",
+        "src/modules/page/components/record-header.component.ts"
       ],
-      "dataContract": "src/modules/pages/data/models.ts",
-      "fixtures": "src/modules/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/page/data/models.ts",
+      "fixtures": "src/modules/page/data/fixture-factories.ts",
       "responsive": "Chiếm 100% chiều cao vùng làm việc; bảng cuộn nội bộ, phân trang ở đáy khi đủ số dòng.",
       "states": [
         "data",
@@ -205,15 +205,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/pages/list/list-standard/create",
-        "detail": "/pages/list/list-standard/:id/detail",
-        "update": "/pages/list/list-standard/:id/update"
+        "create": "/page/list/list-standard/create",
+        "detail": "/page/list/list-standard/:id/detail",
+        "update": "/page/list/list-standard/:id/update"
       }
     },
     {
       "id": "list-advanced-filter",
       "name": "List / Advanced filter",
-      "route": "/pages/list/list-advanced-filter",
+      "route": "/page/list/list-advanced-filter",
       "coreVersion": "22.2.8",
       "entityKind": "order",
       "entityLabel": "Đơn hàng",
@@ -253,15 +253,15 @@
         "SdTable"
       ],
       "sourceFiles": [
-        "src/modules/pages/components/status-badge.ts",
-        "src/modules/pages/data/table-query.ts",
-        "src/modules/pages/features/list-advanced-filter/list-advanced-filter.component.ts",
-        "src/modules/pages/features/list-advanced-filter/list-advanced-filter.component.html",
-        "src/modules/pages/reference/page-navigation.ts",
-        "src/modules/pages/components/record-header.component.ts"
+        "src/modules/page/components/status-badge.ts",
+        "src/modules/page/data/table-query.ts",
+        "src/modules/page/features/list-advanced-filter/list-advanced-filter.component.ts",
+        "src/modules/page/features/list-advanced-filter/list-advanced-filter.component.html",
+        "src/modules/page/reference/page-navigation.ts",
+        "src/modules/page/components/record-header.component.ts"
       ],
-      "dataContract": "src/modules/pages/data/models.ts",
-      "fixtures": "src/modules/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/page/data/models.ts",
+      "fixtures": "src/modules/page/data/fixture-factories.ts",
       "responsive": "Chiếm 100% chiều cao vùng làm việc; bảng cuộn nội bộ, phân trang ở đáy khi đủ số dòng.",
       "states": [
         "data",
@@ -271,15 +271,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/pages/list/list-advanced-filter/create",
-        "detail": "/pages/list/list-advanced-filter/:id/detail",
-        "update": "/pages/list/list-advanced-filter/:id/update"
+        "create": "/page/list/list-advanced-filter/create",
+        "detail": "/page/list/list-advanced-filter/:id/detail",
+        "update": "/page/list/list-advanced-filter/:id/update"
       }
     },
     {
       "id": "list-grouped-tree",
       "name": "List / Grouped tree",
-      "route": "/pages/list/list-grouped-tree",
+      "route": "/page/list/list-grouped-tree",
       "coreVersion": "22.2.8",
       "entityKind": "product",
       "entityLabel": "Nhóm hàng và sản phẩm",
@@ -319,15 +319,15 @@
         "SdTable"
       ],
       "sourceFiles": [
-        "src/modules/pages/components/status-badge.ts",
-        "src/modules/pages/data/table-query.ts",
-        "src/modules/pages/features/list-grouped-tree/list-grouped-tree.component.ts",
-        "src/modules/pages/features/list-grouped-tree/list-grouped-tree.component.html",
-        "src/modules/pages/reference/page-navigation.ts",
-        "src/modules/pages/components/record-header.component.ts"
+        "src/modules/page/components/status-badge.ts",
+        "src/modules/page/data/table-query.ts",
+        "src/modules/page/features/list-grouped-tree/list-grouped-tree.component.ts",
+        "src/modules/page/features/list-grouped-tree/list-grouped-tree.component.html",
+        "src/modules/page/reference/page-navigation.ts",
+        "src/modules/page/components/record-header.component.ts"
       ],
-      "dataContract": "src/modules/pages/data/models.ts",
-      "fixtures": "src/modules/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/page/data/models.ts",
+      "fixtures": "src/modules/page/data/fixture-factories.ts",
       "responsive": "Chiếm 100% chiều cao vùng làm việc; bảng cuộn nội bộ, phân trang ở đáy khi đủ số dòng.",
       "states": [
         "data",
@@ -337,15 +337,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/pages/list/list-grouped-tree/create",
-        "detail": "/pages/list/list-grouped-tree/:id/detail",
-        "update": "/pages/list/list-grouped-tree/:id/update"
+        "create": "/page/list/list-grouped-tree/create",
+        "detail": "/page/list/list-grouped-tree/:id/detail",
+        "update": "/page/list/list-grouped-tree/:id/update"
       }
     },
     {
       "id": "list-master-detail",
       "name": "List / Master–Detail",
-      "route": "/pages/list/list-master-detail",
+      "route": "/page/list/list-master-detail",
       "coreVersion": "22.2.8",
       "entityKind": "ticket",
       "entityLabel": "Yêu cầu hỗ trợ",
@@ -385,14 +385,14 @@
         "SdTable"
       ],
       "sourceFiles": [
-        "src/modules/pages/components/status-badge.ts",
-        "src/modules/pages/features/list-master-detail/list-master-detail.component.ts",
-        "src/modules/pages/features/list-master-detail/list-master-detail.component.html",
-        "src/modules/pages/reference/page-navigation.ts",
-        "src/modules/pages/components/record-header.component.ts"
+        "src/modules/page/components/status-badge.ts",
+        "src/modules/page/features/list-master-detail/list-master-detail.component.ts",
+        "src/modules/page/features/list-master-detail/list-master-detail.component.html",
+        "src/modules/page/reference/page-navigation.ts",
+        "src/modules/page/components/record-header.component.ts"
       ],
-      "dataContract": "src/modules/pages/data/models.ts",
-      "fixtures": "src/modules/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/page/data/models.ts",
+      "fixtures": "src/modules/page/data/fixture-factories.ts",
       "responsive": "Chiếm 100% chiều cao vùng làm việc; bảng cuộn nội bộ, phân trang ở đáy khi đủ số dòng.",
       "states": [
         "data",
@@ -402,15 +402,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/pages/list/list-master-detail/create",
-        "detail": "/pages/list/list-master-detail/:id/detail",
-        "update": "/pages/list/list-master-detail/:id/update"
+        "create": "/page/list/list-master-detail/create",
+        "detail": "/page/list/list-master-detail/:id/detail",
+        "update": "/page/list/list-master-detail/:id/update"
       }
     },
     {
       "id": "detail-overview",
       "name": "Detail / Overview",
-      "route": "/pages/detail/detail-overview",
+      "route": "/page/detail/detail-overview",
       "coreVersion": "22.2.8",
       "entityKind": "customer",
       "entityLabel": "Khách hàng",
@@ -439,13 +439,13 @@
         "SdSection"
       ],
       "sourceFiles": [
-        "src/modules/pages/features/detail-overview/detail-overview.component.ts",
-        "src/modules/pages/features/detail-overview/detail-overview.component.html",
-        "src/modules/pages/reference/page-navigation.ts",
-        "src/modules/pages/components/record-header.component.ts"
+        "src/modules/page/features/detail-overview/detail-overview.component.ts",
+        "src/modules/page/features/detail-overview/detail-overview.component.html",
+        "src/modules/page/reference/page-navigation.ts",
+        "src/modules/page/components/record-header.component.ts"
       ],
-      "dataContract": "src/modules/pages/data/models.ts",
-      "fixtures": "src/modules/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/page/data/models.ts",
+      "fixtures": "src/modules/page/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -455,15 +455,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/pages/detail/detail-overview/create",
-        "detail": "/pages/detail/detail-overview/:id/detail",
-        "update": "/pages/detail/detail-overview/:id/update"
+        "create": "/page/detail/detail-overview/create",
+        "detail": "/page/detail/detail-overview/:id/detail",
+        "update": "/page/detail/detail-overview/:id/update"
       }
     },
     {
       "id": "detail-tabbed",
       "name": "Detail / Tabbed",
-      "route": "/pages/detail/detail-tabbed",
+      "route": "/page/detail/detail-tabbed",
       "coreVersion": "22.2.8",
       "entityKind": "contract",
       "entityLabel": "Hợp đồng",
@@ -494,13 +494,13 @@
         "SdSection"
       ],
       "sourceFiles": [
-        "src/modules/pages/features/detail-tabbed/detail-tabbed.component.ts",
-        "src/modules/pages/features/detail-tabbed/detail-tabbed.component.html",
-        "src/modules/pages/reference/page-navigation.ts",
-        "src/modules/pages/components/record-header.component.ts"
+        "src/modules/page/features/detail-tabbed/detail-tabbed.component.ts",
+        "src/modules/page/features/detail-tabbed/detail-tabbed.component.html",
+        "src/modules/page/reference/page-navigation.ts",
+        "src/modules/page/components/record-header.component.ts"
       ],
-      "dataContract": "src/modules/pages/data/models.ts",
-      "fixtures": "src/modules/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/page/data/models.ts",
+      "fixtures": "src/modules/page/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -510,15 +510,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/pages/detail/detail-tabbed/create",
-        "detail": "/pages/detail/detail-tabbed/:id/detail",
-        "update": "/pages/detail/detail-tabbed/:id/update"
+        "create": "/page/detail/detail-tabbed/create",
+        "detail": "/page/detail/detail-tabbed/:id/detail",
+        "update": "/page/detail/detail-tabbed/:id/update"
       }
     },
     {
       "id": "detail-related-records",
       "name": "Detail / Related records",
-      "route": "/pages/detail/detail-related-records",
+      "route": "/page/detail/detail-related-records",
       "coreVersion": "22.2.8",
       "entityKind": "order",
       "entityLabel": "Đơn hàng",
@@ -549,13 +549,13 @@
         "SdSection"
       ],
       "sourceFiles": [
-        "src/modules/pages/features/detail-related-records/detail-related-records.component.ts",
-        "src/modules/pages/features/detail-related-records/detail-related-records.component.html",
-        "src/modules/pages/reference/page-navigation.ts",
-        "src/modules/pages/components/record-header.component.ts"
+        "src/modules/page/features/detail-related-records/detail-related-records.component.ts",
+        "src/modules/page/features/detail-related-records/detail-related-records.component.html",
+        "src/modules/page/reference/page-navigation.ts",
+        "src/modules/page/components/record-header.component.ts"
       ],
-      "dataContract": "src/modules/pages/data/models.ts",
-      "fixtures": "src/modules/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/page/data/models.ts",
+      "fixtures": "src/modules/page/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -565,15 +565,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/pages/detail/detail-related-records/create",
-        "detail": "/pages/detail/detail-related-records/:id/detail",
-        "update": "/pages/detail/detail-related-records/:id/update"
+        "create": "/page/detail/detail-related-records/create",
+        "detail": "/page/detail/detail-related-records/:id/detail",
+        "update": "/page/detail/detail-related-records/:id/update"
       }
     },
     {
       "id": "form-simple",
       "name": "Form / Simple",
-      "route": "/pages/detail/form-simple",
+      "route": "/page/detail/form-simple",
       "coreVersion": "22.2.8",
       "entityKind": "category",
       "entityLabel": "Danh mục",
@@ -605,13 +605,13 @@
         "SdSection"
       ],
       "sourceFiles": [
-        "src/modules/pages/features/form-simple/form-simple.component.ts",
-        "src/modules/pages/features/form-simple/form-simple.component.html",
-        "src/modules/pages/reference/page-navigation.ts",
-        "src/modules/pages/components/record-header.component.ts"
+        "src/modules/page/features/form-simple/form-simple.component.ts",
+        "src/modules/page/features/form-simple/form-simple.component.html",
+        "src/modules/page/reference/page-navigation.ts",
+        "src/modules/page/components/record-header.component.ts"
       ],
-      "dataContract": "src/modules/pages/data/models.ts",
-      "fixtures": "src/modules/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/page/data/models.ts",
+      "fixtures": "src/modules/page/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -621,15 +621,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/pages/detail/form-simple/create",
-        "detail": "/pages/detail/form-simple/:id/detail",
-        "update": "/pages/detail/form-simple/:id/update"
+        "create": "/page/detail/form-simple/create",
+        "detail": "/page/detail/form-simple/:id/detail",
+        "update": "/page/detail/form-simple/:id/update"
       }
     },
     {
       "id": "form-sections",
       "name": "Form / Sections",
-      "route": "/pages/detail/form-sections",
+      "route": "/page/detail/form-sections",
       "coreVersion": "22.2.8",
       "entityKind": "partner",
       "entityLabel": "Đối tác",
@@ -661,13 +661,13 @@
         "SdSection"
       ],
       "sourceFiles": [
-        "src/modules/pages/features/form-sections/form-sections.component.ts",
-        "src/modules/pages/features/form-sections/form-sections.component.html",
-        "src/modules/pages/reference/page-navigation.ts",
-        "src/modules/pages/components/record-header.component.ts"
+        "src/modules/page/features/form-sections/form-sections.component.ts",
+        "src/modules/page/features/form-sections/form-sections.component.html",
+        "src/modules/page/reference/page-navigation.ts",
+        "src/modules/page/components/record-header.component.ts"
       ],
-      "dataContract": "src/modules/pages/data/models.ts",
-      "fixtures": "src/modules/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/page/data/models.ts",
+      "fixtures": "src/modules/page/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -677,15 +677,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/pages/detail/form-sections/create",
-        "detail": "/pages/detail/form-sections/:id/detail",
-        "update": "/pages/detail/form-sections/:id/update"
+        "create": "/page/detail/form-sections/create",
+        "detail": "/page/detail/form-sections/:id/detail",
+        "update": "/page/detail/form-sections/:id/update"
       }
     },
     {
       "id": "form-line-items",
       "name": "Form / Line items",
-      "route": "/pages/detail/form-line-items",
+      "route": "/page/detail/form-line-items",
       "coreVersion": "22.2.8",
       "entityKind": "order",
       "entityLabel": "Đơn hàng",
@@ -719,13 +719,13 @@
         "SdSection"
       ],
       "sourceFiles": [
-        "src/modules/pages/features/form-line-items/form-line-items.component.ts",
-        "src/modules/pages/features/form-line-items/form-line-items.component.html",
-        "src/modules/pages/reference/page-navigation.ts",
-        "src/modules/pages/components/record-header.component.ts"
+        "src/modules/page/features/form-line-items/form-line-items.component.ts",
+        "src/modules/page/features/form-line-items/form-line-items.component.html",
+        "src/modules/page/reference/page-navigation.ts",
+        "src/modules/page/components/record-header.component.ts"
       ],
-      "dataContract": "src/modules/pages/data/models.ts",
-      "fixtures": "src/modules/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/page/data/models.ts",
+      "fixtures": "src/modules/page/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -735,15 +735,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/pages/detail/form-line-items/create",
-        "detail": "/pages/detail/form-line-items/:id/detail",
-        "update": "/pages/detail/form-line-items/:id/update"
+        "create": "/page/detail/form-line-items/create",
+        "detail": "/page/detail/form-line-items/:id/detail",
+        "update": "/page/detail/form-line-items/:id/update"
       }
     },
     {
       "id": "drawer-compact",
       "name": "Drawer / Compact",
-      "route": "/pages/detail/drawer-compact",
+      "route": "/page/detail/drawer-compact",
       "coreVersion": "22.2.8",
       "entityKind": "category",
       "entityLabel": "Danh mục",
@@ -780,15 +780,15 @@
         "SdSideDrawer"
       ],
       "sourceFiles": [
-        "src/modules/pages/components/status-badge.ts",
-        "src/modules/pages/features/drawer-compact/drawer-compact.component.ts",
-        "src/modules/pages/features/drawer-compact/drawer-compact.component.html",
-        "src/modules/pages/reference/page-navigation.ts",
-        "src/modules/pages/components/record-header.component.ts",
-        "src/modules/pages/features/drawer-pattern-base.ts"
+        "src/modules/page/components/status-badge.ts",
+        "src/modules/page/features/drawer-compact/drawer-compact.component.ts",
+        "src/modules/page/features/drawer-compact/drawer-compact.component.html",
+        "src/modules/page/reference/page-navigation.ts",
+        "src/modules/page/components/record-header.component.ts",
+        "src/modules/page/features/drawer-pattern-base.ts"
       ],
-      "dataContract": "src/modules/pages/data/models.ts",
-      "fixtures": "src/modules/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/page/data/models.ts",
+      "fixtures": "src/modules/page/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -798,15 +798,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/pages/detail/drawer-compact/create",
-        "detail": "/pages/detail/drawer-compact/:id/detail",
-        "update": "/pages/detail/drawer-compact/:id/update"
+        "create": "/page/detail/drawer-compact/create",
+        "detail": "/page/detail/drawer-compact/:id/detail",
+        "update": "/page/detail/drawer-compact/:id/update"
       }
     },
     {
       "id": "drawer-sections",
       "name": "Drawer / Sections",
-      "route": "/pages/detail/drawer-sections",
+      "route": "/page/detail/drawer-sections",
       "coreVersion": "22.2.8",
       "entityKind": "contact",
       "entityLabel": "Liên hệ",
@@ -843,15 +843,15 @@
         "SdSideDrawer"
       ],
       "sourceFiles": [
-        "src/modules/pages/components/status-badge.ts",
-        "src/modules/pages/features/drawer-sections/drawer-sections.component.ts",
-        "src/modules/pages/features/drawer-sections/drawer-sections.component.html",
-        "src/modules/pages/reference/page-navigation.ts",
-        "src/modules/pages/components/record-header.component.ts",
-        "src/modules/pages/features/drawer-pattern-base.ts"
+        "src/modules/page/components/status-badge.ts",
+        "src/modules/page/features/drawer-sections/drawer-sections.component.ts",
+        "src/modules/page/features/drawer-sections/drawer-sections.component.html",
+        "src/modules/page/reference/page-navigation.ts",
+        "src/modules/page/components/record-header.component.ts",
+        "src/modules/page/features/drawer-pattern-base.ts"
       ],
-      "dataContract": "src/modules/pages/data/models.ts",
-      "fixtures": "src/modules/pages/data/fixture-factories.ts",
+      "dataContract": "src/modules/page/data/models.ts",
+      "fixtures": "src/modules/page/data/fixture-factories.ts",
       "responsive": "Hai cột chuyển một cột dưới 900px; bảng cuộn trong vùng riêng.",
       "states": [
         "data",
@@ -861,9 +861,9 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/pages/detail/drawer-sections/create",
-        "detail": "/pages/detail/drawer-sections/:id/detail",
-        "update": "/pages/detail/drawer-sections/:id/update"
+        "create": "/page/detail/drawer-sections/create",
+        "detail": "/page/detail/drawer-sections/:id/detail",
+        "update": "/page/detail/drawer-sections/:id/update"
       }
     }
   ]

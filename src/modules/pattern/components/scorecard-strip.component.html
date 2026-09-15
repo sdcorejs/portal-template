@@ -1,0 +1,39 @@
+@if (interactive()) {
+  <sd-card-group class="scores" [model]="selected()" (sdChange)="choose($event)">
+    @for (card of cards(); track card.id) {
+      <sd-card
+        [value]="card.id"
+        [color]="card.tone === 'pending' ? 'warning' : card.tone === 'done' ? 'success' : 'primary'"
+        [class.p-12]="compact()">
+        <ng-container *ngTemplateOutlet="content; context: { $implicit: card }" />
+      </sd-card>
+    }
+  </sd-card-group>
+} @else {
+  <div class="scores">
+    @for (card of cards(); track card.id) {
+      <sd-section [hideHeader]="true">
+        <div [class]="compact() ? 'p-12' : 'p-16'">
+          <ng-container *ngTemplateOutlet="content; context: { $implicit: card }" />
+        </div>
+      </sd-section>
+    }
+  </div>
+}
+<ng-template #content let-card>
+  <div class="d-flex flex-column gap-8">
+    <div class="d-flex align-items-center gap-8 text-secondary">
+      @if (iconLayout() !== 'none') {
+        <span [class]="iconLayout() === 'tile' ? 'd-inline-flex p-8 rounded-8 bg-' + iconColor(card) + '-light' : 'd-inline-flex'">
+          <sd-icon [name]="card.icon" [class]="'text-' + iconColor(card)" />
+        </span>
+      }
+      <span>{{ card.label }}</span>
+    </div>
+    <strong [class]="compact() ? 'fs-22' : 'fs-28'">{{ card.value }}</strong>
+    @if (card.progress !== undefined) {
+      <progress class="w-100" [value]="card.progress" max="100" [attr.aria-label]="card.label"></progress>
+    }
+    <span class="text-secondary">{{ interactive() && selected() === card.id ? 'Đang lọc' : card.hint }}</span>
+  </div>
+</ng-template>

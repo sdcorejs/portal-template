@@ -1,0 +1,6 @@
+<div class="controls" role="group" aria-label="Cây thư mục">
+  <button type="button" [attr.aria-pressed]="treeMode() === 'blueprint'" (click)="treeMode.set('blueprint')">Module nghiệp vụ</button>
+  <button type="button" [attr.aria-pressed]="treeMode() === 'portal'" (click)="treeMode.set('portal')">Source hiện tại</button>
+</div>
+<pre tabindex="0" aria-label="Cây thư mục">{{ treeMode() === 'blueprint' ? blueprintTree : portalTree }}</pre>
+<a class="demo-link" routerLink="/page/list/list-standard/customer-1/detail">Mở ví dụ đang chạy: khách hàng customer-1</a>

@@ -1,0 +1,10 @@
+// Routed pages must inherit the available height so sd-page owns content scrolling.
+:host ::ng-deep sd-tab-router-outlet {
+  .tab-router__disabled-outlet > router-outlet + *,
+  .tab-router__content > :not(router-outlet) {
+    display: block;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+  }
+}

@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  gap: 8px;
+}
+app-pattern-results {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}

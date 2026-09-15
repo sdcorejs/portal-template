@@ -41,7 +41,7 @@ Thay các ví dụ trước đây như SALES_CUSTOMER_VIEW, các biến thể d�
 
 ## 3. Menu và nội dung 17 trang
 
-Các route trong bảng là route đề xuất, dưới `/instructions`. Menu group và URL không cần giống tên thư mục vật lý; tái sử dụng feature hiện tại khi phù hợp.
+Các route trong bảng là route đề xuất, dưới `/instruction`. Menu group và URL không cần giống tên thư mục vật lý; tái sử dụng feature hiện tại khi phù hợp.
 
 | ID | Nhóm | Trang / route | Ảnh đầu bài | Ví dụ và kết quả người đọc nhìn thấy | Nguồn |
 | --- | --- | --- | --- | --- | --- |
@@ -81,13 +81,13 @@ Desktop có mục lục bên phải; mobile dùng nút “Trong trang này”. H
 
 ## 5. Phạm vi code dự kiến và phần dùng lại
 
-- EDIT `src/modules/instructions/routes.ts`: đăng ký các trang lazy-load, giữ URL cũ phù hợp và đặt redirect cụ thể.
+- EDIT `src/modules/instruction/routes.ts`: đăng ký các trang lazy-load, giữ URL cũ phù hợp và đặt redirect cụ thể.
 - EDIT `src/app/components/main/main.component.ts`: chỉ phần menu Instructions, chuyển thành 6 nhóm; Pages vẫn ở vị trí đã review.
-- CREATE `src/modules/instructions/catalog/instruction-registry.ts`: metadata ID/title/group/route/hero/source/related pages; không đưa toàn bộ nội dung hoặc dependency của các demo vào import eager của menu.
-- CREATE `src/modules/instructions/components/instruction-article/`: bố cục bài, mục lục, ảnh phóng to và nguồn/bài liên quan dùng chung.
-- CREATE `src/modules/instructions/components/instruction-example/`: khung preview/code/reset; từng demo sở hữu state và hành vi riêng.
+- CREATE `src/modules/instruction/catalog/instruction-registry.ts`: metadata ID/title/group/route/hero/source/related pages; không đưa toàn bộ nội dung hoặc dependency của các demo vào import eager của menu.
+- CREATE `src/modules/instruction/components/instruction-article/`: bố cục bài, mục lục, ảnh phóng to và nguồn/bài liên quan dùng chung.
+- CREATE `src/modules/instruction/components/instruction-example/`: khung preview/code/reset; từng demo sở hữu state và hành vi riêng.
 - EDIT feature `architecture`, `coding-conventions`, `coding-conventions-typescript`, `custom-theme`, `portal-config`: dùng bố cục mới, sửa ví dụ theo convention đã xác nhận.
-- CREATE các page còn thiếu dưới `src/modules/instructions/features/<feature>/pages/`. Feature mới dự kiến: getting-started, modern-angular, authorization, tooling; thêm page vào architecture khi cùng phạm vi.
+- CREATE các page còn thiếu dưới `src/modules/instruction/features/<feature>/pages/`. Feature mới dự kiến: getting-started, modern-angular, authorization, tooling; thêm page vào architecture khi cùng phạm vi.
 - CREATE ảnh tại `src/assets/instructions/<article-id>/`, đặt tên theo nội dung; chỉ thêm ảnh thực sự dùng trong bài.
 - EDIT `e2e/architecture.spec.ts`; CREATE `e2e/instructions.spec.ts` để kiểm tra menu/route, ảnh và demo; test logic mapping quyền đặt cùng feature authorization.
 - EDIT README và docs/verification.md sau triển khai để phản ánh hướng dẫn đang chạy.

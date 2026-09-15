@@ -3,7 +3,7 @@ import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import ts from 'typescript';
 export async function loadCatalog() {
-  const source = readFileSync('src/modules/pages/catalog/pattern-registry.ts', 'utf8');
+  const source = readFileSync('src/modules/page/catalog/pattern-registry.ts', 'utf8');
   const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ES2022 } }).outputText;
   const { PAGE_PATTERNS } = await import('data:text/javascript;base64,' + Buffer.from(js).toString('base64'));
   return { schemaVersion: 1, coreVersion: '22.2.8', patterns: structuredClone(PAGE_PATTERNS) };
@@ -22,12 +22,12 @@ export function validateCatalog(catalog) {
     )
       throw new Error('Record URL contract mismatch');
     if (
-      p.route !== '/pages/' + (p.id.startsWith('list-') || p.entityKind === 'role' ? 'list/' : 'detail/') + p.id ||
+      p.route !== '/page/' + (p.id.startsWith('list-') || p.entityKind === 'role' ? 'list/' : 'detail/') + p.id ||
       p.coreVersion !== catalog.coreVersion
     )
       throw new Error('Pattern identity mismatch');
     for (const path of [...p.sourceFiles, p.dataContract, p.fixtures]) {
-      if (path.includes('..') || !path.startsWith('src/modules/pages/') || !existsSync(path)) throw new Error('Invalid source ' + path);
+      if (path.includes('..') || !path.startsWith('src/modules/page/') || !existsSync(path)) throw new Error('Invalid source ' + path);
     }
     if (!p.suitableWhen || !p.avoidWhen || !p.requiredFields.length) throw new Error('Missing selection guidance');
   }
@@ -45,7 +45,7 @@ export async function renderArtifacts() {
         sources.files[path] = readFileSync(path, 'utf8');
     }
   }
-  collect('src/modules/pages');
+  collect('src/modules/page');
   sources.files['src/styles/reference.scss'] = readFileSync('src/styles/reference.scss', 'utf8');
   const markdown =
     '# Page patterns — Core 22.2.8\n\nGenerated from the pattern registry. Demo data is synthetic and scoped to one mounted reference; replace the service boundary for production.\n\n' +
@@ -84,7 +84,7 @@ export async function renderArtifacts() {
   return {
     'public/catalog/page-patterns.v1.json': JSON.stringify(catalog, null, 2) + '\n',
     'public/catalog/page-pattern-sources.v1.json': JSON.stringify(sources, null, 2) + '\n',
-    'docs/page-patterns.md': markdown,
+    'docs/page-pattern.md': markdown,
   };
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {

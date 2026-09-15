@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+.scores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(165px, 100%), 1fr));
+  gap: 12px;
+  margin: 12px 0 18px;
+}

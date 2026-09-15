@@ -4,8 +4,8 @@ Hai ví dụ riêng trong **Pages → List** dùng Core UI 22.2.8:
 
 | Mẫu | URL danh sách | Cách gán quyền |
 | --- | --- | --- |
-| Role · Ma trận quyền | `/pages/list/roles-matrix` | Mỗi chức năng một hàng; cột Xem/Tạo/Cập nhật/Xóa và Other chứa nhiều quyền |
-| Role · Quyền phân cấp | `/pages/list/roles-tree` | Chức năng là hàng cha, từng quyền là hàng con có thể thu gọn |
+| Role · Ma trận quyền | `/page/list/roles-matrix` | Mỗi chức năng một hàng; cột Xem/Tạo/Cập nhật/Xóa và Other chứa nhiều quyền |
+| Role · Quyền phân cấp | `/page/list/roles-tree` | Chức năng là hàng cha, từng quyền là hàng con có thể thu gọn |
 
 Mỗi mẫu có `/create`, `/:id/detail`, `/:id/update`. Mã ở cột đầu dẫn đến detail; nút Cập nhật mở form. Header có Quay lại dạng text kèm mũi tên và Lưu kèm icon. Không có Tạo mới ở detail.
 
@@ -19,7 +19,7 @@ Mã/tên bắt buộc, mã duy nhất trong từng mẫu và chỉ gồm chữ h
 
 ## Mã nguồn để tái sử dụng
 
-`src/modules/pages/features/roles/` tách `pages/`, `components/`, `data/`:
+`src/modules/page/features/role/` tách `pages/`, `components/`, `data/`:
 
 - `RoleListPageComponent`: bảng Core và điều hướng.
 - `RoleRecordPageComponent`: load route và guard; `RoleRecordEditorComponent`: form, draft, lưu.

@@ -1,0 +1,55 @@
+<div class="form-shell">
+  <h3>Danh sách liên hệ</h3>
+  <app-pattern-contact-facts [record]="record()" /><sd-button
+    [title]="
+      variant() === 'detail' ? 'Xem chi tiết' : variant() === 'update' || variant() === 'sections' ? 'Chỉnh sửa liên hệ' : 'Tạo liên hệ'
+    "
+    type="fill"
+    color="primary"
+    (click)="open()" />
+  <p role="status">{{ message() }}</p>
+</div>
+<sd-side-drawer
+  [title]="title()"
+  [width]="variant() === 'sections' ? '760px' : '600px'"
+  [beforeClose]="beforeClose"
+  (sdClosed)="closed()"
+  autoId="pattern-contact-drawer">
+  <div sdHeaderLeft>
+    <h2>{{ title() }}</h2>
+    <p class="text-secondary fs-13">{{ mode() === 'create' ? 'Nhập thông tin liên hệ mới' : record().name }}</p>
+  </div>
+  @if (opened()) {
+    @if (mode() === 'detail') {
+      <div class="pattern-body"><app-pattern-contact-facts [record]="record()" /></div>
+    } @else {
+      @for (key of [mode()]; track key) {
+        <div class="pattern-body">
+          <app-pattern-form-editor
+            [initial]="seed()"
+            [mode]="mode()"
+            [layout]="variant() === 'sections' ? 'sections' : 'simple'"
+            [hideFooter]="true"
+            (saved)="saved($event)" />
+        </div>
+      }
+    }
+  }
+  <div sdFooterLeft class="text-secondary fs-13">{{ mode() === 'detail' ? 'Dữ liệu trong phiên demo' : '* Trường bắt buộc' }}</div>
+  <div sdFooterRight class="d-flex align-items-center flex-wrap gap-8">
+    <sd-button [title]="mode() === 'detail' ? 'Đóng' : 'Hủy'" type="outline" [disabled]="editor()?.saving()" (click)="close()" />
+    @if (mode() === 'detail') {
+      @if (canEdit()) {
+        <sd-button title="Chỉnh sửa" prefixIcon="edit" type="fill" color="primary" (click)="edit()" />
+      }
+    } @else {
+      <sd-button
+        [title]="editor()?.saving() ? 'Đang lưu…' : mode() === 'create' ? 'Tạo liên hệ' : 'Lưu thay đổi'"
+        type="fill"
+        color="primary"
+        [loading]="editor()?.saving()"
+        [disabled]="editor()?.saving()"
+        (click)="save()" />
+    }
+  </div>
+</sd-side-drawer>

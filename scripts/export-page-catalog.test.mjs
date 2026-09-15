@@ -6,8 +6,8 @@ test('CASE-EXPORT: complete, serializable catalog and exact source artifacts', a
   assert.equal(validateCatalog(c), true);
   assert.equal(JSON.parse(JSON.stringify(c)).patterns.length, 14);
   const artifacts = await renderArtifacts();
-  assert.ok(artifacts['docs/page-patterns.md'].includes('list-master-detail'));
-  assert.ok(JSON.parse(artifacts['public/catalog/page-pattern-sources.v1.json']).files['src/modules/pages/data/models.ts']);
+  assert.ok(artifacts['docs/page-pattern.md'].includes('list-master-detail'));
+  assert.ok(JSON.parse(artifacts['public/catalog/page-pattern-sources.v1.json']).files['src/modules/page/data/models.ts']);
 });
 test('CASE-EXPORT: rejects duplicate identities and escaped source paths', async () => {
   const c = await loadCatalog();

@@ -13,7 +13,7 @@ Quản lý vai trò và gán quyền nhóm theo module bằng ma trận CRUD và
 - Create: /pages/list/roles-matrix/create
 - Detail: /pages/list/roles-matrix/:id/detail
 - Update: /pages/list/roles-matrix/:id/update
-- Source: src/modules/pages/features/roles/pages/role-list-page.component.ts, src/modules/pages/features/roles/pages/role-record-editor.component.ts, src/modules/pages/features/roles/components/role-permission-editor.component.ts, src/modules/pages/features/roles/components/permission-matrix.component.ts, src/modules/pages/features/roles/data/role-session.store.ts
+- Source: src/modules/page/features/role/pages/role-list-page.component.ts, src/modules/page/features/role/pages/role-record-editor.component.ts, src/modules/page/features/role/components/role-permission-editor.component.ts, src/modules/page/features/role/components/permission-matrix.component.ts, src/modules/page/features/role/data/role-session.store.ts
 - Fields: code, name, status
 
 ## Role / Quyền phân cấp — roles-tree
@@ -27,7 +27,7 @@ Quản lý vai trò và gán quyền nhóm theo module bằng bảng cha–con.
 - Create: /pages/list/roles-tree/create
 - Detail: /pages/list/roles-tree/:id/detail
 - Update: /pages/list/roles-tree/:id/update
-- Source: src/modules/pages/features/roles/pages/role-list-page.component.ts, src/modules/pages/features/roles/pages/role-record-editor.component.ts, src/modules/pages/features/roles/components/role-permission-editor.component.ts, src/modules/pages/features/roles/components/permission-tree.component.ts, src/modules/pages/features/roles/data/role-session.store.ts
+- Source: src/modules/page/features/role/pages/role-list-page.component.ts, src/modules/page/features/role/pages/role-record-editor.component.ts, src/modules/page/features/role/components/role-permission-editor.component.ts, src/modules/page/features/role/components/permission-tree.component.ts, src/modules/page/features/role/data/role-session.store.ts
 - Fields: code, name, status
 
 ## List / Standard — list-standard
@@ -41,7 +41,7 @@ Tra cứu khách hàng bằng quickSearch, từ khóa và trạng thái trên m�
 - Create: /pages/list/list-standard/create
 - Detail: /pages/list/list-standard/:id/detail
 - Update: /pages/list/list-standard/:id/update
-- Source: src/modules/pages/components/status-badge.ts, src/modules/pages/features/list-standard/list-standard.component.ts, src/modules/pages/features/list-standard/list-standard.component.html, src/modules/pages/reference/page-navigation.ts, src/modules/pages/components/record-header.component.ts
+- Source: src/modules/page/components/status-badge.ts, src/modules/page/features/list-standard/list-standard.component.ts, src/modules/page/features/list-standard/list-standard.component.html, src/modules/page/reference/page-navigation.ts, src/modules/page/components/record-header.component.ts
 - Fields: code, name, status
 
 ## List / Advanced filter — list-advanced-filter
@@ -55,7 +55,7 @@ Quản lý đơn hàng với quickSearch, externalFilters và score card theo d�
 - Create: /pages/list/list-advanced-filter/create
 - Detail: /pages/list/list-advanced-filter/:id/detail
 - Update: /pages/list/list-advanced-filter/:id/update
-- Source: src/modules/pages/components/status-badge.ts, src/modules/pages/data/table-query.ts, src/modules/pages/features/list-advanced-filter/list-advanced-filter.component.ts, src/modules/pages/features/list-advanced-filter/list-advanced-filter.component.html, src/modules/pages/reference/page-navigation.ts, src/modules/pages/components/record-header.component.ts
+- Source: src/modules/page/components/status-badge.ts, src/modules/page/data/table-query.ts, src/modules/page/features/list-advanced-filter/list-advanced-filter.component.ts, src/modules/page/features/list-advanced-filter/list-advanced-filter.component.html, src/modules/page/reference/page-navigation.ts, src/modules/page/components/record-header.component.ts
 - Fields: code, name, status
 
 ## List / Grouped tree — list-grouped-tree
@@ -69,7 +69,7 @@ Tra cứu danh mục phân cấp với externalFilters của Core.
 - Create: /pages/list/list-grouped-tree/create
 - Detail: /pages/list/list-grouped-tree/:id/detail
 - Update: /pages/list/list-grouped-tree/:id/update
-- Source: src/modules/pages/components/status-badge.ts, src/modules/pages/data/table-query.ts, src/modules/pages/features/list-grouped-tree/list-grouped-tree.component.ts, src/modules/pages/features/list-grouped-tree/list-grouped-tree.component.html, src/modules/pages/reference/page-navigation.ts, src/modules/pages/components/record-header.component.ts
+- Source: src/modules/page/components/status-badge.ts, src/modules/page/data/table-query.ts, src/modules/page/features/list-grouped-tree/list-grouped-tree.component.ts, src/modules/page/features/list-grouped-tree/list-grouped-tree.component.html, src/modules/page/reference/page-navigation.ts, src/modules/page/components/record-header.component.ts
 - Fields: code, name, status
 
 ## List / Master–Detail — list-master-detail
@@ -83,7 +83,7 @@ Xử lý yêu cầu với quickSearch, score card và vùng chi tiết độc l�
 - Create: /pages/list/list-master-detail/create
 - Detail: /pages/list/list-master-detail/:id/detail
 - Update: /pages/list/list-master-detail/:id/update
-- Source: src/modules/pages/components/status-badge.ts, src/modules/pages/features/list-master-detail/list-master-detail.component.ts, src/modules/pages/features/list-master-detail/list-master-detail.component.html, src/modules/pages/reference/page-navigation.ts, src/modules/pages/components/record-header.component.ts
+- Source: src/modules/page/components/status-badge.ts, src/modules/page/features/list-master-detail/list-master-detail.component.ts, src/modules/page/features/list-master-detail/list-master-detail.component.html, src/modules/page/reference/page-navigation.ts, src/modules/page/components/record-header.component.ts
 - Fields: code, name, status
 
 ## Detail / Overview — detail-overview
@@ -97,7 +97,7 @@ Xem thông tin chính và một vài nhóm thuộc tính.
 - Create: /pages/detail/detail-overview/create
 - Detail: /pages/detail/detail-overview/:id/detail
 - Update: /pages/detail/detail-overview/:id/update
-- Source: src/modules/pages/features/detail-overview/detail-overview.component.ts, src/modules/pages/features/detail-overview/detail-overview.component.html, src/modules/pages/reference/page-navigation.ts, src/modules/pages/components/record-header.component.ts
+- Source: src/modules/page/features/detail-overview/detail-overview.component.ts, src/modules/page/features/detail-overview/detail-overview.component.html, src/modules/page/reference/page-navigation.ts, src/modules/page/components/record-header.component.ts
 - Fields: code, name, status
 
 ## Detail / Tabbed — detail-tabbed
@@ -111,7 +111,7 @@ Tách nhóm nội dung và dữ liệu liên quan theo tác vụ đọc.
 - Create: /pages/detail/detail-tabbed/create
 - Detail: /pages/detail/detail-tabbed/:id/detail
 - Update: /pages/detail/detail-tabbed/:id/update
-- Source: src/modules/pages/features/detail-tabbed/detail-tabbed.component.ts, src/modules/pages/features/detail-tabbed/detail-tabbed.component.html, src/modules/pages/reference/page-navigation.ts, src/modules/pages/components/record-header.component.ts
+- Source: src/modules/page/features/detail-tabbed/detail-tabbed.component.ts, src/modules/page/features/detail-tabbed/detail-tabbed.component.html, src/modules/page/reference/page-navigation.ts, src/modules/page/components/record-header.component.ts
 - Fields: code, name, status
 
 ## Detail / Related records — detail-related-records
@@ -125,7 +125,7 @@ Tách nhóm nội dung và dữ liệu liên quan theo tác vụ đọc.
 - Create: /pages/detail/detail-related-records/create
 - Detail: /pages/detail/detail-related-records/:id/detail
 - Update: /pages/detail/detail-related-records/:id/update
-- Source: src/modules/pages/features/detail-related-records/detail-related-records.component.ts, src/modules/pages/features/detail-related-records/detail-related-records.component.html, src/modules/pages/reference/page-navigation.ts, src/modules/pages/components/record-header.component.ts
+- Source: src/modules/page/features/detail-related-records/detail-related-records.component.ts, src/modules/page/features/detail-related-records/detail-related-records.component.html, src/modules/page/reference/page-navigation.ts, src/modules/page/components/record-header.component.ts
 - Fields: code, name, status
 
 ## Form / Simple — form-simple
@@ -139,7 +139,7 @@ Nhập nhanh một nhóm trường có cùng ý nghĩa.
 - Create: /pages/detail/form-simple/create
 - Detail: /pages/detail/form-simple/:id/detail
 - Update: /pages/detail/form-simple/:id/update
-- Source: src/modules/pages/features/form-simple/form-simple.component.ts, src/modules/pages/features/form-simple/form-simple.component.html, src/modules/pages/reference/page-navigation.ts, src/modules/pages/components/record-header.component.ts
+- Source: src/modules/page/features/form-simple/form-simple.component.ts, src/modules/page/features/form-simple/form-simple.component.html, src/modules/page/reference/page-navigation.ts, src/modules/page/components/record-header.component.ts
 - Fields: code, name, status
 
 ## Form / Sections — form-sections
@@ -153,7 +153,7 @@ Chia nhóm trường theo nội dung và thứ tự làm việc.
 - Create: /pages/detail/form-sections/create
 - Detail: /pages/detail/form-sections/:id/detail
 - Update: /pages/detail/form-sections/:id/update
-- Source: src/modules/pages/features/form-sections/form-sections.component.ts, src/modules/pages/features/form-sections/form-sections.component.html, src/modules/pages/reference/page-navigation.ts, src/modules/pages/components/record-header.component.ts
+- Source: src/modules/page/features/form-sections/form-sections.component.ts, src/modules/page/features/form-sections/form-sections.component.html, src/modules/page/reference/page-navigation.ts, src/modules/page/components/record-header.component.ts
 - Fields: code, name, status
 
 ## Form / Line items — form-line-items
@@ -167,7 +167,7 @@ Lưu header và các dòng con trong một giao dịch.
 - Create: /pages/detail/form-line-items/create
 - Detail: /pages/detail/form-line-items/:id/detail
 - Update: /pages/detail/form-line-items/:id/update
-- Source: src/modules/pages/features/form-line-items/form-line-items.component.ts, src/modules/pages/features/form-line-items/form-line-items.component.html, src/modules/pages/reference/page-navigation.ts, src/modules/pages/components/record-header.component.ts
+- Source: src/modules/page/features/form-line-items/form-line-items.component.ts, src/modules/page/features/form-line-items/form-line-items.component.html, src/modules/page/reference/page-navigation.ts, src/modules/page/components/record-header.component.ts
 - Fields: code, name, status
 
 ## Drawer / Compact — drawer-compact
@@ -181,7 +181,7 @@ Xem và sửa ngắn tại danh sách, giữ ngữ cảnh phía sau.
 - Create: /pages/detail/drawer-compact/create
 - Detail: /pages/detail/drawer-compact/:id/detail
 - Update: /pages/detail/drawer-compact/:id/update
-- Source: src/modules/pages/components/status-badge.ts, src/modules/pages/features/drawer-compact/drawer-compact.component.ts, src/modules/pages/features/drawer-compact/drawer-compact.component.html, src/modules/pages/reference/page-navigation.ts, src/modules/pages/components/record-header.component.ts, src/modules/pages/features/drawer-pattern-base.ts
+- Source: src/modules/page/components/status-badge.ts, src/modules/page/features/drawer-compact/drawer-compact.component.ts, src/modules/page/features/drawer-compact/drawer-compact.component.html, src/modules/page/reference/page-navigation.ts, src/modules/page/components/record-header.component.ts, src/modules/page/features/drawer-pattern-base.ts
 - Fields: code, name, status
 
 ## Drawer / Sections — drawer-sections
@@ -195,5 +195,5 @@ Chỉnh sửa vài nhóm thông tin trong ngữ cảnh danh sách.
 - Create: /pages/detail/drawer-sections/create
 - Detail: /pages/detail/drawer-sections/:id/detail
 - Update: /pages/detail/drawer-sections/:id/update
-- Source: src/modules/pages/components/status-badge.ts, src/modules/pages/features/drawer-sections/drawer-sections.component.ts, src/modules/pages/features/drawer-sections/drawer-sections.component.html, src/modules/pages/reference/page-navigation.ts, src/modules/pages/components/record-header.component.ts, src/modules/pages/features/drawer-pattern-base.ts
+- Source: src/modules/page/components/status-badge.ts, src/modules/page/features/drawer-sections/drawer-sections.component.ts, src/modules/page/features/drawer-sections/drawer-sections.component.html, src/modules/page/reference/page-navigation.ts, src/modules/page/components/record-header.component.ts, src/modules/page/features/drawer-pattern-base.ts
 - Fields: code, name, status

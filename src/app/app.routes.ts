@@ -7,7 +7,7 @@ export const routes: Routes = [
   {
     path: '',
     data: { permission: SD_PERMISSION_PUBLIC },
-    redirectTo: 'pages',
+    redirectTo: 'page',
     pathMatch: 'full',
   },
   {
@@ -22,10 +22,22 @@ export const routes: Routes = [
         data: { permission: SD_PERMISSION_PUBLIC },
         canActivate: [SdPortalGuard],
         children: [
+          ...Object.entries({
+            pages: 'page',
+            components: 'component',
+            services: 'service',
+            forms: 'form',
+            instructions: 'instruction',
+            utilities: 'utility',
+          }).map(([path, redirectTo]) => ({ path, redirectTo })),
           {
             path: 'patterns',
+            redirectTo: 'pattern',
+          },
+          {
+            path: 'pattern',
             data: { permission: SD_PERMISSION_PUBLIC },
-            loadChildren: () => import('../modules/patterns').then(m => m.patternsRoutes),
+            loadChildren: () => import('../modules/pattern').then(m => m.patternRoutes),
           },
           {
             path: 'layout',
@@ -33,34 +45,34 @@ export const routes: Routes = [
             loadChildren: () => import('@sdcorejs/angular/modules/layout').then(m => m.SdLayoutModule),
           },
           {
-            path: 'pages',
+            path: 'page',
             data: { permission: SD_PERMISSION_PUBLIC },
-            loadChildren: () => import('../modules/pages').then(m => m.pagesRoutes),
+            loadChildren: () => import('../modules/page').then(m => m.pageRoutes),
           },
           {
-            path: 'components',
+            path: 'component',
             data: { permission: SD_PERMISSION_PUBLIC },
-            loadChildren: () => import('@components').then(m => m.componentsRoutes),
+            loadChildren: () => import('@component').then(m => m.componentRoutes),
           },
           {
-            path: 'services',
+            path: 'service',
             data: { permission: SD_PERMISSION_PUBLIC },
-            loadChildren: () => import('@services').then(m => m.servicesRoutes),
+            loadChildren: () => import('@service').then(m => m.serviceRoutes),
           },
           {
-            path: 'forms',
+            path: 'form',
             data: { permission: SD_PERMISSION_PUBLIC },
-            loadChildren: () => import('@forms').then(m => m.formsRoutes),
+            loadChildren: () => import('@form').then(m => m.formRoutes),
           },
           {
-            path: 'instructions',
+            path: 'instruction',
             data: { permission: SD_PERMISSION_PUBLIC },
-            loadChildren: () => import('@instructions').then(m => m.instructionsRoutes),
+            loadChildren: () => import('@instruction').then(m => m.instructionRoutes),
           },
           {
-            path: 'utilities',
+            path: 'utility',
             data: { permission: SD_PERMISSION_PUBLIC },
-            loadChildren: () => import('@utilities').then(m => m.utilitiesRoutes),
+            loadChildren: () => import('@utility').then(m => m.utilityRoutes),
           },
         ],
       },

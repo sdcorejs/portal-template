@@ -17,9 +17,9 @@ Mở [Instructions](http://localhost:2208/instructions/getting-started/overview)
 
 Permission bắt buộc theo `MODULE_ENTITY_TYPE_ACTION`: `CRM_CUSTOMER_C_CREATE` (FE), `CRM_CUSTOMER_A_CREATE` (BE), `CRM_CUSTOMER_G_CREATE` (nhóm nghiệp vụ). UI gán Role chỉ chọn nhóm G với nhãn nghiệp vụ. Demo phân giải hợp quyền, giữ quyền giao nhau khi bỏ một nhóm và kiểm tra assignment theo user/record. Các tình huống API/quyền/Git được ghi rõ là mô phỏng; DI và signal APIs là Angular thật.
 
-Core UI công khai; không có bước cấp khóa kích hoạt. Công cụ palette tại `/instructions/custom-theme/tool` và bài trình bày `/instructions/instroduction` được giữ lại. Cấu hình Portal lưu localStorage và áp dụng sau reload; Reset ví dụ chỉ bỏ draft, “Khôi phục mặc định” mới xóa cấu hình đã lưu.
+Core UI công khai; không có bước cấp khóa kích hoạt. Công cụ palette tại `/instruction/custom-theme/tool` và bài trình bày `/instruction/instroduction` được giữ lại. Cấu hình Portal lưu localStorage và áp dụng sau reload; Reset ví dụ chỉ bỏ draft, “Khôi phục mặc định” mới xóa cấu hình đã lưu.
 
-Nội dung và navigation metadata nằm ở `src/modules/instructions/catalog`; mỗi bài có loader riêng, demo nằm trong `features`, shell nằm trong `components`. Registry không import demo. 17 SVG cùng ảnh UI thực tế nằm trong `src/assets/instructions`. Khi thêm bài, cập nhật registry, article/loader và asset; không hard-code thêm một cây menu khác.
+Nội dung và navigation metadata nằm ở `src/modules/instruction/catalog`; mỗi bài có loader riêng, demo nằm trong `features`, shell nằm trong `components`. Registry không import demo. 17 SVG cùng ảnh UI thực tế nằm trong `src/assets/instructions`. Khi thêm bài, cập nhật registry, article/loader và asset; không hard-code thêm một cây menu khác.
 
 Kiểm tra Instructions và các route liên quan, chỉ cần dev server Portal:
 
@@ -68,12 +68,12 @@ Mỗi ví dụ giữ cùng một URL gốc; trạng thái màn và ID bản ghi 
 
 | Trạng thái | URL |
 | --- | --- |
-| List | `/pages/list/list-standard` |
-| Create | `/pages/list/list-standard/create` |
-| Detail | `/pages/list/list-standard/customer-1/detail` |
-| Update | `/pages/list/list-standard/customer-1/update` |
+| List | `/page/list/list-standard` |
+| Create | `/page/list/list-standard/create` |
+| Detail | `/page/list/list-standard/customer-1/detail` |
+| Update | `/page/list/list-standard/customer-1/update` |
 
-`:id` là ID dữ liệu (`customer-1`), độc lập với mã hiển thị (`CUS-0001`). Create chưa có ID; sau lưu thành công chuyển đến `/:id/detail` của bản ghi vừa tạo. Các mẫu detail, form và drawer áp dụng cùng hậu tố, chẳng hạn `/pages/detail/form-simple/create` và `/pages/detail/drawer-compact/category-1/update`. URL gốc của mẫu detail/form chuyển đến URL detail của bản ghi đầu tiên; ID không tồn tại hiển thị lỗi, không lấy bản ghi khác thay thế.
+`:id` là ID dữ liệu (`customer-1`), độc lập với mã hiển thị (`CUS-0001`). Create chưa có ID; sau lưu thành công chuyển đến `/:id/detail` của bản ghi vừa tạo. Các mẫu detail, form và drawer áp dụng cùng hậu tố, chẳng hạn `/page/detail/form-simple/create` và `/page/detail/drawer-compact/category-1/update`. URL gốc của mẫu detail/form chuyển đến URL detail của bản ghi đầu tiên; ID không tồn tại hiển thị lỗi, không lấy bản ghi khác thay thế.
 
 Header detail: **Chi tiết công ty #CUS-0001**, mã màu primary, tên công ty ở dòng description, badge trạng thái round. Detail chỉ có **Quay lại** và **Cập nhật**. Header create/update chỉ có **Quay lại** (type text, icon arrow_back) và **Lưu** (icon save); không có nút Hủy hoặc diễn giải dấu bắt buộc dưới form. Drawer sử dụng cùng header/action qua các slot public của Core.
 
@@ -100,13 +100,13 @@ Các bảng list và các list mở drawer dùng `sdTableCellDef="code"` để h
 
 ## Chọn mẫu bằng dữ liệu
 
-Đọc [catalog guide](docs/page-patterns.md), [catalog JSON](public/catalog/page-patterns.v1.json) và [source bundle](public/catalog/page-pattern-sources.v1.json). Metadata có ID, route, Core version, shape, fields, relationships, suitableWhen/avoidWhen, components chính, trạng thái và source. Bundle chứa cả base classes, components con, service của Pages và src/styles/reference.scss. Import stylesheet này cùng theme Core khi dùng lại các mẫu.
+Đọc [catalog guide](docs/page-pattern.md), [catalog JSON](public/catalog/page-patterns.v1.json) và [source bundle](public/catalog/page-pattern-sources.v1.json). Metadata có ID, route, Core version, shape, fields, relationships, suitableWhen/avoidWhen, components chính, trạng thái và source. Bundle chứa cả base classes, components con, service của Pages và src/styles/reference.scss. Import stylesheet này cùng theme Core khi dùng lại các mẫu.
 
 Ví dụ: dữ liệu phẳng có mã/tên/trạng thái → list-standard; dữ liệu parentId → list-grouped-tree; header + lines[] cần tổng tiền → form-line-items và detail-related-records; thao tác ngắn cần giữ danh sách → drawer-compact. Thay DTO, validation và service demo theo hợp đồng module; không suy ra quyền hoặc API từ fixture.
 
 Sau khi sửa pattern/registry, chạy npm run export:catalog. Catalog được đọc mà không bootstrap Angular. npm run check:catalog phát hiện source/guide đã cũ.
 
-Hai mẫu Role tại `/pages/list/roles-matrix` và `/pages/list/roles-tree` minh họa gán quyền theo tab module bằng ma trận CRUD/Other hoặc bảng cha–con. Xem [hướng dẫn Role](docs/role-pages.md) để tái sử dụng component, store và quy tắc chọn quyền.
+Hai mẫu Role tại `/page/list/roles-matrix` và `/page/list/roles-tree` minh họa gán quyền theo tab module bằng ma trận CRUD/Other hoặc bảng cha–con. Xem [hướng dẫn Role](docs/role-pages.md) để tái sử dụng component, store và quy tắc chọn quyền.
 
 ## Kiểm tra và build
 
@@ -126,7 +126,7 @@ Xem [Storybook inventory](docs/storybook.md) và [bằng chứng kiểm tra](doc
 
 ## Kiến trúc module / feature
 
-Trang **Instructions → Kiến trúc & tích hợp → Module & Feature** tại `/instructions/architecture` có infographic và cây thư mục chuyển giữa blueprint nghiệp vụ/source hiện tại. Routing, cấu hình, tích hợp và phân quyền có bài riêng với liên kết liên quan.
+Trang **Instructions → Kiến trúc & tích hợp → Module & Feature** tại `/instruction/architecture` có infographic và cây thư mục chuyển giữa blueprint nghiệp vụ/source hiện tại. Routing, cấu hình, tích hợp và phân quyền có bài riêng với liên kết liên quan.
 
 ```text
 src/

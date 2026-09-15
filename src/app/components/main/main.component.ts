@@ -1,6 +1,6 @@
-import { INSTRUCTIONS, INSTRUCTION_GROUPS } from '../../../modules/instructions';
-import { PAGE_EXAMPLES, ROLE_EXAMPLES } from '../../../modules/pages';
-import { PATTERN_GROUPS } from '../../../modules/patterns/catalog/pattern-catalog';
+import { INSTRUCTIONS, INSTRUCTION_GROUPS } from '../../../modules/instruction';
+import { PAGE_EXAMPLES, ROLE_EXAMPLES } from '../../../modules/page';
+import { PATTERN_GROUPS, PATTERN_PATHS } from '../../../modules/pattern/catalog/pattern-catalog';
 import { SD_PERMISSION_PUBLIC } from '@sdcorejs/angular/modules/permission';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { SdLayoutComponent, SdLayoutMenu } from '@sdcorejs/angular/modules';
@@ -13,6 +13,7 @@ import { loadPortalConfig } from '../../configurations';
   selector: 'app-main',
   imports: [SdLayoutComponent, SdTabRouterOutletComponent],
   templateUrl: './main.component.html',
+  styleUrl: './main.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent {
@@ -28,175 +29,165 @@ export class MainComponent {
   );
   // Pages owns route-scoped drafts; retain the actual RouterOutlet for CanDeactivate.
   readonly useTabRouter = computed(
-    () => this.portalConfig.useTabRouter && !this.currentUrl().startsWith('/pages') && !this.currentUrl().startsWith('/patterns')
+    () => this.portalConfig.useTabRouter && !this.currentUrl().startsWith('/page') && !this.currentUrl().startsWith('/pattern')
   );
 
   menus: SdLayoutMenu[] = [
     {
-      icon: 'dashboard_customize',
-      title: 'Patterns',
-      children: Object.entries(PATTERN_GROUPS).map(([id, group]) => ({
-        path: '/patterns/' + id,
-        title: group.name,
-        icon: id === 'scores' ? 'analytics' : 'widgets',
-        permission: SD_PERMISSION_PUBLIC,
-      })),
-    },
-    {
       icon: 'school',
-      title: 'Instructions',
+      title: 'Instruction',
       children: INSTRUCTION_GROUPS.map(group => ({
         title: group,
         children: INSTRUCTIONS.filter(article => article.group === group).map(article => ({
           title: article.title,
-          path: `/instructions/${article.path}`,
+          path: `/instruction/${article.path}`,
           permission: SD_PERMISSION_PUBLIC,
         })),
       })),
     },
     {
       icon: 'widgets',
-      title: 'Components',
+      title: 'Component',
       children: [
         {
-          path: '/components/button',
+          path: '/component/button',
           permission: SD_PERMISSION_PUBLIC,
           title: 'Button',
         },
         {
-          path: '/components/avatar',
+          path: '/component/avatar',
           permission: SD_PERMISSION_PUBLIC,
           title: 'Avatar',
         },
         {
-          path: '/components/badge',
+          path: '/component/badge',
           permission: SD_PERMISSION_PUBLIC,
           title: 'Badge',
         },
         {
-          path: '/components/upload-file',
+          path: '/component/upload-file',
           permission: SD_PERMISSION_PUBLIC,
           title: 'Upload File',
         },
         {
-          path: '/components/table',
+          path: '/component/table',
           permission: SD_PERMISSION_PUBLIC,
           title: 'Table',
           children: [
-            { path: '/components/table/basic', permission: SD_PERMISSION_PUBLIC, title: 'Cơ bản' },
-            { path: '/components/table/column', permission: SD_PERMISSION_PUBLIC, title: 'Tùy chỉnh cột' },
-            { path: '/components/table/filter', permission: SD_PERMISSION_PUBLIC, title: 'Bộ lọc' },
-            { path: '/components/table/index-column', permission: SD_PERMISSION_PUBLIC, title: 'Cột STT (index)' },
-            { path: '/components/table/tree', permission: SD_PERMISSION_PUBLIC, title: 'Tree (cây)' },
+            { path: '/component/table/basic', permission: SD_PERMISSION_PUBLIC, title: 'Cơ bản' },
+            { path: '/component/table/column', permission: SD_PERMISSION_PUBLIC, title: 'Tùy chỉnh cột' },
+            { path: '/component/table/filter', permission: SD_PERMISSION_PUBLIC, title: 'Bộ lọc' },
+            { path: '/component/table/index-column', permission: SD_PERMISSION_PUBLIC, title: 'Cột STT (index)' },
+            { path: '/component/table/tree', permission: SD_PERMISSION_PUBLIC, title: 'Tree (cây)' },
           ],
         },
         {
-          path: '/components/preview-image',
+          path: '/component/preview-image',
           permission: SD_PERMISSION_PUBLIC,
           title: 'Preview Image',
         },
         {
-          path: '/components/preview-pdf',
+          path: '/component/preview-pdf',
           permission: SD_PERMISSION_PUBLIC,
           title: 'Preview PDF',
         },
         {
-          path: '/components/splitter',
+          path: '/component/splitter',
           permission: SD_PERMISSION_PUBLIC,
           title: 'Splitter',
         },
         {
-          path: '/components/query-bar',
+          path: '/component/query-bar',
           permission: SD_PERMISSION_PUBLIC,
           title: 'Query Bar',
           children: [
-            { path: '/components/query-bar/basic', permission: SD_PERMISSION_PUBLIC, title: 'Cơ bản' },
-            { path: '/components/query-bar/modes', permission: SD_PERMISSION_PUBLIC, title: 'Modes & Density' },
-            { path: '/components/query-bar/fields', permission: SD_PERMISSION_PUBLIC, title: '7 kind field' },
+            { path: '/component/query-bar/basic', permission: SD_PERMISSION_PUBLIC, title: 'Cơ bản' },
+            { path: '/component/query-bar/modes', permission: SD_PERMISSION_PUBLIC, title: 'Modes & Density' },
+            { path: '/component/query-bar/fields', permission: SD_PERMISSION_PUBLIC, title: '7 kind field' },
           ],
         },
         {
-          path: '/components/modal',
+          path: '/component/modal',
           permission: SD_PERMISSION_PUBLIC,
           title: 'Modal',
           children: [
-            { path: '/components/modal/basic', permission: SD_PERMISSION_PUBLIC, title: 'Cơ bản' },
-            { path: '/components/modal/slots', permission: SD_PERMISSION_PUBLIC, title: 'Header / Footer slots' },
-            { path: '/components/modal/view-modes', permission: SD_PERMISSION_PUBLIC, title: 'View modes & Variants' },
+            { path: '/component/modal/basic', permission: SD_PERMISSION_PUBLIC, title: 'Cơ bản' },
+            { path: '/component/modal/slots', permission: SD_PERMISSION_PUBLIC, title: 'Header / Footer slots' },
+            { path: '/component/modal/view-modes', permission: SD_PERMISSION_PUBLIC, title: 'View modes & Variants' },
           ],
         },
         {
-          path: '/components/section',
+          path: '/component/section',
           permission: SD_PERMISSION_PUBLIC,
           title: 'Section',
           children: [
-            { path: '/components/section/basic', permission: SD_PERMISSION_PUBLIC, title: 'Cơ bản' },
-            { path: '/components/section/section-item', permission: SD_PERMISSION_PUBLIC, title: 'Kết Hợp SdSectionItem' },
-            { path: '/components/section/header-slots', permission: SD_PERMISSION_PUBLIC, title: 'Tùy Chỉnh Header' },
+            { path: '/component/section/basic', permission: SD_PERMISSION_PUBLIC, title: 'Cơ bản' },
+            { path: '/component/section/section-item', permission: SD_PERMISSION_PUBLIC, title: 'Kết Hợp SdSectionItem' },
+            { path: '/component/section/header-slots', permission: SD_PERMISSION_PUBLIC, title: 'Tùy Chỉnh Header' },
           ],
         },
         {
-          path: '/components/side-drawer',
+          path: '/component/side-drawer',
           permission: SD_PERMISSION_PUBLIC,
           title: 'Side Drawer',
           children: [
-            { path: '/components/side-drawer/basic', permission: SD_PERMISSION_PUBLIC, title: 'Cơ bản (Content thuần)' },
-            { path: '/components/side-drawer/advanced', permission: SD_PERMISSION_PUBLIC, title: 'Mở rộng (Full Layout)' },
-            { path: '/components/side-drawer/custom', permission: SD_PERMISSION_PUBLIC, title: 'Tùy biến (Custom CSS)' },
-            { path: '/components/side-drawer/loading', permission: SD_PERMISSION_PUBLIC, title: 'Trạng thái Loading' },
+            { path: '/component/side-drawer/basic', permission: SD_PERMISSION_PUBLIC, title: 'Cơ bản (Content thuần)' },
+            { path: '/component/side-drawer/advanced', permission: SD_PERMISSION_PUBLIC, title: 'Mở rộng (Full Layout)' },
+            { path: '/component/side-drawer/custom', permission: SD_PERMISSION_PUBLIC, title: 'Tùy biến (Custom CSS)' },
+            { path: '/component/side-drawer/loading', permission: SD_PERMISSION_PUBLIC, title: 'Trạng thái Loading' },
           ],
         },
         {
-          path: '/components/anchor',
+          path: '/component/anchor',
           permission: SD_PERMISSION_PUBLIC,
           title: 'Anchor',
           children: [
-            { path: '/components/anchor/basic', permission: SD_PERMISSION_PUBLIC, title: 'Cơ bản' },
-            { path: '/components/anchor/with-section', permission: SD_PERMISSION_PUBLIC, title: 'Với sd-section' },
+            { path: '/component/anchor/basic', permission: SD_PERMISSION_PUBLIC, title: 'Cơ bản' },
+            { path: '/component/anchor/with-section', permission: SD_PERMISSION_PUBLIC, title: 'Với sd-section' },
           ],
         },
       ],
     },
     {
       icon: 'dynamic_form',
-      title: 'Forms',
+      title: 'Form',
       children: [
-        { path: '/forms/input', permission: SD_PERMISSION_PUBLIC, title: 'Input' },
-        { path: '/forms/select', permission: SD_PERMISSION_PUBLIC, title: 'Select' },
-        { path: '/forms/textarea', permission: SD_PERMISSION_PUBLIC, title: 'Textarea' },
-        { path: '/forms/date', permission: SD_PERMISSION_PUBLIC, title: 'Date' },
-        { path: '/forms/datetime', permission: SD_PERMISSION_PUBLIC, title: 'Date Time' },
-        { path: '/forms/input-number', permission: SD_PERMISSION_PUBLIC, title: 'Input Number' },
-        { path: '/forms/chip', permission: SD_PERMISSION_PUBLIC, title: 'Chip' },
-        { path: '/forms/chip-calendar', permission: SD_PERMISSION_PUBLIC, title: 'Chip Calendar' },
-        { path: '/forms/radio', permission: SD_PERMISSION_PUBLIC, title: 'Radio' },
-        { path: '/forms/checkbox', permission: SD_PERMISSION_PUBLIC, title: 'Checkbox' },
-        { path: '/forms/switch', permission: SD_PERMISSION_PUBLIC, title: 'Switch' },
-        { path: '/forms/validation', permission: SD_PERMISSION_PUBLIC, title: 'Validation & hideInlineError' },
+        { path: '/form/input', permission: SD_PERMISSION_PUBLIC, title: 'Input' },
+        { path: '/form/select', permission: SD_PERMISSION_PUBLIC, title: 'Select' },
+        { path: '/form/textarea', permission: SD_PERMISSION_PUBLIC, title: 'Textarea' },
+        { path: '/form/date', permission: SD_PERMISSION_PUBLIC, title: 'Date' },
+        { path: '/form/datetime', permission: SD_PERMISSION_PUBLIC, title: 'Date Time' },
+        { path: '/form/input-number', permission: SD_PERMISSION_PUBLIC, title: 'Input Number' },
+        { path: '/form/chip', permission: SD_PERMISSION_PUBLIC, title: 'Chip' },
+        { path: '/form/chip-calendar', permission: SD_PERMISSION_PUBLIC, title: 'Chip Calendar' },
+        { path: '/form/radio', permission: SD_PERMISSION_PUBLIC, title: 'Radio' },
+        { path: '/form/checkbox', permission: SD_PERMISSION_PUBLIC, title: 'Checkbox' },
+        { path: '/form/switch', permission: SD_PERMISSION_PUBLIC, title: 'Switch' },
+        { path: '/form/validation', permission: SD_PERMISSION_PUBLIC, title: 'Validation & hideInlineError' },
       ],
     },
     {
       icon: 'miscellaneous_services',
-      title: 'Services',
+      title: 'Service',
       children: [
         {
-          path: '/services/notify',
+          path: '/service/notify',
           permission: SD_PERMISSION_PUBLIC,
           title: 'NotifyService',
         },
         {
-          path: '/services/confirm',
+          path: '/service/confirm',
           permission: SD_PERMISSION_PUBLIC,
           title: 'ConfirmService',
           children: [
-            { path: '/services/confirm/confirm', permission: SD_PERMISSION_PUBLIC, title: 'Xác nhận (.confirm)' },
-            { path: '/services/confirm/with-input', permission: SD_PERMISSION_PUBLIC, title: 'Nhập văn bản (.withInput)' },
-            { path: '/services/confirm/with-radio', permission: SD_PERMISSION_PUBLIC, title: 'Lựa chọn (.withRadio)' },
-            { path: '/services/confirm/with-date', permission: SD_PERMISSION_PUBLIC, title: 'Chọn ngày (.withDate)' },
+            { path: '/service/confirm/confirm', permission: SD_PERMISSION_PUBLIC, title: 'Xác nhận (.confirm)' },
+            { path: '/service/confirm/with-input', permission: SD_PERMISSION_PUBLIC, title: 'Nhập văn bản (.withInput)' },
+            { path: '/service/confirm/with-radio', permission: SD_PERMISSION_PUBLIC, title: 'Lựa chọn (.withRadio)' },
+            { path: '/service/confirm/with-date', permission: SD_PERMISSION_PUBLIC, title: 'Chọn ngày (.withDate)' },
           ],
         },
         {
-          path: '/services/loading',
+          path: '/service/loading',
           permission: SD_PERMISSION_PUBLIC,
           title: 'LoadingService',
         },
@@ -204,15 +195,32 @@ export class MainComponent {
     },
     {
       icon: 'build',
-      title: 'Utilities',
+      title: 'Utility',
       children: [
-        { path: '/utilities/tooltip', permission: SD_PERMISSION_PUBLIC, title: 'sdTooltip Directive' },
-        { path: '/utilities/icons', permission: SD_PERMISSION_PUBLIC, title: 'System Icons (Fill/Outline)' },
+        { path: '/utility/tooltip', permission: SD_PERMISSION_PUBLIC, title: 'sdTooltip Directive' },
+        { path: '/utility/icon', permission: SD_PERMISSION_PUBLIC, title: 'System Icons (Fill/Outline)' },
       ],
     },
     {
+      icon: 'dashboard_customize',
+      title: 'Pattern',
+      children: Object.entries(PATTERN_GROUPS).map(([id, group]) => ({
+        title: group.name,
+        icon: id === 'table' ? 'table_chart' : id === 'score' ? 'analytics' : 'widgets',
+        ...(id === 'header' || id === 'table'
+          ? {
+              children: group.variants.map(variant => ({
+                title: variant[1],
+                path: '/pattern/' + PATTERN_PATHS[id] + '/' + variant[0],
+                permission: SD_PERMISSION_PUBLIC,
+              })),
+            }
+          : { path: '/pattern/' + PATTERN_PATHS[id] + '/' + group.variants[0][0], permission: SD_PERMISSION_PUBLIC }),
+      })),
+    },
+    {
       icon: 'web',
-      title: 'Pages',
+      title: 'Page',
       children: [
         {
           title: 'List',
@@ -220,7 +228,7 @@ export class MainComponent {
           children: [...PAGE_EXAMPLES, ...ROLE_EXAMPLES]
             .filter(x => x.group === 'list')
             .map(x => ({
-              path: '/pages/list/' + x.id,
+              path: '/page/list/' + x.id,
               title: x.title,
               icon: x.icon,
               permission: SD_PERMISSION_PUBLIC,
@@ -230,7 +238,7 @@ export class MainComponent {
           title: 'Detail',
           icon: 'description',
           children: PAGE_EXAMPLES.filter(x => x.group === 'detail').map(x => ({
-            path: '/pages/detail/' + x.id,
+            path: '/page/detail/' + x.id,
             title: x.title,
             icon: x.icon,
             permission: SD_PERMISSION_PUBLIC,

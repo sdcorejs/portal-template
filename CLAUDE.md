@@ -1,8 +1,8 @@
 # Portal Template — Quy ước viết màn demo (sample)
 
-Tài liệu này quy định **cách viết các màn demo/sample** trong repo `portal-template`. Mục tiêu: mọi màn demo (`src/modules/forms/*`, `src/modules/components/*`, `src/modules/patterns/*`, …) đều có **cùng cấu trúc, cùng layout, cùng quy ước đặt tên**, để AI gen code không lệch giữa các lần.
+Tài liệu này quy định **cách viết các màn demo/sample** trong repo `portal-template`. Mục tiêu: mọi màn demo (`src/modules/form/*`, `src/modules/component/*`, `src/modules/pattern/*`, …) đều có **cùng cấu trúc, cùng layout, cùng quy ước đặt tên**, để AI gen code không lệch giữa các lần.
 
-**Màn chuẩn (canonical reference):** [`src/modules/forms/features/input/`](src/modules/forms/features/input/) — gồm `*.component.ts` + `*.component.html` + `*.component.scss`. Khi tạo màn demo mới, **đọc và bám sát màn này** về kiến trúc, đặt tên, layout, signal-flow.
+**Màn chuẩn (canonical reference):** [`src/modules/form/features/input/`](src/modules/form/features/input/) — gồm `*.component.ts` + `*.component.html` + `*.component.scss`. Khi tạo màn demo mới, **đọc và bám sát màn này** về kiến trúc, đặt tên, layout, signal-flow.
 
 ---
 
@@ -36,7 +36,7 @@ src/modules/<group>/<demo-name>/
 
 ## 3. Cấu trúc class `*.component.ts`
 
-Bám theo thứ tự sau (đọc [`forms/input/input.component.ts`](src/modules/forms/features/input/input.component.ts) làm mẫu):
+Bám theo thứ tự sau (đọc [`forms/input/input.component.ts`](src/modules/form/features/input/input.component.ts) làm mẫu):
 
 1. **Imports** — gom theo nhóm: `@angular/*`, third-party, `@sdcorejs/angular/*`, local. Mỗi component `SdXxx` import từ secondary entry point riêng (`@sdcorejs/angular/forms/<name>` hoặc `@sdcorejs/angular/components/<name>`).
 2. **Interface mock data** (nếu cần) — khai báo ngay trên class, không tách file.
@@ -110,7 +110,7 @@ Mọi màn demo dùng đúng skeleton này:
 
 ## 5. SCSS `*.component.scss` — khung cố định
 
-Bám theo [`forms/input/input.component.scss`](src/modules/forms/features/input/input.component.scss). Các class **giữ nguyên** giữa các màn:
+Bám theo [`forms/input/input.component.scss`](src/modules/form/features/input/input.component.scss). Các class **giữ nguyên** giữa các màn:
 
 - `:host { display: block; height: 100%; }` + `.demo-page-body { padding: 8px 4px; background-color: #f1f5f9; min-height: 100%; }`
 - `.config-item` — flex row, `gap: 12px`, padding `10px 12px`, border `1px solid #e2e8f0`, radius `8px`. Control nhập ở phải có `width: 180px; flex-shrink: 0`.
@@ -139,7 +139,7 @@ Bám theo [`forms/input/input.component.scss`](src/modules/forms/features/input/
 
 ## 7. Đăng ký route
 
-Sửa `routes.ts` của group tương ứng (ví dụ [`src/modules/forms/routes.ts`](src/modules/forms/routes.ts)). Một dòng `loadComponent`, không tạo route con phức tạp.
+Sửa `routes.ts` của group tương ứng (ví dụ [`src/modules/form/routes.ts`](src/modules/form/routes.ts)). Một dòng `loadComponent`, không tạo route con phức tạp.
 
 ---
 

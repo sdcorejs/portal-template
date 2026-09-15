@@ -1,0 +1,42 @@
+<sd-side-drawer
+  [title]="editing() ? 'Chỉnh sửa đơn hàng' : 'Chi tiết đơn hàng'"
+  width="600px"
+  [beforeClose]="beforeClose"
+  (sdClosed)="restore()">
+  @if (record(); as row) {
+    <div class="pattern-body">
+      <h2>{{ row.code }} · {{ row.name }}</h2>
+      <p>
+        <span [class]="'badge ' + row.status">{{ labels[row.status] }}</span>
+      </p>
+      @if (editing()) {
+        <fieldset [disabled]="saving()" class="form-grid">
+          <label class="field">Khách hàng<input [(ngModel)]="draft.name" required /></label>
+          <label class="field">Phụ trách<input [(ngModel)]="draft.owner" /></label>
+          <label class="field">Giá trị<input type="number" min="0" [(ngModel)]="draft.amount" required /></label>
+        </fieldset>
+      } @else {
+        <dl class="facts">
+          <dt>Khách hàng</dt>
+          <dd>{{ row.name }}</dd>
+          <dt>Khu vực</dt>
+          <dd>{{ row.region }}</dd>
+          <dt>Giá trị</dt>
+          <dd>{{ row.amount.toLocaleString('vi-VN') }} ₫</dd>
+          <dt>Phụ trách</dt>
+          <dd>{{ row.owner }}</dd>
+        </dl>
+      }
+    </div>
+  }
+  <div sdFooterRight class="d-flex align-items-center flex-wrap gap-8">
+    <sd-button title="Đóng" type="text" [disabled]="saving()" (click)="drawer().requestClose()" />
+    @if (canEdit()) {
+      @if (editing()) {
+        <sd-button title="Lưu" prefixIcon="save" type="fill" color="primary" [loading]="saving()" [disabled]="saving()" (click)="save()" />
+      } @else {
+        <sd-button title="Chỉnh sửa" prefixIcon="edit" type="fill" color="primary" (click)="edit()" />
+      }
+    }
+  </div>
+</sd-side-drawer>

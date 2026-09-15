@@ -1,0 +1,7 @@
+<div class="table-region" [class.fill]="fill()" [style.height]="fill() ? '100%' : null">
+  <sd-table autoId="pattern-results" [option]="option()" [style.height]="fill() ? '100%' : '480px'">
+    <ng-template sdTableCellDef="code" let-row="item"
+      ><a [attr.href]="'#order-' + row.id" (click)="$event.preventDefault(); openRecord.emit(row)">{{ row.code }}</a></ng-template
+    >
+  </sd-table>
+</div>

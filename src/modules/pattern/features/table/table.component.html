@@ -1,0 +1,108 @@
+@switch (variant()) {
+  @case ('tree') {
+    <div class="table-region">
+      <table class="plain-table">
+        <thead>
+          <tr>
+            <th scope="col">Nhóm / sản phẩm</th>
+            <th scope="col" class="number">Số lượng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <button [attr.aria-expanded]="expanded()" (click)="expanded.set(!expanded())">
+                {{ expanded() ? '▾' : '▸' }} Thiết bị văn phòng
+              </button>
+            </td>
+            <td class="number">18</td>
+          </tr>
+          @if (expanded()) {
+            <tr>
+              <td class="pl-48">Máy in</td>
+              <td class="number">6</td>
+            </tr>
+            <tr>
+              <td class="pl-48">Màn hình</td>
+              <td class="number">12</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @case ('related') {
+    <div class="table-region">
+      <table class="plain-table">
+        <caption>
+          Dòng hàng của đơn DH-1024
+        </caption>
+        <thead>
+          <tr>
+            <th>Sản phẩm</th>
+            <th class="number">SL</th>
+            <th class="number">Đơn giá</th>
+            <th class="number">Thành tiền</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Máy in</td>
+            <td class="number">2</td>
+            <td class="number">3.000.000 ₫</td>
+            <td class="number">6.000.000 ₫</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="3">Tổng cộng</th>
+            <td class="number">6.000.000 ₫</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  }
+  @case ('states') {
+    <label class="field"
+      >Trạng thái dữ liệu<select [ngModel]="state()" (ngModelChange)="state.set($event)">
+        <option value="loading">Đang tải</option>
+        <option value="empty">Chưa có dữ liệu</option>
+        <option value="no-results">Không khớp bộ lọc</option>
+        <option value="error">Lỗi</option>
+      </select></label
+    ><sd-data-state
+      [state]="coreState()"
+      [title]="
+        state() === 'loading'
+          ? 'Đang tải đơn hàng…'
+          : state() === 'empty'
+            ? 'Chưa có đơn hàng'
+            : state() === 'error'
+              ? 'Không thể tải đơn hàng'
+              : 'Không có kết quả phù hợp'
+      " />
+    @if (state() === 'error') {
+      <sd-button title="Thử lại" (click)="state.set('empty')" />
+    }
+  }
+  @default {
+    @if (variant() === 'selection') {
+      <label class="d-flex align-items-center flex-wrap gap-8 text-secondary fs-13"
+        ><input type="checkbox" [ngModel]="store.simulateError()" (ngModelChange)="store.simulateError.set($event)" /> Mô phỏng lỗi cập
+        nhật</label
+      >
+    }
+    @if (store.message()) {
+      <p role="status">{{ store.message() }}</p>
+    }
+    <app-pattern-results
+      [rows]="store.records()"
+      [fill]="true"
+      [quickSearch]="variant() === 'quick-search'"
+      [externalFilter]="variant() === 'external-filter'"
+      [selectable]="variant() === 'selection'"
+      (approve)="store.transition($event, 'active')"
+      (openRecord)="detail.open($event)" />
+  }
+}
+<app-pattern-order-detail #detail />

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { SdLoadingService } from '@sdcorejs/angular/services/loading';
-import { LoadingDemoComponent } from '../modules/services/features/loading/loading.component';
+import { LoadingDemoComponent } from '../modules/service/features/loading/loading.component';
 import { DemoHarness } from './demo-harness';
 describe('CASE-HARNESS — service resource isolation', () => {
   it('reset cancels pending work and releases the owned overlay once', async () => {

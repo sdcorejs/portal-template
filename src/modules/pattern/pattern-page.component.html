@@ -1,0 +1,64 @@
+<sd-page [title]="'Pattern / ' + group().name" [description]="group().description">
+  <div class="pattern-body" [class.table-page]="groupId() === 'table'">
+    <div [class.pattern-layout]="groupId() !== 'header' && groupId() !== 'table'">
+      @if (groupId() !== 'header' && groupId() !== 'table') {
+        <nav class="variants" aria-label="Biến thể">
+          @for (item of group().variants; track item[0]) {
+            <a [routerLink]="['/pattern', groupPath(), item[0]]" routerLinkActive="active" ariaCurrentWhenActive="page">{{ item[1] }}</a>
+          }
+        </nav>
+      }
+      <div class="surface">
+        <div class="preview-title">
+          <h2>{{ variant()[1] }}</h2>
+          <span class="text-secondary fs-13">Angular · Dữ liệu mẫu</span>
+        </div>
+        <sd-tab-group [selectedIndex]="tab()" (selectedIndexChange)="selectTab($event)" [stretchTabs]="false" animationDuration="0ms">
+          <sd-tab label="Xem trước" icon="visibility">
+            <div class="preview-stage">
+              @if (demo(); as component) {
+                @for (key of [groupId() + '/' + variant()[0]]; track key) {
+                  <ng-container *ngComponentOutlet="component; inputs: { variant: variant()[0] }" />
+                }
+              } @else {
+                <p role="status">{{ error() || 'Đang tải mẫu…' }}</p>
+              }
+            </div>
+          </sd-tab>
+          <sd-tab label="Hướng dẫn" icon="menu_book">
+            <section class="guide">
+              <h3>Khi dùng</h3>
+              <p>{{ variant()[2] }}</p>
+              <h3>Quy tắc</h3>
+              <p>{{ variant()[3] }}</p>
+              <p class="text-secondary fs-13">
+                Tham khảo file TS / HTML / SCSS ở Mã nguồn. Dữ liệu demo chỉ lưu trong phiên của mẫu; khởi tạo lại khi chuyển biến thể. Thay
+                mock store bằng service của ứng dụng khi tái sử dụng.
+              </p>
+            </section>
+          </sd-tab>
+          <sd-tab label="Mã nguồn" icon="code">
+            <section class="guide" aria-label="Mã nguồn">
+              @if (sourceState() === 'loading') {
+                <p role="status">Đang tải mã nguồn…</p>
+              }
+              @if (sourceState() === 'error') {
+                <p role="alert">Không tải được mã nguồn.</p>
+                <sd-button title="Thử lại" type="fill" color="primary" (click)="showSource()" />
+              }
+              <p role="status">{{ copied() }}</p>
+              @for (file of source(); track file.path) {
+                <details class="source-file" #sourceFile (toggle)="toggleSource(file.path, sourceFile.open)">
+                  <summary>{{ file.path }}</summary>
+                  @if (expandedSources()[file.path]) {
+                    <sd-code-editor [model]="file.content" [language]="language(file.path)" [viewed]="true" maxHeight="560px" />
+                  }
+                </details>
+              }
+            </section>
+          </sd-tab>
+        </sd-tab-group>
+      </div>
+    </div>
+  </div>
+</sd-page>

@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test('architecture guide switches trees and opens a real record example', async ({ page }, info) => {
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto('/instructions/architecture');
+  await page.goto('/instruction/architecture');
   await expect(page.getByRole('heading', { name: 'Module & Feature' })).toBeVisible();
   await page.screenshot({ path: info.outputPath('architecture-desktop.png') });
   await page.getByRole('button', { name: 'Source hiện tại', exact: true }).click();
@@ -19,7 +19,7 @@ test('architecture guide switches trees and opens a real record example', async 
 
 test('architecture infographic remains within a mobile viewport', async ({ page }, info) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/instructions/architecture');
+  await page.goto('/instruction/architecture');
   await expect(page.getByRole('heading', { name: 'Module & Feature' })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await expect(page.locator('.hero img')).toBeVisible();

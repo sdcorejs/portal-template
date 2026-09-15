@@ -1,0 +1,300 @@
+@if (variant() === 'page') {
+  <div class="header-layout">
+    <nav class="header-variants" aria-label="Biến thể Page Header">
+      @for (item of pageVariants; track item[0]) {
+        <sd-button
+          [title]="item[1]"
+          [type]="pageVariant() === item[0] ? 'light' : 'text'"
+          color="primary"
+          [attr.aria-pressed]="pageVariant() === item[0]"
+          (click)="pageVariant.set(item[0])" />
+      }
+    </nav>
+    <div class="d-grid gap-20">
+      @for (example of visibleExamples(); track example.id) {
+        <article [attr.aria-label]="'Header ' + example.label">
+          <h3 class="text-secondary fs-13 font-weight-medium m-0 mb-8">{{ example.label }}</h3>
+          <div class="page-frame">
+            <sd-page [title]="example.title">
+              <div headerLeft class="d-flex align-items-center gap-8">
+                @if (example.id !== 'list') {
+                  <sd-button
+                    prefixIcon="arrow_back"
+                    tooltip="Quay lại"
+                    type="text"
+                    [disabled]="pending()[example.id]"
+                    (click)="example.id === 'update' ? pageVariant.set('actions') : act(example.id, 'Quay lại')" />
+                }
+                <div>
+                  <div class="d-flex align-items-center flex-wrap gap-8">
+                    <h2>
+                      {{ example.title }}
+                      @if (example.id === 'detail' || example.id === 'update') {
+                        <span class="text-primary">#DH-1024</span>
+                      }
+                    </h2>
+                    @if (pageVariant() === 'advanced' && example.id === 'detail') {
+                      <sd-badge
+                        [title]="statuses()['detail'] || 'Chờ duyệt'"
+                        type="round"
+                        [color]="statuses()['detail'] === 'Đã duyệt' ? 'success' : 'warning'" />
+                    }
+                  </div>
+                  @if (example.description && pageVariant() !== 'basic') {
+                    <p class="text-secondary fs-13 m-0 mt-4">{{ example.description }}</p>
+                  }
+                </div>
+              </div>
+              <div
+                headerRight
+                class="d-flex align-items-center flex-wrap gap-8 justify-content-end"
+                [attr.aria-label]="'Hành động ' + example.label">
+                @if (['actions', 'compact', 'grouped'].includes(pageVariant()) && (example.id === 'list' || example.id === 'detail')) {
+                  @if (pageVariant() === 'grouped' && secondaryActions[example.id].length >= 2) {
+                    <sd-button
+                      prefixIcon="more_vert"
+                      tooltip="Tác vụ khác"
+                      type="text"
+                      [matMenuTriggerFor]="actionMenu"
+                      [disabled]="pending()[example.id]" />
+                    <mat-menu #actionMenu="matMenu">
+                      @for (action of secondaryActions[example.id]; track action.title) {
+                        <button mat-menu-item [disabled]="pending()[example.id]" (click)="act(example.id, action.title)">
+                          <sd-icon [name]="action.icon" [color]="action.color" />
+                          <span [class]="'text-' + action.color">{{ action.title }}</span>
+                        </button>
+                      }
+                    </mat-menu>
+                  } @else {
+                    @for (action of secondaryActions[example.id]; track action.title) {
+                      <sd-button
+                        [title]="pageVariant() === 'compact' ? undefined : action.title"
+                        [tooltip]="action.title"
+                        [prefixIcon]="action.icon"
+                        [color]="action.color"
+                        [type]="action.color === 'secondary' ? 'text' : 'light'"
+                        [disabled]="pending()[example.id]"
+                        (click)="act(example.id, action.title)" />
+                    }
+                  }
+                  @if (example.id === 'list') {
+                    <sd-button
+                      title="Tạo mới"
+                      prefixIcon="add"
+                      type="fill"
+                      color="primary"
+                      [loading]="pending()[example.id]"
+                      [disabled]="pending()[example.id]"
+                      (click)="act(example.id, 'Tạo mới')" />
+                  } @else if (canEdit()) {
+                    <sd-button
+                      title="Chỉnh sửa"
+                      prefixIcon="edit"
+                      type="fill"
+                      color="primary"
+                      [disabled]="pending()[example.id]"
+                      (click)="edit('page')" />
+                  }
+                } @else if (example.id === 'create' || example.id === 'update') {
+                  <sd-button
+                    title="Lưu"
+                    prefixIcon="save"
+                    type="fill"
+                    color="primary"
+                    [loading]="pending()[example.id]"
+                    [disabled]="pending()[example.id]"
+                    (click)="act(example.id, 'Lưu')" />
+                }
+              </div>
+              <div class="sample-body">
+                <span class="text-secondary fs-13">{{
+                  example.id === 'list' ? '24 đơn hàng · 8 đơn chờ duyệt' : 'Thông tin đơn hàng · Khách hàng · Sản phẩm'
+                }}</span>
+                <p role="status">{{ messages()[example.id] }}</p>
+              </div>
+            </sd-page>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+} @else if (variant() === 'side-drawer') {
+  <sd-section title="Ví dụ Side Drawer">
+    @for (example of drawerExamples; track example.mode) {
+      <sd-section-item [label]="example.label" labelWidth="35%">
+        <div class="d-flex justify-content-end">
+          <sd-button [title]="example.button" [prefixIcon]="example.icon" type="light" color="primary" (click)="openDrawer(example.mode)" />
+        </div>
+      </sd-section-item>
+    }
+  </sd-section>
+  @if (confirmed().length) {
+    <sd-section title="Đơn hàng đã chọn">
+      @for (row of confirmed(); track row.id) {
+        <sd-section-item [label]="row.code">{{ row.name }}</sd-section-item>
+      }
+    </sd-section>
+  }
+  <sd-side-drawer
+    [title]="drawerMode() === 'create' ? 'Tạo đơn hàng' : drawerMode() === 'detail' ? 'Chi tiết đơn hàng' : 'Cập nhật đơn hàng'"
+    width="560px"
+    [beforeClose]="beforeClose">
+    <div sdHeaderLeft>
+      <div class="d-flex align-items-center flex-wrap gap-8">
+        <h3>
+          {{ drawerMode() === 'create' ? 'Tạo đơn hàng' : drawerMode() === 'detail' ? 'Chi tiết đơn hàng' : 'Cập nhật đơn hàng' }}
+          @if (drawerMode() !== 'create') {
+            <span class="text-primary">#DH-1024</span>
+          }
+        </h3>
+        @if (drawerMode() !== 'create') {
+          <sd-badge
+            [title]="statuses()['drawer'] || 'Chờ duyệt'"
+            type="round"
+            [color]="statuses()['drawer'] === 'Đã duyệt' ? 'success' : 'warning'" />
+        }
+      </div>
+      @if (drawerMode() !== 'create') {
+        <p class="text-secondary fs-13 m-0 mt-4">{{ record().customer }}</p>
+      }
+    </div>
+    <div sdHeaderRight>
+      @if (groupedDrawer() && drawerMode() === 'detail') {
+        <sd-button
+          prefixIcon="more_vert"
+          tooltip="Tác vụ đơn hàng"
+          type="light"
+          [matMenuTriggerFor]="drawerActions"
+          [disabled]="pending()['drawer']" />
+        <mat-menu #drawerActions="matMenu">
+          @for (action of secondaryActions.detail; track action.title) {
+            <button mat-menu-item [disabled]="pending()['drawer']" (click)="act('drawer', action.title)">
+              <sd-icon [name]="action.icon" [color]="action.color" />
+              <span [class]="'text-' + action.color">{{ action.title }}</span>
+            </button>
+          }
+        </mat-menu>
+      }
+    </div>
+    <div>
+      <sd-section title="Thông tin đơn hàng">
+        @if (drawerMode() === 'detail') {
+          <sd-section-item label="Khách hàng">{{ record().customer }}</sd-section-item>
+          <sd-section-item label="Khu vực">{{ record().region }}</sd-section-item>
+          <sd-section-item label="Giá trị đơn hàng">{{ (+record().amount).toLocaleString('vi-VN') }} ₫</sd-section-item>
+        } @else {
+          <div class="p-20 d-flex flex-column gap-8">
+            <sd-input label="Khách hàng" [(model)]="draft.customer" [disabled]="pending()['drawer']" required />
+            <sd-input label="Khu vực" [(model)]="draft.region" [disabled]="pending()['drawer']" required />
+            <sd-input label="Giá trị đơn hàng (VND)" [(model)]="draft.amount" [disabled]="pending()['drawer']" required />
+          </div>
+        }
+      </sd-section>
+      <p role="status">{{ messages()['drawer'] }}</p>
+    </div>
+    <div sdFooterRight class="d-flex align-items-center flex-wrap gap-8 justify-content-end">
+      <sd-button title="Đóng" type="text" [disabled]="pending()['drawer']" (click)="closeDrawer()" />
+      @if (drawerMode() === 'detail' && !groupedDrawer()) {
+        <sd-button
+          title="Từ chối"
+          prefixIcon="close"
+          type="light"
+          color="warning"
+          [disabled]="pending()['drawer']"
+          (click)="act('drawer', 'Từ chối')" />
+      }
+      @if (drawerMode() !== 'detail' || !groupedDrawer()) {
+        <sd-button
+          [title]="drawerMode() === 'detail' ? 'Duyệt' : 'Lưu'"
+          [prefixIcon]="drawerMode() === 'detail' ? 'check' : 'save'"
+          [type]="drawerMode() === 'detail' ? 'light' : 'fill'"
+          [color]="drawerMode() === 'detail' ? 'success' : 'primary'"
+          [loading]="pending()['drawer']"
+          [disabled]="pending()['drawer']"
+          (click)="drawerMode() === 'detail' ? act('drawer', 'Duyệt') : saveDrawer()" />
+      }
+      @if (drawerMode() === 'detail' && canEdit()) {
+        <sd-button
+          title="Chỉnh sửa"
+          prefixIcon="edit"
+          type="fill"
+          color="primary"
+          [disabled]="pending()['drawer']"
+          (click)="edit('drawer')" />
+      }
+    </div>
+  </sd-side-drawer>
+  <sd-side-drawer #tableDrawer [title]="tableMode() === 'selection' ? 'Chọn đơn hàng' : 'Danh sách đơn hàng liên quan'" width="900px">
+    @if (tableDrawer.isOpened()) {
+      <sd-table [option]="tableOption()" class="h-100 drawer-table" />
+    }
+    <div sdFooterLeft>
+      @if (tableMode() === 'selection') {
+        Đã chọn {{ picked().length }} đơn hàng
+      }
+    </div>
+    <div sdFooterRight class="d-flex gap-8">
+      <sd-button title="Đóng" type="text" (click)="tableDrawer.requestClose()" />
+      @if (tableMode() === 'selection') {
+        <sd-button
+          title="Xác nhận lựa chọn"
+          prefixIcon="check"
+          type="fill"
+          color="primary"
+          [disabled]="!picked().length"
+          (click)="confirmSelection()" />
+      }
+    </div>
+  </sd-side-drawer>
+} @else {
+  <div class="d-grid gap-20">
+    <sd-section>
+      <div sdHeaderLeft>
+        <h3>Thông tin liên hệ</h3>
+        <p class="text-secondary fs-13 m-0 mt-4">Đầu mối giao nhận của khách hàng</p>
+      </div>
+      <div sdHeaderRight class="d-flex align-items-center flex-wrap gap-8 justify-content-end">
+        <sd-button title="Làm mới" prefixIcon="refresh" type="text" [disabled]="pending()['section']" (click)="act('section', 'Làm mới')" />
+        <sd-button title="Import" prefixIcon="upload" type="outline" [disabled]="pending()['section']" (click)="act('section', 'Import')" />
+        <sd-button
+          title="Thêm liên hệ"
+          prefixIcon="add"
+          type="fill"
+          color="primary"
+          [loading]="pending()['section']"
+          [disabled]="pending()['section']"
+          (click)="act('section', 'Thêm liên hệ')" />
+      </div>
+      <div class="sample-body">
+        <strong>Nguyễn Minh An</strong>
+        <p class="text-secondary fs-13">Phụ trách giao nhận · an@example.test</p>
+        <p role="status">{{ messages()['section'] }}</p>
+      </div>
+    </sd-section>
+    <sd-section>
+      <div sdHeaderLeft>
+        <h3>Điều khoản thanh toán</h3>
+      </div>
+      <div sdHeaderRight class="d-flex align-items-center flex-wrap gap-8 justify-content-end">
+        <sd-button title="Đặt lại" type="text" [disabled]="pending()['terms']" (click)="act('terms', 'Đặt lại')" />
+        <sd-button
+          title="Lưu"
+          prefixIcon="save"
+          type="fill"
+          color="primary"
+          [loading]="pending()['terms']"
+          [disabled]="pending()['terms']"
+          (click)="act('terms', 'Lưu')" />
+      </div>
+      <div class="sample-body">
+        Thanh toán trong 30 ngày kể từ ngày xuất hóa đơn.
+        <p role="status">{{ messages()['terms'] }}</p>
+      </div>
+    </sd-section>
+    <sd-section title="Thông tin giao nhận" subTitle="Ví dụ header có thể thu gọn và mở rộng" [collapsible]="true">
+      <sd-section-item label="Người nhận">Nguyễn Minh An</sd-section-item>
+      <sd-section-item label="Điện thoại">0901 234 567</sd-section-item>
+      <sd-section-item label="Địa chỉ">28 Nguyễn Huệ, Thành phố Hồ Chí Minh</sd-section-item>
+    </sd-section>
+  </div>
+}

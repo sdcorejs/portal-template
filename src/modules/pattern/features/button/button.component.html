@@ -1,0 +1,56 @@
+@switch (variant()) {
+  @case ('crud') {
+    <div class="d-flex align-items-center flex-wrap gap-8">
+      <sd-button title="Tạo liên hệ" type="fill" color="primary" routerLink="/pattern/drawer/create" /><sd-button
+        title="Lưu thay đổi"
+        type="outline"
+        routerLink="/pattern/drawer/update" /><sd-button title="Chỉnh sửa" type="text" routerLink="/pattern/drawer/update" /><sd-button
+        title="Xem chi tiết"
+        type="text"
+        routerLink="/pattern/drawer/detail" />
+    </div>
+    <p class="text-secondary fs-13">Mở đúng mẫu create/update/detail để thử hành động. Detail dùng Đóng; update dùng Lưu thay đổi.</p>
+  }
+  @case ('query') {
+    <div class="d-flex align-items-center flex-wrap gap-8">
+      <sd-button title="Tìm kiếm" type="fill" color="primary" routerLink="/pattern/table/filter" /><sd-button
+        title="Áp dụng bộ lọc"
+        type="outline"
+        routerLink="/pattern/composition/listing" /><sd-button
+        title="Xóa bộ lọc"
+        type="text"
+        (click)="message.set('Đưa các điều kiện về mặc định; thử query thật trong mẫu Listing.')" />
+    </div>
+  }
+  @case ('workflow') {
+    <div class="d-flex align-items-center flex-wrap gap-8">
+      <sd-button title="Gửi duyệt" type="fill" color="primary" (click)="message.set('Đã gửi đơn hàng mẫu để chờ duyệt.')" /><sd-button
+        title="Duyệt đơn hàng"
+        type="outline"
+        (click)="message.set('Đã duyệt đơn hàng mẫu.')" /><sd-button
+        title="Từ chối"
+        type="text"
+        (click)="message.set('Đã từ chối đơn hàng mẫu.')" />
+    </div>
+    <p class="text-secondary fs-13">Tham khảo câu chữ; thao tác chuyển trạng thái bản ghi nằm ở Hàng đợi xử lý.</p>
+  }
+  @case ('danger') {
+    @if (!deleted()) {
+      <p>Đơn hàng mẫu DH-1024 · An Phát</p>
+      <sd-button title="Xóa đơn hàng" color="error" type="fill" (click)="remove()" />
+    } @else {
+      <sd-button title="Khôi phục dữ liệu mẫu" (click)="deleted.set(false); message.set('')" />
+    }
+  }
+  @case ('async') {
+    <sd-button
+      [title]="saving() ? 'Đang lưu…' : attempt() === 1 ? 'Thử lại' : 'Lưu thay đổi'"
+      type="fill"
+      color="primary"
+      [disabled]="saving()"
+      [loading]="saving()"
+      (click)="save()" />
+    <p class="text-secondary fs-13">Lần lưu đầu mô phỏng lỗi; thử lại thành công. Không gửi lặp khi pending.</p>
+  }
+}
+<p role="status">{{ message() }}</p>

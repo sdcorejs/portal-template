@@ -1,0 +1,82 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+// Material paginator controls have a 48px hit area even when Core uses a 40px row.
+.drawer-table ::ng-deep .c-paginator {
+  min-height: 48px;
+  flex-shrink: 0;
+}
+.header-layout {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.header-variants {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+@media (max-width: 1100px) {
+  .header-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .header-variants {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+.page-frame {
+  height: 168px;
+  border: 1px solid var(--sd-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--sd-background);
+}
+h2 {
+  font-size: 18px;
+  line-height: 1.4;
+  margin: 0;
+}
+h3 {
+  font-size: 16px;
+  margin: 0;
+}
+.sample-body {
+  padding: 20px;
+}
+.sample-body p {
+  margin: 8px 0 0;
+}
+[role='status'] {
+  font-size: 13px;
+  color: var(--sd-primary);
+}
+sd-button {
+  max-width: 100%;
+}
+@media (max-width: 900px) {
+  .page-frame {
+    height: 212px;
+  }
+}
+@media (max-width: 600px) {
+  // Keep the two Core slots separate while allowing actions to wrap on narrow previews.
+  :host ::ng-deep .sd-section-header {
+    flex-wrap: wrap;
+  }
+  :host ::ng-deep .sd-section-header-right {
+    max-width: 100%;
+    margin-left: auto;
+  }
+  .page-frame {
+    height: 264px;
+  }
+  .sample-body {
+    padding: 16px;
+  }
+  h2 {
+    font-size: 16px;
+  }
+}

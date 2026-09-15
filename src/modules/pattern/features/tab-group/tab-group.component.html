@@ -1,0 +1,115 @@
+<div class="d-flex flex-column gap-16">
+  @if (variant() === 'appearance') {
+    <div class="d-flex flex-wrap gap-8">
+      @for (item of ['line', 'pills', 'segmented']; track item) {
+        <sd-button [title]="item" [type]="shape() === item ? 'fill' : 'light'" color="primary" (click)="shape.set($any(item))" />
+      }
+    </div>
+  }
+  @if (variant() === 'loading') {
+    <div class="d-flex flex-wrap gap-8">
+      <sd-button title="Có dữ liệu" type="fill" color="primary" (click)="state.set('ready'); load()" />
+      <sd-button title="Không có dữ liệu" type="light" (click)="state.set('empty'); load()" />
+      <sd-button title="Mô phỏng lỗi" type="light" color="warning" (click)="state.set('error'); load()" />
+    </div>
+  }
+  @if (variant() === 'disabled') {
+    <sd-button
+      title="Hoàn tất hồ sơ để mở Hợp đồng"
+      prefixIcon="check"
+      type="fill"
+      color="primary"
+      (click)="available.set(true)"
+      [disabled]="available()" />
+  }
+  @if (variant() === 'closable') {
+    <sd-button title="Mở lại 3 hồ sơ" prefixIcon="folder_open" type="fill" color="primary" (click)="reopen()" />
+  }
+  <sd-tab-group
+    [variant]="variant() === 'views' ? 'segmented' : shape()"
+    [selectedIndex]="selected()"
+    (selectedIndexChange)="change($event)"
+    [stretchTabs]="false"
+    animationDuration="0ms">
+    @for (label of labels(); track label; let i = $index) {
+      <sd-tab
+        [label]="label"
+        [icon]="tabIcon(label)"
+        [badge]="variant() === 'counts' ? count(i) : null"
+        [disabled]="variant() === 'disabled' && i === 1 && !available()"
+        [closable]="variant() === 'closable'"
+        [beforeClose]="beforeClose(label)"
+        (close)="close(label)">
+        <div class="py-16">
+          @if (loading()) {
+            <sd-data-state state="loading" title="Đang tải dữ liệu…" />
+          } @else if (variant() === 'loading' && state() === 'error') {
+            <sd-data-state
+              state="error"
+              title="Không tải được dữ liệu"
+              message="Vui lòng thử lại để tải nội dung của tab này."
+              [retryable]="true"
+              retryLabel="Thử lại"
+              (sdRetry)="state.set('ready'); load()" />
+          } @else if (variant() === 'loading' && state() === 'empty') {
+            <sd-data-state state="empty" title="Chưa có dữ liệu trong nhóm này" message="Dữ liệu sẽ hiển thị tại đây khi có bản ghi." />
+          } @else if (variant() === 'form') {
+            <sd-section [title]="label"
+              ><div class="p-20 d-flex flex-column gap-8">
+                @if (i === 0) {
+                  <sd-input label="Tên khách hàng" [(model)]="name" required />
+                } @else {
+                  <sd-input label="Email" [(model)]="email" required />
+                }</div
+            ></sd-section>
+          } @else if (variant() === 'closable') {
+            <sd-section [title]="'Chi tiết khách hàng #' + label"
+              ><div class="p-20"><sd-input label="Tên khách hàng" [(model)]="recordDrafts[label]" /></div
+            ></sd-section>
+          } @else if (
+            variant() === 'counts' || variant() === 'table' || (variant() === 'views' && i === 0) || (variant() === 'mixed' && i === 1)
+          ) {
+            <app-pattern-results
+              [rows]="variant() === 'counts' ? filtered() : rows()"
+              [quickSearch]="true"
+              (openRecord)="notify.info('Đơn hàng ' + $event.code + ' · ' + $event.name)" />
+          } @else if (variant() === 'views') {
+            <div class="d-flex flex-column gap-12">
+              @for (row of rows().slice(0, 6); track row.id) {
+                <sd-section [title]="row.code"
+                  ><sd-section-item label="Khách hàng">{{ row.name }}</sd-section-item
+                  ><sd-section-item label="Khu vực">{{ row.region }}</sd-section-item></sd-section
+                >
+              }
+            </div>
+          } @else {
+            <sd-section [title]="label">
+              <sd-section-item label="Khách hàng">Công ty An Phát</sd-section-item>
+              <sd-section-item label="Nội dung">{{
+                i === 0
+                  ? 'Khách hàng doanh nghiệp · Miền Bắc'
+                  : i === 1
+                    ? '24 đơn hàng · Giao hàng theo đợt'
+                    : 'Nguyễn An cập nhật hồ sơ · 15/09/2026'
+              }}</sd-section-item>
+            </sd-section>
+          }
+        </div>
+      </sd-tab>
+    }
+  </sd-tab-group>
+  @if (variant() === 'counts') {
+    <sd-button
+      title="Hoàn tất một đơn chờ xử lý"
+      prefixIcon="check"
+      type="fill"
+      color="primary"
+      [disabled]="count(1) === 0"
+      (click)="complete()" />
+  }
+  @if (variant() === 'form') {
+    <div class="d-flex justify-content-end">
+      <sd-button title="Lưu" prefixIcon="save" type="fill" color="primary" [loading]="loading()" [disabled]="loading()" (click)="save()" />
+    </div>
+  }
+</div>

@@ -1,0 +1,16 @@
+@if (variant() === 'readonly' && !editing()) {
+  <section class="form-shell">
+    <h3>Thông tin liên hệ</h3>
+    <app-pattern-contact-facts [record]="record()" />
+    @if (canEdit()) {
+      <div class="form-footer"><sd-button title="Chỉnh sửa" prefixIcon="edit" type="fill" color="primary" (click)="edit()" /></div>
+    }
+  </section>
+} @else {
+  <app-pattern-form-editor
+    [layout]="variant() === 'readonly' ? 'sections' : variant()"
+    [mode]="editing() ? 'update' : 'create'"
+    [initial]="editing() ? record() : { name: '', email: '', phone: '', region: 'Miền Bắc', note: '' }"
+    (saved)="record.set($event); editing.set(false)"
+    (cancelled)="editing.set(false)" />
+}

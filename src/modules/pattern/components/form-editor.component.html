@@ -1,0 +1,68 @@
+<form class="form-shell" (submit)="$event.preventDefault(); save()" novalidate>
+  <label class="d-flex align-items-center flex-wrap gap-8 text-secondary fs-13 mb-18"
+    ><input type="checkbox" [checked]="fail()" [disabled]="saving()" (change)="fail.set($any($event.target).checked)" /> Mô phỏng lỗi
+    lưu</label
+  >
+  @if (layout() === 'lines') {
+    <label class="field">Tên đơn hàng *<input [formControl]="orderName" aria-label="Tên đơn hàng" required /></label>
+    @if (attempted() && orderName.invalid) {
+      <p class="text-error">Nhập tên đơn hàng.</p>
+    }
+    @for (line of lines.controls; track line; let index = $index) {
+      <fieldset class="form-section mt-18" [formGroup]="line">
+        <legend>Dòng {{ index + 1 }}</legend>
+        <div class="form-grid">
+          <label class="field">Sản phẩm *<input formControlName="name" required /></label
+          ><label class="field">Số lượng *<input formControlName="quantity" type="number" min="1" step="1" required /></label
+          ><label class="field">Đơn giá *<input formControlName="price" type="number" min="0" required /></label
+          ><sd-button title="Xóa dòng" color="error" type="text" [disabled]="saving()" (click)="removeLine(index)" />
+        </div>
+        @if (attempted() && line.invalid) {
+          <p class="text-error">Nhập sản phẩm, số lượng nguyên dương và đơn giá không âm.</p>
+        }
+      </fieldset>
+    }
+    <sd-button title="Thêm dòng hàng" type="outline" [disabled]="saving()" (click)="addLine()" />
+    <p>
+      Tổng cộng: <strong>{{ total().toLocaleString('vi-VN') }} ₫</strong>
+    </p>
+  } @else {
+    @if (layout() === 'sections') {
+      <h3>Thông tin liên hệ</h3>
+      <p class="text-secondary fs-13">Đầu mối chính để phối hợp công việc.</p>
+    }
+    <div class="form-grid" [class.one]="layout() === 'simple'">
+      <sd-input name="name" label="Họ và tên" [form]="form" [model]="initial().name" [maxlength]="100" required />
+      <sd-input name="email" label="Email" type="email" pattern="EMAIL" [form]="form" [model]="initial().email" required />
+      <sd-input name="phone" label="Số điện thoại" [form]="form" [model]="initial().phone" />
+      <sd-select
+        name="region"
+        label="Khu vực"
+        [form]="form"
+        [model]="initial().region"
+        [items]="regions"
+        valueField="id"
+        displayField="name" />
+    </div>
+    @if (layout() === 'sections') {
+      <div class="mt-22">
+        <h3>Thông tin bổ sung</h3>
+        <sd-textarea name="note" label="Ghi chú phối hợp" [form]="form" [model]="initial().note" />
+      </div>
+    }
+  }
+  @if (message()) {
+    <p role="status">{{ message() }}</p>
+  }
+  @if (!hideFooter()) {
+    <div class="form-footer">
+      <sd-button title="Hủy" type="outline" [disabled]="saving()" (click)="cancel()" /><sd-button
+        [title]="saving() ? 'Đang lưu…' : mode() === 'update' ? 'Lưu thay đổi' : layout() === 'lines' ? 'Tạo đơn hàng' : 'Tạo liên hệ'"
+        type="fill"
+        color="primary"
+        [loading]="saving()"
+        [disabled]="saving()"
+        (click)="save()" />
+    </div>
+  }
+</form>

@@ -1,0 +1,135 @@
+<div class="d-flex flex-column gap-16">
+  @if (variant() === 'draft') {
+    <div class="d-flex flex-wrap gap-8">
+      <sd-button title="Khôi phục bản nháp" prefixIcon="restore" type="light" (click)="restore()" /><sd-button
+        title="Lưu nháp"
+        prefixIcon="save"
+        type="light"
+        color="primary"
+        (click)="saveDraft()" />
+    </div>
+  }
+  @if (variant() === 'branch') {
+    <div class="d-flex gap-8">
+      <sd-button
+        title="Cá nhân"
+        [type]="company() ? 'light' : 'fill'"
+        color="primary"
+        (click)="company.set(false); index.set(0)" /><sd-button
+        title="Doanh nghiệp"
+        color="primary"
+        [type]="company() ? 'fill' : 'light'"
+        (click)="company.set(true); index.set(0)" />
+    </div>
+  }
+  @if (saved()) {
+    <sd-section title="Đã tạo hồ sơ"
+      ><sd-section-item label="Khách hàng">{{ controls.name.value }}</sd-section-item
+      ><sd-section-item label="Trạng thái">Đã lưu thành công</sd-section-item></sd-section
+    >
+  } @else {
+    <sd-stepper
+      [(selectedIndex)]="index"
+      [linear]="true"
+      [orientation]="variant() === 'vertical' || variant() === 'many' ? 'vertical' : 'horizontal'"
+      labelPosition="bottom"
+      animationDuration="0ms">
+      @for (step of steps(); track step.key; let i = $index) {
+        <sd-step
+          [label]="step.label"
+          [stepControl]="group(step.key)"
+          [optional]="step.key === 'note'"
+          [editable]="!busy()"
+          [icon]="stepIcon(step.key)">
+          <div class="d-flex flex-column gap-16 py-16">
+            <sd-section [title]="step.key === 'review' ? 'Kiểm tra hồ sơ trước khi lưu' : step.label">
+              @if (step.key === 'review') {
+                @for (item of steps(); track item.key; let position = $index) {
+                  @for (field of item.fields; track field[0]) {
+                    <sd-section-item [label]="field[1]">{{ control(field[0]).value || 'Chưa cung cấp' }}</sd-section-item>
+                  }
+                  @if (item.key !== 'review') {
+                    <div class="px-20 pb-8">
+                      <sd-button [title]="'Sửa ' + item.label" prefixIcon="edit" type="text" (click)="wizard()?.goTo(position)" />
+                    </div>
+                  }
+                }
+                @if (variant() === 'selection') {
+                  <sd-section-item label="Đơn hàng đã chọn">
+                    @for (row of picked(); track row.id) {
+                      <span class="mr-8">{{ row.code }}</span>
+                    }
+                  </sd-section-item>
+                }
+                @if (variant() === 'lines') {
+                  @for (line of lines(); track line.id) {
+                    <sd-section-item [label]="line.name">{{ line.quantity }}</sd-section-item>
+                  }
+                }
+              } @else if (step.key === 'selection') {
+                <div class="overflow-auto"><sd-table [option]="tableOption" /></div>
+                <p class="px-20" role="status">Đã chọn {{ picked().length }} đơn hàng</p>
+              } @else if (step.key === 'lines') {
+                <div class="p-20 d-flex flex-column gap-8">
+                  @for (line of lines(); track line.id) {
+                    <div class="d-flex flex-wrap gap-8 align-items-center">
+                      <sd-input label="Dịch vụ" [model]="line.name" (modelChange)="changeLine(line.id, 'name', $event)" required /><sd-input
+                        label="Số lượng"
+                        [model]="line.quantity"
+                        (modelChange)="changeLine(line.id, 'quantity', $event)"
+                        required /><sd-button
+                        title="Xóa dòng"
+                        prefixIcon="delete"
+                        type="light"
+                        color="warning"
+                        (click)="removeLine(line.id)" />
+                    </div>
+                  }
+                  <sd-button title="Thêm dịch vụ" prefixIcon="add" type="light" color="primary" (click)="addLine()" />
+                </div>
+              } @else {
+                <div class="p-20 d-flex flex-column gap-8">
+                  @for (field of step.fields; track field[0]) {
+                    <sd-input
+                      [label]="field[1]"
+                      [model]="control(field[0]).value"
+                      (modelChange)="edit(field[0], $event)"
+                      [required]="step.key !== 'note'"
+                      [disabled]="busy()" />
+                  }
+                </div>
+              }
+            </sd-section>
+            <div class="d-flex justify-content-end flex-wrap gap-8">
+              @if (i > 0) {
+                <sd-button title="Bước trước" prefixIcon="arrow_back" type="text" [disabled]="busy()" (click)="wizard()?.previous()" />
+              }
+              @if (step.key === 'note') {
+                <sd-button title="Bỏ qua" type="light" (click)="wizard()?.next()" />
+              }
+              @if (step.key === 'review') {
+                <sd-button
+                  title="Lưu"
+                  prefixIcon="save"
+                  type="fill"
+                  color="primary"
+                  [loading]="busy()"
+                  [disabled]="busy()"
+                  (click)="save()" />
+              } @else {
+                <sd-button
+                  [title]="busy() ? 'Đang kiểm tra…' : 'Tiếp tục'"
+                  suffixIcon="arrow_forward"
+                  type="fill"
+                  color="primary"
+                  [loading]="busy()"
+                  [disabled]="busy()"
+                  (click)="next()" />
+              }
+            </div>
+          </div>
+        </sd-step>
+      }
+    </sd-stepper>
+  }
+</div>

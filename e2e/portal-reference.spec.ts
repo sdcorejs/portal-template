@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { selectCore } from './helpers/demo-fixtures';
 test('CASE-PORTAL: direct entry with List/Detail and no old Patterns module', async ({ page }) => {
-  await page.goto('/pages');
+  await page.goto('/page');
   await expect(page).toHaveURL(/pages\/list\/list-standard/);
   await expect(page.locator('app-demo-host')).toBeVisible();
   await expect(page.getByText('List', { exact: true })).toBeVisible();
@@ -10,7 +10,7 @@ test('CASE-PORTAL: direct entry with List/Detail and no old Patterns module', as
 });
 for (const version of [1, 2, 3])
   test('CASE-SIDEBAR: version ' + version + ' persists and renders', async ({ page }) => {
-    await page.goto('/instructions/portal-config');
+    await page.goto('/instruction/portal-config');
     await selectCore(
       page,
       'Sidebar',
@@ -23,7 +23,7 @@ for (const version of [1, 2, 3])
     await expect(page.locator('sd-sidebar-v' + version)).toBeVisible();
   });
 test('CASE-SPACING: input playground has padding and full width fields', async ({ page }) => {
-  await page.goto('/forms/input');
+  await page.goto('/form/input');
   const panel = page.locator('.demo-config-panel');
   await expect(panel).toBeVisible();
   const measure = await panel.evaluate(el => {
@@ -39,10 +39,10 @@ test('CASE-SPACING: input playground has padding and full width fields', async (
 });
 
 test('CASE-TAB-METADATA: tab router shows a meaningful title and icon', async ({ page }) => {
-  await page.goto('/instructions/portal-config');
+  await page.goto('/instruction/portal-config');
   await page.getByRole('switch').click();
   await page.getByRole('button', { name: 'Lưu & Tải lại', exact: true }).click();
-  await page.goto('/forms/input');
+  await page.goto('/form/input');
   await expect(page.locator('sd-tab-router-item')).toContainText('SdInput Component');
   await expect(page.locator('sd-tab-router-item sd-icon').filter({ hasText: 'edit_note' })).toBeVisible();
 });

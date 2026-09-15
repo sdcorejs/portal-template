@@ -1,6 +1,6 @@
 import { expect, Page } from '@playwright/test';
 export async function openPattern(page: Page, id: string) {
-  await page.goto('/pages/' + id, { waitUntil: 'domcontentloaded' });
+  await page.goto('/page/' + id, { waitUntil: 'domcontentloaded' });
   await expect(page.locator('app-demo-host')).toBeVisible();
 }
 export async function selectCore(page: Page, label: string, option: string) {

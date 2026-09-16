@@ -11,13 +11,17 @@ app-pattern-results {
   overflow: hidden;
 }
 .core-table-region {
+  display: flex;
   flex: 1;
-  min-height: 240px;
+  min-height: 0;
   min-width: 0;
-  overflow: auto;
+  overflow: hidden;
 }
 .core-table-region sd-table {
-  min-width: 620px;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
 }
 .table-total {
   display: block;

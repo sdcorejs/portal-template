@@ -2,6 +2,20 @@
 
 Generated from the pattern registry. Demo data is synthetic and scoped to one mounted reference; replace the service boundary for production.
 
+## Đơn hàng / Thống kê tương tác — list-score-filter
+
+Score card có icon, lọc bảng hai chiều và gọi API thống kê độc lập.
+
+- Phù hợp: Quản lý đơn hàng với quickSearch, externalFilters và score card theo dữ liệu phiên.
+- Không phù hợp: Danh sách rất ngắn chỉ cần tìm nhanh.
+- Shape: filterable; container: page
+- Route: /page/order/summary
+- Create: /page/order/summary/create
+- Detail: /page/order/summary/:id/detail
+- Update: /page/order/summary/:id/update
+- Source: src/modules/page/components/status-badge.ts, src/modules/page/data/table-query.ts, src/modules/page/features/list-score-filter/order-summary-api.ts, src/modules/page/features/list-score-filter/list-score-filter.component.ts, src/modules/page/features/list-score-filter/list-score-filter.component.html, src/modules/page/reference/page-navigation.ts, src/modules/page/components/record-header.component.ts
+- Fields: code, name, status
+
 ## Role / Ma trận quyền — roles-matrix
 
 Quản lý vai trò và gán quyền nhóm theo module bằng ma trận CRUD và Other.

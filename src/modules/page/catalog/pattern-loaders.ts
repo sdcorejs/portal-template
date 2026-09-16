@@ -1,5 +1,6 @@
 import type { Type } from '@angular/core';
 export const PATTERN_LOADERS: Record<string, () => Promise<Type<unknown>>> = {
+  'list-score-filter': () => import('../features/list-score-filter/list-score-filter.component').then(m => m.ListScoreFilterComponent),
   'roles-matrix': () => import('../features/role/pages/role-list-page.component').then(m => m.RoleListPageComponent),
   'roles-tree': () => import('../features/role/pages/role-list-page.component').then(m => m.RoleListPageComponent),
   'list-standard': () => import('../features/list-standard/list-standard.component').then(m => m.ListStandardComponent),

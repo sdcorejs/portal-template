@@ -1,5 +1,13 @@
 export const PAGE_EXAMPLES = [
   {
+    id: 'list-score-filter',
+    path: 'order/summary',
+    group: 'list',
+    title: 'Đơn hàng · Thống kê tương tác',
+    icon: 'dashboard',
+    description: 'Chọn thẻ để lọc trạng thái; thống kê từ API riêng, cập nhật theo tên đơn hàng và khu vực.',
+  },
+  {
     id: 'list-standard',
     path: 'company',
     group: 'list',

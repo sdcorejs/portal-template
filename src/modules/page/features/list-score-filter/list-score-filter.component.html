@@ -1,0 +1,39 @@
+<div class="list-shell" [hidden]="view() !== 'list'">
+  <sd-page title="Danh sách đơn hàng" [description]="exampleDescription">
+    <sd-button headerRight title="Tạo mới" prefixIcon="add" type="fill" color="primary" (click)="create()" />
+    <div class="list-content">
+      <sd-card-group
+        class="summary-cards"
+        [model]="filters().status || 'all'"
+        (sdChange)="chooseCard($event)"
+        aria-label="Lọc đơn hàng theo trạng thái"
+        [attr.aria-busy]="summaryLoading()">
+        @for (card of cards; track card.id) {
+          <sd-card [value]="card.id" [color]="card.color" [autoId]="'order-summary-' + card.id" class="p-12">
+            <div class="d-flex align-items-center gap-8">
+              <span [class]="'d-inline-flex p-8 rounded-8 bg-' + card.color + '-light'"
+                ><sd-icon [name]="card.icon" [class]="'text-' + card.color"
+              /></span>
+              <span>{{ card.title }}</span>
+            </div>
+            <strong class="d-block fs-24 mt-8">{{ summaryLoading() ? '…' : summaryError() ? '—' : (summary()?.[card.id] ?? '—') }}</strong>
+          </sd-card>
+        }
+      </sd-card-group>
+      @if (summaryError()) {
+        <sd-data-state state="error" title="Không thể tải thống kê" actionLabel="Thử lại" (sdAction)="loadSummary()" />
+      }
+      <sd-table autoId="order-summary-list" [option]="option()">
+        <ng-template sdTableCellDef="code" let-row="item"
+          ><a [href]="navigation.href('detail', row.id)" (click)="navigation.openLink($event, row.id)">{{ row.code }}</a></ng-template
+        >
+      </sd-table>
+    </div>
+  </sd-page>
+</div>
+@if (view() === 'create') {
+  <app-form-line-items [embedded]="true" (done)="back()" />
+}
+@if (view() === 'detail') {
+  <app-detail-related-records [embedded]="true" (done)="back()" />
+}

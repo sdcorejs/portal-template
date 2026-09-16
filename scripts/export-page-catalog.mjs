@@ -9,7 +9,7 @@ export async function loadCatalog() {
   return { schemaVersion: 1, coreVersion: '22.2.8', patterns: structuredClone(PAGE_PATTERNS) };
 }
 export function validateCatalog(catalog) {
-  if (catalog.schemaVersion !== 1 || catalog.coreVersion !== '22.2.8' || catalog.patterns.length !== 14)
+  if (catalog.schemaVersion !== 1 || catalog.coreVersion !== '22.2.8' || catalog.patterns.length !== 15)
     throw new Error('Catalog version/count mismatch');
   const ids = new Set();
   for (const p of catalog.patterns) {
@@ -93,5 +93,5 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
       writeFileSync(path, content);
     }
   }
-  console.log('Catalog: 14 patterns; source and guide consistent.');
+  console.log('Catalog: 15 patterns; source and guide consistent.');
 }

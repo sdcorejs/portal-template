@@ -4,7 +4,7 @@ import { loadCatalog, validateCatalog, renderArtifacts } from './export-page-cat
 test('CASE-EXPORT: complete, serializable catalog and exact source artifacts', async () => {
   const c = await loadCatalog();
   assert.equal(validateCatalog(c), true);
-  assert.equal(JSON.parse(JSON.stringify(c)).patterns.length, 14);
+  assert.equal(JSON.parse(JSON.stringify(c)).patterns.length, 15);
   const artifacts = await renderArtifacts();
   assert.ok(artifacts['docs/page-pattern.md'].includes('list-master-detail'));
   assert.ok(JSON.parse(artifacts['public/catalog/page-pattern-sources.v1.json']).files['src/modules/page/data/models.ts']);

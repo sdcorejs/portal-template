@@ -334,7 +334,7 @@
     },
     {
       "path": "src/modules/pattern/features/table/table.component.scss",
-      "content": ":host {\n  display: flex;\n  flex-direction: column;\n  height: 100%;\n  min-height: 0;\n  gap: 8px;\n}\napp-pattern-results {\n  flex: 1;\n  min-height: 0;\n  overflow: hidden;\n}\n.core-table-region {\n  flex: 1;\n  min-height: 240px;\n  min-width: 0;\n  overflow: auto;\n}\n.core-table-region sd-table {\n  min-width: 620px;\n}\n.table-total {\n  display: block;\n  text-align: right;\n  margin-inline: -8px;\n}\n"
+      "content": ":host {\n  display: flex;\n  flex-direction: column;\n  height: 100%;\n  min-height: 0;\n  gap: 8px;\n}\napp-pattern-results {\n  flex: 1;\n  min-height: 0;\n  overflow: hidden;\n}\n.core-table-region {\n  display: flex;\n  flex: 1;\n  min-height: 0;\n  min-width: 0;\n  overflow: hidden;\n}\n.core-table-region sd-table {\n  flex: 1;\n  min-height: 0;\n  min-width: 0;\n  overflow: hidden;\n}\n.table-total {\n  display: block;\n  text-align: right;\n  margin-inline: -8px;\n}\n"
     },
     {
       "path": "src/modules/pattern/features/table/table.component.ts",

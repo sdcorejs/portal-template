@@ -3,6 +3,73 @@
   "coreVersion": "22.2.8",
   "patterns": [
     {
+      "id": "list-score-filter",
+      "name": "Đơn hàng / Thống kê tương tác",
+      "route": "/page/order/summary",
+      "coreVersion": "22.2.8",
+      "entityKind": "order",
+      "entityLabel": "Đơn hàng",
+      "purpose": "Score card có icon, lọc bảng hai chiều và gọi API thống kê độc lập.",
+      "dataShape": "filterable",
+      "density": "comfortable-table",
+      "container": "page",
+      "requiredFields": [
+        "code",
+        "name",
+        "status"
+      ],
+      "relationships": [],
+      "interactions": [
+        "code-link",
+        "badge-round",
+        "search",
+        "filter",
+        "sort",
+        "paginate",
+        "detail",
+        "create",
+        "update",
+        "quickSearch",
+        "externalFilters",
+        "score-cards",
+        "deep-link",
+        "history-navigation",
+        "guarded-back"
+      ],
+      "suitableWhen": "Quản lý đơn hàng với quickSearch, externalFilters và score card theo dữ liệu phiên.",
+      "avoidWhen": "Danh sách rất ngắn chỉ cần tìm nhanh.",
+      "components": [
+        "SdTableCellDefDirective",
+        "SdBadge",
+        "SdPageComponent",
+        "SdTable"
+      ],
+      "sourceFiles": [
+        "src/modules/page/components/status-badge.ts",
+        "src/modules/page/data/table-query.ts",
+        "src/modules/page/features/list-score-filter/order-summary-api.ts",
+        "src/modules/page/features/list-score-filter/list-score-filter.component.ts",
+        "src/modules/page/features/list-score-filter/list-score-filter.component.html",
+        "src/modules/page/reference/page-navigation.ts",
+        "src/modules/page/components/record-header.component.ts"
+      ],
+      "dataContract": "src/modules/page/data/models.ts",
+      "fixtures": "src/modules/page/data/fixture-factories.ts",
+      "responsive": "Chiếm 100% chiều cao vùng làm việc; bảng cuộn nội bộ, phân trang ở đáy khi đủ số dòng.",
+      "states": [
+        "data",
+        "loading",
+        "empty",
+        "no-results",
+        "error"
+      ],
+      "recordRoutes": {
+        "create": "/page/order/summary/create",
+        "detail": "/page/order/summary/:id/detail",
+        "update": "/page/order/summary/:id/update"
+      }
+    },
+    {
       "id": "roles-matrix",
       "name": "Role / Ma trận quyền",
       "route": "/page/role/matrix",

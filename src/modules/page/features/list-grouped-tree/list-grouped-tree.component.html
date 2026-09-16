@@ -1,5 +1,5 @@
 <div class="list-shell" [hidden]="view() === 'create' || view() === 'detail'">
-  <sd-page title="Danh sách sản phẩm"
+  <sd-page [description]="exampleDescription" title="Danh sách sản phẩm"
     ><sd-button headerRight title="Tạo mới" type="fill" color="primary" prefixIcon="add" (click)="create()" />
     <div class="list-content">
       <sd-table autoId="list-grouped-tree" [option]="treeOption()">

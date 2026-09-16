@@ -5,11 +5,11 @@
     {
       "id": "roles-matrix",
       "name": "Role / Ma trận quyền",
-      "route": "/page/list/roles-matrix",
+      "route": "/page/role/matrix",
       "recordRoutes": {
-        "create": "/page/list/roles-matrix/create",
-        "detail": "/page/list/roles-matrix/:id/detail",
-        "update": "/page/list/roles-matrix/:id/update"
+        "create": "/page/role/matrix/create",
+        "detail": "/page/role/matrix/:id/detail",
+        "update": "/page/role/matrix/:id/update"
       },
       "coreVersion": "22.2.8",
       "entityKind": "role",
@@ -77,11 +77,11 @@
     {
       "id": "roles-tree",
       "name": "Role / Quyền phân cấp",
-      "route": "/page/list/roles-tree",
+      "route": "/page/role/tree",
       "recordRoutes": {
-        "create": "/page/list/roles-tree/create",
-        "detail": "/page/list/roles-tree/:id/detail",
-        "update": "/page/list/roles-tree/:id/update"
+        "create": "/page/role/tree/create",
+        "detail": "/page/role/tree/:id/detail",
+        "update": "/page/role/tree/:id/update"
       },
       "coreVersion": "22.2.8",
       "entityKind": "role",
@@ -149,7 +149,7 @@
     {
       "id": "list-standard",
       "name": "List / Standard",
-      "route": "/page/list/list-standard",
+      "route": "/page/company",
       "coreVersion": "22.2.8",
       "entityKind": "customer",
       "entityLabel": "Khách hàng doanh nghiệp",
@@ -205,15 +205,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/page/list/list-standard/create",
-        "detail": "/page/list/list-standard/:id/detail",
-        "update": "/page/list/list-standard/:id/update"
+        "create": "/page/company/create",
+        "detail": "/page/company/:id/detail",
+        "update": "/page/company/:id/update"
       }
     },
     {
       "id": "list-advanced-filter",
       "name": "List / Advanced filter",
-      "route": "/page/list/list-advanced-filter",
+      "route": "/page/order",
       "coreVersion": "22.2.8",
       "entityKind": "order",
       "entityLabel": "Đơn hàng",
@@ -271,15 +271,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/page/list/list-advanced-filter/create",
-        "detail": "/page/list/list-advanced-filter/:id/detail",
-        "update": "/page/list/list-advanced-filter/:id/update"
+        "create": "/page/order/create",
+        "detail": "/page/order/:id/detail",
+        "update": "/page/order/:id/update"
       }
     },
     {
       "id": "list-grouped-tree",
       "name": "List / Grouped tree",
-      "route": "/page/list/list-grouped-tree",
+      "route": "/page/product",
       "coreVersion": "22.2.8",
       "entityKind": "product",
       "entityLabel": "Nhóm hàng và sản phẩm",
@@ -337,15 +337,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/page/list/list-grouped-tree/create",
-        "detail": "/page/list/list-grouped-tree/:id/detail",
-        "update": "/page/list/list-grouped-tree/:id/update"
+        "create": "/page/product/create",
+        "detail": "/page/product/:id/detail",
+        "update": "/page/product/:id/update"
       }
     },
     {
       "id": "list-master-detail",
       "name": "List / Master–Detail",
-      "route": "/page/list/list-master-detail",
+      "route": "/page/ticket",
       "coreVersion": "22.2.8",
       "entityKind": "ticket",
       "entityLabel": "Yêu cầu hỗ trợ",
@@ -402,15 +402,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/page/list/list-master-detail/create",
-        "detail": "/page/list/list-master-detail/:id/detail",
-        "update": "/page/list/list-master-detail/:id/update"
+        "create": "/page/ticket/create",
+        "detail": "/page/ticket/:id/detail",
+        "update": "/page/ticket/:id/update"
       }
     },
     {
       "id": "detail-overview",
       "name": "Detail / Overview",
-      "route": "/page/detail/detail-overview",
+      "route": "/page/customer",
       "coreVersion": "22.2.8",
       "entityKind": "customer",
       "entityLabel": "Khách hàng",
@@ -455,15 +455,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/page/detail/detail-overview/create",
-        "detail": "/page/detail/detail-overview/:id/detail",
-        "update": "/page/detail/detail-overview/:id/update"
+        "create": "/page/customer/create",
+        "detail": "/page/customer/:id/detail",
+        "update": "/page/customer/:id/update"
       }
     },
     {
       "id": "detail-tabbed",
       "name": "Detail / Tabbed",
-      "route": "/page/detail/detail-tabbed",
+      "route": "/page/contract",
       "coreVersion": "22.2.8",
       "entityKind": "contract",
       "entityLabel": "Hợp đồng",
@@ -510,15 +510,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/page/detail/detail-tabbed/create",
-        "detail": "/page/detail/detail-tabbed/:id/detail",
-        "update": "/page/detail/detail-tabbed/:id/update"
+        "create": "/page/contract/create",
+        "detail": "/page/contract/:id/detail",
+        "update": "/page/contract/:id/update"
       }
     },
     {
       "id": "detail-related-records",
       "name": "Detail / Related records",
-      "route": "/page/detail/detail-related-records",
+      "route": "/page/order/related-record",
       "coreVersion": "22.2.8",
       "entityKind": "order",
       "entityLabel": "Đơn hàng",
@@ -565,15 +565,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/page/detail/detail-related-records/create",
-        "detail": "/page/detail/detail-related-records/:id/detail",
-        "update": "/page/detail/detail-related-records/:id/update"
+        "create": "/page/order/related-record/create",
+        "detail": "/page/order/related-record/:id/detail",
+        "update": "/page/order/related-record/:id/update"
       }
     },
     {
       "id": "form-simple",
       "name": "Form / Simple",
-      "route": "/page/detail/form-simple",
+      "route": "/page/category",
       "coreVersion": "22.2.8",
       "entityKind": "category",
       "entityLabel": "Danh mục",
@@ -621,15 +621,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/page/detail/form-simple/create",
-        "detail": "/page/detail/form-simple/:id/detail",
-        "update": "/page/detail/form-simple/:id/update"
+        "create": "/page/category/create",
+        "detail": "/page/category/:id/detail",
+        "update": "/page/category/:id/update"
       }
     },
     {
       "id": "form-sections",
       "name": "Form / Sections",
-      "route": "/page/detail/form-sections",
+      "route": "/page/partner",
       "coreVersion": "22.2.8",
       "entityKind": "partner",
       "entityLabel": "Đối tác",
@@ -677,15 +677,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/page/detail/form-sections/create",
-        "detail": "/page/detail/form-sections/:id/detail",
-        "update": "/page/detail/form-sections/:id/update"
+        "create": "/page/partner/create",
+        "detail": "/page/partner/:id/detail",
+        "update": "/page/partner/:id/update"
       }
     },
     {
       "id": "form-line-items",
       "name": "Form / Line items",
-      "route": "/page/detail/form-line-items",
+      "route": "/page/order/line-item",
       "coreVersion": "22.2.8",
       "entityKind": "order",
       "entityLabel": "Đơn hàng",
@@ -735,15 +735,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/page/detail/form-line-items/create",
-        "detail": "/page/detail/form-line-items/:id/detail",
-        "update": "/page/detail/form-line-items/:id/update"
+        "create": "/page/order/line-item/create",
+        "detail": "/page/order/line-item/:id/detail",
+        "update": "/page/order/line-item/:id/update"
       }
     },
     {
       "id": "drawer-compact",
       "name": "Drawer / Compact",
-      "route": "/page/detail/drawer-compact",
+      "route": "/page/category/side-drawer",
       "coreVersion": "22.2.8",
       "entityKind": "category",
       "entityLabel": "Danh mục",
@@ -798,15 +798,15 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/page/detail/drawer-compact/create",
-        "detail": "/page/detail/drawer-compact/:id/detail",
-        "update": "/page/detail/drawer-compact/:id/update"
+        "create": "/page/category/side-drawer/create",
+        "detail": "/page/category/side-drawer/:id/detail",
+        "update": "/page/category/side-drawer/:id/update"
       }
     },
     {
       "id": "drawer-sections",
       "name": "Drawer / Sections",
-      "route": "/page/detail/drawer-sections",
+      "route": "/page/contact",
       "coreVersion": "22.2.8",
       "entityKind": "contact",
       "entityLabel": "Liên hệ",
@@ -861,9 +861,9 @@
         "error"
       ],
       "recordRoutes": {
-        "create": "/page/detail/drawer-sections/create",
-        "detail": "/page/detail/drawer-sections/:id/detail",
-        "update": "/page/detail/drawer-sections/:id/update"
+        "create": "/page/contact/create",
+        "detail": "/page/contact/:id/detail",
+        "update": "/page/contact/:id/update"
       }
     }
   ]

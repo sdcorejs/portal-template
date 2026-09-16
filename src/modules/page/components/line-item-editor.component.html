@@ -1,50 +1,43 @@
-<sd-section title="Dòng hàng — lưu cùng đơn hàng"
-  ><div class="p-20 d-flex flex-column gap-8">
-    @for (row of rows(); track row; let i = $index) {
-      <sd-section [title]="'Dòng ' + (i + 1)"
-        ><div class="p-20">
-          <div class="row row-sm gap-y-8">
-            <div class="col-12 col-md-6">
-              <sd-input
-                label="Sản phẩm / dịch vụ"
-                name="name"
-                [form]="row"
-                [model]="row.seed.name"
-                required
-                size="sm"
-                (sdChange)="update()" />
-            </div>
-            <div class="col-6 col-md-3">
-              <sd-input-number
-                label="Số lượng"
-                name="quantity"
-                [form]="row"
-                [model]="row.seed.quantity"
-                [min]="1"
-                required
-                size="sm"
-                (sdChange)="update()" />
-            </div>
-            <div class="col-6 col-md-3">
-              <sd-input-number
-                label="Đơn giá (VND)"
-                name="unitPrice"
-                [form]="row"
-                [model]="row.seed.unitPrice"
-                [min]="0"
-                required
-                size="sm"
-                (sdChange)="update()" />
-            </div>
-          </div>
-        </div>
-        <sd-button sdFooterRight title="Xóa dòng" type="text" color="error" (click)="remove(i)"
-      /></sd-section>
-    }
-    <div class="d-flex justify-content-between align-items-center flex-wrap gap-8">
-      <sd-button title="Thêm dòng" prefixIcon="add" type="outline" (click)="add()" /><span class="T16M"
-        >Tổng tạm tính: {{ total() | currency: 'VND' : 'symbol' : '1.0-0' }}</span
-      >
-    </div>
-  </div></sd-section
->
+<sd-section title="Dòng hàng — lưu cùng đơn hàng" [collapsible]="true">
+  <sd-button sdHeaderRight title="Thêm dòng" prefixIcon="add" type="fill" color="primary" (click)="add()" />
+  <div class="p-12 d-flex flex-column gap-8">
+    <sd-table autoId="order-line-editor" [option]="option()" [style.height.px]="Math.min(400, 80 + rows().length * 90)">
+      <ng-template sdTableCellDef="name" let-row="item">
+        <sd-input
+          label="Sản phẩm / dịch vụ"
+          name="name"
+          [form]="row.form"
+          [model]="row.form.seed.name"
+          required
+          size="sm"
+          (sdChange)="change(row.form, 'name', $event)" />
+      </ng-template>
+      <ng-template sdTableCellDef="quantity" let-row="item">
+        <sd-input-number
+          label="Số lượng"
+          name="quantity"
+          [form]="row.form"
+          [model]="row.form.seed.quantity"
+          [min]="1"
+          required
+          size="sm"
+          (sdChange)="change(row.form, 'quantity', $event)" />
+      </ng-template>
+      <ng-template sdTableCellDef="unitPrice" let-row="item">
+        <sd-input-number
+          label="Đơn giá (VND)"
+          name="unitPrice"
+          [form]="row.form"
+          [model]="row.form.seed.unitPrice"
+          [min]="0"
+          required
+          size="sm"
+          (sdChange)="change(row.form, 'unitPrice', $event)" />
+      </ng-template>
+      <ng-template sdTableCellDef="action" let-row="item">
+        <sd-button tooltip="Xóa dòng" prefixIcon="delete" type="text" color="error" (click)="removeRow(row.form)" />
+      </ng-template>
+    </sd-table>
+    <div class="text-right T16M">Tổng tạm tính: {{ total() | currency: 'VND' : 'symbol' : '1.0-0' }}</div>
+  </div>
+</sd-section>

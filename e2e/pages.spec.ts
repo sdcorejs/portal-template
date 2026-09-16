@@ -25,7 +25,7 @@ for (const id of patterns)
     expect(errors).toEqual([]);
   });
 test('CASE-SESSION: create, update, reload and revisit preserve data', async ({ page }) => {
-  await page.goto('/page/detail/form-simple/create');
+  await page.goto('/page/category/create');
   await page.getByRole('textbox', { name: 'Mã hồ sơ', exact: true }).fill('CAT-NEW');
   await page.getByRole('textbox', { name: 'Tên hồ sơ', exact: true }).fill('Danh mục phiên làm việc');
   const save = page.getByRole('button', { name: 'Lưu', exact: true });
@@ -45,11 +45,11 @@ test('CASE-SESSION: create, update, reload and revisit preserve data', async ({ 
   expect(records).toHaveLength(31);
   expect(records.filter((r: { code: string }) => r.code === 'CAT-NEW')).toHaveLength(1);
   await openPattern(page, 'list-standard');
-  await page.goto('/page/detail/form-simple/category-31/detail');
+  await page.goto('/page/category/category-31/detail');
   await expect(page.locator('app-demo-host')).toContainText('Danh mục đã cập nhật');
 });
 test('CASE-VALIDATION: invalid form stays open with actionable error', async ({ page }) => {
-  await page.goto('/page/detail/form-simple/create');
+  await page.goto('/page/category/create');
   await page.getByRole('button', { name: 'Lưu', exact: true }).click();
   await expect(page.getByTestId('form-error')).toContainText('Mã hồ sơ');
   await expect(page.getByTestId('form-error')).toContainText('Tên hồ sơ');

@@ -17,6 +17,7 @@ export class EntityFormSectionsComponent {
   readonly form = input.required<FormGroup>();
   readonly seed = input.required<DemoEntity>();
   readonly extended = input(false);
+  readonly compact = input(false);
   readonly editing = input(false);
   readonly statuses = STATUS_OPTIONS;
   readonly groups = GROUP_OPTIONS;

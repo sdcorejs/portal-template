@@ -1,36 +1,81 @@
 <div class="list-shell" [hidden]="view() === 'create'">
-  <sd-page title="Danh sách yêu cầu hỗ trợ"
+  <sd-page [description]="exampleDescription" title="Danh sách yêu cầu hỗ trợ"
     ><sd-button headerRight title="Tạo mới" type="fill" color="primary" prefixIcon="add" (click)="create()" />
     <div class="list-content">
-      <dl class="list-scorecards" aria-label="Thống kê toàn bộ yêu cầu">
+      <div class="list-scorecards" role="group" aria-label="Thống kê toàn bộ yêu cầu">
         @for (card of scoreCards(); track card.label) {
-          <div class="list-scorecard" [attr.data-tone]="card.tone">
-            <dt>{{ card.label }}</dt>
-            <dd>{{ card.value }}</dd>
-          </div>
+          <sd-section [hideHeader]="true">
+            <div class="p-12 d-flex flex-column gap-8">
+              <div class="d-flex align-items-center gap-8">
+                <span [class]="'score-icon p-8 rounded-8 bg-' + (card.tone === 'default' ? 'info' : card.tone) + '-light'">
+                  <sd-icon
+                    [name]="card.tone === 'warning' ? 'schedule' : card.tone === 'success' ? 'check_circle' : 'receipt_long'"
+                    [class]="'text-' + (card.tone === 'default' ? 'info' : card.tone)" />
+                </span>
+                <span class="text-secondary fs-12">{{ card.label }}</span>
+              </div>
+              <strong class="fs-24">{{ card.value }}</strong>
+            </div>
+          </sd-section>
         }
-      </dl>
+      </div>
 
-      <div class="list-master-content">
+      <div class="list-master-content" [class.has-detail]="view() === 'detail'">
         <div class="list-master-table">
           <sd-table autoId="list-master-detail" [option]="option()">
             <ng-template sdTableCellDef="code" let-row="item">
-              <a [href]="navigation.href('detail', row.id)" class="record-link" (click)="navigation.openLink($event, row.id)">{{
-                row.code
-              }}</a>
+              <a [href]="navigation.href('detail', row.id)" (click)="navigation.openLink($event, row.id)">{{ row.code }}</a>
             </ng-template>
           </sd-table>
         </div>
-        <aside class="list-detail-panel" aria-label="Chi tiết yêu cầu">
-          @if (view() === 'detail') {
-            <app-detail-overview [embedded]="true" (done)="back()" />
-          } @else {
-            <sd-data-state state="empty" title="Chọn một yêu cầu" message="Mở hồ sơ từ danh sách để xem và cập nhật." />
-          }
-        </aside>
+        @if (view() === 'detail') {
+          <aside class="list-detail-panel" aria-label="Chi tiết yêu cầu">
+            @if (entity(); as row) {
+              <sd-section title="Chi tiết yêu cầu">
+                <div sdHeaderRight class="d-flex gap-8">
+                  <sd-button title="Đóng" type="text" (click)="back()" />
+                  <sd-button title="Cập nhật" type="fill" color="primary" prefixIcon="edit" (click)="navigation.go('update', row.id)" />
+                </div>
+                <sd-section-item label="Mã yêu cầu" labelWidth="32%"
+                  ><strong class="text-primary">#{{ row.code }}</strong></sd-section-item
+                >
+                <sd-section-item label="Tiêu đề" labelWidth="32%">{{ row.name }}</sd-section-item>
+                <sd-section-item label="Trạng thái" labelWidth="32%"
+                  ><sd-badge type="round" [title]="badge().title" [color]="badge().color"
+                /></sd-section-item>
+                <sd-section-item label="Khu vực" labelWidth="32%">{{ region() }}</sd-section-item>
+                <sd-section-item label="Liên hệ" labelWidth="32%">{{ row.email }}</sd-section-item>
+                <sd-section-item label="Cập nhật" labelWidth="32%">{{ row.updatedAt | date: 'dd/MM/yyyy' }}</sd-section-item>
+                <sd-section-item label="Nội dung" labelWidth="32%">{{ row.description }}</sd-section-item>
+              </sd-section>
+            } @else {
+              <sd-data-state state="error" title="Không tìm thấy yêu cầu" actionLabel="Đóng" (sdAction)="back()" />
+            }
+          </aside>
+        }
       </div></div
   ></sd-page>
 </div>
+<sd-side-drawer #editDrawer title="Cập nhật yêu cầu" width="640px" [beforeClose]="beforeClose">
+  <div sdHeaderLeft>
+    <div class="d-flex align-items-center flex-wrap gap-8">
+      <h3 class="m-0">
+        Cập nhật yêu cầu <span class="text-primary">#{{ entity()?.code }}</span>
+      </h3>
+      <sd-badge type="round" [title]="badge().title" [color]="badge().color" />
+    </div>
+    <p class="text-secondary fs-13 m-0 mt-4">{{ entity()?.name }}</p>
+  </div>
+  @if (navigation.view() === 'update') {
+    @for (id of [store.selectedId()]; track id) {
+      <app-form-sections #editor [embedded]="true" [inDrawer]="true" />
+    }
+  }
+  <div sdFooterRight class="d-flex gap-8">
+    <sd-button title="Đóng" type="text" [disabled]="store.saving()" (click)="editDrawer.close()" />
+    <sd-button title="Lưu" type="fill" color="primary" prefixIcon="save" [loading]="store.saving()" (click)="editor()?.save()" />
+  </div>
+</sd-side-drawer>
 @if (view() === 'create') {
   @if (store.kind === 'order') {
     <app-form-line-items [embedded]="true" (done)="back()" />

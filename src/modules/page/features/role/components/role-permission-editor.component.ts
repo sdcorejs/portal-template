@@ -29,20 +29,23 @@ import { PermissionTreeComponent } from './permission-tree.component';
           @if (tab() === index) {
             <div class="permission-toolbar">
               <sd-input label="Tìm chức năng hoặc quyền" [(model)]="search" size="sm" />
-              <app-role-permission-check
-                [selected]="selected()"
-                [ids]="visibleIds()"
-                label="Chọn tất cả quyền đang hiển thị"
-                text="Chọn tất cả kết quả"
-                [disabled]="disabled()"
-                (changed)="select($event)" />
-              <sd-checkbox label="Chức năng đã có quyền" [(model)]="onlySelected" />
+              @if (!viewed()) {
+                <app-role-permission-check
+                  [selected]="selected()"
+                  [ids]="visibleIds()"
+                  label="Chọn tất cả quyền đang hiển thị"
+                  text="Chọn tất cả kết quả"
+                  [disabled]="disabled()"
+                  (changed)="select($event)" />
+              }
+              <sd-checkbox size="sm" label="Chức năng đã có quyền" [(model)]="onlySelected" />
             </div>
             @if (visibleEntities().length) {
               @if (layout() === 'matrix') {
                 <app-role-permission-matrix
                   [module]="module"
                   [entities]="visibleEntities()"
+                  [viewed]="viewed()"
                   [selected]="selected()"
                   [disabled]="disabled()"
                   (changed)="select($event)" />
@@ -50,6 +53,7 @@ import { PermissionTreeComponent } from './permission-tree.component';
                 <app-role-permission-tree
                   [module]="module"
                   [entities]="visibleEntities()"
+                  [viewed]="viewed()"
                   [selected]="selected()"
                   [disabled]="disabled()"
                   (changed)="select($event)" />
@@ -123,6 +127,7 @@ export class RolePermissionEditorComponent {
   readonly layout = input.required<RoleLayout>();
   readonly selected = model.required<string[]>();
   readonly disabled = input(false);
+  readonly viewed = input(false);
   readonly modules = ROLE_MODULES;
   readonly tab = signal(0);
   readonly search = signal('');

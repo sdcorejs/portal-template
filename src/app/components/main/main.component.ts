@@ -223,30 +223,12 @@ export class MainComponent {
     {
       icon: 'web',
       title: 'Page',
-      children: [
-        {
-          title: 'List',
-          icon: 'view_list',
-          children: [...PAGE_EXAMPLES, ...ROLE_EXAMPLES]
-            .filter(x => x.group === 'list')
-            .map(x => ({
-              path: '/page/list/' + x.id,
-              title: x.title,
-              icon: x.icon,
-              permission: SD_PERMISSION_PUBLIC,
-            })),
-        },
-        {
-          title: 'Detail',
-          icon: 'description',
-          children: PAGE_EXAMPLES.filter(x => x.group === 'detail').map(x => ({
-            path: '/page/detail/' + x.id,
-            title: x.title,
-            icon: x.icon,
-            permission: SD_PERMISSION_PUBLIC,
-          })),
-        },
-      ],
+      children: [...PAGE_EXAMPLES, ...ROLE_EXAMPLES].map(example => ({
+        path: '/page/' + example.path,
+        title: example.title,
+        icon: example.icon,
+        permission: SD_PERMISSION_PUBLIC,
+      })),
     },
   ];
 }

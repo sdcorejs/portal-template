@@ -19,7 +19,7 @@ export default {
       title: 'Chọn page theo dữ liệu',
       text: 'Dùng list chuẩn cho bảng dữ liệu; thử quick search, external filters hoặc score card khi nghiệp vụ cần.',
       file: 'src/modules/page/catalog',
-      code: '/page/list/list-standard\n/pages/list/list-standard/customer-1/detail\n/pages/list/list-standard/create',
+      code: '/page/company\n/pages/list/list-standard/customer-1/detail\n/pages/list/list-standard/create',
       result: 'Cột mã dẫn đến chi tiết; tạo mới và cập nhật có URL riêng.',
     },
   ],

@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, Type, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, Type, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SdDataState } from '@sdcorejs/angular/components/data-state';
+import { SdLoadingService } from '@sdcorejs/angular/services/loading';
 import { SdUnsavedChangesService } from '@sdcorejs/angular/services/unsaved-changes';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { PAGE_PATTERNS } from '../catalog/pattern-registry';
@@ -19,6 +20,7 @@ import { DemoHostComponent } from './demo-host.component';
 })
 export class PageReferenceComponent {
   readonly store = inject(DemoSessionStore);
+  private readonly loading = inject(SdLoadingService);
   readonly unsaved = inject(SdUnsavedChangesService);
   readonly component = signal<Type<unknown> | null>(null);
   readonly loadError = signal('');
@@ -27,7 +29,14 @@ export class PageReferenceComponent {
   readonly route = inject(ActivatedRoute);
   private request = 0;
   private loaded = false;
+  private recordComponent: Type<unknown> | null = null;
   constructor() {
+    effect(onCleanup => {
+      if (this.store.operation()) {
+        const ref = this.loading.start();
+        onCleanup(() => ref.close());
+      }
+    });
     this.route.paramMap.pipe(takeUntilDestroyed()).subscribe(params => {
       void this.load(this.route.snapshot.data['patternId'], params.get('view') as RecordView | null, params.get('recordId'));
     });
@@ -40,27 +49,28 @@ export class PageReferenceComponent {
       return;
     }
     this.navigation.baseUrl = pattern.route;
-    this.navigation.listShell = id.startsWith('list-') || id.startsWith('drawer-');
+    this.navigation.listShell = true;
+    const hasOwnList = id.startsWith('list-') || id.startsWith('drawer-');
     this.loadError.set('');
     try {
-      let component = this.component();
+      let component = this.recordComponent;
       if (!this.loaded) {
         const result = await Promise.all([PATTERN_LOADERS[id](), this.store.openSession(pattern.entityKind)]);
         if (request !== this.request || this.destroy.destroyed) return;
         component = id.startsWith('form-')
           ? (await import('../features/detail-overview/detail-overview.component')).DetailOverviewComponent
           : result[0];
+        this.recordComponent = component;
         this.loaded = true;
         this.store.formLayout.set(id === 'form-simple' ? 'simple' : id === 'form-line-items' ? 'lines' : 'sections');
       } else {
         await this.store.wait(view === 'create' ? 'Đang chuẩn bị hồ sơ…' : 'Đang mở hồ sơ…');
       }
       if (request !== this.request || this.destroy.destroyed) return;
-      if (!view && !this.navigation.listShell) {
-        this.component.set(component);
-        await this.navigation.go('detail', this.store.selectedId(), true);
-        return;
+      if (!view && !hasOwnList) {
+        component = (await import('./record-list.component')).RecordListComponent;
       }
+      if (request !== this.request || this.destroy.destroyed) return;
       this.store.selectedId.set(recordId);
       this.store.mode.set(view === 'create' || view === 'update' ? view : 'detail');
       this.navigation.view.set(view ?? 'list');

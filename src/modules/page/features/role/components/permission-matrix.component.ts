@@ -1,85 +1,100 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { SdTable, SdTableCellDefDirective, SdTableTitleDefDirective, SdTableOption } from '@sdcorejs/angular/components/table';
+import { SdBadge } from '@sdcorejs/angular/components/badge';
 import { PermissionCheckComponent, PermissionSelectionChange } from './permission-check.component';
 import { CRUD, permissionsFor, selectionState } from '../data/role-permissions';
-import type { RoleModule, RoleEntity } from '../data/role.model';
+import type { RoleModule, RoleEntity, RolePermission } from '../data/role.model';
+interface MatrixRow {
+  id: string;
+  name: string;
+  hint: string;
+  ids: string[];
+  VIEW?: string;
+  CREATE?: string;
+  UPDATE?: string;
+  DELETE?: string;
+  other: RolePermission[];
+}
 @Component({
   selector: 'app-role-permission-matrix',
-  imports: [PermissionCheckComponent],
-  template: `<div class="permission-scroll" tabindex="0" role="region" aria-label="Ma trận quyền có thể cuộn ngang">
-    <table class="permission-table matrix">
-      <caption class="sr-only">
-        Ma trận phân quyền theo chức năng
-      </caption>
-      <thead>
-        <tr>
-          <th scope="col" class="feature">Chức năng</th>
-          @for (column of columns(); track column.action) {
-            <th scope="col" class="crud">
-              <app-role-permission-check
-                [selected]="selected()"
-                [ids]="column.ids"
-                [label]="'Chọn ' + column.label + ' cho các chức năng đang hiển thị'"
-                [text]="column.label"
-                [disabled]="disabled()"
-                (changed)="changed.emit($event)" />
-            </th>
-          }
-          <th scope="col" class="other">Other <span class="muted">/ Quyền khác</span></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (row of rows(); track row.entity.id) {
-          <tr>
-            <th scope="row" class="feature">
-              <div class="feature-label">
-                <app-role-permission-check
-                  [selected]="selected()"
-                  [ids]="row.ids"
-                  [label]="'Chọn tất cả quyền ' + row.entity.name"
-                  [disabled]="disabled()"
-                  (changed)="changed.emit($event)" />
-                <div>
-                  <strong>{{ row.entity.name }}</strong
-                  ><span class="hint">{{ row.entity.hint }}</span>
-                </div>
-                <span class="count">{{ selectionState(selected(), row.ids).count }}</span>
-              </div>
-            </th>
-            @for (cell of row.crud; track cell.action) {
-              <td class="crud">
-                @if (cell.id) {
-                  <app-role-permission-check
-                    [selected]="selected()"
-                    [ids]="[cell.id]"
-                    [label]="cell.label + ' · ' + row.entity.name"
-                    [disabled]="disabled()"
-                    (changed)="changed.emit($event)" />
-                } @else {
-                  <span class="muted" [attr.aria-label]="'Không áp dụng ' + cell.label">—</span>
-                }
-              </td>
-            }
-            <td>
-              <div class="other-options">
-                @for (permission of row.other; track permission.id) {
-                  <app-role-permission-check
-                    [selected]="selected()"
-                    [ids]="[permission.id]"
-                    [label]="permission.label + ' · ' + row.entity.name"
-                    [text]="permission.label"
-                    [disabled]="disabled()"
-                    (changed)="changed.emit($event)" />
-                } @empty {
-                  <span class="muted">—</span>
-                }
-              </div>
-            </td>
-          </tr>
+  imports: [SdTable, SdTableCellDefDirective, SdTableTitleDefDirective, SdBadge, PermissionCheckComponent],
+  template: `<sd-table autoId="role-permission-matrix" [option]="option()">
+    <ng-template sdTableCellDef="name" let-row="item">
+      <div class="d-flex align-items-center gap-8">
+        @if (!viewed()) {
+          <app-role-permission-check
+            [selected]="selected()"
+            [ids]="row.ids"
+            [label]="'Chọn tất cả quyền ' + row.name"
+            [disabled]="disabled()"
+            (changed)="changed.emit($event)" />
         }
-      </tbody>
-    </table>
-  </div>`,
-  styleUrl: './permission-table.scss',
+        <div class="d-flex flex-column gap-4">
+          <div class="d-flex align-items-center gap-8">
+            <strong>{{ row.name }}</strong>
+            <sd-badge type="round" color="primary" [title]="'' + selectionState(selected(), row.ids).count" />
+          </div>
+          <small>{{ row.hint }}</small>
+        </div>
+      </div>
+    </ng-template>
+    @for (column of columns(); track column.action) {
+      <ng-template [sdTableTitleDef]="column.action">
+        @if (viewed()) {
+          {{ column.label }}
+        } @else {
+          <app-role-permission-check
+            [selected]="selected()"
+            [ids]="column.ids"
+            [label]="'Chọn ' + column.label + ' cho các chức năng đang hiển thị'"
+            [text]="column.label"
+            [disabled]="disabled()"
+            (changed)="changed.emit($event)" />
+        }
+      </ng-template>
+      <ng-template [sdTableCellDef]="column.action" let-row="item">
+        @if (row[column.action]; as id) {
+          @if (viewed()) {
+            <sd-badge
+              type="round"
+              [color]="selected().includes(id) ? 'success' : 'secondary'"
+              [title]="selected().includes(id) ? 'Có' : 'Không'" />
+          } @else {
+            <app-role-permission-check
+              [selected]="selected()"
+              [ids]="[id]"
+              [label]="column.label + ' · ' + row.name"
+              [disabled]="disabled()"
+              (changed)="changed.emit($event)" />
+          }
+        } @else {
+          <span [attr.aria-label]="'Không áp dụng ' + column.label">—</span>
+        }
+      </ng-template>
+    }
+    <ng-template sdTableCellDef="other" let-row="item">
+      <div class="d-flex flex-wrap gap-8">
+        @for (permission of row.other; track permission.id) {
+          @if (viewed()) {
+            @if (selected().includes(permission.id)) {
+              <sd-badge type="round" color="primary" [title]="permission.label" />
+            }
+          } @else {
+            <app-role-permission-check
+              [selected]="selected()"
+              [ids]="[permission.id]"
+              [label]="permission.label + ' · ' + row.name"
+              [text]="permission.label"
+              [disabled]="disabled()"
+              (changed)="changed.emit($event)" />
+          }
+        } @empty {
+          <span>—</span>
+        }
+      </div>
+    </ng-template>
+  </sd-table>`,
+  styles: [':host { display: block; min-width: 0; height: 400px; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PermissionMatrixComponent {
@@ -87,15 +102,18 @@ export class PermissionMatrixComponent {
   readonly entities = input.required<RoleEntity[]>();
   readonly selected = input.required<string[]>();
   readonly disabled = input(false);
+  readonly viewed = input(false);
   readonly changed = output<PermissionSelectionChange>();
   readonly selectionState = selectionState;
-  readonly rows = computed(() =>
+  readonly rows = computed<MatrixRow[]>(() =>
     this.entities().map(entity => {
       const permissions = permissionsFor(this.module(), entity);
       return {
-        entity,
+        id: entity.id,
+        name: entity.name,
+        hint: entity.hint,
         ids: permissions.map(p => p.id),
-        crud: CRUD.map(column => ({ ...column, id: permissions.find(p => p.action === column.action)?.id })),
+        ...Object.fromEntries(permissions.filter(p => p.type === 'CRUD').map(p => [p.action, p.id])),
         other: permissions.filter(p => p.type === 'Other'),
       };
     })
@@ -110,4 +128,26 @@ export class PermissionMatrixComponent {
       ),
     }))
   );
+  readonly option = computed<SdTableOption<MatrixRow>>(() => {
+    const rows = this.rows();
+    return {
+      type: 'local',
+      items: () => rows,
+      rowKey: 'id',
+      columns: [
+        { field: 'name', title: 'Chức năng', type: 'string', width: '290px' },
+        ...CRUD.map(column => ({
+          field: column.action as 'VIEW' | 'CREATE' | 'UPDATE' | 'DELETE',
+          title: column.label,
+          type: 'string' as const,
+          width: '110px',
+        })),
+        { field: 'other', title: 'Other / Quyền khác', type: 'string', width: '320px' },
+      ],
+      paginate: { hidden: true, pageSize: Math.max(rows.length, 1) },
+      filter: { disabled: true },
+      sort: { enable: false },
+      config: { visible: false },
+    };
+  });
 }

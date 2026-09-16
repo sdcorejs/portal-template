@@ -1,5 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
-const root = (layout: string) => '/page/list/roles-' + layout;
+const root = (layout: string) => '/page/role/' + layout;
 const checkbox = (page: Page, name: string) => page.getByRole('checkbox', { name, exact: true });
 const button = (page: Page, name: string) => page.getByRole('button', { name, exact: true });
 const refreshIsGuarded = (page: Page) =>
@@ -63,7 +63,7 @@ for (const layout of ['matrix', 'tree']) {
     await expect(page.getByRole('alert')).toContainText('đã tồn tại');
     await page.getByRole('textbox', { name: 'Mã vai trò', exact: true }).fill('ROLE-NEW');
     await button(page, 'Lưu').click();
-    await expect(page).toHaveURL(new RegExp('/roles-' + layout + '/role-[a-f0-9-]+/detail$'));
+    await expect(page).toHaveURL(new RegExp('/role/' + layout + '/role-[a-f0-9-]+/detail$'));
     await expect(page.getByRole('heading', { name: 'Chi tiết vai trò #ROLE-NEW' })).toBeVisible();
     await expect(page.getByRole('status').filter({ hasText: '0 quyền · 0 module' })).toBeVisible();
     await page.reload();
@@ -106,7 +106,7 @@ test('matrix: filtered bulk/column scope preserves hidden grants and shows missi
   await expect(page.getByLabel('Không áp dụng Xóa')).toBeVisible();
   const search = page.getByRole('textbox', { name: 'Tìm chức năng hoặc quyền', exact: true });
   await search.fill('Nguồn khách hàng');
-  await expect(page.locator('app-role-permission-matrix tbody tr')).toHaveCount(1);
+  await expect(page.locator('app-role-permission-matrix tbody tr:has(app-role-permission-check)')).toHaveCount(1);
   await checkbox(page, 'Chọn Tạo cho các chức năng đang hiển thị').check();
   await checkbox(page, 'Chọn tất cả quyền đang hiển thị').check();
   await checkbox(page, 'Chọn tất cả quyền đang hiển thị').uncheck();
@@ -126,11 +126,11 @@ test('tree: collapse is independent of grants; parent/child mixed selection', as
   await page.goto(root('tree') + '/role-sales/update');
   const parent = checkbox(page, 'Chọn tất cả quyền Khách hàng');
   await expect(parent).toBeChecked({ indeterminate: true });
-  await button(page, 'Thu gọn Khách hàng').click();
+  await page.locator('app-role-permission-tree .sd-tree-toggle-btn').first().click();
   await expect(checkbox(page, 'Xem · Khách hàng')).toHaveCount(0);
   await expect(page.getByRole('tab', { name: 'CRM 8', exact: true })).toBeVisible();
   await parent.check();
-  await button(page, 'Mở rộng Khách hàng').click();
+  await page.locator('app-role-permission-tree .sd-tree-toggle-btn').first().click();
   await expect(checkbox(page, 'Nhập dữ liệu · Khách hàng')).toBeChecked();
   await checkbox(page, 'Xóa · Khách hàng').uncheck();
   await expect(parent).toBeChecked({ indeterminate: true });
@@ -188,7 +188,7 @@ for (const layout of ['matrix', 'tree'])
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(391);
     const box = await save.boundingBox();
     expect(box!.x + box!.width).toBeLessThanOrEqual(391);
-    await page.locator('.permission-scroll').scrollIntoViewIfNeeded();
+    await page.locator('app-role-permission-editor sd-table').scrollIntoViewIfNeeded();
     await expect(save).toBeInViewport();
     await page.screenshot({ path: info.outputPath(layout + '-mobile.png') });
   });

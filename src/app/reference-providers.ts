@@ -21,23 +21,18 @@ export function provideReferenceUi(): Provider[] {
         return {
           async confirm() {
             try {
-              const choice = await confirm.withRadio('Bạn muốn xử lý các thay đổi chưa lưu như thế nào?', {
+              await confirm.confirm('Các thay đổi chưa được lưu. Bạn muốn tiếp tục chỉnh sửa hay bỏ qua?', {
                 title: 'Thay đổi chưa lưu',
-                yesTitle: 'Tiếp tục',
-                noTitle: 'Tiếp tục chỉnh sửa',
-                items: [
-                  { id: 'save', name: 'Lưu thay đổi' },
-                  { id: 'discard', name: 'Bỏ thay đổi' },
-                ],
-                valueField: 'id',
-                displayField: 'name',
-                display: 'column',
-                required: true,
-                defaultValue: 'save',
+                icon: 'edit_note',
+                yesTitle: 'Tiếp tục chỉnh sửa',
+                yesButtonColor: 'primary',
+                noTitle: 'Bỏ qua',
+                noButtonColor: 'secondary',
+                disableBackdropClose: true,
               });
-              return choice === 'save' ? 'save' : 'discard';
-            } catch {
               return 'cancel';
+            } catch (reason) {
+              return reason === 'CANCEL' ? 'discard' : 'cancel';
             }
           },
         };

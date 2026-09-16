@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -26,6 +27,7 @@ import { SdDataState } from '@sdcorejs/angular/components/data-state';
 @Directive()
 export abstract class ListPatternBase {
   readonly store = inject(DemoSessionStore);
+  readonly exampleDescription = inject(ActivatedRoute).snapshot.data['description'] ?? '';
   readonly navigation = inject(PageNavigation);
   readonly view = computed(() => (this.navigation.view() === 'update' ? 'detail' : this.navigation.view()));
   readonly bulkMessage = signal('');
@@ -89,9 +91,9 @@ export abstract class ListPatternBase {
       filter: {
         cacheable: false,
         hideInlineFilter: true,
-        hideExternalFilterToolbar: this.store.kind !== 'order' && this.store.kind !== 'product',
+        hideExternalFilterToolbar: true,
         quickSearch:
-          this.store.kind === 'product'
+          this.store.kind === 'product' || this.store.kind === 'order'
             ? undefined
             : {
                 containFields: ['code', 'name'],

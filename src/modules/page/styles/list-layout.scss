@@ -1,0 +1,40 @@
+:host {
+  display: block;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+}
+.list-shell {
+  height: 100%;
+  min-height: 0;
+}
+.list-content {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 12px;
+  gap: 12px;
+}
+sd-table {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}
+.list-scorecards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  flex-shrink: 0;
+}
+.score-icon {
+  display: inline-flex;
+}
+@media (max-width: 600px) {
+  .score-icon {
+    display: none;
+  }
+}

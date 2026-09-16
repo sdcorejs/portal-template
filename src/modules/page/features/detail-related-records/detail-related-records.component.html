@@ -10,9 +10,12 @@
   } @else {
     @if (entity(); as row) {
       <sd-page [title]="'Chi tiết #' + row.code">
-        <app-record-header headerLeft [kind]="store.kind" [entity]="row" />
+        <div headerLeft class="d-flex align-items-center gap-8">
+          <sd-button tooltip="Quay lại" type="text" prefixIcon="arrow_back" (click)="back()" /><app-record-header
+            [kind]="store.kind"
+            [entity]="row" />
+        </div>
         <div headerRight class="record-actions">
-          <sd-button title="Quay lại" type="text" prefixIcon="arrow_back" (click)="back()" />
           <sd-button title="Cập nhật" type="fill" color="primary" prefixIcon="edit" (click)="edit()" />
         </div>
         <div class="p-20 d-flex flex-column gap-16"><app-entity-facts [entity]="row" /><app-related-records [lines]="row.lines" /></div

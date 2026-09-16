@@ -21,10 +21,7 @@ export function validateCatalog(catalog) {
       p.recordRoutes?.update !== p.route + '/:id/update'
     )
       throw new Error('Record URL contract mismatch');
-    if (
-      p.route !== '/page/' + (p.id.startsWith('list-') || p.entityKind === 'role' ? 'list/' : 'detail/') + p.id ||
-      p.coreVersion !== catalog.coreVersion
-    )
+    if (!/^\/page\/[a-z]+(?:-[a-z]+)*(?:\/[a-z]+(?:-[a-z]+)*)?$/.test(p.route) || p.coreVersion !== catalog.coreVersion)
       throw new Error('Pattern identity mismatch');
     for (const path of [...p.sourceFiles, p.dataContract, p.fixtures]) {
       if (path.includes('..') || !path.startsWith('src/modules/page/') || !existsSync(path)) throw new Error('Invalid source ' + path);

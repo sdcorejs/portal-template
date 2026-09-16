@@ -1,11 +1,11 @@
 # Mẫu quản lý vai trò
 
-Hai ví dụ riêng trong **Pages → List** dùng Core UI 22.2.8:
+Hai ví dụ riêng ngay trong menu **Page** dùng Core UI 22.2.12. Mỗi ví dụ mở danh sách trước; tạo mới, chi tiết và cập nhật được điều hướng từ danh sách:
 
 | Mẫu | URL danh sách | Cách gán quyền |
 | --- | --- | --- |
-| Role · Ma trận quyền | `/page/list/roles-matrix` | Mỗi chức năng một hàng; cột Xem/Tạo/Cập nhật/Xóa và Other chứa nhiều quyền |
-| Role · Quyền phân cấp | `/page/list/roles-tree` | Chức năng là hàng cha, từng quyền là hàng con có thể thu gọn |
+| Role · Ma trận quyền | `/page/role/matrix` | Mỗi chức năng một hàng; cột Xem/Tạo/Cập nhật/Xóa và Other chứa nhiều quyền |
+| Role · Quyền phân cấp | `/page/role/tree` | Chức năng là hàng cha, từng quyền là hàng con có thể thu gọn |
 
 Mỗi mẫu có `/create`, `/:id/detail`, `/:id/update`. Mã ở cột đầu dẫn đến detail; nút Cập nhật mở form. Header có Quay lại dạng text kèm mũi tên và Lưu kèm icon. Không có Tạo mới ở detail.
 
@@ -24,7 +24,8 @@ Mã/tên bắt buộc, mã duy nhất trong từng mẫu và chỉ gồm chữ h
 - `RoleListPageComponent`: bảng Core và điều hướng.
 - `RoleRecordPageComponent`: load route và guard; `RoleRecordEditorComponent`: form, draft, lưu.
 - `RolePermissionEditorComponent`: module tabs, bộ lọc và tổng quyền.
-- `PermissionMatrixComponent`, `PermissionTreeComponent`: trình bày và emit phạm vi checkbox; dùng chung pure helpers.
+- `PermissionMatrixComponent`: dùng `SdTable`, `sdTableTitleDef` cho chọn cả cột và `sdTableCellDef` cho chọn từng quyền CRUD/Other.
+- `PermissionTreeComponent`: dùng `SdTable` với `tree.loadType: 'static'`; Core xử lý bung/thu hàng cha, checkbox dùng chung helpers để giữ phạm vi quyền.
 - `RoleSessionStore`: adapter giả lập, validation và lưu phiên; thay boundary này bằng API khi tích hợp.
 
 Core 22.2.8 chưa công bố input `indeterminate` ở `SdCheckbox`. `PermissionCheckComponent` dùng `MatCheckbox` từ dependency Angular Material hiện có để hỗ trợ mixed state và bàn phím, nhận màu từ theme Core. Không thêm package hoặc truy cập nội bộ Core.

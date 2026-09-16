@@ -19,8 +19,7 @@ export class RoutingDemoComponent {
   readonly selected = signal('List');
   readonly url = computed(
     () =>
-      '/page/list/list-standard' +
-      ({ List: '', Create: '/create', Detail: '/customer-1/detail', Update: '/customer-1/update' }[this.selected()] ?? '')
+      '/page/company' + ({ List: '', Create: '/create', Detail: '/customer-1/detail', Update: '/customer-1/update' }[this.selected()] ?? '')
   );
 }
 @Component({

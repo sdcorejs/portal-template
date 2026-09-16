@@ -1,41 +1,67 @@
-<div class="row row-sm gap-y-8">
-  <div [class]="extended() ? 'col-12 col-md-6' : 'col-12'">
-    <sd-section title="Thông tin chung"
-      ><div class="p-20 d-flex flex-column gap-8">
-        <sd-input label="Mã hồ sơ" name="code" [form]="form()" [model]="seed().code" [disabled]="editing()" required /><sd-input
-          label="Tên hồ sơ"
-          name="name"
-          [form]="form()"
-          [model]="seed().name"
-          required
-          [maxlength]="160" /><sd-select
-          label="Trạng thái"
-          name="status"
-          [form]="form()"
-          [model]="seed().status"
-          [items]="statuses"
-          valueField="id"
-          displayField="name"
-          required /></div
+<div [class]="compact() ? 'd-flex flex-column gap-8' : 'row row-sm gap-y-8'">
+  <div [class]="extended() && !compact() ? 'col-12 col-md-6' : 'col-12'">
+    <sd-section [collapsible]="true" title="Thông tin chung"
+      ><div [class]="compact() ? 'p-12' : 'p-20'">
+        <div [class]="compact() ? 'row row-sm gap-y-8' : 'd-flex flex-column gap-8'">
+          <sd-input
+            [class]="compact() ? 'col-12 col-md-6' : ''"
+            label="Mã hồ sơ"
+            name="code"
+            [form]="form()"
+            [model]="seed().code"
+            [disabled]="editing()"
+            required /><sd-input
+            [class]="compact() ? 'col-12 col-md-6' : ''"
+            label="Tên hồ sơ"
+            name="name"
+            [form]="form()"
+            [model]="seed().name"
+            required
+            [maxlength]="160" /><sd-select
+            [class]="compact() ? 'col-12 col-md-6' : ''"
+            label="Trạng thái"
+            name="status"
+            [form]="form()"
+            [model]="seed().status"
+            [items]="statuses"
+            valueField="id"
+            displayField="name"
+            required />
+        </div></div
     ></sd-section>
   </div>
   @if (extended()) {
-    <div class="col-12 col-md-6">
-      <sd-section title="Thông tin phối hợp"
-        ><div class="p-20 d-flex flex-column gap-8">
-          <sd-input label="Email liên hệ" name="email" type="email" [form]="form()" [model]="seed().email" /><sd-select
-            label="Khu vực"
-            name="group"
-            [form]="form()"
-            [model]="seed().group"
-            [items]="groups"
-            valueField="id"
-            displayField="name" /><sd-input-number
-            label="Giá trị (VND)"
-            name="amount"
-            [form]="form()"
-            [model]="seed().amount"
-            [min]="0" /><sd-textarea label="Ghi chú phối hợp" name="description" [form]="form()" [model]="seed().description" /></div
+    <div [class]="compact() ? 'col-12' : 'col-12 col-md-6'">
+      <sd-section [collapsible]="true" title="Thông tin phối hợp"
+        ><div [class]="compact() ? 'p-12' : 'p-20'">
+          <div [class]="compact() ? 'row row-sm gap-y-8' : 'd-flex flex-column gap-8'">
+            <sd-input
+              [class]="compact() ? 'col-12 col-md-6' : ''"
+              label="Email liên hệ"
+              name="email"
+              type="email"
+              [form]="form()"
+              [model]="seed().email" /><sd-select
+              [class]="compact() ? 'col-12 col-md-6' : ''"
+              label="Khu vực"
+              name="group"
+              [form]="form()"
+              [model]="seed().group"
+              [items]="groups"
+              valueField="id"
+              displayField="name" /><sd-input-number
+              [class]="compact() ? 'col-12 col-md-6' : ''"
+              label="Giá trị (VND)"
+              name="amount"
+              [form]="form()"
+              [model]="seed().amount"
+              [min]="0" /><sd-textarea
+              [class]="compact() ? 'col-12' : ''"
+              label="Ghi chú phối hợp"
+              name="description"
+              [form]="form()"
+              [model]="seed().description" />
+          </div></div
       ></sd-section>
     </div>
   }

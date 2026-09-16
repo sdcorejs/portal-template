@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, WritableSignal, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -10,7 +11,7 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 @Component({
   selector: 'app-custom-theme',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdButton, SdCodeEditor, SdPageComponent, SdSection, SdSwitch],
+  imports: [DemoPropertyComponent, CommonModule, FormsModule, SdButton, SdCodeEditor, SdPageComponent, SdSection, SdSwitch],
   templateUrl: './custom-theme.component.html',
   styleUrls: ['./custom-theme.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

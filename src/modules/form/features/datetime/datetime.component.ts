@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
@@ -16,7 +17,20 @@ import { Size as SdSize } from '@sdcorejs/utils/models';
 @Component({
   selector: 'app-datetime-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdDatetime, SdCodeEditor, SdPageComponent, SdSection, SdInput, SdSelect, SdSwitch, SdLabel, SdDate],
+  imports: [
+    DemoPropertyComponent,
+    CommonModule,
+    FormsModule,
+    SdDatetime,
+    SdCodeEditor,
+    SdPageComponent,
+    SdSection,
+    SdInput,
+    SdSelect,
+    SdSwitch,
+    SdLabel,
+    SdDate,
+  ],
   templateUrl: './datetime.component.html',
   styleUrls: ['./datetime.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

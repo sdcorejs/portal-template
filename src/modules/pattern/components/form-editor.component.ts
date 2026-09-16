@@ -1,13 +1,15 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, computed, inject, input, output, signal } from '@angular/core';
-import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdInform } from '@sdcorejs/angular/components/inform';
 import { SdInput } from '@sdcorejs/angular/forms/input';
 import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdTextarea } from '@sdcorejs/angular/forms/textarea';
 import { PatternDraft } from '../data/pattern-draft';
 import { SdNotifyService } from '@sdcorejs/angular/services/notify';
 import { REGIONS } from '../data/pattern-query';
-import { merge } from 'rxjs';
+
 export interface ContactRecord {
   name: string;
   email: string;
@@ -25,7 +27,7 @@ export const sampleContact = (): ContactRecord => ({
 });
 @Component({
   selector: 'app-pattern-form-editor',
-  imports: [ReactiveFormsModule, SdButton, SdInput, SdSelect, SdTextarea],
+  imports: [ReactiveFormsModule, SdButton, SdSection, SdInform, SdInput, SdSelect, SdTextarea],
   templateUrl: './form-editor.component.html',
   styleUrl: '../styles/pattern.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,23 +37,26 @@ export class FormEditorComponent implements OnInit {
   readonly mode = input('create');
   readonly initial = input<ContactRecord>(emptyContact());
   readonly hideFooter = input(false);
+  readonly errorPresentation = input<'notify' | 'inform'>('notify');
   readonly saved = output<ContactRecord>();
   readonly cancelled = output<void>();
   readonly saving = signal(false);
   readonly message = signal('');
   readonly attempted = signal(false);
-  readonly fail = signal(false);
+  readonly errorMessage = signal('');
+  readonly errorColor = signal<'warning' | 'error'>('warning');
+  readonly sectionWarnings = computed(() => {
+    this.revision();
+    return {
+      identity: this.attempted() && !!this.form.get('name')?.invalid,
+      communication: this.attempted() && !!this.form.get('email')?.invalid,
+    };
+  });
   readonly revision = signal(0);
   private baseline = '';
   // Core fields register and validate their own controls on this group.
   readonly form = new FormGroup<Record<string, FormControl>>({});
-  readonly orderName = new FormControl('', { nonNullable: true, validators: [Validators.required] });
-  readonly lines = new FormArray<FormGroup<{ name: FormControl<string>; quantity: FormControl<number>; price: FormControl<number> }>>([]);
   readonly regions = REGIONS.map(name => ({ id: name, name }));
-  readonly total = computed(() => {
-    this.revision();
-    return this.lines.getRawValue().reduce((sum, row) => sum + Number(row.quantity) * Number(row.price), 0);
-  });
   readonly dirty = computed(() => {
     this.revision();
     return this.snapshot() !== this.baseline;
@@ -60,12 +65,9 @@ export class FormEditorComponent implements OnInit {
   private readonly notify = inject(SdNotifyService);
   private readonly destroy = inject(DestroyRef);
   ngOnInit(): void {
-    if (this.layout() === 'lines') this.addLine();
     this.baseline = this.snapshot();
     this.revision.update(n => n + 1);
-    const subscription = merge(this.form.valueChanges, this.lines.valueChanges, this.orderName.valueChanges).subscribe(() =>
-      this.revision.update(n => n + 1)
-    );
+    const subscription = this.form.valueChanges.subscribe(() => this.revision.update(n => n + 1));
     const dirty = () => this.dirty(),
       saving = () => this.saving();
     this.draft.dirty = dirty;
@@ -79,7 +81,7 @@ export class FormEditorComponent implements OnInit {
     });
   }
   private snapshot(): string {
-    return JSON.stringify({ contact: this.readContact(), orderName: this.orderName.value, lines: this.lines.getRawValue() });
+    return JSON.stringify(this.readContact());
   }
   private readContact(): ContactRecord {
     const value = this.form.getRawValue();
@@ -94,52 +96,34 @@ export class FormEditorComponent implements OnInit {
       note: field('note'),
     };
   }
-  addLine(): void {
-    if (this.saving()) return;
-    this.lines.push(
-      new FormGroup({
-        name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-        quantity: new FormControl(1, {
-          nonNullable: true,
-          validators: [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)],
-        }),
-        price: new FormControl(0, { nonNullable: true, validators: [Validators.required, Validators.min(0)] }),
-      })
-    );
-    this.revision.update(n => n + 1);
-  }
-  removeLine(index: number): void {
-    if (!this.saving()) {
-      this.lines.removeAt(index);
-      this.revision.update(n => n + 1);
-    }
-  }
   async save(): Promise<boolean> {
     if (this.saving()) return false;
     this.message.set('');
+    this.errorMessage.set('');
     this.attempted.set(true);
     this.form.markAllAsTouched();
-    this.orderName.markAsTouched();
-    this.lines.markAllAsTouched();
-    const invalid = this.layout() === 'lines' ? this.orderName.invalid || this.lines.invalid || !this.lines.length : this.form.invalid;
+    const invalid = this.form.invalid;
     if (invalid) {
-      this.notify.error('Kiểm tra các trường bắt buộc, email hợp lệ và dòng hàng.');
+      const message = 'Kiểm tra họ và tên, email hợp lệ trước khi lưu.';
+      this.errorColor.set('warning');
+      if (this.errorPresentation() === 'inform') {
+        if (this.layout() !== 'section-errors') this.errorMessage.set(message);
+      } else this.notify.warning(message);
       return false;
     }
     this.saving.set(true);
     this.message.set('');
-    const fail = this.fail();
     this.form.disable();
-    this.orderName.disable();
-    this.lines.disable();
     await new Promise(resolve => setTimeout(resolve, 450));
     if (this.destroy.destroyed) return false;
     this.form.enable();
-    this.orderName.enable();
-    this.lines.enable();
     this.saving.set(false);
-    if (fail) {
-      this.notify.error('Không thể lưu. Nội dung đã nhập được giữ lại; hãy thử lại.');
+    // Phản hồi BE mẫu: email của liên hệ có sẵn bị trùng khi tạo mới.
+    if (this.mode() === 'create' && this.readContact().email.trim().toLowerCase() === sampleContact().email) {
+      const message = 'Email đã được sử dụng bởi một liên hệ khác. Vui lòng nhập email khác.';
+      this.errorColor.set('error');
+      if (this.errorPresentation() === 'inform') this.errorMessage.set(message);
+      else this.notify.error(message);
       return false;
     }
     this.baseline = this.snapshot();
@@ -151,12 +135,10 @@ export class FormEditorComponent implements OnInit {
   async cancel(): Promise<void> {
     if (await this.draft.canLeave()) {
       this.form.patchValue(this.initial());
-      this.orderName.reset('');
-      this.lines.clear();
-      if (this.layout() === 'lines') this.addLine();
       this.baseline = this.snapshot();
       this.revision.update(n => n + 1);
       this.attempted.set(false);
+      this.errorMessage.set('');
       this.message.set('');
       this.cancelled.emit();
     }

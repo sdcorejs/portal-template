@@ -3,43 +3,34 @@
     <div class="row row-sm mx-0">
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">drawerTitle</span>
-                  <span class="config-item__desc">Tiêu đề hiển thị trên drawer.</span>
-                </div>
-                <sd-input [(model)]="drawerTitle"></sd-input>
-              </div>
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">width</span>
-                  <span class="config-item__desc">Chiều rộng của drawer.</span>
-                </div>
-                <sd-select [items]="widthOptions" valueField="id" displayField="name" [(model)]="width"></sd-select>
-              </div>
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">hideClose</span>
-                  <span class="config-item__desc">Ẩn nút đóng ở góc trên cùng.</span>
-                </div>
-                <sd-switch [(model)]="hideClose" size="sm"></sd-switch>
-              </div>
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">disableBackdropClose</span>
-                  <span class="config-item__desc">Không cho đóng khi click ngoài drawer.</span>
-                </div>
-                <sd-switch [(model)]="disableBackdropClose" size="sm"></sd-switch>
-              </div>
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">showFooterActions</span>
-                  <span class="config-item__desc">Hiển thị khu vực footer với các nút hành động.</span>
-                </div>
-                <sd-switch [(model)]="showFooterActions" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="drawerTitle">
+                <span propertyDescription>Tiêu đề hiển thị trên drawer.</span>
+                <sd-input [(model)]="drawerTitle" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
+              <app-demo-property label="width">
+                <span propertyDescription>Chiều rộng của drawer.</span>
+                <sd-select
+                  [items]="widthOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="width"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
+              <app-demo-property label="hideClose">
+                <span propertyDescription>Ẩn nút đóng ở góc trên cùng.</span>
+                <sd-switch [(model)]="hideClose" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
+              <app-demo-property label="disableBackdropClose">
+                <span propertyDescription>Không cho đóng khi click ngoài drawer.</span>
+                <sd-switch [(model)]="disableBackdropClose" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
+              <app-demo-property label="showFooterActions">
+                <span propertyDescription>Hiển thị khu vực footer với các nút hành động.</span>
+                <sd-switch [(model)]="showFooterActions" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>

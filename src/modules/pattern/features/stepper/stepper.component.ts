@@ -3,14 +3,35 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SdStepper, SdStep } from '@sdcorejs/angular/components/stepper';
 import { SdSection, SdSectionItem } from '@sdcorejs/angular/components/section';
 import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdInputNumber } from '@sdcorejs/angular/forms/input-number';
 import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdBadge } from '@sdcorejs/angular/components/badge';
 import { SdNotifyService } from '@sdcorejs/angular/services/notify';
-import { SdTable, SdTableOption } from '@sdcorejs/angular/components/table';
+import {
+  SdTable,
+  SdTableOption,
+  SdTableCellDefDirective,
+  SdTableCommandHeaderDefDirective,
+  SdTableTitleDefDirective,
+} from '@sdcorejs/angular/components/table';
 import { PatternOrder, seedOrders } from '../../data/pattern-query';
 
 @Component({
   selector: 'app-pattern-stepper',
-  imports: [SdStepper, SdStep, SdSection, SdSectionItem, SdInput, SdButton, SdTable],
+  imports: [
+    SdStepper,
+    SdStep,
+    SdSection,
+    SdSectionItem,
+    SdInput,
+    SdInputNumber,
+    SdButton,
+    SdBadge,
+    SdTable,
+    SdTableCellDefDirective,
+    SdTableCommandHeaderDefDirective,
+    SdTableTitleDefDirective,
+  ],
   templateUrl: './stepper.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'd-block' },
@@ -42,6 +63,20 @@ export class StepperComponent {
   readonly company = signal(false);
   readonly picked = signal<PatternOrder[]>([]);
   readonly lines = signal([{ id: 1, name: 'Giao hàng nội thành', quantity: '1' }]);
+  readonly linesTable = viewChild<SdTable>('linesTable');
+  readonly linesOption: SdTableOption<{ id: number; name: string; quantity: string }> = {
+    type: 'local',
+    items: () => this.lines(),
+    rowKey: 'id',
+    filter: { disabled: true },
+    selector: { visible: false },
+    paginate: { hidden: true, pageSize: 1000 },
+    columns: [
+      { field: 'name', title: 'Dịch vụ', type: 'string', width: '320px' },
+      { field: 'quantity', title: 'Số lượng', type: 'number', width: '160px' },
+    ],
+    command: { commands: [{ title: 'Xoá dòng', icon: 'delete', color: 'error', click: row => this.removeLine(row.id) }] },
+  };
   private lineId = 1;
   readonly controls = {
     name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
@@ -101,7 +136,11 @@ export class StepperComponent {
       hideExternalFilterToolbar: true,
       quickSearch: { containFields: ['code', 'name'], placeholder: 'Tìm đơn hàng' },
     },
-    selector: { visible: true, onSelect: (_row, rows) => this.select(rows ?? []), onSelectAll: rows => this.select(rows) },
+    selector: {
+      visible: true,
+      onSelect: (_row, rows) => this.select(rows ?? []),
+      onSelectAll: rows => this.select(rows),
+    },
   };
   control(key: string): FormControl {
     return this.controls[key as keyof typeof this.controls];
@@ -120,6 +159,7 @@ export class StepperComponent {
   addLine(): void {
     this.lines.update(rows => [...rows, { id: ++this.lineId, name: '', quantity: '1' }]);
     this.validateLines();
+    void this.linesTable()?.reload(true);
   }
   changeLine(id: number, field: 'name' | 'quantity', value: string): void {
     this.lines.update(rows => rows.map(r => (r.id === id ? { ...r, [field]: value ?? '' } : r)));
@@ -128,6 +168,7 @@ export class StepperComponent {
   removeLine(id: number): void {
     this.lines.update(rows => rows.filter(r => r.id !== id));
     this.validateLines();
+    void this.linesTable()?.reload(true);
   }
   validateLines(): void {
     this.controls.lines.setValue(
@@ -150,7 +191,7 @@ export class StepperComponent {
     const group = this.group(step.key);
     group.markAllAsTouched();
     if (group.invalid) {
-      this.notify.error(
+      this.notify[step.key === 'code' && this.controls.code.value.trim() ? 'error' : 'warning'](
         step.key === 'selection'
           ? 'Chọn ít nhất một đơn hàng.'
           : step.key === 'code'
@@ -166,7 +207,7 @@ export class StepperComponent {
     const invalid = this.steps().findIndex(s => this.group(s.key).invalid);
     if (invalid >= 0) {
       this.wizard()?.goTo(invalid);
-      this.notify.error('Hoàn tất thông tin trước khi lưu.');
+      this.notify.warning('Hoàn tất thông tin trước khi lưu.');
       return;
     }
     await this.wait();

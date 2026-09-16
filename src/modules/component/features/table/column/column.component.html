@@ -4,72 +4,53 @@
       <!-- CỘT TRÁI: BẬT/TẮT CUSTOM -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
               <div class="config-section-title">Cột Tên</div>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">Custom title</span>
-                  <span class="config-item__desc"
-                    >Render header riêng qua <code>title.templateRef</code>, vẫn giữ <code>title</code> dạng text để export/config
-                    dùng.</span
-                  >
-                </div>
-                <sd-switch [(model)]="customTitleName" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="Custom title">
+                <span propertyDescription>
+                  Render header riêng qua <code>title.templateRef</code>, vẫn giữ <code>title</code> dạng text để export/config dùng.
+                </span>
+                <sd-switch [(model)]="customTitleName" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">Custom cell</span>
-                  <span class="config-item__desc"
-                    >Render thân ô bằng <code>cell.templateRef</code>, context nhận <code>{{ snippetCellContext }}</code
-                    >.</span
-                  >
-                </div>
-                <sd-switch [(model)]="customCellName" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="Custom cell">
+                <span propertyDescription>
+                  Render thân ô bằng <code>cell.templateRef</code>, context nhận <code>{{ snippetCellContext }}</code
+                  >.
+                </span>
+                <sd-switch [(model)]="customCellName" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">Copy</span>
-                  <span class="config-item__desc">Bật <code>cell.copiable</code> để hiện nút copy nội dung cell khi hover.</span>
-                </div>
-                <sd-switch [(model)]="copyEnabled" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="Copy">
+                <span propertyDescription>Bật <code>cell.copiable</code> để hiện nút copy nội dung cell khi hover.</span>
+                <sd-switch [(model)]="copyEnabled" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
               <div class="config-section-title">Cột Ghi chú</div>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">Truncate</span>
-                  <span class="config-item__desc"
-                    >Rút gọn nội dung dài qua <code>cell.truncate.enable</code>, kiểu hiển thị đầy đủ: <code>type: 'tooltip'</code> hoặc
-                    <code>'more'</code>.</span
-                  >
-                </div>
-                <sd-switch [(model)]="truncateEnabled" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="Truncate">
+                <span propertyDescription>
+                  Rút gọn nội dung dài qua <code>cell.truncate.enable</code>, kiểu hiển thị đầy đủ: <code>type: 'tooltip'</code> hoặc
+                  <code>'more'</code>.
+                </span>
+                <sd-switch [(model)]="truncateEnabled" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
               <div class="config-section-title">Cột Trạng thái</div>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">Custom title</span>
-                  <span class="config-item__desc">Header có icon nhấn mạnh trạng thái.</span>
-                </div>
-                <sd-switch [(model)]="customTitleStatus" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="Custom title">
+                <span propertyDescription>Header có icon nhấn mạnh trạng thái.</span>
+                <sd-switch [(model)]="customTitleStatus" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">Custom cell (switch)</span>
-                  <span class="config-item__desc"
-                    >Thay text mặc định bằng <code>sd-switch</code>: click để đổi <code>item.isActive</code> ngay trong bảng.</span
-                  >
-                </div>
-                <sd-switch [(model)]="customCellStatus" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="Custom cell (switch)">
+                <span propertyDescription>
+                  Thay text mặc định bằng <code>sd-switch</code>: click để đổi <code>item.isActive</code> ngay trong bảng.
+                </span>
+                <sd-switch [(model)]="customCellStatus" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>

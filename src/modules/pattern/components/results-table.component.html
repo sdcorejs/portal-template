@@ -1,5 +1,25 @@
 <div class="table-region" [class.fill]="fill()" [style.height]="fill() ? '100%' : null">
   <sd-table autoId="pattern-results" [option]="option()" [style.height]="fill() ? '100%' : '480px'">
+    @if (quickSearchRight(); as actions) {
+      <ng-template sdTableQuickSearchRightDef>
+        <ng-container [ngTemplateOutlet]="actions" />
+      </ng-template>
+    }
+    @if (customCells()) {
+      <ng-template sdTableTitleDef="name"
+        ><strong>Khách hàng</strong><small class="d-block text-secondary">Khu vực · Phụ trách</small></ng-template
+      >
+      <ng-template sdTableTitleDef="amount"
+        ><strong>Giá trị đơn hàng</strong><small class="d-block text-secondary">Đơn vị: VND</small></ng-template
+      >
+      <ng-template sdTableCellDef="name" let-row="item"
+        ><strong>{{ row.name }}</strong
+        ><small class="d-block text-secondary">{{ row.region }} · {{ row.owner }}</small></ng-template
+      >
+      <ng-template sdTableCellDef="amount" let-row="item"
+        ><strong class="d-block text-right text-primary">{{ row.amount | sdFormatNumber: 0 }} ₫</strong></ng-template
+      >
+    }
     <ng-template sdTableCellDef="code" let-row="item"
       ><a [attr.href]="'#order-' + row.id" (click)="$event.preventDefault(); openRecord.emit(row)">{{ row.code }}</a></ng-template
     >

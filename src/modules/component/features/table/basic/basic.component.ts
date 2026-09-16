@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
@@ -39,7 +40,7 @@ const LEVEL_OPTIONS = [
 @Component({
   selector: 'app-table-basic',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdTable, SdCodeEditor, SdPageComponent, SdSection, SdSelect, SdSwitch],
+  imports: [DemoPropertyComponent, CommonModule, FormsModule, SdTable, SdCodeEditor, SdPageComponent, SdSection, SdSelect, SdSwitch],
   templateUrl: './basic.component.html',
   styleUrls: ['./basic.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -193,8 +194,7 @@ export class TableBasicComponent {
       option: { items: DEPT_OPTIONS, valueField: 'id', displayField: 'name' } },
   ],
 ${cfg ? `  config:   { visible: true },  // Nút thiết lập hiển thị cột\n` : ''}${rld ? `  reload:   { visible: true },  // Nút tải lại dữ liệu\n` : ''}${sel ? `  selector: { visible: true },  // Cột checkbox chọn dòng\n` : ''}${exp ? `  export:   { visible: 'ALL', items: () => this.getEmployees() },  // Nút Export\n` : ''}
-  paginate: { pageSize: ${ps}, pages: [5, 10, 25] },
-};`;
+  paginate: { pageSize: ${ps}, pages: [5, 10, 25] } };`;
     }
     return `tableOption: SdTableOption<Employee> = {
   type: 'server',
@@ -208,8 +208,7 @@ ${cfg ? `  config:   { visible: true },  // Nút thiết lập hiển thị cộ
 
   columns: [ /* ... */ ],
 ${cfg ? `  config:   { visible: true },  // Nút thiết lập hiển thị cột\n` : ''}${rld ? `  reload:   { visible: true },  // Nút tải lại\n` : ''}${sel ? `  selector: { visible: true },  // Cột checkbox\n` : ''}${exp ? `  export:   { visible: 'ALL', items: () => this.getAllEmployees() },\n` : ''}
-  paginate: { pageSize: ${ps}, pages: [5, 10, 25] },
-};`;
+  paginate: { pageSize: ${ps}, pages: [5, 10, 25] } };`;
   });
 
   // ── Server simulation ────────────────────────────────────────────────────────

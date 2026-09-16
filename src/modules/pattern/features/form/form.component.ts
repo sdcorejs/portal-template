@@ -3,9 +3,11 @@ import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angu
 import { FormEditorComponent, sampleContact } from '../../components/form-editor.component';
 import { ContactFactsComponent } from '../../components/contact-facts.component';
 import { SdButton } from '@sdcorejs/angular/components/button';
+import { InlineTableComponent } from '../table/inline-table.component';
+import { TimeSlotsComponent } from './time-slots.component';
 @Component({
   selector: 'app-pattern-form',
-  imports: [FormEditorComponent, ContactFactsComponent, SdButton],
+  imports: [FormEditorComponent, ContactFactsComponent, SdButton, InlineTableComponent, TimeSlotsComponent],
   templateUrl: './form.component.html',
   styleUrl: '../../styles/pattern.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

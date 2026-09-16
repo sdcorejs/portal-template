@@ -18,36 +18,28 @@
       <div class="col-md-4">
         <div class="d-flex flex-column gap-16">
           <sd-section title="Thuộc tính" icon="settings"
-            ><div class="demo-section-content">
+            ><div class="demo-property-content">
               <div class="demo-config-panel">
-                <div class="config-item config-item--stacked">
-                  <div class="config-item__label">
-                    <span class="config-item__title">primary</span>
-                    <span class="config-item__desc">Màu chính cho button, link, accent.</span>
-                  </div>
+                <app-demo-property label="primary">
+                  <span propertyDescription>Màu chính cho button, link, accent.</span>
                   <div class="color-input-row">
                     <input type="color" [value]="primaryColor()" (input)="onColorPick(primaryColor, $event)" />
                     <input
                       type="text"
                       class="hex-input"
                       [value]="primaryColor().toUpperCase()"
-                      (change)="onHexType(primaryColor, $event)" />
-                  </div>
-                </div>
-                <div class="config-item config-item--stacked">
-                  <div class="config-item__label">
-                    <span class="config-item__title">primary-light</span>
-                    <span class="config-item__desc">Bản nhạt của màu chính.</span>
-                  </div>
+                      (change)="onHexType(primaryColor, $event)" /></div
+                ></app-demo-property>
+                <app-demo-property label="primary-light">
+                  <span propertyDescription>Bản nhạt của màu chính.</span>
                   <div class="color-input-row">
                     <input type="color" [value]="primaryLightColor()" (input)="onColorPick(primaryLightColor, $event)" />
                     <input
                       type="text"
                       class="hex-input"
                       [value]="primaryLightColor().toUpperCase()"
-                      (change)="onHexType(primaryLightColor, $event)" />
-                  </div>
-                </div>
+                      (change)="onHexType(primaryLightColor, $event)" /></div
+                ></app-demo-property>
               </div></div
           ></sd-section>
 

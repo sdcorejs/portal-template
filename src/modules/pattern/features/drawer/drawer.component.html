@@ -1,17 +1,21 @@
 <div class="form-shell">
-  <h3>Danh sách liên hệ</h3>
-  <app-pattern-contact-facts [record]="record()" /><sd-button
-    [title]="
-      variant() === 'detail' ? 'Xem chi tiết' : variant() === 'update' || variant() === 'sections' ? 'Chỉnh sửa liên hệ' : 'Tạo liên hệ'
-    "
-    type="fill"
-    color="primary"
-    (click)="open()" />
+  <div class="d-flex align-items-center justify-content-between flex-wrap gap-12 mb-16">
+    <h3 class="m-0">Danh sách liên hệ</h3>
+    <sd-button
+      [title]="
+        variant() === 'detail' ? 'Xem chi tiết' : variant() === 'update' || variant() === 'sections' ? 'Chỉnh sửa liên hệ' : 'Tạo liên hệ'
+      "
+      type="fill"
+      color="primary"
+      [prefixIcon]="variant() === 'detail' ? 'visibility' : variant() === 'update' || variant() === 'sections' ? 'edit' : 'add'"
+      (click)="open()" />
+  </div>
+  <app-pattern-contact-facts [record]="record()" />
   <p role="status">{{ message() }}</p>
 </div>
 <sd-side-drawer
   [title]="title()"
-  [width]="variant() === 'sections' ? '760px' : '600px'"
+  [width]="variant() === 'sections' || variant() === 'section-errors' ? '760px' : '600px'"
   [beforeClose]="beforeClose"
   (sdClosed)="closed()"
   autoId="pattern-contact-drawer">
@@ -21,23 +25,28 @@
   </div>
   @if (opened()) {
     @if (mode() === 'detail') {
-      <div class="pattern-body"><app-pattern-contact-facts [record]="record()" /></div>
+      <app-pattern-contact-facts [record]="record()" />
     } @else {
       @for (key of [mode()]; track key) {
-        <div class="pattern-body">
-          <app-pattern-form-editor
-            [initial]="seed()"
-            [mode]="mode()"
-            [layout]="variant() === 'sections' ? 'sections' : 'simple'"
-            [hideFooter]="true"
-            (saved)="saved($event)" />
-        </div>
+        <app-pattern-form-editor
+          [initial]="seed()"
+          [mode]="mode()"
+          [layout]="variant() === 'section-errors' ? 'section-errors' : variant() === 'sections' ? 'sections' : 'simple'"
+          [hideFooter]="true"
+          [errorPresentation]="variant() === 'create-inform' || variant() === 'section-errors' ? 'inform' : 'notify'"
+          (saved)="saved($event)" />
       }
     }
   }
-  <div sdFooterLeft class="text-secondary fs-13">{{ mode() === 'detail' ? 'Dữ liệu trong phiên demo' : '* Trường bắt buộc' }}</div>
+  @if (mode() === 'detail') {
+    <div sdFooterLeft class="text-secondary fs-13">Dữ liệu trong phiên demo</div>
+  }
   <div sdFooterRight class="d-flex align-items-center flex-wrap gap-8">
-    <sd-button [title]="mode() === 'detail' ? 'Đóng' : 'Hủy'" type="outline" [disabled]="editor()?.saving()" (click)="close()" />
+    <sd-button
+      [title]="mode() === 'detail' ? 'Đóng' : 'Hủy'"
+      [type]="mode() === 'detail' ? 'text' : 'outline'"
+      [disabled]="editor()?.saving()"
+      (click)="close()" />
     @if (mode() === 'detail') {
       @if (canEdit()) {
         <sd-button title="Chỉnh sửa" prefixIcon="edit" type="fill" color="primary" (click)="edit()" />

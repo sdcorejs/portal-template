@@ -4,64 +4,43 @@
       <!-- CỘT TRÁI: THUỘC TÍNH -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">title</span>
-                  <span class="config-item__desc">Tiêu đề chính hiển thị trong header của section.</span>
-                </div>
-                <sd-input [label]="'Title'" [(model)]="title" placeholder="VD: Thông tin KH"></sd-input>
-              </div>
+              <app-demo-property label="title">
+                <span propertyDescription>Tiêu đề chính hiển thị trong header của section.</span>
+                <sd-input [(model)]="title" placeholder="VD: Thông tin KH" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">subTitle</span>
-                  <span class="config-item__desc">Dòng mô tả phụ hiển thị dưới title.</span>
-                </div>
-                <sd-input [label]="'SubTitle'" [(model)]="subTitle" placeholder="VD: Thông tin cơ bản"></sd-input>
-              </div>
+              <app-demo-property label="subTitle">
+                <span propertyDescription>Dòng mô tả phụ hiển thị dưới title.</span>
+                <sd-input [(model)]="subTitle" placeholder="VD: Thông tin cơ bản" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">icon</span>
-                  <span class="config-item__desc">Tên icon hiển thị trước title.</span>
-                </div>
-                <sd-input [label]="'Icon'" [(model)]="icon" placeholder="VD: person, info..."></sd-input>
-              </div>
+              <app-demo-property label="icon">
+                <span propertyDescription>Tên icon hiển thị trước title.</span>
+                <sd-input [(model)]="icon" placeholder="VD: person, info..." hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">iconColor</span>
-                  <span class="config-item__desc">Màu sắc áp dụng cho icon header.</span>
-                </div>
-                <sd-select [label]="'Icon Color'" [items]="iconColorOptions" valueField="id" displayField="name" [(model)]="iconColor">
-                </sd-select>
-              </div>
+              <app-demo-property label="iconColor">
+                <span propertyDescription>Màu sắc áp dụng cho icon header.</span>
+                <sd-select [items]="iconColorOptions" valueField="id" displayField="name" [(model)]="iconColor" hideInlineError size="sm">
+                </sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">collapsible</span>
-                  <span class="config-item__desc">Cho phép thu gọn hoặc mở rộng khi click vào header.</span>
-                </div>
-                <sd-switch [(model)]="collapsible" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="collapsible">
+                <span propertyDescription>Cho phép thu gọn hoặc mở rộng khi click vào header.</span>
+                <sd-switch [(model)]="collapsible" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">collapsed</span>
-                  <span class="config-item__desc">Trạng thái ban đầu của section khi có hỗ trợ thu gọn.</span>
-                </div>
-                <sd-switch [(model)]="collapsed" size="sm" [disabled]="!collapsible()"></sd-switch>
-              </div>
+              <app-demo-property label="collapsed">
+                <span propertyDescription>Trạng thái ban đầu của section khi có hỗ trợ thu gọn.</span>
+                <sd-switch [(model)]="collapsed" [disabled]="!collapsible()" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">hideHeader</span>
-                  <span class="config-item__desc">Ẩn toàn bộ phần header gồm icon, title và subtitle.</span>
-                </div>
-                <sd-switch [(model)]="hideHeader" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="hideHeader">
+                <span propertyDescription>Ẩn toàn bộ phần header gồm icon, title và subtitle.</span>
+                <sd-switch [(model)]="hideHeader" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>
@@ -69,27 +48,29 @@
       <!-- CỘT PHẢI: XEM TRƯỚC + MÃ NGUỒN -->
       <div class="col-md-8">
         <div class="d-flex flex-column gap-16">
-          <sd-section title="Xem trước" icon="visibility"><div class="demo-section-content">
-            <div class="p-16 bg-slate-100 rounded-8 border border-dashed border-slate-300">
-              <sd-section
-                [title]="title()"
-                [subTitle]="subTitle()"
-                [icon]="icon()"
-                [iconColor]="iconColor()"
-                [collapsible]="collapsible()"
-                [(collapsed)]="collapsed"
-                [hideHeader]="hideHeader()"
-                ><div class="demo-section-content">
-                  <p class="T14R" style="margin: 0">Nội dung body của section. Dùng wrapper với class p-16 để thêm khoảng đệm khi cần.</p>
-                </div></sd-section
-              >
-            </div>
-            @if (collapsible()) {
-              <div class="mt-12 T12R text-secondary text-center">
-                Trạng thái: <strong>{{ collapsed() ? 'Thu gọn' : 'Mở rộng' }}</strong> - click vào header để toggle.
+          <sd-section title="Xem trước" icon="visibility"
+            ><div class="demo-section-content">
+              <div class="p-16 bg-slate-100 rounded-8 border border-dashed border-slate-300">
+                <sd-section
+                  [title]="title()"
+                  [subTitle]="subTitle()"
+                  [icon]="icon()"
+                  [iconColor]="iconColor()"
+                  [collapsible]="collapsible()"
+                  [(collapsed)]="collapsed"
+                  [hideHeader]="hideHeader()"
+                  ><div class="demo-section-content">
+                    <p class="T14R" style="margin: 0">Nội dung body của section. Dùng wrapper với class p-16 để thêm khoảng đệm khi cần.</p>
+                  </div></sd-section
+                >
               </div>
-            }
-          </div></sd-section>
+              @if (collapsible()) {
+                <div class="mt-12 T12R text-secondary text-center">
+                  Trạng thái: <strong>{{ collapsed() ? 'Thu gọn' : 'Mở rộng' }}</strong> - click vào header để toggle.
+                </div>
+              }
+            </div></sd-section
+          >
 
           <sd-section title="Mã nguồn" icon="code"
             ><div class="demo-section-content">

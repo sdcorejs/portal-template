@@ -204,19 +204,21 @@ export class MainComponent {
     {
       icon: 'dashboard_customize',
       title: 'Pattern',
-      children: Object.entries(PATTERN_GROUPS).map(([id, group]) => ({
-        title: group.name,
-        icon: id === 'table' ? 'table_chart' : id === 'score' ? 'analytics' : 'widgets',
-        ...(id === 'header' || id === 'table'
-          ? {
-              children: group.variants.map(variant => ({
-                title: variant[1],
-                path: '/pattern/' + PATTERN_PATHS[id] + '/' + variant[0],
-                permission: SD_PERMISSION_PUBLIC,
-              })),
-            }
-          : { path: '/pattern/' + PATTERN_PATHS[id] + '/' + group.variants[0][0], permission: SD_PERMISSION_PUBLIC }),
-      })),
+      children: Object.entries(PATTERN_GROUPS)
+        .filter(([id]) => id !== 'composition')
+        .map(([id, group]) => ({
+          title: group.name,
+          icon: id === 'table' ? 'table_chart' : id === 'score' ? 'analytics' : 'widgets',
+          ...(id === 'header' || id === 'table'
+            ? {
+                children: group.variants.map(variant => ({
+                  title: variant[1],
+                  path: '/pattern/' + PATTERN_PATHS[id] + '/' + variant[0],
+                  permission: SD_PERMISSION_PUBLIC,
+                })),
+              }
+            : { path: '/pattern/' + PATTERN_PATHS[id] + '/' + group.variants[0][0], permission: SD_PERMISSION_PUBLIC }),
+        })),
     },
     {
       icon: 'web',

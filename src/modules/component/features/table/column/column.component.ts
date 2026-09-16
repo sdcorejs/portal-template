@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild, computed, effect, signal } from '@angular/core';
@@ -27,7 +28,7 @@ const DEPARTMENT_OPTIONS = [
 @Component({
   selector: 'app-table-column',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdCodeEditor, SdPageComponent, SdSection, SdSwitch, SdTable],
+  imports: [DemoPropertyComponent, CommonModule, FormsModule, SdCodeEditor, SdPageComponent, SdSection, SdSwitch, SdTable],
   templateUrl: './column.component.html',
   styleUrls: ['./column.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -113,8 +114,7 @@ export class TableColumnComponent {
     ${statusTitle},
     type: 'boolean',
     width: '150px',${statusCell ? `\n    ${statusCell},` : ''}
-    option: { displayOnTrue: 'Hoạt động', displayOnFalse: 'Tạm ngừng' },
-  },
+    option: { displayOnTrue: 'Hoạt động', displayOnFalse: 'Tạm ngừng' } },
 ];`;
   });
 

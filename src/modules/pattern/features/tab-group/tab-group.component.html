@@ -1,10 +1,20 @@
 <div class="d-flex flex-column gap-16">
   @if (variant() === 'appearance') {
-    <div class="d-flex flex-wrap gap-8">
-      @for (item of ['line', 'pills', 'segmented']; track item) {
-        <sd-button [title]="item" [type]="shape() === item ? 'fill' : 'light'" color="primary" (click)="shape.set($any(item))" />
-      }
-    </div>
+    <sd-section hideHeader>
+      <div class="p-16 d-flex align-items-center justify-content-between flex-wrap gap-12">
+        <strong>Tuỳ chọn hiển thị</strong>
+        <sd-select
+          label="Kiểu tab"
+          style="width: 260px; max-width: 100%"
+          [items]="shapeOptions"
+          valueField="id"
+          displayField="name"
+          [(model)]="shape"
+          [clearable]="false"
+          size="sm"
+          hideInlineError />
+      </div>
+    </sd-section>
   }
   @if (variant() === 'loading') {
     <div class="d-flex flex-wrap gap-8">
@@ -72,6 +82,7 @@
             <app-pattern-results
               [rows]="variant() === 'counts' ? filtered() : rows()"
               [quickSearch]="true"
+              [quickSearchRight]="variant() === 'counts' ? completeAction : undefined"
               (openRecord)="notify.info('Đơn hàng ' + $event.code + ' · ' + $event.name)" />
           } @else if (variant() === 'views') {
             <div class="d-flex flex-column gap-12">
@@ -98,7 +109,7 @@
       </sd-tab>
     }
   </sd-tab-group>
-  @if (variant() === 'counts') {
+  <ng-template #completeAction>
     <sd-button
       title="Hoàn tất một đơn chờ xử lý"
       prefixIcon="check"
@@ -106,7 +117,7 @@
       color="primary"
       [disabled]="count(1) === 0"
       (click)="complete()" />
-  }
+  </ng-template>
   @if (variant() === 'form') {
     <div class="d-flex justify-content-end">
       <sd-button title="Lưu" prefixIcon="save" type="fill" color="primary" [loading]="loading()" [disabled]="loading()" (click)="save()" />

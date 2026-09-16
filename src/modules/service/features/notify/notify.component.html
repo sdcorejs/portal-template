@@ -4,47 +4,32 @@
       <!-- CỘT TRÁI: CONFIGURATION -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">title</span>
-                  <span class="config-item__desc">Tiêu đề chính của toast thông báo.</span>
-                </div>
-                <sd-input [label]="'Tiêu đề'" [(model)]="title"></sd-input>
-              </div>
+              <app-demo-property label="title">
+                <span propertyDescription>Tiêu đề chính của toast thông báo.</span>
+                <sd-input [(model)]="title" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">message</span>
-                  <span class="config-item__desc">Nội dung mô tả hiển thị trong thông báo.</span>
-                </div>
-                <sd-input [label]="'Nội dung'" [(model)]="message"></sd-input>
-              </div>
+              <app-demo-property label="message">
+                <span propertyDescription>Nội dung mô tả hiển thị trong thông báo.</span>
+                <sd-input [(model)]="message" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">actionLabel</span>
-                  <span class="config-item__desc">Nhãn cho nút hành động bổ sung trên toast.</span>
-                </div>
-                <sd-input [label]="'Nhãn hành động'" [(model)]="actionLabel"></sd-input>
-              </div>
+              <app-demo-property label="actionLabel">
+                <span propertyDescription>Nhãn cho nút hành động bổ sung trên toast.</span>
+                <sd-input [(model)]="actionLabel" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">type</span>
-                  <span class="config-item__desc">Màu trạng thái của thông báo hiển thị.</span>
-                </div>
-                <sd-select [label]="'Loại'" [items]="typeOptions" valueField="id" displayField="name" [(model)]="type"></sd-select>
-              </div>
+              <app-demo-property label="type">
+                <span propertyDescription>Màu trạng thái của thông báo hiển thị.</span>
+                <sd-select [items]="typeOptions" valueField="id" displayField="name" [(model)]="type" hideInlineError size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">duration</span>
-                  <span class="config-item__desc">Thời gian toast tự ẩn, tính bằng mili giây.</span>
-                </div>
-                <sd-input-number [label]="'Thời gian (ms)'" [(model)]="duration"></sd-input-number>
-              </div>
+              <app-demo-property label="duration">
+                <span propertyDescription>Thời gian toast tự ẩn, tính bằng mili giây.</span>
+                <sd-input-number [(model)]="duration" hideInlineError size="sm"></sd-input-number
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>
@@ -52,17 +37,23 @@
       <!-- CỘT PHẢI: PREVIEW & CODE -->
       <div class="col-md-8">
         <div class="d-flex flex-column gap-16">
-          <sd-section title="Xem trước" icon="visibility"><div class="demo-section-content">
-            <div
-              class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex flex-column align-items-center justify-content-center gap-16">
-              <div class="T16M">Nhấn nút bên dưới để kích hoạt Toast</div>
-              <div class="d-flex gap-12">
-                <sd-button [title]="'Hiển thị thông báo'" [color]="type()" (click)="showNotify()"></sd-button>
-                <sd-button [title]="'Hiển thị có hành động'" color="secondary" type="outline" (click)="showNotifyWithAction()"></sd-button>
+          <sd-section title="Xem trước" icon="visibility"
+            ><div class="demo-section-content">
+              <div
+                class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex flex-column align-items-center justify-content-center gap-16">
+                <div class="T16M">Nhấn nút bên dưới để kích hoạt Toast</div>
+                <div class="d-flex gap-12">
+                  <sd-button [title]="'Hiển thị thông báo'" [color]="type()" (click)="showNotify()"></sd-button>
+                  <sd-button
+                    [title]="'Hiển thị có hành động'"
+                    color="secondary"
+                    type="outline"
+                    (click)="showNotifyWithAction()"></sd-button>
+                </div>
               </div>
-            </div>
-            <div class="mt-16 font-size-13 text-center">Dịch vụ sẽ sử dụng cấu hình từ bảng bên trái để hiển thị thông báo.</div>
-          </div></sd-section>
+              <div class="mt-16 font-size-13 text-center">Dịch vụ sẽ sử dụng cấu hình từ bảng bên trái để hiển thị thông báo.</div>
+            </div></sd-section
+          >
 
           <sd-section title="Mã nguồn" icon="code"
             ><div class="demo-section-content">

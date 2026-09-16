@@ -10,3 +10,17 @@ app-pattern-results {
   min-height: 0;
   overflow: hidden;
 }
+.core-table-region {
+  flex: 1;
+  min-height: 240px;
+  min-width: 0;
+  overflow: auto;
+}
+.core-table-region sd-table {
+  min-width: 620px;
+}
+.table-total {
+  display: block;
+  text-align: right;
+  margin-inline: -8px;
+}

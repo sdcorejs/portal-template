@@ -4,47 +4,44 @@
       <!-- CỘT TRÁI: THUỘC TÍNH -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="d-flex flex-column gap-12">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">title</span>
-                  <span class="config-item__desc">Tiêu đề header của modal</span>
-                </div>
-                <sd-input [(model)]="modalTitle" size="sm"></sd-input>
-              </div>
+              <app-demo-property label="title">
+                <span propertyDescription>Tiêu đề header của modal</span>
+                <sd-input [(model)]="modalTitle" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">width</span>
-                  <span class="config-item__desc">Chiều rộng modal (px / vw / %)</span>
-                </div>
-                <sd-select [items]="widthOptions" valueField="id" displayField="name" [(model)]="width" size="sm"></sd-select>
-              </div>
+              <app-demo-property label="width">
+                <span propertyDescription>Chiều rộng modal (px / vw / %)</span>
+                <sd-select
+                  [items]="widthOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="width"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">height</span>
-                  <span class="config-item__desc">Chiều cao (auto = fit content)</span>
-                </div>
-                <sd-select [items]="heightOptions" valueField="id" displayField="name" [(model)]="height" size="sm"></sd-select>
-              </div>
+              <app-demo-property label="height">
+                <span propertyDescription>Chiều cao (auto = fit content)</span>
+                <sd-select
+                  [items]="heightOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="height"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">hideClose</span>
-                  <span class="config-item__desc">Ẩn nút X ở header</span>
-                </div>
-                <sd-switch [(model)]="hideClose" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="hideClose">
+                <span propertyDescription>Ẩn nút X ở header</span>
+                <sd-switch [(model)]="hideClose" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">disableBackdropClose</span>
-                  <span class="config-item__desc">Click ngoài modal không đóng</span>
-                </div>
-                <sd-switch [(model)]="disableBackdropClose" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="disableBackdropClose">
+                <span propertyDescription>Click ngoài modal không đóng</span>
+                <sd-switch [(model)]="disableBackdropClose" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
               <div class="event-info">Sự kiện <code>(sdClosed)</code>: {{ lastClosedAt() }}</div>
             </div>

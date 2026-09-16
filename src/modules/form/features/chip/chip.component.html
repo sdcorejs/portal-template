@@ -10,71 +10,47 @@
       <!-- CỘT TRÁI: CONFIGURATION -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">label</span>
-                  <span class="config-item__desc">Tiêu đề hiển thị phía trên ô nhập chip.</span>
-                </div>
-                <sd-input [label]="'Label'" [(model)]="label"></sd-input>
-              </div>
+              <app-demo-property label="label">
+                <span propertyDescription>Tiêu đề hiển thị phía trên ô nhập chip.</span>
+                <sd-input [(model)]="label" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">placeholder</span>
-                  <span class="config-item__desc">Gợi ý hiển thị khi chưa nhập dữ liệu.</span>
-                </div>
-                <sd-input [label]="'Placeholder'" [(model)]="placeholder"></sd-input>
-              </div>
+              <app-demo-property label="placeholder">
+                <span propertyDescription>Gợi ý hiển thị khi chưa nhập dữ liệu.</span>
+                <sd-input [(model)]="placeholder" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">size</span>
-                  <span class="config-item__desc">Điều chỉnh kích thước chip.</span>
-                </div>
-                <sd-select [label]="'Size'" [items]="sizeOptions" valueField="id" displayField="name" [(model)]="size"></sd-select>
-              </div>
+              <app-demo-property label="size">
+                <span propertyDescription>Điều chỉnh kích thước chip.</span>
+                <sd-select [items]="sizeOptions" valueField="id" displayField="name" [(model)]="size" hideInlineError size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">required</span>
-                  <span class="config-item__desc">Bắt buộc nhập ít nhất một giá trị.</span>
-                </div>
-                <sd-switch [(model)]="required" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="required">
+                <span propertyDescription>Bắt buộc nhập ít nhất một giá trị.</span>
+                <sd-switch [(model)]="required" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">min</span>
-                  <span class="config-item__desc">Số lượng giá trị tối thiểu.</span>
-                </div>
-                <sd-input [label]="'Min'" [(model)]="minValue" [type]="'number'"></sd-input>
-              </div>
+              <app-demo-property label="min">
+                <span propertyDescription>Số lượng giá trị tối thiểu.</span>
+                <sd-input [(model)]="minValue" [type]="'number'" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">max</span>
-                  <span class="config-item__desc">Số lượng giá trị tối đa.</span>
-                </div>
-                <sd-input [label]="'Max'" [(model)]="maxValue" [type]="'number'"></sd-input>
-              </div>
+              <app-demo-property label="max">
+                <span propertyDescription>Số lượng giá trị tối đa.</span>
+                <sd-input [(model)]="maxValue" [type]="'number'" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">removable</span>
-                  <span class="config-item__desc">Cho phép xóa các chip đã nhập.</span>
-                </div>
-                <sd-switch [(model)]="removable" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="removable">
+                <span propertyDescription>Cho phép xóa các chip đã nhập.</span>
+                <sd-switch [(model)]="removable" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">disabled</span>
-                  <span class="config-item__desc">Khoá tương tác với ô nhập chip.</span>
-                </div>
-                <sd-switch [(model)]="disabled" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="disabled">
+                <span propertyDescription>Khoá tương tác với ô nhập chip.</span>
+                <sd-switch [(model)]="disabled" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>
@@ -82,23 +58,26 @@
       <!-- CỘT PHẢI: PREVIEW & CODE -->
       <div class="col-md-8">
         <div class="d-flex flex-column gap-16">
-          <sd-section title="Xem trước" icon="visibility"><div class="demo-section-content">
-            <div class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
-              <sd-chip
-                style="width: 100%"
-                [model]="modelValue()"
-                (modelChange)="modelValue.set($event)"
-                [label]="label()"
-                [placeholder]="placeholder()"
-                [size]="size()"
-                [disabled]="disabled()"
-                [required]="required()"
-                [removable]="removable()"
-                [min]="minValue()"
-                [max]="maxValue()"></sd-chip>
-            </div>
-            <div class="mt-16 font-size-13"><span class="T16M">Giá trị hiện tại:</span> {{ modelValue() | json }}</div>
-          </div></sd-section>
+          <sd-section title="Xem trước" icon="visibility"
+            ><div class="demo-section-content">
+              <div
+                class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
+                <sd-chip
+                  style="width: 100%"
+                  [model]="modelValue()"
+                  (modelChange)="modelValue.set($event)"
+                  [label]="label()"
+                  [placeholder]="placeholder()"
+                  [size]="size()"
+                  [disabled]="disabled()"
+                  [required]="required()"
+                  [removable]="removable()"
+                  [min]="minValue()"
+                  [max]="maxValue()"></sd-chip>
+              </div>
+              <div class="mt-16 font-size-13"><span class="T16M">Giá trị hiện tại:</span> {{ modelValue() | json }}</div>
+            </div></sd-section
+          >
 
           <sd-section title="Mã nguồn" icon="code"
             ><div class="demo-section-content">

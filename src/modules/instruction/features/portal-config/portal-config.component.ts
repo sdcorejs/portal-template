@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -18,7 +19,7 @@ import {
 @Component({
   selector: 'app-portal-config',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdSection, SdSelect, SdSwitch],
+  imports: [DemoPropertyComponent, CommonModule, FormsModule, SdSection, SdSelect, SdSwitch],
   templateUrl: './portal-config.component.html',
   styleUrls: ['./portal-config.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

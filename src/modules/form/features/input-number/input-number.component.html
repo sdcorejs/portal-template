@@ -10,102 +10,70 @@
       <!-- CỘT TRÁI: CONFIGURATION -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">label</span>
-                  <span class="config-item__desc">Tiêu đề hiển thị phía trên input number.</span>
-                </div>
-                <sd-input [label]="'Label'" [(model)]="label"></sd-input>
-              </div>
+              <app-demo-property label="label">
+                <span propertyDescription>Tiêu đề hiển thị phía trên input number.</span>
+                <sd-input [(model)]="label" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">placeholder</span>
-                  <span class="config-item__desc">Gợi ý hiển thị khi chưa có giá trị số.</span>
-                </div>
-                <sd-input [label]="'Placeholder'" [(model)]="placeholder"></sd-input>
-              </div>
+              <app-demo-property label="placeholder">
+                <span propertyDescription>Gợi ý hiển thị khi chưa có giá trị số.</span>
+                <sd-input [(model)]="placeholder" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">size</span>
-                  <span class="config-item__desc">Điều chỉnh nhịp hiển thị của control nhập số.</span>
-                </div>
-                <sd-select [label]="'Size'" [items]="sizeOptions" valueField="id" displayField="name" [(model)]="size"></sd-select>
-              </div>
+              <app-demo-property label="size">
+                <span propertyDescription>Điều chỉnh nhịp hiển thị của control nhập số.</span>
+                <sd-select [items]="sizeOptions" valueField="id" displayField="name" [(model)]="size" hideInlineError size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">precision</span>
-                  <span class="config-item__desc">Số chữ số thập phân được phép nhập.</span>
-                </div>
-                <sd-input-number [label]="'Độ chính xác'" [(model)]="precision"></sd-input-number>
-              </div>
+              <app-demo-property label="precision">
+                <span propertyDescription>Số chữ số thập phân được phép nhập.</span>
+                <sd-input-number [(model)]="precision" hideInlineError size="sm"></sd-input-number
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">min</span>
-                  <span class="config-item__desc">Giá trị nhỏ nhất được chấp nhận.</span>
-                </div>
-                <sd-input-number [label]="'Min'" [(model)]="min"></sd-input-number>
-              </div>
+              <app-demo-property label="min">
+                <span propertyDescription>Giá trị nhỏ nhất được chấp nhận.</span>
+                <sd-input-number [(model)]="min" hideInlineError size="sm"></sd-input-number
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">max</span>
-                  <span class="config-item__desc">Giá trị lớn nhất được chấp nhận.</span>
-                </div>
-                <sd-input-number [label]="'Max'" [(model)]="max"></sd-input-number>
-              </div>
+              <app-demo-property label="max">
+                <span propertyDescription>Giá trị lớn nhất được chấp nhận.</span>
+                <sd-input-number [(model)]="max" hideInlineError size="sm"></sd-input-number
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">suffix</span>
-                  <span class="config-item__desc">Chọn kiểu đơn vị hiển thị ở cuối input number.</span>
-                </div>
+              <app-demo-property label="suffix">
+                <span propertyDescription>Chọn kiểu đơn vị hiển thị ở cuối input number.</span>
                 <sd-select
-                  [label]="'Suffix Type'"
                   [items]="suffixModeOptions"
                   valueField="id"
                   displayField="name"
-                  [(model)]="suffixMode"></sd-select>
-              </div>
+                  [(model)]="suffixMode"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
               @if (suffixMode() !== 'none') {
-                <div class="config-item">
-                  <div class="config-item__label">
-                    <span class="config-item__title">suffixValue</span>
-                    <span class="config-item__desc">{{ suffixDescription() }}</span>
-                  </div>
-                  <sd-input [label]="'Suffix Value'" [(model)]="suffixValue" [placeholder]="suffixPlaceholder()"></sd-input>
-                </div>
+                <app-demo-property label="suffixValue">
+                  <span propertyDescription>{{ suffixDescription() }}</span>
+                  <sd-input [(model)]="suffixValue" [placeholder]="suffixPlaceholder()" hideInlineError size="sm"></sd-input
+                ></app-demo-property>
               }
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">disabled</span>
-                  <span class="config-item__desc">Khoá tương tác với control nhập số.</span>
-                </div>
-                <sd-switch [(model)]="disabled" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="disabled">
+                <span propertyDescription>Khoá tương tác với control nhập số.</span>
+                <sd-switch [(model)]="disabled" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">required</span>
-                  <span class="config-item__desc">Đánh dấu trường bắt buộc nhập.</span>
-                </div>
-                <sd-switch [(model)]="required" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="required">
+                <span propertyDescription>Đánh dấu trường bắt buộc nhập.</span>
+                <sd-switch [(model)]="required" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">viewed</span>
-                  <span class="config-item__desc">Hiển thị giá trị ở chế độ xem.</span>
-                </div>
-                <sd-switch [(model)]="viewed" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="viewed">
+                <span propertyDescription>Hiển thị giá trị ở chế độ xem.</span>
+                <sd-switch [(model)]="viewed" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>
@@ -113,34 +81,37 @@
       <!-- CỘT PHẢI: PREVIEW & CODE -->
       <div class="col-md-8">
         <div class="d-flex flex-column gap-16">
-          <sd-section title="Xem trước" icon="visibility"><div class="demo-section-content">
-            <div class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
-              <sd-input-number
-                style="width: 100%"
-                [(model)]="modelValue"
-                [label]="label()"
-                [placeholder]="placeholder()"
-                [size]="size()"
-                [precision]="precision()"
-                [disabled]="disabled()"
-                [required]="required()"
-                [viewed]="viewed()"
-                [min]="min()"
-                [max]="max()">
-                @if (suffixMode() !== 'none') {
-                  <ng-template sdSuffixDef>
-                    @if (suffixMode() === 'icon') {
-                      <mat-icon class="demo-suffix-icon">{{ suffixValue() || 'payments' }}</mat-icon>
-                    } @else {
-                      <span class="demo-suffix-text">{{ suffixValue() || 'VNĐ' }}</span>
-                    }
-                  </ng-template>
-                }
-              </sd-input-number>
-            </div>
-            <div class="mt-16 font-size-13"><span class="T16M">Giá trị hiện tại:</span> {{ modelValue() }}</div>
-            <div class="mt-8 font-size-12 text-secondary">Suffix hiện tại: {{ suffixPreviewLabel() }}</div>
-          </div></sd-section>
+          <sd-section title="Xem trước" icon="visibility"
+            ><div class="demo-section-content">
+              <div
+                class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
+                <sd-input-number
+                  style="width: 100%"
+                  [(model)]="modelValue"
+                  [label]="label()"
+                  [placeholder]="placeholder()"
+                  [size]="size()"
+                  [precision]="precision()"
+                  [disabled]="disabled()"
+                  [required]="required()"
+                  [viewed]="viewed()"
+                  [min]="min()"
+                  [max]="max()">
+                  @if (suffixMode() !== 'none') {
+                    <ng-template sdSuffixDef>
+                      @if (suffixMode() === 'icon') {
+                        <mat-icon class="demo-suffix-icon">{{ suffixValue() || 'payments' }}</mat-icon>
+                      } @else {
+                        <span class="demo-suffix-text">{{ suffixValue() || 'VNĐ' }}</span>
+                      }
+                    </ng-template>
+                  }
+                </sd-input-number>
+              </div>
+              <div class="mt-16 font-size-13"><span class="T16M">Giá trị hiện tại:</span> {{ modelValue() }}</div>
+              <div class="mt-8 font-size-12 text-secondary">Suffix hiện tại: {{ suffixPreviewLabel() }}</div>
+            </div></sd-section
+          >
 
           <sd-section title="Mã nguồn" icon="code"
             ><div class="demo-section-content">

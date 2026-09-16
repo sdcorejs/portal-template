@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { DemoHarness } from '../../../../shared/demo-harness';
@@ -12,7 +13,7 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 @Component({
   selector: 'app-loading-demo',
   standalone: true,
-  imports: [SdButton, SdCodeEditor, SdPageComponent, SdSection, SdInputNumber, SdLabel],
+  imports: [DemoPropertyComponent, SdButton, SdCodeEditor, SdPageComponent, SdSection, SdInputNumber, SdLabel],
   templateUrl: './loading.component.html',
   styleUrls: ['./loading.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -45,8 +46,7 @@ import { SdLoadingService } from '@sdcorejs/angular/services/loading';
 @Component({
   selector: 'app-my-component',
   standalone: true,
-  templateUrl: './my-component.component.html',
-})
+  templateUrl: './my-component.component.html' })
 export class MyComponent {
   readonly #loadingService = inject(SdLoadingService);
 

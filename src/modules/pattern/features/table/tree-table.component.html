@@ -1,0 +1,77 @@
+<div class="tree-intro">
+  <div>
+    <strong>Danh mục thiết bị</strong>
+    <p>2 nhóm · 3 danh mục · 6 sản phẩm · 3 cấp cha–con</p>
+  </div>
+  <div class="tree-options">
+    <label><input type="checkbox" [ngModel]="selection()" (ngModelChange)="toggleSelection($event)" /> Hiện selection</label>
+    <label><input type="checkbox" [ngModel]="commands()" (ngModelChange)="toggleCommands($event)" /> Hiện command</label>
+  </div>
+</div>
+<p class="tree-help">
+  Bấm mũi tên để thu/mở nhánh. Chỉ chọn sản phẩm đang hiển thị; dòng cha tổng hợp số lượng, không chọn theo nhánh. Command ở cuối dòng.
+</p>
+@if (message()) {
+  <p class="tree-feedback" role="status">{{ message() }}</p>
+}
+<div class="tree-table-region">
+  <sd-table autoId="pattern-tree" [option]="option()">
+    <ng-template sdTableCellDef="name" let-row="item">
+      <div class="tree-name" [class.tree-parent]="row.kind !== 'product'">
+        <div>
+          <span>{{ row.name }}</span
+          ><small
+            >{{ row.code }}
+            @if (row.children) {
+              · {{ row.children.length }} mục con
+            }
+          </small>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template sdTableCellDef="kind" let-row="item">
+      <sd-badge type="round" size="sm" [color]="row.kind === 'group' ? 'primary' : 'secondary'" [title]="labels[row.kind]" />
+    </ng-template>
+    <ng-template sdTableCellDef="status" let-row="item">
+      @if (row.kind === 'product') {
+        <sd-badge
+          size="sm"
+          [color]="row.status === 'active' ? 'success' : 'warning'"
+          [title]="row.status === 'active' ? 'Đang bán' : 'Tạm ngừng'" />
+      } @else {
+        <span class="tree-muted">Tổng hợp</span>
+      }
+    </ng-template>
+  </sd-table>
+</div>
+<p class="tree-help">
+  Dữ liệu mẫu trong phiên. Selection hiện thanh thao tác hàng loạt; command áp dụng cho một dòng. Tắt từng tùy chọn để so sánh bố cục.
+</p>
+<sd-side-drawer title="Chi tiết trong cây" width="560px" (sdClosed)="restoreFocus()">
+  @if (detail(); as row) {
+    <div class="tree-detail">
+      <p class="tree-muted">{{ row.code }} · {{ labels[row.kind] }}</p>
+      <h2>{{ row.name }}</h2>
+      <dl>
+        <dt>Phân cấp</dt>
+        <dd>{{ row.path }}</dd>
+        <dt>Số lượng</dt>
+        <dd>
+          {{ row.quantity }}
+          @if (row.kind !== 'product') {
+            (tổng các sản phẩm bên dưới)
+          }
+        </dd>
+        @if (row.kind === 'product') {
+          <dt>Trạng thái</dt>
+          <dd>{{ row.status === 'active' ? 'Đang bán' : 'Tạm ngừng' }}</dd>
+        }
+        @if (row.children) {
+          <dt>Mục con trực tiếp</dt>
+          <dd>{{ row.children.length }}</dd>
+        }
+      </dl>
+    </div>
+  }
+  <div sdFooterRight><sd-button title="Đóng" type="text" (click)="drawer().requestClose()" /></div>
+</sd-side-drawer>

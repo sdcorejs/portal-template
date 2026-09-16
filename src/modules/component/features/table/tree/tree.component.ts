@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
@@ -70,7 +71,18 @@ function generateTree(rootCount: number): BudgetItem[] {
 @Component({
   selector: 'app-table-tree',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdTable, SdCodeEditor, SdPageComponent, SdSection, SdSelect, SdSwitch, SdInputNumber],
+  imports: [
+    DemoPropertyComponent,
+    CommonModule,
+    FormsModule,
+    SdTable,
+    SdCodeEditor,
+    SdPageComponent,
+    SdSection,
+    SdSelect,
+    SdSwitch,
+    SdInputNumber,
+  ],
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -177,9 +189,7 @@ tableOption: SdTableOption<BudgetItem> = {
       if (ctx?.level === 0) return { 'background-color': '#f8fafc' };
       if (ctx?.hasChildren) return { 'font-weight': '600' };
       return {};
-    },
-  },
-};`;
+    } } };`;
   });
 
   // ── Columns ────────────────────────────────────────────────────────────────

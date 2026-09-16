@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
@@ -15,7 +16,18 @@ type SwitchColor = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'e
 @Component({
   selector: 'app-switch-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdCodeEditor, SdPageComponent, SdSection, SdInput, SdLabel, SdSelect, SdSwitch],
+  imports: [
+    DemoPropertyComponent,
+    CommonModule,
+    FormsModule,
+    SdCodeEditor,
+    SdPageComponent,
+    SdSection,
+    SdInput,
+    SdLabel,
+    SdSelect,
+    SdSwitch,
+  ],
   templateUrl: './switch.component.html',
   styleUrls: ['./switch.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

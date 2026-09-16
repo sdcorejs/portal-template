@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
@@ -12,7 +13,18 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 @Component({
   selector: 'app-section-item-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdSection, SdSectionItem, SdCodeEditor, SdPageComponent, SdInput, SdSwitch, SdLabel],
+  imports: [
+    DemoPropertyComponent,
+    CommonModule,
+    FormsModule,
+    SdSection,
+    SdSectionItem,
+    SdCodeEditor,
+    SdPageComponent,
+    SdInput,
+    SdSwitch,
+    SdLabel,
+  ],
   templateUrl: './section-item.component.html',
   styleUrls: ['./section-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

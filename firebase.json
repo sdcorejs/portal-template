@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "cs-portal-template",
+    "site": "cloud-solution-vn-portal-template",
     "public": "dist/browser",
     "ignore": [
       "firebase.json",

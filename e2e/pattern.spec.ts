@@ -1,6 +1,267 @@
 import { test, expect, Page } from '@playwright/test';
 import { PATTERN_GROUPS, PATTERN_PATHS } from '../src/modules/pattern/catalog/pattern-catalog';
 const button = (page: Page, name: string) => page.getByRole('button', { name, exact: true });
+
+test('inline operators combine numeric comparison and text filtering', async ({ page }) => {
+  await open(page, 'table', 'inline-operator');
+  const table = page.locator('app-pattern-results');
+  await expect(table.locator('tbody a')).toHaveCount(6);
+  const amount = table.locator('th').filter({ has: page.getByRole('button', { name: 'Giá trị (VND)', exact: true }) });
+  await amount.getByRole('button').nth(1).click();
+  await page.getByRole('menuitem', { name: 'Nhỏ hơn LESS_THAN', exact: true }).click();
+  await amount.getByRole('textbox').fill('7000000');
+  await amount.getByRole('textbox').press('Enter');
+  await expect(table.locator('tbody a')).toHaveCount(2);
+  const name = table.locator('th').filter({ has: page.getByRole('button', { name: 'Khách hàng', exact: true }) });
+  await name.getByRole('textbox').fill('An Phát');
+  await name.getByRole('textbox').press('Enter');
+  await expect(table.locator('tbody a')).toHaveCount(1);
+  await expect(table.locator('tbody a')).toHaveText('DH-1001');
+});
+
+test('table inline filters and custom header/cell templates render real Core columns', async ({ page }) => {
+  await open(page, 'table', 'inline-filter');
+  const demo = page.locator('app-pattern-results');
+  await expect(demo.locator('tbody a')).toHaveCount(6);
+  const filter = demo
+    .locator('thead th')
+    .filter({ has: page.getByRole('button', { name: 'Khách hàng', exact: true }) })
+    .getByRole('textbox');
+  await filter.fill('An Phát');
+  await filter.press('Enter');
+  await expect(demo.locator('tbody a')).toHaveCount(3);
+  await expect(demo.getByRole('row').filter({ has: page.getByRole('link') })).toHaveText([/An Phát/, /An Phát/, /An Phát/]);
+  await expect(demo.locator('tbody')).toContainText('An Phát');
+  await open(page, 'table', 'custom-cells');
+  await expect(demo.getByRole('columnheader').filter({ hasText: 'Đơn vị: VND' })).toBeVisible();
+  await expect(demo.locator('tbody strong').first()).toHaveText('An Phát');
+});
+
+test('table children commands execute row and selection actions', async ({ page }) => {
+  await open(page, 'table', 'children');
+  const demo = page.locator('app-pattern-results');
+  const row = (code: string) => demo.getByRole('row').filter({ has: page.getByRole('link', { name: code, exact: true }) });
+  await row('DH-1001').getByRole('button', { name: 'Xử lý đơn hàng', exact: true }).click();
+  await page.getByRole('menuitem', { name: 'Duyệt đơn hàng', exact: true }).click();
+  await expect(row('DH-1001')).toContainText('Đang xử lý');
+  await row('DH-1001').getByRole('checkbox').check();
+  await demo.getByRole('button', { name: 'Xử lý các đơn đã chọn', exact: true }).click();
+  await page.getByRole('menuitem', { name: 'Hoàn tất đơn hàng', exact: true }).click();
+  await expect(row('DH-1001')).toContainText('Hoàn tất');
+  await expect(row('DH-1002')).toContainText('Đang xử lý');
+});
+
+test('inline table preserves edits through add/delete and distinguishes FE and BE errors', async ({ page }) => {
+  await open(page, 'table', 'inline-edit');
+  const demo = page.locator('app-pattern-inline-table');
+  const name = (id: number) => demo.locator(`sd-input[name="name"][data-line-id="${id}"] input`);
+  await name(1).fill('Máy in mới');
+  await demo.locator('th sd-button[tooltip="Thêm dòng"] button').click();
+  await expect(name(3)).toBeVisible();
+  await expect(name(1)).toHaveValue('Máy in mới');
+  await demo.getByRole('button', { name: 'Xoá dòng', exact: true }).last().click();
+  await expect(name(3)).toHaveCount(0);
+  await expect(name(1)).toHaveValue('Máy in mới');
+  await name(2).fill('');
+  const save = () => demo.getByRole('button', { name: 'Lưu', exact: true }).click({ delay: 350 });
+  await save();
+  await expect(demo.locator('sd-inform .c-warning')).toBeVisible();
+  await name(2).fill('Máy in mới');
+  await save();
+  await expect(demo.locator('sd-inform .c-error')).toBeVisible();
+  await name(2).fill('Màn hình mới');
+  await save();
+  await expect(demo.locator('sd-inform')).toContainText('Đã lưu 2 dòng hàng');
+  await demo.screenshot({ path: 'test-results/inline-edit.png' });
+});
+
+test('compact inline table adds rows from command header even when empty', async ({ page }) => {
+  await open(page, 'table', 'inline-command-header');
+  const demo = page.locator('app-pattern-inline-table');
+  await demo.getByRole('button', { name: 'Xoá dòng', exact: true }).last().click({ delay: 350 });
+  await demo.getByRole('button', { name: 'Xoá dòng', exact: true }).last().click({ delay: 350 });
+  const add = demo.locator('th sd-button[tooltip="Thêm dòng"] button');
+  await add.click();
+  await expect(demo.locator('sd-input[name="name"][data-line-id="3"] input')).toBeVisible();
+  await demo.screenshot({ path: 'test-results/inline-command-header.png' });
+});
+
+test('grouped actions use Core popover with keyboard and execute a command', async ({ page }) => {
+  await open(page, 'button', 'grouped');
+  const trigger = page.locator('app-pattern-button').getByRole('button', { name: 'Tác vụ', exact: true });
+  await trigger.click();
+  await expect(page.getByRole('menuitem', { name: 'Duyệt', exact: true })).toBeVisible();
+  await page.screenshot({ path: 'test-results/action-popover.png' });
+  await page.keyboard.press('Escape');
+  await expect(trigger).toBeFocused();
+  await trigger.press('ArrowDown');
+  await page.getByRole('menuitem', { name: 'Duyệt', exact: true }).click();
+  await expect(page.locator('app-pattern-button').getByRole('status')).toContainText('Duyệt');
+});
+
+test('three section drawer shows two FE warnings and BE error then saves', async ({ page }) => {
+  await open(page, 'drawer', 'section-errors');
+  const opener = button(page, 'Tạo liên hệ');
+  const title = page.getByRole('heading', { name: 'Danh sách liên hệ', exact: true });
+  const titleBox = (await title.boundingBox())!;
+  const buttonBox = (await opener.boundingBox())!;
+  expect(buttonBox.x).toBeGreaterThan(titleBox.x + titleBox.width);
+  expect(Math.abs(buttonBox.y + buttonBox.height / 2 - titleBox.y - titleBox.height / 2)).toBeLessThan(2);
+  await opener.click();
+  const dialog = page.getByRole('dialog');
+  const editor = dialog.locator('app-pattern-form-editor');
+  await expect(editor.locator('sd-section')).toHaveCount(3);
+  const save = () => dialog.getByRole('button', { name: 'Tạo liên hệ', exact: true }).click({ delay: 350 });
+  await save();
+  await expect(editor.locator('sd-section sd-inform')).toHaveCount(2);
+  await expect(editor.locator('sd-inform[color="warning"]')).toHaveCount(2);
+  await dialog.screenshot({ path: 'test-results/drawer-three-section-warnings.png' });
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await dialog.evaluate(el => el.scrollWidth <= el.clientWidth)).toBeTruthy();
+  await dialog.screenshot({ path: 'test-results/drawer-three-section-mobile.png' });
+  await editor.getByRole('textbox', { name: 'Họ và tên', exact: true }).fill('Liên hệ mẫu mới');
+  await expect(editor.locator('sd-section sd-inform')).toHaveCount(1);
+  await editor.getByRole('textbox', { name: 'Email', exact: true }).fill('minhanh@example.test');
+  await save();
+  await expect(editor.locator('sd-section sd-inform')).toHaveCount(0);
+  await expect(editor.locator('sd-inform')).toContainText('Email đã được sử dụng');
+  await expect(editor.locator('sd-inform .c-error')).toBeVisible();
+  await expect(page.locator('toast')).toHaveCount(0);
+  await editor.getByRole('textbox', { name: 'Email', exact: true }).fill('new-section@example.test');
+  await save();
+  await expect(dialog).toBeHidden();
+});
+
+test('button conventions: common CRUD, entity CRUD and light business actions', async ({ page }) => {
+  await open(page, 'button', 'crud');
+  const demo = page.locator('app-pattern-button');
+  await expect(page.getByText('Ghép thành page', { exact: true })).toHaveCount(0);
+  for (const label of ['Tạo mới', 'Chỉnh sửa', 'Lưu']) {
+    await expect(demo.getByRole('button', { name: label, exact: true })).toHaveClass(/c-fill/);
+    await expect(demo.getByRole('button', { name: label, exact: true })).toHaveClass(/mat-primary/);
+  }
+  await expect(demo.getByRole('button', { name: 'Xoá', exact: true })).toHaveClass(/mat-error/);
+  await expect(demo.getByRole('link', { name: 'LH-1024', exact: true })).toHaveAttribute('href', '/pattern/drawer/detail');
+  await demo.getByRole('button', { name: 'Lưu', exact: true }).click();
+  await expect(demo.getByRole('status')).toHaveText('Đã lưu thay đổi.');
+  await page.locator('.preview-stage').screenshot({ path: 'test-results/button-crud.png' });
+  await open(page, 'button', 'crud-entity');
+  for (const label of ['Tạo liên hệ', 'Chỉnh sửa liên hệ', 'Lưu liên hệ']) {
+    await expect(demo.getByRole('button', { name: label, exact: true })).toHaveClass(/c-fill/);
+    await expect(demo.getByRole('button', { name: label, exact: true })).toHaveClass(/mat-primary/);
+  }
+  await open(page, 'button', 'workflow');
+  await expect(demo.locator('sd-section')).toHaveCount(3);
+  await expect(demo.locator('button.c-light')).toHaveCount(18);
+  await demo.locator('sd-section').first().getByRole('button', { name: 'Duyệt', exact: true }).click();
+  await expect(demo.getByRole('status')).toContainText('Đã thực hiện tác vụ mẫu: Duyệt.');
+  await page.locator('.preview-stage').screenshot({ path: 'test-results/button-workflow.png' });
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+});
+
+test('Core table related lines calculate footer totals', async ({ page }) => {
+  await open(page, 'table', 'related');
+  const table = page.locator('app-pattern-table sd-table');
+  await expect(table.getByRole('row').filter({ hasText: 'Máy in' })).toContainText('6.000.000');
+  const footer = table.getByRole('row').filter({ hasText: 'Tổng cộng' });
+  await expect(footer).toContainText('10');
+  await expect(footer).toContainText('15.500.000');
+  await page.locator('.preview-stage').screenshot({ path: 'test-results/table-related-core.png' });
+});
+
+test('Core table states load, empty, error retry and unmatched search', async ({ page }) => {
+  await open(page, 'table', 'states');
+  const demo = page.locator('app-pattern-table');
+  const table = demo.locator('sd-table');
+  await expect(table.locator('.c-loading')).toBeVisible();
+  await expect(table.getByRole('row').filter({ hasText: 'DH-1001' })).toBeVisible();
+  await demo.getByRole('button', { name: 'Chưa có dữ liệu', exact: true }).click();
+  await expect(table.getByText('Chưa có đơn hàng', { exact: true })).toBeVisible();
+  await expect(table.locator('.c-loading')).toBeHidden();
+  await expect(table.getByRole('row').filter({ hasText: 'DH-1001' })).toHaveCount(0);
+  await page.locator('.preview-stage').screenshot({ path: 'test-results/table-empty-core.png' });
+  await demo.getByRole('button', { name: 'Lỗi rồi thử lại', exact: true }).click();
+  await expect(table.getByText('Không thể tải đơn hàng', { exact: true })).toBeVisible();
+  await page.locator('.preview-stage').screenshot({ path: 'test-results/table-error-core.png' });
+  await table.getByRole('button', { name: 'Thử lại', exact: true }).click();
+  await expect(table.getByRole('row').filter({ hasText: 'DH-1001' })).toBeVisible();
+  const search = table.getByPlaceholder('Tìm mã hoặc tên khách hàng');
+  await search.fill('khong-ton-tai');
+  await search.press('Enter');
+  await expect(table.getByText('Không có kết quả phù hợp', { exact: true })).toBeVisible();
+  await expect(table.locator('.c-loading')).toBeHidden();
+  await expect(table.getByRole('row').filter({ hasText: 'DH-1001' })).toHaveCount(0);
+  await page.locator('.preview-stage').screenshot({ path: 'test-results/table-no-results-core.png' });
+  await search.fill('DH-1002');
+  await search.press('Enter');
+  await expect(table.getByRole('row').filter({ hasText: 'DH-1002' })).toBeVisible();
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
+});
+
+test('tree showcase: hierarchy, leaf selection and row commands', async ({ page }) => {
+  page.setDefaultTimeout(15000);
+  await open(page, 'table', 'tree');
+  const demo = page.locator('app-pattern-tree-table');
+  const row = (code: string) => demo.getByRole('row').filter({ hasText: code });
+  await expect(row('VP-PRINT')).toContainText('Danh mục');
+  await expect(row('SP-001')).toContainText('HP LaserJet Pro');
+  await expect(row('NH-VP').getByRole('checkbox')).toBeDisabled();
+  const toggle = row('NH-VP').locator('.sd-tree-toggle-btn');
+  await toggle.click();
+  await expect(row('SP-001')).toHaveCount(0);
+  await toggle.focus();
+  await page.keyboard.press('Enter');
+  await expect(row('SP-001')).toBeVisible();
+  await row('SP-001').getByRole('checkbox').check();
+  await row('SP-003').getByRole('checkbox').check();
+  await expect(demo.getByRole('button', { name: 'Tạm ngừng sản phẩm đã chọn', exact: true })).toBeInViewport();
+  await page.locator('.preview-stage').screenshot({ path: 'test-results/tree-showcase-selection.png' });
+  await demo.getByRole('button', { name: 'Tạm ngừng sản phẩm đã chọn', exact: true }).click();
+  await expect(demo.getByRole('status')).toHaveText('Đã tạm ngừng 2 sản phẩm.');
+  await expect(row('SP-001')).toContainText('Tạm ngừng');
+  await expect(row('SP-003')).toContainText('Tạm ngừng');
+  await expect(row('SP-002')).toContainText('Đang bán');
+  await row('SP-001').getByRole('button', { name: 'Mở bán', exact: true }).click();
+  await expect(row('SP-001')).toContainText('Đang bán');
+  await row('SP-001').getByRole('button', { name: 'Xem chi tiết', exact: true }).click();
+  await expect(page.getByRole('dialog')).toContainText('Thiết bị văn phòng / In ấn / HP LaserJet Pro');
+  await page.getByRole('dialog').locator('sd-button').getByRole('button', { name: 'Đóng', exact: true }).click();
+  await demo.getByRole('checkbox', { name: 'Hiện selection', exact: true }).uncheck();
+  await expect(row('SP-001')).toBeVisible();
+  await expect(row('SP-001').getByRole('checkbox')).toHaveCount(0);
+  await demo.getByRole('checkbox', { name: 'Hiện command', exact: true }).uncheck();
+  await expect(row('SP-001')).toBeVisible();
+  await expect(row('SP-001').getByRole('button', { name: 'Xem chi tiết', exact: true })).toHaveCount(0);
+  await demo.getByRole('checkbox', { name: 'Hiện selection', exact: true }).check();
+  await expect(row('SP-001').getByRole('checkbox')).toBeVisible();
+  await demo.getByRole('checkbox', { name: 'Hiện command', exact: true }).check();
+  await expect(row('SP-001').getByRole('button', { name: 'Xem chi tiết', exact: true })).toBeVisible();
+  await page.locator('.preview-stage').screenshot({ path: 'test-results/tree-showcase-desktop.png' });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(demo).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
+  await page.locator('.preview-stage').screenshot({ path: 'test-results/tree-showcase-mobile.png' });
+});
+
+test('tree showcase: select all excludes parents and collapsed products', async ({ page }) => {
+  await open(page, 'table', 'tree');
+  const demo = page.locator('app-pattern-tree-table');
+  const row = (code: string) => demo.getByRole('row').filter({ hasText: code });
+  await row('NH-VP').locator('.sd-tree-toggle-btn').click();
+  await demo.getByRole('columnheader').getByRole('checkbox').check();
+  await expect(demo.locator('tbody input[type="checkbox"]:checked')).toHaveCount(2);
+  await demo.getByRole('button', { name: 'Tạm ngừng sản phẩm đã chọn', exact: true }).click();
+  await expect(demo.getByRole('status')).toHaveText('Đã tạm ngừng 2 sản phẩm.');
+  await expect(row('SP-005')).toContainText('Tạm ngừng');
+  await expect(row('SP-006')).toContainText('Tạm ngừng');
+  await expect(demo.locator('tbody input[type="checkbox"]:checked')).toHaveCount(0);
+  await expect(row('SP-001')).toHaveCount(0);
+  await row('NH-VP').locator('.sd-tree-toggle-btn').click();
+  await expect(row('SP-001')).toContainText('Đang bán');
+  await expect(row('NH-VP')).toContainText('30');
+});
 test('Pattern design: primary actions and review captures', async ({ page }) => {
   await open(page, 'tab-group', 'form');
   await page.locator('.preview-stage').screenshot({ path: 'test-results/tab-group-design.png' });
@@ -84,7 +345,8 @@ test('Stepper: validation, review, edit, save and draft restoration', async ({ p
   await demo.getByRole('button', { name: 'Sửa Thông tin', exact: true }).click();
   await expect(demo.getByRole('textbox', { name: 'Tên khách hàng' })).toHaveValue('Công ty kiểm thử');
   await demo.getByRole('button', { name: 'Tiếp tục', exact: true }).click();
-  await demo.getByRole('button', { name: 'Tiếp tục', exact: true }).click();
+  await expect(demo.getByRole('textbox', { name: 'Email', exact: true })).toBeVisible();
+  await demo.getByRole('button', { name: 'Tiếp tục', exact: true }).click({ delay: 350 });
   await demo.getByRole('button', { name: 'Lưu', exact: true }).click();
   await expect(demo).toContainText('Đã lưu thành công');
 });
@@ -105,8 +367,10 @@ test('Stepper: duplicate code check and table selection', async ({ page }) => {
   await demo.getByRole('textbox', { name: 'Tên khách hàng' }).fill('Khách hàng');
   await demo.getByRole('button', { name: 'Tiếp tục', exact: true }).click();
   await demo.locator('sd-table').getByRole('checkbox').nth(1).check();
-  await expect(demo.getByRole('status').filter({ hasText: 'Đã chọn' })).toContainText('Đã chọn 1');
-  await demo.getByRole('button', { name: 'Tiếp tục', exact: true }).click();
+  await expect(demo.locator('sd-table').getByRole('checkbox').nth(1)).toBeChecked();
+  await expect(demo.locator('sd-table').getByRole('checkbox').first()).toHaveJSProperty('indeterminate', true);
+  await expect(demo.getByText('Đã chọn 0 đơn hàng', { exact: true })).toHaveCount(0);
+  await demo.getByRole('button', { name: 'Tiếp tục', exact: true }).click({ delay: 350 });
   await expect(demo).toContainText('DH-1001');
 });
 async function open(page: Page, group: string, variant: string) {
@@ -131,10 +395,16 @@ test('Stepper: optional steps, business branch and repeated rows', async ({ page
   await open(page, 'stepper', 'lines');
   await demo.getByRole('textbox', { name: 'Tên khách hàng' }).fill('Khách hàng');
   await demo.getByRole('button', { name: 'Tiếp tục', exact: true }).click();
-  await demo.getByRole('button', { name: 'Thêm dịch vụ' }).click();
+  await demo.locator('th sd-button[tooltip="Thêm dịch vụ"] button').click();
   await demo.getByRole('button', { name: 'Tiếp tục', exact: true }).click();
-  await expect(demo.getByRole('textbox', { name: 'Dịch vụ', exact: true })).toHaveCount(2);
-  await demo.getByRole('textbox', { name: 'Dịch vụ', exact: true }).nth(1).fill('Lắp đặt');
+  const services = demo.locator('sd-table sd-input input');
+  await expect(services).toHaveCount(2);
+  await services.nth(1).fill('Lắp đặt');
+  await demo.locator('th sd-button[tooltip="Thêm dịch vụ"] button').click({ delay: 350 });
+  await expect(services).toHaveCount(3);
+  await expect(services.nth(1)).toHaveValue('Lắp đặt');
+  await demo.getByRole('button', { name: 'Xoá dòng', exact: true }).last().click();
+  await expect(services).toHaveCount(2);
   await page.waitForTimeout(350);
   await demo.getByRole('button', { name: 'Tiếp tục', exact: true }).click();
   await expect(demo.getByRole('button', { name: 'Lưu', exact: true })).toBeVisible();
@@ -166,7 +436,7 @@ test('Page header stays fixed while only page content scrolls', async ({ page })
   for (const width of [1440, 390]) {
     await page.setViewportSize({ width, height: 500 });
     await open(page, 'header', 'page');
-    await page.getByRole('button', { name: 'Tác vụ', exact: true }).click();
+    await page.getByRole('link', { name: 'Tác vụ', exact: true }).click();
     const header = page.locator('app-pattern-page > sd-page > .c-page-header');
     const content = page.locator('app-pattern-page > sd-page > .c-page-wrapper');
     const outlet = page.locator('.tab-router__disabled-outlet');
@@ -240,9 +510,9 @@ test('Header/Footer: five paired variants and prioritized actions', async ({ pag
   await open(page, 'header', 'page');
   const demo = page.locator('app-pattern-header');
   const variants = page.getByRole('navigation', { name: 'Biến thể Page Header' });
-  await expect(variants.getByRole('button')).toHaveCount(5);
+  await expect(variants.getByRole('link')).toHaveCount(5);
   for (const title of ['Cơ bản', 'Nâng cao', 'Tác vụ', 'Tác vụ nhỏ gọn', 'Tác vụ có gom nhóm']) {
-    await variants.getByRole('button', { name: title, exact: true }).click();
+    await variants.getByRole('link', { name: title, exact: true }).click();
     await expect(demo.getByRole('article')).toHaveCount(2);
     await expect(demo.getByRole('article', { name: 'Header Danh sách' }).locator('sd-badge')).toHaveCount(0);
   }
@@ -254,14 +524,14 @@ test('Header/Footer: five paired variants and prioritized actions', async ({ pag
   await expect(page.getByRole('menu').locator('sd-icon')).toHaveCount(2);
   await page.getByRole('menuitem', { name: 'Duyệt', exact: true }).click();
   await expect(detail.getByRole('status')).toContainText('Đã thực hiện');
-  await variants.getByRole('button', { name: 'Tác vụ', exact: true }).click();
+  await variants.getByRole('link', { name: 'Tác vụ', exact: true }).click();
   await expect(detail.locator('sd-button[title="Chỉnh sửa"]')).toHaveAttribute('type', 'fill');
   await expect(detail.getByRole('button', { name: 'Duyệt', exact: true })).toHaveClass(/mat-success/);
   await expect(detail.getByRole('button', { name: 'Từ chối', exact: true })).toHaveClass(/mat-warning/);
   expect((await detail.getByRole('button', { name: 'Chỉnh sửa', exact: true }).boundingBox())!.x).toBeGreaterThan(
     (await detail.getByRole('button', { name: 'Duyệt', exact: true }).boundingBox())!.x
   );
-  await variants.getByRole('button', { name: 'Tác vụ nhỏ gọn', exact: true }).click();
+  await variants.getByRole('link', { name: 'Tác vụ nhỏ gọn', exact: true }).click();
   await expect(detail.locator('button.c-square')).toHaveCount(3);
   await detail.getByRole('button', { name: 'Chỉnh sửa', exact: true }).click();
   await expect(demo.getByRole('button', { name: 'Lưu', exact: true })).toBeVisible();
@@ -276,7 +546,7 @@ test('Header/Footer: drawer actions are in footer and section actions stay in he
   expect((await save.boundingBox())!.x).toBeGreaterThan((await drawer.locator('sd-button[title="Đóng"] button').boundingBox())!.x);
   expect((await save.boundingBox())!.y).toBeGreaterThan(800);
   await save.click();
-  await expect(page.locator('toast[data-type="error"]').last()).toContainText('Nhập khách hàng');
+  await expect(page.locator('toast[data-type="warning"]').last()).toContainText('Nhập khách hàng');
   await drawer.getByRole('textbox', { name: 'Khách hàng', exact: true }).fill('Công ty mẫu');
   await drawer.getByRole('textbox', { name: 'Khu vực', exact: true }).fill('Miền Nam');
   await drawer.getByRole('textbox', { name: 'Giá trị đơn hàng (VND)', exact: true }).fill('2500000');
@@ -415,15 +685,18 @@ test('listing AND search/filter, detail, error retry and queue drill-down', asyn
   await button(page, 'Chờ xử lý · 7 đơn →').click();
   await expect(page.locator('app-pattern-composition > [role="status"]').first()).toContainText('7 kết quả phù hợp');
 });
-test('drawer validates, guards dirty close, preserves failures and updates detail', async ({ page }) => {
+test('drawer validates with notify, guards dirty close and updates detail', async ({ page }) => {
   await open(page, 'drawer', 'create');
   await button(page, 'Tạo liên hệ').click();
   const editor = page.locator('app-pattern-form-editor');
   await expect(editor.getByRole('textbox', { name: 'Họ và tên', exact: true })).toBeVisible();
+  await expect(editor.locator('sd-section .sd-section-header')).toHaveCount(0);
+  await expect(page.getByText('* Trường bắt buộc', { exact: true })).toHaveCount(0);
+  await expect(page.getByRole('checkbox', { name: 'Mô phỏng lỗi lưu' })).toHaveCount(0);
   // Core SdButton intentionally throttles repeat clicks for 300 ms.
   const save = () => page.getByRole('dialog').getByRole('button', { name: 'Tạo liên hệ', exact: true }).click({ delay: 350 });
   await save();
-  await expect(page.locator('toast[data-type="error"]').filter({ hasText: 'Kiểm tra' }).last()).toBeVisible();
+  await expect(page.locator('toast[data-type="warning"]').filter({ hasText: 'Kiểm tra' }).last()).toBeVisible();
   await expect(editor.getByRole('status')).toHaveCount(0);
   await page.getByRole('textbox', { name: 'Họ và tên', exact: true }).fill('Liên hệ mới');
   await page.keyboard.press('Escape');
@@ -431,19 +704,44 @@ test('drawer validates, guards dirty close, preserves failures and updates detai
   await button(page, 'Tiếp tục chỉnh sửa').click();
   await page.getByRole('textbox', { name: 'Email', exact: true }).fill('invalid-email');
   await save();
-  await expect(page.locator('toast[data-type="error"]').filter({ hasText: 'Kiểm tra' }).last()).toBeVisible();
+  await expect(page.locator('toast[data-type="warning"]').filter({ hasText: 'Kiểm tra' }).last()).toBeVisible();
   await expect(editor.getByRole('status')).toHaveCount(0);
   await expect(page.getByRole('textbox', { name: 'Email', exact: true })).toHaveAttribute('aria-invalid', 'true');
-  await page.getByRole('textbox', { name: 'Email', exact: true }).fill('new@example.test');
-  await page.getByRole('checkbox', { name: 'Mô phỏng lỗi lưu' }).check();
+  await page.getByRole('textbox', { name: 'Email', exact: true }).fill('minhanh@example.test');
   await save();
-  await expect(page.locator('toast[data-type="error"]').filter({ hasText: 'Không thể lưu' })).toBeVisible();
-  await expect(editor.getByRole('status')).toHaveCount(0);
-  await expect(page.getByRole('textbox', { name: 'Họ và tên', exact: true })).toHaveValue('Liên hệ mới');
-  await page.getByRole('checkbox', { name: 'Mô phỏng lỗi lưu' }).uncheck();
+  await expect(page.locator('toast[data-type="error"]').filter({ hasText: 'Email đã được sử dụng' })).toBeVisible();
+  await page.getByRole('textbox', { name: 'Email', exact: true }).fill('new@example.test');
   await save();
   await expect(page.getByRole('status').filter({ hasText: 'Đã lưu liên hệ Liên hệ mới.' })).toBeVisible();
   await expect(page.locator('app-pattern-drawer app-pattern-contact-facts').first()).toContainText('Liên hệ mới');
+});
+
+test('drawer inform errors stay above the white section and valid save closes it', async ({ page }) => {
+  await open(page, 'drawer', 'create-inform');
+  await button(page, 'Tạo liên hệ').click();
+  const dialog = page.getByRole('dialog');
+  const editor = dialog.locator('app-pattern-form-editor');
+  await dialog.getByRole('button', { name: 'Tạo liên hệ', exact: true }).click({ delay: 350 });
+  await expect(editor.locator('sd-inform')).toContainText('Chưa thể lưu thông tin');
+  await expect(page.locator('toast[data-type="error"]')).toHaveCount(0);
+  const banner = (await editor.locator('sd-inform').boundingBox())!;
+  const section = (await editor.locator('sd-section').boundingBox())!;
+  expect(banner.y + banner.height).toBeLessThanOrEqual(section.y);
+  await expect(editor.locator('.sd-section')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+  await expect(editor.locator('.sd-section-header')).toHaveCount(0);
+  await editor.getByRole('textbox', { name: 'Họ và tên', exact: true }).fill('Liên hệ Inform');
+  await editor.getByRole('textbox', { name: 'Email', exact: true }).fill('email-sai');
+  await dialog.getByRole('button', { name: 'Tạo liên hệ', exact: true }).click({ delay: 350 });
+  await expect(editor.locator('sd-inform')).toBeVisible();
+  await expect(editor.getByRole('textbox', { name: 'Họ và tên', exact: true })).toHaveValue('Liên hệ Inform');
+  await dialog.screenshot({ path: 'test-results/drawer-inform.png' });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(editor.locator('sd-inform')).toBeInViewport();
+  await dialog.screenshot({ path: 'test-results/drawer-inform-mobile.png' });
+  await editor.getByRole('textbox', { name: 'Email', exact: true }).fill('inform@example.test');
+  await dialog.getByRole('button', { name: 'Tạo liên hệ', exact: true }).click({ delay: 350 });
+  await expect(dialog).toBeHidden();
+  await expect(page.getByRole('status').filter({ hasText: 'Đã lưu liên hệ Liên hệ Inform.' })).toBeVisible();
 });
 
 test('pristine create/update drawers close without a discard dialog and restore focus', async ({ page }) => {
@@ -496,21 +794,20 @@ test('clearing an optional region is dirty and saves the cleared value', async (
   await button(page, 'Tiếp tục chỉnh sửa').click();
   await button(page, 'Lưu thay đổi').click();
   await expect(page.locator('app-pattern-form-editor')).toHaveCount(0);
-  await expect(page.locator('app-pattern-contact-facts dd').nth(3)).toHaveText('Chưa cung cấp');
+  await expect(page.locator('app-pattern-contact-facts sd-section-item[label="Khu vực"]')).toContainText('Chưa cung cấp');
 });
 test('form lines compute totals and route guard protects drafts', async ({ page }) => {
   await open(page, 'form', 'lines');
   await page.getByRole('textbox', { name: 'Tên đơn hàng', exact: true }).fill('Đơn kiểm tra');
-  await page.getByRole('textbox', { name: 'Sản phẩm', exact: false }).fill('Máy in');
-  await page.getByRole('spinbutton', { name: 'Số lượng', exact: false }).fill('3');
-  await page.getByRole('spinbutton', { name: 'Đơn giá', exact: false }).fill('25000');
-  await expect(page.locator('app-pattern-form-editor')).toContainText('75.000 ₫');
+  await page.locator('sd-input-number[name="quantity"][data-line-id="1"] input').fill('3');
+  await page.locator('sd-input-number[name="price"][data-line-id="1"] input').fill('25000');
+  await expect(page.locator('app-pattern-inline-table sd-table')).toContainText('75.000 ₫');
   await page.locator('.variants a').filter({ hasText: 'Một cột ngắn' }).click();
   await expect(page.getByText('Thông tin chưa được lưu', { exact: true })).toBeVisible();
   await button(page, 'Tiếp tục chỉnh sửa').click();
   await expect(page).toHaveURL(/\/form\/lines$/);
-  await button(page, 'Tạo đơn hàng').click();
-  await expect(page.getByRole('status').filter({ hasText: 'Đã lưu dữ liệu mẫu trong phiên.' })).toBeVisible();
+  await button(page, 'Lưu').click();
+  await expect(page.locator('app-pattern-inline-table sd-inform')).toContainText('Đã lưu 2 dòng hàng');
   await page.locator('.variants a').filter({ hasText: 'Một cột ngắn' }).click();
   await expect(page).toHaveURL(/\/form\/simple$/);
 });

@@ -215,6 +215,12 @@ a:focus-visible {
   grid-template-columns: 1fr;
   max-width: 540px;
 }
+.form-compact {
+  width: 100%;
+  max-width: 580px;
+  box-sizing: border-box;
+  margin-inline: auto;
+}
 .form-grid > * {
   min-width: 0;
 }
@@ -228,6 +234,10 @@ a:focus-visible {
   background: var(--sd-surface);
   border: 1px solid var(--sd-border);
   border-radius: 6px;
+}
+.contact-form-section {
+  max-width: 860px;
+  margin-inline: auto;
 }
 .form-section {
   margin: 0 0 20px;

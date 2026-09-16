@@ -3,30 +3,22 @@
     <div class="row row-sm mx-0">
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item config-item--stacked">
-                <div class="config-item__label">
-                  <span class="config-item__title">src</span>
-                  <span class="config-item__desc"
-                    >Nhập URL ảnh hoặc chuỗi tên để avatar tự fallback sang chữ cái đầu và màu nền ngẫu nhiên.</span
-                  >
-                </div>
-                <sd-input [label]="'Hình ảnh URL hoặc Chuỗi Tên (Src)'" [(model)]="src"></sd-input>
+              <app-demo-property label="src">
+                <span propertyDescription> Nhập URL ảnh hoặc chuỗi tên để avatar tự fallback sang chữ cái đầu và màu nền ngẫu nhiên. </span>
+                <sd-input [(model)]="src" hideInlineError size="sm"></sd-input>
                 <div class="font-size-12 text-secondary">
                   <a href="javascript:void(0)" (click)="simulateEmptyUrl()">Thử xoá URL</a> |
                   <a href="javascript:void(0)" (click)="simulateName()">Thử nhập Tên (Fallback)</a> |
                   <a href="javascript:void(0)" (click)="simulateError()">Thử nhập URL lỗi</a>
-                </div>
-              </div>
+                </div></app-demo-property
+              >
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">size</span>
-                  <span class="config-item__desc">Kích thước hiển thị avatar, đơn vị pixel.</span>
-                </div>
-                <sd-input-number [label]="'Kích thước (Size - px)'" [(model)]="size"></sd-input-number>
-              </div>
+              <app-demo-property label="size">
+                <span propertyDescription>Kích thước hiển thị avatar, đơn vị pixel.</span>
+                <sd-input-number [(model)]="size" hideInlineError size="sm"></sd-input-number
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>

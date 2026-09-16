@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
@@ -18,7 +19,19 @@ type ButtonColor = 'primary' | 'secondary' | 'success' | 'error' | 'warning' | '
 @Component({
   selector: 'app-confirm-with-date',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdButton, SdCodeEditor, SdPageComponent, SdSection, SdInput, SdLabel, SdSelect, SdSwitch],
+  imports: [
+    DemoPropertyComponent,
+    CommonModule,
+    FormsModule,
+    SdButton,
+    SdCodeEditor,
+    SdPageComponent,
+    SdSection,
+    SdInput,
+    SdLabel,
+    SdSelect,
+    SdSwitch,
+  ],
   templateUrl: './with-date.component.html',
   styleUrls: ['./with-date.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

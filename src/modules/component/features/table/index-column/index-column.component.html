@@ -4,47 +4,38 @@
       <!-- CỘT TRÁI: THUỘC TÍNH -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="d-flex flex-column gap-12">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">index.enabled</span>
-                  <span class="config-item__desc">Bật/tắt cột STT — render thêm cột sticky đầu</span>
-                </div>
-                <sd-switch [(model)]="indexEnabled" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="index.enabled">
+                <span propertyDescription>Bật/tắt cột STT — render thêm cột sticky đầu</span>
+                <sd-switch [(model)]="indexEnabled" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">index.title</span>
-                  <span class="config-item__desc">Tiêu đề header của cột STT (mặc định '#')</span>
-                </div>
-                <sd-input [(model)]="indexTitle" [disabled]="!indexEnabled()"></sd-input>
-              </div>
+              <app-demo-property label="index.title">
+                <span propertyDescription>Tiêu đề header của cột STT (mặc định '#')</span>
+                <sd-input [(model)]="indexTitle" [disabled]="!indexEnabled()" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">index.width</span>
-                  <span class="config-item__desc">Chiều rộng cột STT (mặc định '50px')</span>
-                </div>
-                <sd-input [(model)]="indexWidth" [disabled]="!indexEnabled()"></sd-input>
-              </div>
+              <app-demo-property label="index.width">
+                <span propertyDescription>Chiều rộng cột STT (mặc định '50px')</span>
+                <sd-input [(model)]="indexWidth" [disabled]="!indexEnabled()" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">selector.visible</span>
-                  <span class="config-item__desc">Cột checkbox — STT render ngay sau selector</span>
-                </div>
-                <sd-switch [(model)]="showSelector" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="selector.visible">
+                <span propertyDescription>Cột checkbox — STT render ngay sau selector</span>
+                <sd-switch [(model)]="showSelector" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">paginate.pageSize</span>
-                  <span class="config-item__desc">Chuyển trang để xác nhận STT vẫn tính theo global index</span>
-                </div>
-                <sd-select [items]="pageSizeOptions" valueField="id" displayField="name" [(model)]="pageSize" size="sm"></sd-select>
-              </div>
+              <app-demo-property label="paginate.pageSize">
+                <span propertyDescription>Chuyển trang để xác nhận STT vẫn tính theo global index</span>
+                <sd-select
+                  [items]="pageSizeOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="pageSize"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
               <div class="hint-box">
                 💡 Sang trang 2 — STT bắt đầu từ <strong>{{ pageSize() + 1 }}</strong

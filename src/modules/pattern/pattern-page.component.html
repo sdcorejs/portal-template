@@ -1,7 +1,19 @@
 <sd-page [title]="'Pattern / ' + group().name" [description]="group().description">
   <div class="pattern-body" [class.table-page]="groupId() === 'table'">
-    <div [class.pattern-layout]="groupId() !== 'header' && groupId() !== 'table'">
-      @if (groupId() !== 'header' && groupId() !== 'table') {
+    <div [class.pattern-layout]="(groupId() === 'header' && variant()[0] === 'page') || (groupId() !== 'header' && groupId() !== 'table')">
+      @if (groupId() === 'header' && variant()[0] === 'page') {
+        <nav class="variants" aria-label="Biến thể Page Header">
+          @for (item of headerVariants; track item[0]) {
+            <a
+              routerLink="/pattern/header/page"
+              [queryParams]="{ example: item[0] }"
+              [class.active]="headerExample() === item[0]"
+              [attr.aria-current]="headerExample() === item[0] ? 'page' : null"
+              >{{ item[1] }}</a
+            >
+          }
+        </nav>
+      } @else if (groupId() !== 'header' && groupId() !== 'table') {
         <nav class="variants" aria-label="Biến thể">
           @for (item of group().variants; track item[0]) {
             <a [routerLink]="['/pattern', groupPath(), item[0]]" routerLinkActive="active" ariaCurrentWhenActive="page">{{ item[1] }}</a>

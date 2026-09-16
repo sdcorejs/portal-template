@@ -4,55 +4,49 @@
       <!-- CỘT TRÁI: THUỘC TÍNH -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="d-flex flex-column gap-12">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">type</span>
-                  <span class="config-item__desc">Chế độ xử lý: phía client hay server</span>
-                </div>
-                <sd-select [items]="tableTypeOptions" valueField="id" displayField="name" [(model)]="tableType" size="sm"></sd-select>
-              </div>
+              <app-demo-property label="type">
+                <span propertyDescription>Chế độ xử lý: phía client hay server</span>
+                <sd-select
+                  [items]="tableTypeOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="tableType"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">paginate.pageSize</span>
-                  <span class="config-item__desc">Số dòng hiển thị mỗi trang</span>
-                </div>
-                <sd-select [items]="pageSizeOptions" valueField="id" displayField="name" [(model)]="pageSize" size="sm"></sd-select>
-              </div>
+              <app-demo-property label="paginate.pageSize">
+                <span propertyDescription>Số dòng hiển thị mỗi trang</span>
+                <sd-select
+                  [items]="pageSizeOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="pageSize"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">config.visible</span>
-                  <span class="config-item__desc">Nút thiết lập hiển thị cột</span>
-                </div>
-                <sd-switch [(model)]="showConfig" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="config.visible">
+                <span propertyDescription>Nút thiết lập hiển thị cột</span>
+                <sd-switch [(model)]="showConfig" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">reload.visible</span>
-                  <span class="config-item__desc">Nút tải lại dữ liệu</span>
-                </div>
-                <sd-switch [(model)]="showReload" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="reload.visible">
+                <span propertyDescription>Nút tải lại dữ liệu</span>
+                <sd-switch [(model)]="showReload" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">export.visible</span>
-                  <span class="config-item__desc">Nút Export Excel/CSV</span>
-                </div>
-                <sd-switch [(model)]="showExport" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="export.visible">
+                <span propertyDescription>Nút Export Excel/CSV</span>
+                <sd-switch [(model)]="showExport" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">selector.visible</span>
-                  <span class="config-item__desc">Cột checkbox chọn dòng</span>
-                </div>
-                <sd-switch [(model)]="showSelector" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="selector.visible">
+                <span propertyDescription>Cột checkbox chọn dòng</span>
+                <sd-switch [(model)]="showSelector" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>

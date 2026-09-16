@@ -10,63 +10,42 @@
       <!-- CỘT TRÁI: CONFIGURATION -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">label</span>
-                  <span class="config-item__desc">Tiêu đề hiển thị phía trên dropdown.</span>
-                </div>
-                <sd-input [label]="'Label'" [(model)]="label"></sd-input>
-              </div>
+              <app-demo-property label="label">
+                <span propertyDescription>Tiêu đề hiển thị phía trên dropdown.</span>
+                <sd-input [(model)]="label" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">placeholder</span>
-                  <span class="config-item__desc">Nội dung gợi ý trước khi người dùng chọn giá trị.</span>
-                </div>
-                <sd-input [label]="'Placeholder'" [(model)]="placeholder"></sd-input>
-              </div>
+              <app-demo-property label="placeholder">
+                <span propertyDescription>Nội dung gợi ý trước khi người dùng chọn giá trị.</span>
+                <sd-input [(model)]="placeholder" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">size</span>
-                  <span class="config-item__desc">Điều chỉnh chiều cao và spacing của select.</span>
-                </div>
-                <sd-select [label]="'Size'" [items]="sizeOptions" valueField="id" displayField="name" [(model)]="size"></sd-select>
-              </div>
+              <app-demo-property label="size">
+                <span propertyDescription>Điều chỉnh chiều cao và spacing của select.</span>
+                <sd-select [items]="sizeOptions" valueField="id" displayField="name" [(model)]="size" hideInlineError size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">multiple</span>
-                  <span class="config-item__desc">Cho phép chọn nhiều giá trị cùng lúc.</span>
-                </div>
-                <sd-switch [(model)]="multiple" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="multiple">
+                <span propertyDescription>Cho phép chọn nhiều giá trị cùng lúc.</span>
+                <sd-switch [(model)]="multiple" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">disabled</span>
-                  <span class="config-item__desc">Khoá thao tác mở dropdown và chọn giá trị.</span>
-                </div>
-                <sd-switch [(model)]="disabled" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="disabled">
+                <span propertyDescription>Khoá thao tác mở dropdown và chọn giá trị.</span>
+                <sd-switch [(model)]="disabled" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">required</span>
-                  <span class="config-item__desc">Đánh dấu dropdown là trường bắt buộc.</span>
-                </div>
-                <sd-switch [(model)]="required" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="required">
+                <span propertyDescription>Đánh dấu dropdown là trường bắt buộc.</span>
+                <sd-switch [(model)]="required" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">viewed</span>
-                  <span class="config-item__desc">Hiển thị giá trị ở chế độ xem.</span>
-                </div>
-                <sd-switch [(model)]="viewed" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="viewed">
+                <span propertyDescription>Hiển thị giá trị ở chế độ xem.</span>
+                <sd-switch [(model)]="viewed" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>
@@ -74,24 +53,27 @@
       <!-- CỘT PHẢI: PREVIEW & CODE -->
       <div class="col-md-8">
         <div class="d-flex flex-column gap-16">
-          <sd-section title="Xem trước" icon="visibility"><div class="demo-section-content">
-            <div class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
-              <sd-select
-                style="width: 100%"
-                [items]="countries"
-                valueField="id"
-                displayField="name"
-                [(model)]="modelValue"
-                [label]="label()"
-                [placeholder]="placeholder()"
-                [size]="size()"
-                [multiple]="multiple()"
-                [disabled]="disabled()"
-                [required]="required()"
-                [viewed]="viewed()"></sd-select>
-            </div>
-            <div class="mt-16 font-size-13"><span class="T16M">Giá trị hiện tại:</span> {{ modelValue() }}</div>
-          </div></sd-section>
+          <sd-section title="Xem trước" icon="visibility"
+            ><div class="demo-section-content">
+              <div
+                class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
+                <sd-select
+                  style="width: 100%"
+                  [items]="countries"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="modelValue"
+                  [label]="label()"
+                  [placeholder]="placeholder()"
+                  [size]="size()"
+                  [multiple]="multiple()"
+                  [disabled]="disabled()"
+                  [required]="required()"
+                  [viewed]="viewed()"></sd-select>
+              </div>
+              <div class="mt-16 font-size-13"><span class="T16M">Giá trị hiện tại:</span> {{ modelValue() }}</div>
+            </div></sd-section
+          >
 
           <sd-section title="Mã nguồn" icon="code"
             ><div class="demo-section-content">

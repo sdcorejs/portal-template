@@ -10,71 +10,47 @@
       <!-- CỘT TRÁI: CONFIGURATION -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">label</span>
-                  <span class="config-item__desc">Tiêu đề hiển thị phía trên datetime picker.</span>
-                </div>
-                <sd-input [label]="'Label'" [(model)]="label"></sd-input>
-              </div>
+              <app-demo-property label="label">
+                <span propertyDescription>Tiêu đề hiển thị phía trên datetime picker.</span>
+                <sd-input [(model)]="label" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">placeholder</span>
-                  <span class="config-item__desc">Gợi ý định dạng ngày giờ cho người dùng.</span>
-                </div>
-                <sd-input [label]="'Placeholder'" [(model)]="placeholder"></sd-input>
-              </div>
+              <app-demo-property label="placeholder">
+                <span propertyDescription>Gợi ý định dạng ngày giờ cho người dùng.</span>
+                <sd-input [(model)]="placeholder" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">size</span>
-                  <span class="config-item__desc">Điều chỉnh nhịp hiển thị của control ngày giờ.</span>
-                </div>
-                <sd-select [label]="'Size'" [items]="sizeOptions" valueField="id" displayField="name" [(model)]="size"></sd-select>
-              </div>
+              <app-demo-property label="size">
+                <span propertyDescription>Điều chỉnh nhịp hiển thị của control ngày giờ.</span>
+                <sd-select [items]="sizeOptions" valueField="id" displayField="name" [(model)]="size" hideInlineError size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">min</span>
-                  <span class="config-item__desc">Mốc ngày giờ nhỏ nhất được phép chọn.</span>
-                </div>
-                <sd-date [label]="'Min'" [(model)]="min" placeholder="YYYY/MM/DD"></sd-date>
-              </div>
+              <app-demo-property label="min">
+                <span propertyDescription>Mốc ngày giờ nhỏ nhất được phép chọn.</span>
+                <sd-date [(model)]="min" placeholder="YYYY/MM/DD" hideInlineError size="sm"></sd-date
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">max</span>
-                  <span class="config-item__desc">Mốc ngày giờ lớn nhất được phép chọn.</span>
-                </div>
-                <sd-date [label]="'Max'" [(model)]="max" placeholder="YYYY/MM/DD"></sd-date>
-              </div>
+              <app-demo-property label="max">
+                <span propertyDescription>Mốc ngày giờ lớn nhất được phép chọn.</span>
+                <sd-date [(model)]="max" placeholder="YYYY/MM/DD" hideInlineError size="sm"></sd-date
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">disabled</span>
-                  <span class="config-item__desc">Khoá tương tác với datetime picker.</span>
-                </div>
-                <sd-switch [(model)]="disabled" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="disabled">
+                <span propertyDescription>Khoá tương tác với datetime picker.</span>
+                <sd-switch [(model)]="disabled" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">required</span>
-                  <span class="config-item__desc">Đánh dấu trường bắt buộc nhập ngày giờ.</span>
-                </div>
-                <sd-switch [(model)]="required" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="required">
+                <span propertyDescription>Đánh dấu trường bắt buộc nhập ngày giờ.</span>
+                <sd-switch [(model)]="required" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">viewed</span>
-                  <span class="config-item__desc">Chuyển control sang chế độ xem giá trị.</span>
-                </div>
-                <sd-switch [(model)]="viewed" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="viewed">
+                <span propertyDescription>Chuyển control sang chế độ xem giá trị.</span>
+                <sd-switch [(model)]="viewed" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>
@@ -82,22 +58,25 @@
       <!-- CỘT PHẢI: PREVIEW & CODE -->
       <div class="col-md-8">
         <div class="d-flex flex-column gap-16">
-          <sd-section title="Xem trước" icon="visibility"><div class="demo-section-content">
-            <div class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
-              <sd-datetime
-                style="width: 100%"
-                [(model)]="modelValue"
-                [label]="label()"
-                [placeholder]="placeholder()"
-                [size]="size()"
-                [disabled]="disabled()"
-                [required]="required()"
-                [viewed]="viewed()"
-                [min]="min()"
-                [max]="max()"></sd-datetime>
-            </div>
-            <div class="mt-16 font-size-13"><span class="T16M">Giá trị hiện tại:</span> {{ modelValue() }}</div>
-          </div></sd-section>
+          <sd-section title="Xem trước" icon="visibility"
+            ><div class="demo-section-content">
+              <div
+                class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
+                <sd-datetime
+                  style="width: 100%"
+                  [(model)]="modelValue"
+                  [label]="label()"
+                  [placeholder]="placeholder()"
+                  [size]="size()"
+                  [disabled]="disabled()"
+                  [required]="required()"
+                  [viewed]="viewed()"
+                  [min]="min()"
+                  [max]="max()"></sd-datetime>
+              </div>
+              <div class="mt-16 font-size-13"><span class="T16M">Giá trị hiện tại:</span> {{ modelValue() }}</div>
+            </div></sd-section
+          >
 
           <sd-section title="Mã nguồn" icon="code"
             ><div class="demo-section-content">

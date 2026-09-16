@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
@@ -9,7 +10,7 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 @Component({
   selector: 'app-icons-demo',
   standalone: true,
-  imports: [CommonModule, SdPageComponent, SdSection, SdInput, SdInputNumber],
+  imports: [DemoPropertyComponent, CommonModule, SdPageComponent, SdSection, SdInput, SdInputNumber],
   templateUrl: './icon.component.html',
   styleUrls: ['./icon.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

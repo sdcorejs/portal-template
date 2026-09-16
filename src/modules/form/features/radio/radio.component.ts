@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
@@ -21,7 +22,19 @@ type RadioColor = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'er
 @Component({
   selector: 'app-radio-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdCodeEditor, SdPageComponent, SdSection, SdInput, SdLabel, SdRadio, SdSelect, SdSwitch],
+  imports: [
+    DemoPropertyComponent,
+    CommonModule,
+    FormsModule,
+    SdCodeEditor,
+    SdPageComponent,
+    SdSection,
+    SdInput,
+    SdLabel,
+    SdRadio,
+    SdSelect,
+    SdSwitch,
+  ],
   templateUrl: './radio.component.html',
   styleUrls: ['./radio.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

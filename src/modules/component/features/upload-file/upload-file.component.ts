@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild, inject, DestroyRef } from '@angular/core';
@@ -17,6 +18,7 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
   selector: 'app-upload-file-demo',
   standalone: true,
   imports: [
+    DemoPropertyComponent,
     CommonModule,
     FormsModule,
     SdButton,
@@ -115,8 +117,7 @@ import { SdUploadFile } from '@sdcorejs/angular/components/upload-file';
 @Component({
   standalone: true,
   imports: [SdUploadFile],
-  templateUrl: './my-component.component.html',
-})
+  templateUrl: './my-component.component.html' })
 export class MyComponent {
   // Xem uploadLocal/fileDetails trong source demo: lưu File bằng object URL của phiên.
   // Ứng dụng thực tế thay adapter bằng API upload và metadata của module.

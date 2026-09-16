@@ -11,57 +11,47 @@
       <!-- CỘT TRÁI: FORM CẤU HÌNH -->
       <div class="col-md-6">
         <sd-section title="Cấu hình hệ thống" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">Phiên bản sidebar</span
-                  ><span class="config-item__desc">Chọn bố cục điều hướng phù hợp với cách làm việc.</span>
-                </div>
+              <app-demo-property label="Phiên bản sidebar">
+                <span propertyDescription>Chọn bố cục điều hướng phù hợp với cách làm việc.</span>
                 <sd-select
-                  label="Sidebar"
                   [items]="sidebarOptions"
                   valueField="id"
                   displayField="name"
                   [(model)]="sidebarVersion"
                   required
-                  [clearable]="false" />
-              </div>
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">format.number</span>
-                  <span class="config-item__desc"
-                    >Định dạng hiển thị/nhập liệu số toàn Portal (truyền vào <code>SD_CORE_CONFIGURATION.format.number</code>).</span
-                  >
-                </div>
+                  [clearable]="false"
+                  hideInlineError
+                  size="sm"
+              /></app-demo-property>
+              <app-demo-property label="format.number">
+                <span propertyDescription
+                  >Định dạng hiển thị/nhập liệu số toàn Portal (truyền vào <code>SD_CORE_CONFIGURATION.format.number</code>).</span
+                >
                 <sd-select
-                  [label]="'Number Format'"
                   [items]="numberFormatOptions"
                   valueField="id"
                   displayField="name"
-                  [(model)]="numberFormat">
-                </sd-select>
-              </div>
+                  [(model)]="numberFormat"
+                  hideInlineError
+                  size="sm">
+                </sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">language</span>
-                  <span class="config-item__desc">Ngôn ngữ mặc định (truyền vào <code>SD_CORE_CONFIGURATION.language</code>).</span>
-                </div>
-                <sd-select [label]="'Language'" [items]="languageOptions" valueField="id" displayField="name" [(model)]="language">
-                </sd-select>
-              </div>
+              <app-demo-property label="language">
+                <span propertyDescription>Ngôn ngữ mặc định (truyền vào <code>SD_CORE_CONFIGURATION.language</code>).</span>
+                <sd-select [items]="languageOptions" valueField="id" displayField="name" [(model)]="language" hideInlineError size="sm">
+                </sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">useTabRouter</span>
-                  <span class="config-item__desc"
-                    >Bật tab-router: mỗi route mở 1 tab. Tắt → truyền <code>[disabled]="true"</code> vào <code>sd-tab-router-outlet</code>,
-                    navigation hoạt động như router mặc định.</span
-                  >
-                </div>
-                <sd-switch [(model)]="useTabRouter" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="useTabRouter">
+                <span propertyDescription
+                  >Bật tab-router: mỗi route mở 1 tab. Tắt → truyền <code>[disabled]="true"</code> vào <code>sd-tab-router-outlet</code>,
+                  navigation hoạt động như router mặc định.</span
+                >
+                <sd-switch [(model)]="useTabRouter" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>

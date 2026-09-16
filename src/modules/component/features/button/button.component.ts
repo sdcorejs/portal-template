@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
@@ -15,7 +16,19 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 @Component({
   selector: 'app-button-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdButton, SdCodeEditor, SdSwitch, SdPageComponent, SdSection, SdInput, SdSelect, SdLabel],
+  imports: [
+    DemoPropertyComponent,
+    CommonModule,
+    FormsModule,
+    SdButton,
+    SdCodeEditor,
+    SdSwitch,
+    SdPageComponent,
+    SdSection,
+    SdInput,
+    SdSelect,
+    SdLabel,
+  ],
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

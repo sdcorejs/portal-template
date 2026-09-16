@@ -4,7 +4,7 @@
       <!-- CỘT TRÁI: THUỘC TÍNH -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
               <!-- HƯỚNG DẪN SỬ DỤNG -->
               <div class="config-item">
@@ -14,49 +14,39 @@
                 </div>
               </div>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">sidebarWidth</span>
-                  <span class="config-item__desc">Chiều rộng của sidebar anchor list.</span>
-                </div>
+              <app-demo-property label="sidebarWidth">
+                <span propertyDescription>Chiều rộng của sidebar anchor list.</span>
                 <sd-select
-                  [label]="'Sidebar Width'"
                   [items]="sidebarWidthOptions"
                   valueField="id"
                   displayField="name"
-                  [(model)]="sidebarWidth">
-                </sd-select>
-              </div>
+                  [(model)]="sidebarWidth"
+                  hideInlineError
+                  size="sm">
+                </sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">containerHeight</span>
-                  <span class="config-item__desc">Chiều cao của container (⚠️ bắt buộc).</span>
-                </div>
+              <app-demo-property label="containerHeight">
+                <span propertyDescription>Chiều cao của container (⚠️ bắt buộc).</span>
                 <sd-select
-                  [label]="'Container Height'"
                   [items]="containerHeightOptions"
                   valueField="id"
                   displayField="name"
-                  [(model)]="containerHeight">
-                </sd-select>
-              </div>
+                  [(model)]="containerHeight"
+                  hideInlineError
+                  size="sm">
+                </sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">ellipsis</span>
-                  <span class="config-item__desc">Cho phép cắt ngắn text với ... nếu quá dài.</span>
-                </div>
-                <sd-switch [label]="'Ellipsis'" [(model)]="ellipsis"></sd-switch>
-              </div>
+              <app-demo-property label="ellipsis">
+                <span propertyDescription>Cho phép cắt ngắn text với ... nếu quá dài.</span>
+                <sd-switch [(model)]="ellipsis" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">showIcons</span>
-                  <span class="config-item__desc">Hiển thị icon bên cạnh các tiêu đề.</span>
-                </div>
-                <sd-switch [label]="'Show Icons'" [(model)]="showIcons"></sd-switch>
-              </div>
+              <app-demo-property label="showIcons">
+                <span propertyDescription>Hiển thị icon bên cạnh các tiêu đề.</span>
+                <sd-switch [(model)]="showIcons" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>

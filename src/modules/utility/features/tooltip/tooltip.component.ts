@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild, computed, signal } from '@angular/core';
@@ -14,7 +15,17 @@ type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
 @Component({
   selector: 'app-tooltip-demo',
   standalone: true,
-  imports: [CommonModule, SdPageComponent, SdSection, SdCodeEditor, SdInput, SdInputNumber, SdSelect, SdTooltipDirective],
+  imports: [
+    DemoPropertyComponent,
+    CommonModule,
+    SdPageComponent,
+    SdSection,
+    SdCodeEditor,
+    SdInput,
+    SdInputNumber,
+    SdSelect,
+    SdTooltipDirective,
+  ],
   templateUrl: './tooltip.component.html',
   styleUrls: ['./tooltip.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, input, signal, viewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 import { SdButton } from '@sdcorejs/angular/components/button';
 import { SdBadge } from '@sdcorejs/angular/components/badge';
@@ -24,17 +26,16 @@ export class HeaderComponent {
   edit(scope: 'page' | 'drawer'): void {
     if (!this.canEdit() || this.pending()[scope === 'page' ? 'detail' : scope]) return;
     if (scope === 'drawer') this.drawerMode.set('update');
-    else this.pageVariant.set('update');
+    else this.selectPageVariant('update');
   }
   readonly variant = input('page');
-  readonly pageVariant = signal('basic');
-  readonly pageVariants = [
-    ['basic', 'Cơ bản'],
-    ['advanced', 'Nâng cao'],
-    ['actions', 'Tác vụ'],
-    ['compact', 'Tác vụ nhỏ gọn'],
-    ['grouped', 'Tác vụ có gom nhóm'],
-  ];
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly query = toSignal(this.route.queryParamMap, { initialValue: this.route.snapshot.queryParamMap });
+  readonly pageVariant = computed(() => this.query().get('example') ?? 'basic');
+  selectPageVariant(example: string): void {
+    void this.router.navigate([], { relativeTo: this.route, queryParams: { example }, queryParamsHandling: 'merge' });
+  }
   readonly examples = [
     { id: 'list', label: 'Danh sách', title: 'Danh sách đơn hàng', description: 'Quản lý đơn hàng theo trạng thái xử lý.' },
     { id: 'detail', label: 'Chi tiết', title: 'Chi tiết đơn hàng', description: 'Công ty An Phát · Miền Bắc' },
@@ -111,7 +112,7 @@ export class HeaderComponent {
       !Number.isFinite(Number(this.draft.amount)) ||
       Number(this.draft.amount) <= 0
     ) {
-      this.notify.error('Nhập khách hàng, khu vực và giá trị đơn hàng lớn hơn 0.');
+      this.notify.warning('Nhập khách hàng, khu vực và giá trị đơn hàng lớn hơn 0.');
       return;
     }
     this.act('drawer', 'Lưu');

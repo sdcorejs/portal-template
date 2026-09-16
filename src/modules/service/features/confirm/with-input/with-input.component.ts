@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
@@ -20,6 +21,7 @@ type ButtonColor = 'primary' | 'secondary' | 'success' | 'error' | 'warning' | '
   selector: 'app-confirm-with-input',
   standalone: true,
   imports: [
+    DemoPropertyComponent,
     CommonModule,
     FormsModule,
     SdButton,
@@ -84,8 +86,7 @@ export class MyComponent {
         noTitle: '${this.noTitle()}',${yesColor ? `\n        yesButtonColor: '${yesColor}',` : ''}${noColor ? `\n        noButtonColor: '${noColor}',` : ''}
         required: ${this.required()},
         maxlength: ${this.maxlength()},
-        defaultValue: '${this.defaultValue()}',
-      });
+        defaultValue: '${this.defaultValue()}' });
       console.log(value); // Chuỗi người dùng đã nhập
     } catch {
       // Người dùng hủy

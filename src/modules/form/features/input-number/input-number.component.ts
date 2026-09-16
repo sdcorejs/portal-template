@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
@@ -18,6 +19,7 @@ import { Size as SdSize } from '@sdcorejs/utils/models';
   selector: 'app-input-number-demo',
   standalone: true,
   imports: [
+    DemoPropertyComponent,
     CommonModule,
     FormsModule,
     MatIconModule,

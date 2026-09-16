@@ -4,62 +4,45 @@
       <!-- CỘT TRÁI: THUỘC TÍNH -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="d-flex flex-column gap-12">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">tree.maxDepth</span>
-                  <span class="config-item__desc">Giới hạn độ sâu cây — node sâu hơn sẽ không render con</span>
-                </div>
-                <sd-input-number [(model)]="maxDepth" [min]="1" [max]="10"></sd-input-number>
-              </div>
+              <app-demo-property label="tree.maxDepth">
+                <span propertyDescription>Giới hạn độ sâu cây — node sâu hơn sẽ không render con</span>
+                <sd-input-number [(model)]="maxDepth" [min]="1" [max]="10" hideInlineError size="sm"></sd-input-number
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">tree.defaultExpanded</span>
-                  <span class="config-item__desc">false | true | số cấp mở sẵn (vd 1 = mở cấp 1)</span>
-                </div>
+              <app-demo-property label="tree.defaultExpanded">
+                <span propertyDescription>false | true | số cấp mở sẵn (vd 1 = mở cấp 1)</span>
                 <sd-select
                   [items]="defaultExpandedOptions"
                   valueField="id"
                   displayField="name"
                   [(model)]="defaultExpandedMode"
-                  size="sm"></sd-select>
-              </div>
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
               @if (defaultExpandedMode() === 'level') {
-                <div class="config-item">
-                  <div class="config-item__label">
-                    <span class="config-item__title">expandLevel</span>
-                    <span class="config-item__desc">Mở tới cấp N (1 = chỉ mở root, 2 = mở thêm cấp 2)</span>
-                  </div>
-                  <sd-input-number [(model)]="expandLevel" [min]="0" [max]="5"></sd-input-number>
-                </div>
+                <app-demo-property label="expandLevel">
+                  <span propertyDescription>Mở tới cấp N (1 = chỉ mở root, 2 = mở thêm cấp 2)</span>
+                  <sd-input-number [(model)]="expandLevel" [min]="0" [max]="5" hideInlineError size="sm"></sd-input-number
+                ></app-demo-property>
               }
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">tree.indentSize</span>
-                  <span class="config-item__desc">Pixel thụt vào mỗi cấp (mặc định 20)</span>
-                </div>
-                <sd-input-number [(model)]="indentSize" [min]="0" [max]="60"></sd-input-number>
-              </div>
+              <app-demo-property label="tree.indentSize">
+                <span propertyDescription>Pixel thụt vào mỗi cấp (mặc định 20)</span>
+                <sd-input-number [(model)]="indentSize" [min]="0" [max]="60" hideInlineError size="sm"></sd-input-number
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">index.enabled</span>
-                  <span class="config-item__desc">Bật cột STT — chỉ đánh số trên root rows</span>
-                </div>
-                <sd-switch [(model)]="showIndex" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="index.enabled">
+                <span propertyDescription>Bật cột STT — chỉ đánh số trên root rows</span>
+                <sd-switch [(model)]="showIndex" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">selector.visible</span>
-                  <span class="config-item__desc">Checkbox theo dòng — bao gồm cả node con</span>
-                </div>
-                <sd-switch [(model)]="showSelector" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="selector.visible">
+                <span propertyDescription>Checkbox theo dòng — bao gồm cả node con</span>
+                <sd-switch [(model)]="showSelector" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
               <div class="hint-box">
                 📋 Dữ liệu: <strong>{{ rootCount() }}</strong> hạng mục gốc, mỗi mục có 2–4 con. Một số node có cấp 3 — đổi

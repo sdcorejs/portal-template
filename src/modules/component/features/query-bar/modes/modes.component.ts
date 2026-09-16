@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
@@ -23,7 +24,7 @@ interface Employee {
 @Component({
   selector: 'app-query-bar-modes',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdCodeEditor, SdPageComponent, SdQueryBar, SdSection, SdSelect, SdSwitch],
+  imports: [DemoPropertyComponent, CommonModule, FormsModule, SdCodeEditor, SdPageComponent, SdQueryBar, SdSection, SdSelect, SdSwitch],
   templateUrl: './modes.component.html',
   styleUrls: ['./modes.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

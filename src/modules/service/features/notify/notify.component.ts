@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
@@ -19,6 +20,7 @@ export type ToastType = 'success' | 'info' | 'warning' | 'error';
   selector: 'app-notify-demo',
   standalone: true,
   imports: [
+    DemoPropertyComponent,
     CommonModule,
     FormsModule,
     SdButton,

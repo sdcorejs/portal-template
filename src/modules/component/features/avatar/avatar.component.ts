@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
@@ -13,7 +14,18 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 @Component({
   selector: 'app-avatar-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdCodeEditor, SdPageComponent, SdSection, SdAvatar, SdInput, SdInputNumber, SdLabel],
+  imports: [
+    DemoPropertyComponent,
+    CommonModule,
+    FormsModule,
+    SdCodeEditor,
+    SdPageComponent,
+    SdSection,
+    SdAvatar,
+    SdInput,
+    SdInputNumber,
+    SdLabel,
+  ],
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,8 +55,7 @@ import { SdAvatar } from '@sdcorejs/angular/components/avatar';
 @Component({
   standalone: true,
   imports: [SdAvatar],
-  templateUrl: './my-component.component.html',
-})
+  templateUrl: './my-component.component.html' })
 export class MyComponent {
   // Variables or Logic here
 }`;

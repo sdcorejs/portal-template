@@ -1,0 +1,82 @@
+@if (variant() === 'order-lines') {
+  <sd-input label="Tên đơn hàng" [(model)]="orderName" required hideInlineError [disabled]="saving()" />
+}
+<div class="d-flex align-items-center justify-content-between flex-wrap gap-8">
+  <div class="d-flex align-items-center gap-8">
+    <strong>{{ variant() === 'order-lines' ? 'Dòng hàng' : 'Dòng hàng của đơn DH-1024' }}</strong>
+    <sd-button
+      prefixIcon="info"
+      type="text"
+      color="info"
+      size="sm"
+      tooltip="Để trống sản phẩm hoặc nhập số lượng 0 rồi Lưu để xem warning FE. Nhập trùng sản phẩm để xem error từ BE mẫu. Ô lỗi có tooltip." />
+  </div>
+  <div class="d-flex gap-8">
+    <sd-button title="Lưu" prefixIcon="save" type="fill" color="primary" [loading]="saving()" [disabled]="saving()" (click)="save()" />
+  </div>
+</div>
+@if (message()) {
+  <sd-inform [color]="severity()" [title]="severity() === 'success' ? 'Lưu thành công' : 'Kiểm tra dòng hàng'" [description]="message()" />
+}
+<div class="inline-table-region">
+  <sd-table [option]="option" autoId="pattern-inline-editor">
+    <ng-template sdTableCommandHeaderDef>
+      <sd-button tooltip="Thêm dòng" prefixIcon="add" size="sm" type="light" color="primary" [disabled]="saving()" (click)="add()" />
+    </ng-template>
+    <ng-template sdTableTitleDef="name">
+      <span class="d-inline-flex align-items-center gap-4"
+        ><strong>Sản phẩm <span class="text-error">*</span></strong>
+        <span tabindex="0" aria-label="Hướng dẫn sản phẩm" sdTooltip="Mỗi sản phẩm chỉ xuất hiện một lần trong đơn hàng."
+          ><sd-icon name="info" size="sm"
+        /></span>
+      </span>
+    </ng-template>
+    <ng-template sdTableTitleDef="quantity"
+      ><strong>Số lượng <span class="text-error">*</span></strong></ng-template
+    >
+    <ng-template sdTableTitleDef="price"
+      ><strong>Đơn giá (VND) <span class="text-error">*</span></strong></ng-template
+    >
+    <ng-template sdTableCellDef="name" let-row="item">
+      <sd-input
+        name="name"
+        [attr.data-line-id]="row.id"
+        [form]="row.form"
+        [model]="row.name"
+        size="sm"
+        hideInlineError
+        required
+        [inlineError]="serverErrors()[row.id]" />
+    </ng-template>
+    <ng-template sdTableCellDef="amount" let-row="item">
+      <strong class="d-block text-right">{{ amounts()[row.id] | sdFormatNumber: 0 }} ₫</strong>
+    </ng-template>
+    <ng-template sdTableCellDef="quantity" let-row="item">
+      <sd-input-number
+        name="quantity"
+        [attr.data-line-id]="row.id"
+        [form]="row.form"
+        [model]="row.quantity"
+        size="sm"
+        hideInlineError
+        required
+        [min]="1"
+        [precision]="0" />
+    </ng-template>
+    <ng-template sdTableCellDef="price" let-row="item">
+      <sd-input-number
+        name="price"
+        [attr.data-line-id]="row.id"
+        [form]="row.form"
+        [model]="row.price"
+        size="sm"
+        hideInlineError
+        required
+        [min]="0"
+        [precision]="0" />
+    </ng-template>
+  </sd-table>
+</div>
+<div class="d-flex justify-content-between gap-8 text-secondary fs-13">
+  <span>{{ rows().length }} dòng hàng</span><strong>Tổng cộng: {{ total() | sdFormatNumber: 0 }} ₫</strong>
+</div>

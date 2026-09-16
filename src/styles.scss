@@ -1,4 +1,5 @@
 @use '@sdcorejs/angular/assets/scss/themes/default' as sd;
+@use './styles/demo';
 
 html {
   @include sd.theme(

@@ -1,10 +1,11 @@
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SdButton } from '@sdcorejs/angular/components/button';
 import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
-import { SdSection, SdSectionItem } from '@sdcorejs/angular/components/section';
+import { SdSection } from '@sdcorejs/angular/components/section';
 import { SdInput } from '@sdcorejs/angular/forms/input';
 import { SdLabel } from '@sdcorejs/angular/forms/label';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
@@ -13,7 +14,18 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 @Component({
   selector: 'app-section-header-slots',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdSection, SdSectionItem, SdButton, SdCodeEditor, SdPageComponent, SdInput, SdSwitch, SdLabel],
+  imports: [
+    DemoPropertyComponent,
+    CommonModule,
+    FormsModule,
+    SdSection,
+    SdButton,
+    SdCodeEditor,
+    SdPageComponent,
+    SdInput,
+    SdSwitch,
+    SdLabel,
+  ],
   templateUrl: './header-slots.component.html',
   styleUrls: ['./header-slots.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -83,8 +95,7 @@ import { SdSection } from '@sdcorejs/angular/components/section';
   selector: 'app-my-component',
   standalone: true,
   imports: [SdSection, SdButton],
-  templateUrl: './my-component.component.html',
-})
+  templateUrl: './my-component.component.html' })
 export class MyComponent {
   onEdit() { /* ... */ }
   onDelete() { /* ... */ }

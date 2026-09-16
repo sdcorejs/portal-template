@@ -4,13 +4,14 @@ import { SdSection, SdSectionItem } from '@sdcorejs/angular/components/section';
 import { SdButton } from '@sdcorejs/angular/components/button';
 import { SdDataState } from '@sdcorejs/angular/components/data-state';
 import { SdInput } from '@sdcorejs/angular/forms/input';
+import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdNotifyService } from '@sdcorejs/angular/services/notify';
 import { ResultsTableComponent } from '../../components/results-table.component';
 import { seedOrders } from '../../data/pattern-query';
 
 @Component({
   selector: 'app-pattern-tab-group',
-  imports: [SdTab, SdTabGroup, SdSection, SdSectionItem, SdButton, SdDataState, SdInput, ResultsTableComponent],
+  imports: [SdTab, SdTabGroup, SdSection, SdSectionItem, SdButton, SdDataState, SdInput, SdSelect, ResultsTableComponent],
   templateUrl: './tab-group.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'd-block' },
@@ -47,6 +48,11 @@ export class TabGroupComponent {
   readonly selected = signal(0);
   readonly rows = signal(seedOrders());
   readonly shape = signal<'line' | 'pills' | 'segmented'>('line');
+  readonly shapeOptions = [
+    { id: 'line', name: 'Line · Gạch chân' },
+    { id: 'pills', name: 'Pills · Bo tròn' },
+    { id: 'segmented', name: 'Segmented · Chia nhóm' },
+  ];
   readonly loading = signal(false);
   readonly state = signal<'ready' | 'empty' | 'error'>('ready');
   readonly available = signal(false);
@@ -107,7 +113,7 @@ export class TabGroupComponent {
   async save(): Promise<void> {
     if (!(this.name ?? '').trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email ?? '')) {
       this.selected.set(!(this.name ?? '').trim() ? 0 : 1);
-      this.notify.error('Nhập tên khách hàng và email hợp lệ.');
+      this.notify.warning('Nhập tên khách hàng và email hợp lệ.');
       return;
     }
     await this.load();

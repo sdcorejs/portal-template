@@ -7,7 +7,7 @@ import { SdButton } from '@sdcorejs/angular/components/button';
 import { SdTab, SdTabGroup } from '@sdcorejs/angular/components/tab';
 import { SdCodeEditor, CodeLanguage } from '@sdcorejs/angular/components/code-editor';
 import { MAT_TABS_CONFIG } from '@angular/material/tabs';
-import { PATTERN_GROUPS, PATTERN_PATHS } from './catalog/pattern-catalog';
+import { PATTERN_GROUPS, PATTERN_PATHS, PAGE_HEADER_VARIANTS } from './catalog/pattern-catalog';
 import { PatternDraft } from './data/pattern-draft';
 const LOADERS: Record<string, () => Promise<Type<unknown>>> = {
   'tab-group': () => import('./features/tab-group/tab-group.component').then(m => m.TabGroupComponent),
@@ -34,7 +34,10 @@ interface SourceFile {
 })
 export class PatternPageComponent {
   readonly draft = inject(PatternDraft);
+  readonly headerVariants = PAGE_HEADER_VARIANTS;
   private readonly route = inject(ActivatedRoute);
+  private readonly query = toSignal(this.route.queryParamMap, { initialValue: this.route.snapshot.queryParamMap });
+  readonly headerExample = computed(() => this.query().get('example') ?? 'basic');
   private readonly data = toSignal(this.route.data, { initialValue: this.route.snapshot.data });
   private readonly params = toSignal(this.route.paramMap, { initialValue: this.route.snapshot.paramMap });
   readonly groupId = computed(() => this.data()['group'] as string);

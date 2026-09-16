@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
@@ -27,7 +28,18 @@ const STATUS_OPTIONS = [
 @Component({
   selector: 'app-table-index-column',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdTable, SdCodeEditor, SdPageComponent, SdSection, SdSelect, SdSwitch, SdInput],
+  imports: [
+    DemoPropertyComponent,
+    CommonModule,
+    FormsModule,
+    SdTable,
+    SdCodeEditor,
+    SdPageComponent,
+    SdSection,
+    SdSelect,
+    SdSwitch,
+    SdInput,
+  ],
   templateUrl: './index-column.component.html',
   styleUrls: ['./index-column.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -103,8 +115,7 @@ ${
     { field: 'createdAt', title: 'Tạo lúc',  type: 'datetime' },
   ],
 
-  paginate: { pageSize: ${ps}, pages: [5, 10, 25] },
-};`;
+  paginate: { pageSize: ${ps}, pages: [5, 10, 25] } };`;
   });
 
   // ── Columns ────────────────────────────────────────────────────────────────

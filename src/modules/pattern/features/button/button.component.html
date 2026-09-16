@@ -1,50 +1,142 @@
 @switch (variant()) {
+  @case ('grouped') {
+    <sd-section title="Tác vụ gộp bằng popover">
+      <div class="p-20 d-flex align-items-center flex-wrap gap-8">
+        <sd-button title="Tác vụ" prefixIcon="bolt" suffixIcon="expand_more" type="light" color="primary">
+          <sd-button-item-divider title="Xử lý hồ sơ" />
+          @for (action of workflowActions; track action.title) {
+            <sd-button-item [prefixIcon]="action.icon" [color]="action.color" (click)="runAction(action.title)">{{
+              action.title
+            }}</sd-button-item>
+          }
+          <sd-button-item-divider title="Dữ liệu" />
+          @for (action of dataActions; track action.title) {
+            <sd-button-item [prefixIcon]="action.icon" [color]="action.color" (click)="runAction(action.title)">{{
+              action.title
+            }}</sd-button-item>
+          }
+        </sd-button>
+        <sd-button prefixIcon="more_horiz" tooltip="Tác vụ khác" type="light" color="secondary">
+          @for (action of actions; track action.title) {
+            <sd-button-item [prefixIcon]="action.icon" [color]="action.color" (click)="runAction(action.title)">{{
+              action.title
+            }}</sd-button-item>
+          }
+        </sd-button>
+      </div>
+    </sd-section>
+  }
   @case ('crud') {
-    <div class="d-flex align-items-center flex-wrap gap-8">
-      <sd-button title="Tạo liên hệ" type="fill" color="primary" routerLink="/pattern/drawer/create" /><sd-button
-        title="Lưu thay đổi"
-        type="outline"
-        routerLink="/pattern/drawer/update" /><sd-button title="Chỉnh sửa" type="text" routerLink="/pattern/drawer/update" /><sd-button
-        title="Xem chi tiết"
-        type="text"
-        routerLink="/pattern/drawer/detail" />
-    </div>
-    <p class="text-secondary fs-13">Mở đúng mẫu create/update/detail để thử hành động. Detail dùng Đóng; update dùng Lưu thay đổi.</p>
+    <sd-section hideHeader
+      ><div class="p-20">
+        <div class="d-flex align-items-center flex-wrap gap-8">
+          <sd-button title="Tạo mới" prefixIcon="add" type="fill" color="primary" routerLink="/pattern/drawer/create" />
+          <sd-button title="Chỉnh sửa" prefixIcon="edit" type="fill" color="primary" routerLink="/pattern/drawer/update" />
+          <sd-button
+            title="Lưu"
+            prefixIcon="save"
+            type="fill"
+            color="primary"
+            [loading]="saving()"
+            [disabled]="saving()"
+            (click)="save()" />
+          <sd-button title="Xoá" prefixIcon="delete" type="fill" color="error" [disabled]="deleted()" (click)="remove()" />
+        </div>
+        <p class="mt-18 mb-0">
+          Xem chi tiết qua <a routerLink="/pattern/drawer/detail">LH-1024</a> hoặc
+          <a routerLink="/pattern/drawer/detail">Nguyễn Minh Anh</a>.
+        </p>
+      </div></sd-section
+    >
+    <p class="text-secondary fs-13">
+      Convention khuyến khích khi màn hình đã thể hiện rõ đối tượng. Tạo, sửa và lưu dùng primary fill; xoá dùng error fill.
+    </p>
+  }
+  @case ('crud-entity') {
+    <sd-section hideHeader
+      ><div class="p-20">
+        <div class="d-flex align-items-center flex-wrap gap-8">
+          <sd-button title="Tạo liên hệ" prefixIcon="add" type="fill" color="primary" routerLink="/pattern/drawer/create" />
+          <sd-button title="Chỉnh sửa liên hệ" prefixIcon="edit" type="fill" color="primary" routerLink="/pattern/drawer/update" />
+          <sd-button
+            title="Lưu liên hệ"
+            prefixIcon="save"
+            type="fill"
+            color="primary"
+            [loading]="saving()"
+            [disabled]="saving()"
+            (click)="save()" />
+        </div>
+        <p class="mt-18 mb-0">Chi tiết: <a routerLink="/pattern/drawer/detail">Nguyễn Minh Anh</a></p>
+      </div></sd-section
+    >
+    <p class="text-secondary fs-13">CRUD theo đối tượng: thêm tên đối tượng khi cần phân biệt nhiều ngữ cảnh trong cùng màn hình.</p>
   }
   @case ('query') {
-    <div class="d-flex align-items-center flex-wrap gap-8">
-      <sd-button title="Tìm kiếm" type="fill" color="primary" routerLink="/pattern/table/filter" /><sd-button
-        title="Áp dụng bộ lọc"
-        type="outline"
-        routerLink="/pattern/composition/listing" /><sd-button
-        title="Xóa bộ lọc"
-        type="text"
-        (click)="message.set('Đưa các điều kiện về mặc định; thử query thật trong mẫu Listing.')" />
-    </div>
+    <sd-section hideHeader
+      ><div class="p-20 d-flex align-items-center flex-wrap gap-8">
+        <sd-button title="Tìm kiếm" prefixIcon="search" type="light" color="primary" routerLink="/pattern/table/quick-search" />
+        <sd-button title="Áp dụng bộ lọc" prefixIcon="filter_alt" type="light" color="info" routerLink="/pattern/table/external-filter" />
+        <sd-button
+          title="Xóa bộ lọc"
+          prefixIcon="filter_alt_off"
+          type="light"
+          color="secondary"
+          (click)="message.set('Đã đặt lại điều kiện tìm kiếm mẫu.')" /></div
+    ></sd-section>
   }
   @case ('workflow') {
-    <div class="d-flex align-items-center flex-wrap gap-8">
-      <sd-button title="Gửi duyệt" type="fill" color="primary" (click)="message.set('Đã gửi đơn hàng mẫu để chờ duyệt.')" /><sd-button
-        title="Duyệt đơn hàng"
-        type="outline"
-        (click)="message.set('Đã duyệt đơn hàng mẫu.')" /><sd-button
-        title="Từ chối"
-        type="text"
-        (click)="message.set('Đã từ chối đơn hàng mẫu.')" />
+    <div class="d-grid gap-20">
+      <sd-section title="Tác vụ có icon"
+        ><div class="p-20 d-flex align-items-center flex-wrap gap-8">
+          @for (action of actions; track action.title) {
+            <sd-button
+              [title]="action.title"
+              [prefixIcon]="action.icon"
+              [color]="action.color"
+              type="light"
+              (click)="runAction(action.title)" />
+          }</div
+      ></sd-section>
+      <sd-section title="Tác vụ không icon"
+        ><div class="p-20 d-flex align-items-center flex-wrap gap-8">
+          @for (action of actions; track action.title) {
+            <sd-button [title]="action.title" [color]="action.color" type="light" (click)="runAction(action.title)" />
+          }</div
+      ></sd-section>
+      <sd-section title="Tác vụ nhỏ gọn"
+        ><div class="p-20 d-flex align-items-center flex-wrap gap-8">
+          @for (action of actions; track action.title) {
+            <sd-button
+              [prefixIcon]="action.icon"
+              [tooltip]="action.title"
+              [color]="action.color"
+              type="light"
+              (click)="runAction(action.title)" />
+          }</div
+      ></sd-section>
     </div>
-    <p class="text-secondary fs-13">Tham khảo câu chữ; thao tác chuyển trạng thái bản ghi nằm ở Hàng đợi xử lý.</p>
+    <p class="text-secondary fs-13">
+      Màu theo ý nghĩa nghiệp vụ. Icon-only cần tooltip mô tả rõ hành động; dùng khi người dùng đã quen thao tác.
+    </p>
   }
   @case ('danger') {
     @if (!deleted()) {
       <p>Đơn hàng mẫu DH-1024 · An Phát</p>
-      <sd-button title="Xóa đơn hàng" color="error" type="fill" (click)="remove()" />
+      <sd-button title="Xoá" prefixIcon="delete" color="error" type="fill" (click)="remove()" />
     } @else {
-      <sd-button title="Khôi phục dữ liệu mẫu" (click)="deleted.set(false); message.set('')" />
+      <sd-button
+        title="Khôi phục dữ liệu mẫu"
+        prefixIcon="restore"
+        type="light"
+        color="info"
+        (click)="deleted.set(false); message.set('')" />
     }
   }
   @case ('async') {
     <sd-button
-      [title]="saving() ? 'Đang lưu…' : attempt() === 1 ? 'Thử lại' : 'Lưu thay đổi'"
+      [title]="saving() ? 'Đang lưu…' : attempt() === 1 ? 'Thử lại' : 'Lưu'"
+      prefixIcon="save"
       type="fill"
       color="primary"
       [disabled]="saving()"

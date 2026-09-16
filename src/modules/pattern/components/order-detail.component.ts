@@ -32,7 +32,7 @@ export class OrderDetailComponent {
     const row = this.record();
     if (!row || !this.canEdit() || this.saving()) return;
     if (!this.draft.name.trim() || !Number.isFinite(this.draft.amount) || this.draft.amount < 0) {
-      this.notify.error('Nhập khách hàng và giá trị đơn hàng hợp lệ.');
+      this.notify.warning('Nhập khách hàng và giá trị đơn hàng hợp lệ.');
       return;
     }
     this.saving.set(true);

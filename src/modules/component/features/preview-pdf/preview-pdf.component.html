@@ -4,23 +4,17 @@
       <!-- CỘT TRÁI: THUỘC TÍNH -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="d-flex flex-column gap-12">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">source (preset)</span>
-                  <span class="config-item__desc">Bộ PDF mẫu — Mozilla pdf.js / broken URL</span>
-                </div>
-                <sd-select [items]="setOptions" valueField="id" displayField="name" [(model)]="pdfSet" size="sm"></sd-select>
-              </div>
+              <app-demo-property label="source (preset)">
+                <span propertyDescription>Bộ PDF mẫu — Mozilla pdf.js / broken URL</span>
+                <sd-select [items]="setOptions" valueField="id" displayField="name" [(model)]="pdfSet" hideInlineError size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">source (File)</span>
-                  <span class="config-item__desc">Chọn file PDF từ máy — override preset</span>
-                </div>
-                <input type="file" accept="application/pdf" (change)="onFilePick($event)" class="file-input" />
-              </div>
+              <app-demo-property label="source (File)">
+                <span propertyDescription>Chọn file PDF từ máy — override preset</span>
+                <input type="file" accept="application/pdf" (change)="onFilePick($event)" class="file-input"
+              /></app-demo-property>
 
               @if (uploadedFile(); as f) {
                 <div class="file-info">
@@ -29,61 +23,58 @@
                 </div>
               }
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">sidebar</span>
-                  <span class="config-item__desc">Tab sidebar — thumbnails | outline | search | none</span>
-                </div>
-                <sd-select [items]="sidebarOptions" valueField="id" displayField="name" [(model)]="sidebar" size="sm"></sd-select>
-              </div>
+              <app-demo-property label="sidebar">
+                <span propertyDescription>Tab sidebar — thumbnails | outline | search | none</span>
+                <sd-select
+                  [items]="sidebarOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="sidebar"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">sidebarOpen</span>
-                  <span class="config-item__desc">Mặc định mở/đóng sidebar</span>
-                </div>
-                <sd-switch [(model)]="sidebarOpen" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="sidebarOpen">
+                <span propertyDescription>Mặc định mở/đóng sidebar</span>
+                <sd-switch [(model)]="sidebarOpen" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">initialZoom</span>
-                  <span class="config-item__desc">Zoom khởi tạo (mode hoặc scale)</span>
-                </div>
-                <sd-select [items]="zoomOptions" valueField="id" displayField="name" [(model)]="initialZoomId" size="sm"></sd-select>
-              </div>
+              <app-demo-property label="initialZoom">
+                <span propertyDescription>Zoom khởi tạo (mode hoặc scale)</span>
+                <sd-select
+                  [items]="zoomOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="initialZoomId"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">theme</span>
-                  <span class="config-item__desc">Bảng màu dark / light</span>
-                </div>
-                <sd-select [items]="themeOptions" valueField="id" displayField="name" [(model)]="theme" size="sm"></sd-select>
-              </div>
+              <app-demo-property label="theme">
+                <span propertyDescription>Bảng màu dark / light</span>
+                <sd-select
+                  [items]="themeOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="theme"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">showToolbar</span>
-                  <span class="config-item__desc">Hiển thị thanh điều khiển trang/zoom</span>
-                </div>
-                <sd-switch [(model)]="showToolbar" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="showToolbar">
+                <span propertyDescription>Hiển thị thanh điều khiển trang/zoom</span>
+                <sd-switch [(model)]="showToolbar" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">downloadable</span>
-                  <span class="config-item__desc">Hiển thị nút tải về</span>
-                </div>
-                <sd-switch [(model)]="downloadable" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="downloadable">
+                <span propertyDescription>Hiển thị nút tải về</span>
+                <sd-switch [(model)]="downloadable" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">title</span>
-                  <span class="config-item__desc">Tiêu đề header (ưu tiên file.name nếu rỗng)</span>
-                </div>
-                <sd-input [(model)]="titleOverride" size="sm"></sd-input>
-              </div>
+              <app-demo-property label="title">
+                <span propertyDescription>Tiêu đề header (ưu tiên file.name nếu rỗng)</span>
+                <sd-input [(model)]="titleOverride" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
             </div>
 
             <div class="event-log mt-12">

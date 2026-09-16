@@ -4,15 +4,12 @@
       <!-- CỘT TRÁI: THUỘC TÍNH -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">labelWidth</span>
-                  <span class="config-item__desc">Độ rộng cột nhãn dùng để căn thẳng hàng các section item.</span>
-                </div>
-                <sd-input [label]="'labelWidth'" [(model)]="labelWidth" placeholder="VD: 150px, 200px"></sd-input>
-              </div>
+              <app-demo-property label="labelWidth">
+                <span propertyDescription>Độ rộng cột nhãn dùng để căn thẳng hàng các section item.</span>
+                <sd-input [(model)]="labelWidth" placeholder="VD: 150px, 200px" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>

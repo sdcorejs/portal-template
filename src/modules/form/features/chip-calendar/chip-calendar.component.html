@@ -10,62 +10,41 @@
       <!-- CỘT TRÁI: CONFIGURATION -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">label</span>
-                  <span class="config-item__desc">Tiêu đề hiển thị phía trên ô chọn ngày.</span>
-                </div>
-                <sd-input [label]="'Label'" [(model)]="label"></sd-input>
-              </div>
+              <app-demo-property label="label">
+                <span propertyDescription>Tiêu đề hiển thị phía trên ô chọn ngày.</span>
+                <sd-input [(model)]="label" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">size</span>
-                  <span class="config-item__desc">Điều chỉnh kích thước chip-calendar.</span>
-                </div>
-                <sd-select [label]="'Size'" [items]="sizeOptions" valueField="id" displayField="name" [(model)]="size"></sd-select>
-              </div>
+              <app-demo-property label="size">
+                <span propertyDescription>Điều chỉnh kích thước chip-calendar.</span>
+                <sd-select [items]="sizeOptions" valueField="id" displayField="name" [(model)]="size" hideInlineError size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">required</span>
-                  <span class="config-item__desc">Bắt buộc chọn ít nhất một ngày.</span>
-                </div>
-                <sd-switch [(model)]="required" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="required">
+                <span propertyDescription>Bắt buộc chọn ít nhất một ngày.</span>
+                <sd-switch [(model)]="required" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">min</span>
-                  <span class="config-item__desc">Số lượng ngày tối thiểu.</span>
-                </div>
-                <sd-input [label]="'Min'" [(model)]="minValue" [type]="'number'"></sd-input>
-              </div>
+              <app-demo-property label="min">
+                <span propertyDescription>Số lượng ngày tối thiểu.</span>
+                <sd-input [(model)]="minValue" [type]="'number'" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">max</span>
-                  <span class="config-item__desc">Số lượng ngày tối đa.</span>
-                </div>
-                <sd-input [label]="'Max'" [(model)]="maxValue" [type]="'number'"></sd-input>
-              </div>
+              <app-demo-property label="max">
+                <span propertyDescription>Số lượng ngày tối đa.</span>
+                <sd-input [(model)]="maxValue" [type]="'number'" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">disabled</span>
-                  <span class="config-item__desc">Khoá tương tác với ô chọn ngày.</span>
-                </div>
-                <sd-switch [(model)]="disabled" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="disabled">
+                <span propertyDescription>Khoá tương tác với ô chọn ngày.</span>
+                <sd-switch [(model)]="disabled" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">Định dạng</span>
-                  <span class="config-item__desc">Các ngày được lưu dưới dạng <strong>yyyy/MM/dd</strong></span>
-                </div>
-              </div>
+              <app-demo-property label="Định dạng">
+                <span propertyDescription>Các ngày được lưu dưới dạng <strong>yyyy/MM/dd</strong></span></app-demo-property
+              >
             </div>
           </div></sd-section
         >
@@ -74,22 +53,25 @@
       <!-- CỘT PHẢI: PREVIEW & CODE -->
       <div class="col-md-8">
         <div class="d-flex flex-column gap-16">
-          <sd-section title="Xem trước" icon="visibility"><div class="demo-section-content">
-            <div class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
-              <sd-chip-calendar
-                style="width: 100%"
-                [model]="modelValue()"
-                (modelChange)="modelValue.set($event)"
-                [label]="label()"
-                [size]="size()"
-                [disabled]="disabled()"
-                [required]="required()"
-                [min]="minValue()"
-                [max]="maxValue()"></sd-chip-calendar>
-            </div>
-            <div class="mt-16 font-size-13"><span class="T16M">Giá trị hiện tại:</span> {{ modelValue() | json }}</div>
-            <div class="mt-8 font-size-12 text-secondary">Định dạng ngày: <strong>yyyy/MM/dd</strong></div>
-          </div></sd-section>
+          <sd-section title="Xem trước" icon="visibility"
+            ><div class="demo-section-content">
+              <div
+                class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
+                <sd-chip-calendar
+                  style="width: 100%"
+                  [model]="modelValue()"
+                  (modelChange)="modelValue.set($event)"
+                  [label]="label()"
+                  [size]="size()"
+                  [disabled]="disabled()"
+                  [required]="required()"
+                  [min]="minValue()"
+                  [max]="maxValue()"></sd-chip-calendar>
+              </div>
+              <div class="mt-16 font-size-13"><span class="T16M">Giá trị hiện tại:</span> {{ modelValue() | json }}</div>
+              <div class="mt-8 font-size-12 text-secondary">Định dạng ngày: <strong>yyyy/MM/dd</strong></div>
+            </div></sd-section
+          >
 
           <sd-section title="Mã nguồn" icon="code"
             ><div class="demo-section-content">

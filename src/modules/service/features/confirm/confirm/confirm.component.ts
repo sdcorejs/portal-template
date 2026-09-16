@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
@@ -16,7 +17,7 @@ type ButtonColor = 'primary' | 'secondary' | 'success' | 'error' | 'warning' | '
 @Component({
   selector: 'app-confirm-basic',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdButton, SdCodeEditor, SdPageComponent, SdSection, SdInput, SdSelect],
+  imports: [DemoPropertyComponent, CommonModule, FormsModule, SdButton, SdCodeEditor, SdPageComponent, SdSection, SdInput, SdSelect],
   templateUrl: './confirm.component.html',
   styleUrls: ['./confirm.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -72,8 +73,7 @@ export class MyComponent {
         title: '${this.title()}',
         yesTitle: '${this.yesTitle()}',
         noTitle: '${this.noTitle()}',${yesColor ? `\n        yesButtonColor: '${yesColor}',` : ''}${noColor ? `\n        noButtonColor: '${noColor}',` : ''}
-        width: '${this.width()}',
-      });
+        width: '${this.width()}' });
       // Accept Logic
       console.log('Xác nhận thành công');
     } catch {

@@ -1,4 +1,8 @@
-@if (variant() === 'readonly' && !editing()) {
+@if (variant() === 'lines') {
+  <app-pattern-inline-table variant="order-lines" />
+} @else if (variant() === 'time-slots') {
+  <app-pattern-time-slots />
+} @else if (variant() === 'readonly' && !editing()) {
   <section class="form-shell">
     <h3>Thông tin liên hệ</h3>
     <app-pattern-contact-facts [record]="record()" />

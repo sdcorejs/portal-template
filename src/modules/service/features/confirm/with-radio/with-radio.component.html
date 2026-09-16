@@ -4,71 +4,68 @@
       <!-- CỘT TRÁI: CONFIGURATION -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">title</span>
-                  <span class="config-item__desc">Tiêu đề của modal xác nhận.</span>
-                </div>
-                <sd-input [(model)]="title"></sd-input>
-              </div>
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">message</span>
-                  <span class="config-item__desc">Nội dung lời nhắc của hộp thoại.</span>
-                </div>
-                <sd-input [(model)]="message"></sd-input>
-              </div>
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">yesTitle</span>
-                  <span class="config-item__desc">Nhãn của nút xác nhận.</span>
-                </div>
-                <sd-input [(model)]="yesTitle"></sd-input>
-              </div>
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">noTitle</span>
-                  <span class="config-item__desc">Nhãn của nút hủy bỏ.</span>
-                </div>
-                <sd-input [(model)]="noTitle"></sd-input>
-              </div>
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">yesButtonColor</span>
-                  <span class="config-item__desc">Màu của nút xác nhận.</span>
-                </div>
-                <sd-select [items]="colorOptions" valueField="id" displayField="name" [(model)]="yesButtonColor"></sd-select>
-              </div>
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">noButtonColor</span>
-                  <span class="config-item__desc">Màu của nút hủy bỏ.</span>
-                </div>
-                <sd-select [items]="colorOptions" valueField="id" displayField="name" [(model)]="noButtonColor"></sd-select>
-              </div>
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">display</span>
-                  <span class="config-item__desc">Hướng hiển thị các tùy chọn (dọc hoặc ngang).</span>
-                </div>
-                <sd-select [items]="displayOptions" valueField="id" displayField="name" [(model)]="display"></sd-select>
-              </div>
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">defaultValue</span>
-                  <span class="config-item__desc">Tùy chọn mặc định được chọn.</span>
-                </div>
-                <sd-select [items]="defaultValueOptions" valueField="id" displayField="name" [(model)]="defaultValue"></sd-select>
-              </div>
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">required</span>
-                  <span class="config-item__desc">Bắt buộc phải chọn một tùy chọn.</span>
-                </div>
-                <sd-switch [(model)]="required" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="title">
+                <span propertyDescription>Tiêu đề của modal xác nhận.</span>
+                <sd-input [(model)]="title" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
+              <app-demo-property label="message">
+                <span propertyDescription>Nội dung lời nhắc của hộp thoại.</span>
+                <sd-input [(model)]="message" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
+              <app-demo-property label="yesTitle">
+                <span propertyDescription>Nhãn của nút xác nhận.</span>
+                <sd-input [(model)]="yesTitle" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
+              <app-demo-property label="noTitle">
+                <span propertyDescription>Nhãn của nút hủy bỏ.</span>
+                <sd-input [(model)]="noTitle" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
+              <app-demo-property label="yesButtonColor">
+                <span propertyDescription>Màu của nút xác nhận.</span>
+                <sd-select
+                  [items]="colorOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="yesButtonColor"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
+              <app-demo-property label="noButtonColor">
+                <span propertyDescription>Màu của nút hủy bỏ.</span>
+                <sd-select
+                  [items]="colorOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="noButtonColor"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
+              <app-demo-property label="display">
+                <span propertyDescription>Hướng hiển thị các tùy chọn (dọc hoặc ngang).</span>
+                <sd-select
+                  [items]="displayOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="display"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
+              <app-demo-property label="defaultValue">
+                <span propertyDescription>Tùy chọn mặc định được chọn.</span>
+                <sd-select
+                  [items]="defaultValueOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="defaultValue"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
+              <app-demo-property label="required">
+                <span propertyDescription>Bắt buộc phải chọn một tùy chọn.</span>
+                <sd-switch [(model)]="required" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>

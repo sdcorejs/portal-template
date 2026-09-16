@@ -7,46 +7,38 @@
       <div class="col-md-4">
         <div class="d-flex flex-column gap-16">
           <sd-section title="Thuộc tính" icon="settings"
-            ><div class="demo-section-content">
+            ><div class="demo-property-content">
               <div class="demo-config-panel">
-                <div class="config-item config-item--stacked">
-                  <div class="config-item__label">
-                    <span class="config-item__title">primary</span>
-                    <span class="config-item__desc">Màu chính cho button, link, accent.</span>
-                  </div>
+                <app-demo-property label="primary">
+                  <span propertyDescription>Màu chính cho button, link, accent.</span>
                   <div class="color-input-row">
                     <input type="color" [value]="primaryColor()" (input)="onColorPick(primaryColor, $event)" />
                     <input
                       type="text"
                       class="hex-input"
                       [value]="primaryColor().toUpperCase()"
-                      (change)="onHexType(primaryColor, $event)" />
-                  </div>
-                </div>
-                <div class="config-item config-item--stacked">
-                  <div class="config-item__label">
-                    <span class="config-item__title">error</span>
-                    <span class="config-item__desc">Màu cho thông báo lỗi, cảnh báo.</span>
-                  </div>
+                      (change)="onHexType(primaryColor, $event)" /></div
+                ></app-demo-property>
+                <app-demo-property label="error">
+                  <span propertyDescription>Màu cho thông báo lỗi, cảnh báo.</span>
                   <div class="color-input-row">
                     <input type="color" [value]="errorColor()" (input)="onColorPick(errorColor, $event)" />
-                    <input type="text" class="hex-input" [value]="errorColor().toUpperCase()" (change)="onHexType(errorColor, $event)" />
-                  </div>
-                </div>
-                <div class="config-item config-item--stacked">
-                  <div class="config-item__label">
-                    <span class="config-item__title">success</span>
-                    <span class="config-item__desc">Màu cho thao tác thành công, dữ liệu tốt.</span>
-                  </div>
+                    <input
+                      type="text"
+                      class="hex-input"
+                      [value]="errorColor().toUpperCase()"
+                      (change)="onHexType(errorColor, $event)" /></div
+                ></app-demo-property>
+                <app-demo-property label="success">
+                  <span propertyDescription>Màu cho thao tác thành công, dữ liệu tốt.</span>
                   <div class="color-input-row">
                     <input type="color" [value]="successColor()" (input)="onColorPick(successColor, $event)" />
                     <input
                       type="text"
                       class="hex-input"
                       [value]="successColor().toUpperCase()"
-                      (change)="onHexType(successColor, $event)" />
-                  </div>
-                </div>
+                      (change)="onHexType(successColor, $event)" /></div
+                ></app-demo-property>
               </div></div
           ></sd-section>
 

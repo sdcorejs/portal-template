@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
@@ -16,6 +17,7 @@ import { SdLabel } from '@sdcorejs/angular/forms/label';
   selector: 'app-chip-calendar-demo',
   standalone: true,
   imports: [
+    DemoPropertyComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

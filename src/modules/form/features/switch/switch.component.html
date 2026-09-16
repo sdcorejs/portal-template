@@ -8,55 +8,43 @@
       <!-- CỘT TRÁI: CONFIGURATION -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">label</span>
-                  <span class="config-item__desc">Nhãn hiển thị cạnh switch.</span>
-                </div>
-                <sd-input [label]="'Label'" [(model)]="label"></sd-input>
-              </div>
+              <app-demo-property label="label">
+                <span propertyDescription>Nhãn hiển thị cạnh switch.</span>
+                <sd-input [(model)]="label" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">color</span>
-                  <span class="config-item__desc">Bộ màu hệ thống áp dụng cho thanh switch.</span>
-                </div>
-                <sd-select [label]="'Color'" [items]="colorOptions" valueField="id" displayField="name" [(model)]="color"></sd-select>
-              </div>
+              <app-demo-property label="color">
+                <span propertyDescription>Bộ màu hệ thống áp dụng cho thanh switch.</span>
+                <sd-select
+                  [items]="colorOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="color"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">disabled</span>
-                  <span class="config-item__desc">Khoá tương tác với switch.</span>
-                </div>
-                <sd-switch [(model)]="disabled" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="disabled">
+                <span propertyDescription>Khoá tương tác với switch.</span>
+                <sd-switch [(model)]="disabled" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">viewed</span>
-                  <span class="config-item__desc">Chuyển control sang chế độ hiển thị (read-only).</span>
-                </div>
-                <sd-switch [(model)]="viewed" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="viewed">
+                <span propertyDescription>Chuyển control sang chế độ hiển thị (read-only).</span>
+                <sd-switch [(model)]="viewed" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">required</span>
-                  <span class="config-item__desc">Đánh dấu trường bắt buộc bật.</span>
-                </div>
-                <sd-switch [(model)]="required" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="required">
+                <span propertyDescription>Đánh dấu trường bắt buộc bật.</span>
+                <sd-switch [(model)]="required" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">hideInlineError</span>
-                  <span class="config-item__desc">Ẩn dòng lỗi inline mặc định, dùng khi muốn tự quản lý lỗi bên ngoài.</span>
-                </div>
-                <sd-switch [(model)]="hideInlineError" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="hideInlineError">
+                <span propertyDescription>Ẩn dòng lỗi inline mặc định, dùng khi muốn tự quản lý lỗi bên ngoài.</span>
+                <sd-switch [(model)]="hideInlineError" size="sm"></sd-switch
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>
@@ -64,20 +52,23 @@
       <!-- CỘT PHẢI: PREVIEW & CODE -->
       <div class="col-md-8">
         <div class="d-flex flex-column gap-16">
-          <sd-section title="Xem trước" icon="visibility"><div class="demo-section-content">
-            <div class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
-              <sd-switch
-                [(model)]="modelValue"
-                [label]="label()"
-                [color]="color()"
-                [disabled]="disabled()"
-                [viewed]="viewed()"
-                [required]="required()"
-                [hideInlineError]="hideInlineError()">
-              </sd-switch>
-            </div>
-            <div class="mt-16 font-size-13"><span class="T16M">Giá trị hiện tại:</span> {{ modelValue() }}</div>
-          </div></sd-section>
+          <sd-section title="Xem trước" icon="visibility"
+            ><div class="demo-section-content">
+              <div
+                class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
+                <sd-switch
+                  [(model)]="modelValue"
+                  [label]="label()"
+                  [color]="color()"
+                  [disabled]="disabled()"
+                  [viewed]="viewed()"
+                  [required]="required()"
+                  [hideInlineError]="hideInlineError()">
+                </sd-switch>
+              </div>
+              <div class="mt-16 font-size-13"><span class="T16M">Giá trị hiện tại:</span> {{ modelValue() }}</div>
+            </div></sd-section
+          >
 
           <sd-section title="Mã nguồn" icon="code"
             ><div class="demo-section-content">

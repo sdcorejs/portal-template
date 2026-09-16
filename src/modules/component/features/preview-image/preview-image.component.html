@@ -4,71 +4,65 @@
       <!-- CỘT TRÁI: THUỘC TÍNH -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="d-flex flex-column gap-12">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">items</span>
-                  <span class="config-item__desc">Bộ ảnh thử nghiệm (multi/single/empty/broken/mixed)</span>
-                </div>
-                <sd-select [items]="setOptions" valueField="id" displayField="name" [(model)]="imageSet" size="sm"></sd-select>
-              </div>
+              <app-demo-property label="items">
+                <span propertyDescription>Bộ ảnh thử nghiệm (multi/single/empty/broken/mixed)</span>
+                <sd-select
+                  [items]="setOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="imageSet"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">thumbnailPosition</span>
-                  <span class="config-item__desc">Vị trí dải thumbnail / dots / none</span>
-                </div>
-                <sd-select [items]="thumbOptions" valueField="id" displayField="name" [(model)]="thumbnailPosition" size="sm"></sd-select>
-              </div>
+              <app-demo-property label="thumbnailPosition">
+                <span propertyDescription>Vị trí dải thumbnail / dots / none</span>
+                <sd-select
+                  [items]="thumbOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="thumbnailPosition"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">theme</span>
-                  <span class="config-item__desc">Bảng màu dark / light (flip qua [data-theme])</span>
-                </div>
-                <sd-select [items]="themeOptions" valueField="id" displayField="name" [(model)]="theme" size="sm"></sd-select>
-              </div>
+              <app-demo-property label="theme">
+                <span propertyDescription>Bảng màu dark / light (flip qua [data-theme])</span>
+                <sd-select
+                  [items]="themeOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="theme"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">loop</span>
-                  <span class="config-item__desc">Cuộn vòng khi đến ảnh cuối / đầu</span>
-                </div>
-                <sd-switch [(model)]="loop" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="loop">
+                <span propertyDescription>Cuộn vòng khi đến ảnh cuối / đầu</span>
+                <sd-switch [(model)]="loop" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">showToolbar</span>
-                  <span class="config-item__desc">Hiển thị thanh công cụ zoom/xoay/download</span>
-                </div>
-                <sd-switch [(model)]="showToolbar" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="showToolbar">
+                <span propertyDescription>Hiển thị thanh công cụ zoom/xoay/download</span>
+                <sd-switch [(model)]="showToolbar" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">zoomable</span>
-                  <span class="config-item__desc">Cho phép phóng to / thu nhỏ (scroll + nút)</span>
-                </div>
-                <sd-switch [(model)]="zoomable" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="zoomable">
+                <span propertyDescription>Cho phép phóng to / thu nhỏ (scroll + nút)</span>
+                <sd-switch [(model)]="zoomable" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">downloadable</span>
-                  <span class="config-item__desc">Hiển thị nút tải về (emit (download))</span>
-                </div>
-                <sd-switch [(model)]="downloadable" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="downloadable">
+                <span propertyDescription>Hiển thị nút tải về (emit (download))</span>
+                <sd-switch [(model)]="downloadable" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">title</span>
-                  <span class="config-item__desc">Tiêu đề header (mặc định 'Xem ảnh')</span>
-                </div>
-                <sd-input [(model)]="titleOverride" size="sm"></sd-input>
-              </div>
+              <app-demo-property label="title">
+                <span propertyDescription>Tiêu đề header (mặc định 'Xem ảnh')</span>
+                <sd-input [(model)]="titleOverride" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
             </div>
 
             <div class="event-log mt-12">

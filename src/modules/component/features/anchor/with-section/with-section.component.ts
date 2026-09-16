@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
@@ -12,7 +13,19 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 @Component({
   selector: 'app-anchor-with-section',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdAnchor, SdAnchorItem, SdCodeEditor, SdPageComponent, SdSection, SdSectionItem, SdSelect, SdSwitch],
+  imports: [
+    DemoPropertyComponent,
+    CommonModule,
+    FormsModule,
+    SdAnchor,
+    SdAnchorItem,
+    SdCodeEditor,
+    SdPageComponent,
+    SdSection,
+    SdSectionItem,
+    SdSelect,
+    SdSwitch,
+  ],
   templateUrl: './with-section.component.html',
   styleUrls: ['./with-section.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

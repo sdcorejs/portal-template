@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
@@ -17,6 +18,7 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
   selector: 'app-side-drawer-advanced',
   standalone: true,
   imports: [
+    DemoPropertyComponent,
     CommonModule,
     FormsModule,
     SdBadge,
@@ -99,8 +101,7 @@ import { SdSideDrawer } from '@sdcorejs/angular/components/side-drawer';
   selector: 'app-my-component',
   standalone: true,
   imports: [SdButton, SdSideDrawer],
-  templateUrl: './my-component.component.html',
-})
+  templateUrl: './my-component.component.html' })
 export class MyComponent {
   drawer = viewChild.required<SdSideDrawer>('drawer');
 

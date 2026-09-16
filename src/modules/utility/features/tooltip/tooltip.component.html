@@ -3,39 +3,33 @@
     <div class="row row-sm mx-0">
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">sdTooltip</span>
-                  <span class="config-item__desc">Nội dung tooltip dạng text hoặc TemplateRef.</span>
-                </div>
-                <sd-input [(model)]="tooltipText"></sd-input>
-              </div>
+              <app-demo-property label="sdTooltip">
+                <span propertyDescription>Nội dung tooltip dạng text hoặc TemplateRef.</span>
+                <sd-input [(model)]="tooltipText" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">sdTooltipPosition</span>
-                  <span class="config-item__desc">Vị trí hiển thị tooltip quanh phần tử.</span>
-                </div>
-                <sd-select [items]="positionOptions" valueField="id" displayField="name" [(model)]="tooltipPosition"></sd-select>
-              </div>
+              <app-demo-property label="sdTooltipPosition">
+                <span propertyDescription>Vị trí hiển thị tooltip quanh phần tử.</span>
+                <sd-select
+                  [items]="positionOptions"
+                  valueField="id"
+                  displayField="name"
+                  [(model)]="tooltipPosition"
+                  hideInlineError
+                  size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">sdTooltipDelay</span>
-                  <span class="config-item__desc">Độ trễ (ms) trước khi tooltip xuất hiện.</span>
-                </div>
-                <sd-input-number [(model)]="tooltipDelay" [min]="0" [max]="2000"></sd-input-number>
-              </div>
+              <app-demo-property label="sdTooltipDelay">
+                <span propertyDescription>Độ trễ (ms) trước khi tooltip xuất hiện.</span>
+                <sd-input-number [(model)]="tooltipDelay" [min]="0" [max]="2000" hideInlineError size="sm"></sd-input-number
+              ></app-demo-property>
 
-              <div class="config-item config-item--stacked">
-                <div class="config-item__label">
-                  <span class="config-item__title">sdTooltipColor</span>
-                  <span class="config-item__desc">Màu nền tooltip (hex color).</span>
-                </div>
-                <input class="tooltip-color" type="color" [value]="tooltipColor()" (input)="tooltipColor.set($any($event.target).value)" />
-              </div>
+              <app-demo-property label="sdTooltipColor">
+                <span propertyDescription>Màu nền tooltip (hex color).</span>
+                <input class="tooltip-color" type="color" [value]="tooltipColor()" (input)="tooltipColor.set($any($event.target).value)"
+              /></app-demo-property>
             </div></div
         ></sd-section>
       </div>

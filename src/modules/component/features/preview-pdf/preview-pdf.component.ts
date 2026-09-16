@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
@@ -18,6 +19,7 @@ type PdfSet = 'sample' | 'small' | 'empty' | 'broken';
   selector: 'app-preview-pdf-demo',
   standalone: true,
   imports: [
+    DemoPropertyComponent,
     CommonModule,
     FormsModule,
     SdButton,
@@ -139,8 +141,7 @@ export class PreviewPdfDemoComponent {
       (loadError)="onError($event)"
       (close)="onClose()">
     </sd-preview-pdf>
-  \`,
-})
+  \` })
 export class PdfViewerComponent {
   // PdfSource = string | File | Blob | ArrayBuffer | Uint8Array |
   //             { url, httpHeaders?, withCredentials? } |

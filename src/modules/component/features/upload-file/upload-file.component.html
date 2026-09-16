@@ -3,68 +3,42 @@
     <div class="row row-sm mx-0">
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">label</span>
-                  <span class="config-item__desc">Tiêu đề trường upload hiển thị phía trên control.</span>
-                </div>
-                <sd-input [label]="'Tiêu đề trường (Label)'" [(model)]="label"></sd-input>
-              </div>
+              <app-demo-property label="label">
+                <span propertyDescription>Tiêu đề trường upload hiển thị phía trên control.</span>
+                <sd-input [(model)]="label" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">description</span>
-                  <span class="config-item__desc">Mô tả phụ giúp người dùng hiểu yêu cầu upload.</span>
-                </div>
-                <sd-input [label]="'Mô tả (Description)'" [(model)]="description"></sd-input>
-              </div>
+              <app-demo-property label="description">
+                <span propertyDescription>Mô tả phụ giúp người dùng hiểu yêu cầu upload.</span>
+                <sd-input [(model)]="description" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">type</span>
-                  <span class="config-item__desc">Giới hạn nhóm file cho phép tải lên.</span>
-                </div>
-                <sd-select
-                  [label]="'Kiểu Upload (Type)'"
-                  [items]="typeOptions"
-                  valueField="id"
-                  displayField="name"
-                  [(model)]="type"></sd-select>
-              </div>
+              <app-demo-property label="type">
+                <span propertyDescription>Giới hạn nhóm file cho phép tải lên.</span>
+                <sd-select [items]="typeOptions" valueField="id" displayField="name" [(model)]="type" hideInlineError size="sm"></sd-select
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">maxSize</span>
-                  <span class="config-item__desc">Dung lượng tối đa mỗi file, đơn vị MB.</span>
-                </div>
-                <sd-input-number [label]="'Dung lượng File tối đa (MB)'" [(model)]="maxSize" [placeholder]="'Ví dụ: 5'"></sd-input-number>
-              </div>
+              <app-demo-property label="maxSize">
+                <span propertyDescription>Dung lượng tối đa mỗi file, đơn vị MB.</span>
+                <sd-input-number [(model)]="maxSize" [placeholder]="'Ví dụ: 5'" hideInlineError size="sm"></sd-input-number
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">max</span>
-                  <span class="config-item__desc">Số lượng file tối đa cho phép chọn.</span>
-                </div>
-                <sd-input-number [label]="'Số lượng File tối đa'" [(model)]="maxFiles" [placeholder]="'Ví dụ: 3'"></sd-input-number>
-              </div>
+              <app-demo-property label="max">
+                <span propertyDescription>Số lượng file tối đa cho phép chọn.</span>
+                <sd-input-number [(model)]="maxFiles" [placeholder]="'Ví dụ: 3'" hideInlineError size="sm"></sd-input-number
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">required</span>
-                  <span class="config-item__desc">Đánh dấu trường upload là bắt buộc.</span>
-                </div>
-                <sd-switch [(model)]="required" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="required">
+                <span propertyDescription>Đánh dấu trường upload là bắt buộc.</span>
+                <sd-switch [(model)]="required" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">disabled</span>
-                  <span class="config-item__desc">Khoá thao tác click, kéo thả và chọn file.</span>
-                </div>
-                <sd-switch [(model)]="disabled" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="disabled">
+                <span propertyDescription>Khoá thao tác click, kéo thả và chọn file.</span>
+                <sd-switch [(model)]="disabled" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>

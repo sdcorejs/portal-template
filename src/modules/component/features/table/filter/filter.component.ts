@@ -1,9 +1,10 @@
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
-import { SdSection } from '@sdcorejs/angular/components/section';
+import { SdSection, SdSectionItem } from '@sdcorejs/angular/components/section';
 import { SdTable, SdTableOption } from '@sdcorejs/angular/components/table';
 import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
@@ -38,7 +39,18 @@ const LEVEL_OPTIONS = [
 @Component({
   selector: 'app-table-filter',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdTable, SdCodeEditor, SdPageComponent, SdSection, SdSelect, SdSwitch],
+  imports: [
+    DemoPropertyComponent,
+    CommonModule,
+    FormsModule,
+    SdTable,
+    SdCodeEditor,
+    SdPageComponent,
+    SdSection,
+    SdSectionItem,
+    SdSelect,
+    SdSwitch,
+  ],
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,9 +1,10 @@
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
-import { SdSection, SdSectionItem } from '@sdcorejs/angular/components/section';
+import { SdSection } from '@sdcorejs/angular/components/section';
 import { SdInput } from '@sdcorejs/angular/forms/input';
 import { SdLabel } from '@sdcorejs/angular/forms/label';
 import { SdSelect } from '@sdcorejs/angular/forms/select';
@@ -14,7 +15,18 @@ import { Color as SdColor } from '@sdcorejs/utils/models';
 @Component({
   selector: 'app-section-basic',
   standalone: true,
-  imports: [CommonModule, FormsModule, SdSection, SdSectionItem, SdCodeEditor, SdPageComponent, SdInput, SdSelect, SdSwitch, SdLabel],
+  imports: [
+    DemoPropertyComponent,
+    CommonModule,
+    FormsModule,
+    SdSection,
+    SdCodeEditor,
+    SdPageComponent,
+    SdInput,
+    SdSelect,
+    SdSwitch,
+    SdLabel,
+  ],
   templateUrl: './basic.component.html',
   styleUrls: ['./basic.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -67,8 +79,7 @@ import { SdSection } from '@sdcorejs/angular/components/section';
   selector: 'app-my-component',
   standalone: true,
   imports: [SdSection],
-  templateUrl: './my-component.component.html',
-})
+  templateUrl: './my-component.component.html' })
 export class MyComponent {
   isCollapsed = false;
 }`;

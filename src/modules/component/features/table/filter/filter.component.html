@@ -4,70 +4,50 @@
       <!-- CỘT TRÁI: THUỘC TÍNH -->
       <div class="col-md-4">
         <sd-section title="Thuộc tính" icon="settings"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="d-flex flex-column gap-12">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">hideInlineFilter: false</span>
-                  <span class="config-item__desc">Hiển thị bộ lọc inline trong header mỗi cột</span>
-                </div>
-                <sd-switch [(model)]="showInlineFilter" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="hideInlineFilter: false">
+                <span propertyDescription>Hiển thị bộ lọc inline trong header mỗi cột</span>
+                <sd-switch [(model)]="showInlineFilter" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">externalFilters</span>
-                  <span class="config-item__desc">Hiển thị panel lọc ngoài phía trên bảng</span>
-                </div>
-                <sd-switch [(model)]="showExternalFilter" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label="externalFilters">
+                <span propertyDescription>Hiển thị panel lọc ngoài phía trên bảng</span>
+                <sd-switch [(model)]="showExternalFilter" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
               @if (showExternalFilter()) {
-                <div class="config-item config-item--sub">
-                  <div class="config-item__label">
-                    <span class="config-item__title">hideExternalFilterToolbar</span>
-                    <span class="config-item__desc">Ẩn thanh công cụ (Xóa lọc, Ẩn/hiện)</span>
-                  </div>
-                  <sd-switch [(model)]="hideExternalFilterToolbar" size="sm"></sd-switch>
-                </div>
+                <app-demo-property label="hideExternalFilterToolbar">
+                  <span propertyDescription>Ẩn thanh công cụ (Xóa lọc, Ẩn/hiện)</span>
+                  <sd-switch [(model)]="hideExternalFilterToolbar" hideInlineError size="sm"></sd-switch
+                ></app-demo-property>
 
-                <div class="config-item config-item--sub">
-                  <div class="config-item__label">
-                    <span class="config-item__title">externalFilterPerRow</span>
-                    <span class="config-item__desc">Số filter hiển thị mỗi hàng</span>
-                  </div>
+                <app-demo-property label="externalFilterPerRow">
+                  <span propertyDescription>Số filter hiển thị mỗi hàng</span>
                   <sd-select
                     [items]="perRowOptions"
                     valueField="id"
                     displayField="name"
                     [(model)]="externalFilterPerRow"
-                    size="sm"></sd-select>
-                </div>
+                    hideInlineError
+                    size="sm"></sd-select
+                ></app-demo-property>
               }
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">Cột "Cấp độ" — filter.disabled</span>
-                  <span class="config-item__desc">Tắt bộ lọc inline cho cột Cấp độ</span>
-                </div>
-                <sd-switch [(model)]="disableLevelFilter" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label='Cột "Cấp độ" — filter.disabled' labelWidth="28%">
+                <span propertyDescription>Tắt bộ lọc inline cho cột Cấp độ</span>
+                <sd-switch [(model)]="disableLevelFilter" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">Cột "Lương" — filter.disabled</span>
-                  <span class="config-item__desc">Tắt bộ lọc inline cho cột Lương</span>
-                </div>
-                <sd-switch [(model)]="disableSalaryFilter" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label='Cột "Lương" — filter.disabled' labelWidth="28%">
+                <span propertyDescription>Tắt bộ lọc inline cho cột Lương</span>
+                <sd-switch [(model)]="disableSalaryFilter" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">Cột "Họ và tên" — operator</span>
-                  <span class="config-item__desc">Hiện dropdown chọn kiểu so sánh (CONTAIN, EQUAL…)</span>
-                </div>
-                <sd-switch [(model)]="enableNameOperator" size="sm"></sd-switch>
-              </div>
+              <app-demo-property label='Cột "Họ và tên" — operator' labelWidth="28%">
+                <span propertyDescription>Hiện dropdown chọn kiểu so sánh (CONTAIN, EQUAL…)</span>
+                <sd-switch [(model)]="enableNameOperator" hideInlineError size="sm"></sd-switch
+              ></app-demo-property>
             </div></div
         ></sd-section>
       </div>

@@ -3,33 +3,24 @@
     <div class="row row-sm mx-0">
       <div class="col-md-4">
         <sd-section title="Bộ lọc" icon="tune"
-          ><div class="demo-section-content">
+          ><div class="demo-property-content">
             <div class="demo-config-panel">
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">search</span>
-                  <span class="config-item__desc">Lọc icon theo tên.</span>
-                </div>
-                <sd-input [(model)]="searchText" [placeholder]="'Ví dụ: user, settings, download'"></sd-input>
-              </div>
+              <app-demo-property label="search">
+                <span propertyDescription>Lọc icon theo tên.</span>
+                <sd-input [(model)]="searchText" [placeholder]="'Ví dụ: user, settings, download'" hideInlineError size="sm"></sd-input
+              ></app-demo-property>
 
-              <div class="config-item">
-                <div class="config-item__label">
-                  <span class="config-item__title">iconSize</span>
-                  <span class="config-item__desc">Kích thước icon hiển thị.</span>
-                </div>
-                <sd-input-number [(model)]="iconSize" [min]="16" [max]="48"></sd-input-number>
-              </div>
+              <app-demo-property label="iconSize">
+                <span propertyDescription>Kích thước icon hiển thị.</span>
+                <sd-input-number [(model)]="iconSize" [min]="16" [max]="48" hideInlineError size="sm"></sd-input-number
+              ></app-demo-property>
 
-              <div class="config-item config-item--stacked">
-                <div class="config-item__label">
-                  <span class="config-item__title">copy</span>
-                  <span class="config-item__desc">Click một icon để copy tên dùng cho thuộc tính icon/prefixIcon/suffixIcon.</span>
-                </div>
+              <app-demo-property label="copy">
+                <span propertyDescription>Click một icon để copy tên dùng cho thuộc tính icon/prefixIcon/suffixIcon.</span>
                 <div class="copy-note">
                   Đã copy: <strong>{{ copiedIcon() || '---' }}</strong>
-                </div>
-              </div>
+                </div></app-demo-property
+              >
             </div>
           </div></sd-section
         >

@@ -1,3 +1,10 @@
+export const PAGE_HEADER_VARIANTS = [
+  ['basic', 'Cơ bản'],
+  ['advanced', 'Nâng cao'],
+  ['actions', 'Tác vụ'],
+  ['compact', 'Tác vụ nhỏ gọn'],
+  ['grouped', 'Tác vụ có gom nhóm'],
+];
 export const PATTERN_PATHS: Record<string, string> = {
   'tab-group': 'tab-group',
   stepper: 'stepper',
@@ -153,7 +160,7 @@ export const PATTERN_GROUPS: Record<string, PatternGroup> = {
         'page',
         'Page Header',
         'Năm mẫu header, mỗi mẫu có màn danh sách và chi tiết.',
-        'List dùng Tạo mới/Tạo + tên entity và Import. Detail ưu tiên Chỉnh sửa primary fill bên phải; Duyệt success, Từ chối warning. Mẫu nhỏ gọn dùng icon và tooltip cho tác vụ phụ; mẫu gom nhóm dùng menu ba chấm. Create/update dùng Lưu và Quay lại. Không đặt link trở về danh sách cạnh title. Mỗi nhóm xếp từ trái sang phải: text, outline, primary fill; tác vụ ưu tiên nhất ở bên phải.',
+        'List dùng Tạo mới/Tạo + tên entity và Import. Detail ưu tiên Chỉnh sửa primary fill bên phải; Duyệt success, Từ chối warning. Mẫu nhỏ gọn dùng icon và tooltip cho tác vụ phụ; mẫu gom nhóm dùng menu ba chấm. Create/update dùng Lưu và Quay lại. Không đặt link trở về danh sách cạnh title. CRUD dùng primary fill với icon add/edit/save; Xoá dùng error fill với icon delete. Tác vụ nghiệp vụ dùng light và màu theo ý nghĩa; tác vụ chính ở bên phải.',
       ],
       [
         'side-drawer',
@@ -175,6 +182,18 @@ export const PATTERN_GROUPS: Record<string, PatternGroup> = {
     variants: [
       ['standard', 'Tra cứu cơ bản', 'So sánh các bản ghi phẳng theo cột.', 'Định danh có link; số căn phải; phân trang sau lọc/sort.'],
       [
+        'inline-filter',
+        'Inline column filter',
+        'Lọc trực tiếp theo từng cột.',
+        'Dùng filter.hideInlineFilter=false; nhập rồi Enter hoặc rời ô để áp dụng. Các điều kiện cột kết hợp AND, phân trang sau lọc.',
+      ],
+      [
+        'inline-operator',
+        'Inline filter + operator',
+        'Chọn phép so sánh và nhập điều kiện ngay trong cột.',
+        'Dùng column.filter.operator với enable và list; type server gửi columnOperator tới adapter dữ liệu demo để lọc trước khi phân trang. Khách hàng: chứa, bằng, bắt đầu bằng. Giá trị: bằng, lớn hơn, nhỏ hơn và các phép so sánh bao gồm bằng. Nhập rồi Enter để áp dụng; nhiều cột kết hợp AND.',
+      ],
+      [
         'quick-search',
         'Quick search',
         'Tìm nhanh theo mã đơn hoặc tên khách hàng.',
@@ -195,20 +214,50 @@ export const PATTERN_GROUPS: Record<string, PatternGroup> = {
       [
         'tree',
         'Bảng phân cấp',
-        'Dữ liệu có quan hệ cha–con thực tế.',
-        'Có nút expand bằng bàn phím; không giả lập phân cấp chỉ bằng thụt lề.',
+        'Cây 3 cấp: nhóm → danh mục → sản phẩm, có selection và command theo dòng.',
+        'Dùng SdTable tree; chỉ chọn sản phẩm đang hiển thị, dòng cha tổng hợp số lượng. Command xem chi tiết và đổi trạng thái chạy trên dữ liệu mẫu trong phiên.',
+      ],
+      [
+        'children',
+        'Command / selection có children',
+        'Gom thao tác của một dòng hoặc tập dòng đã chọn.',
+        'Dùng command.commands[].children và selector.actions[].children; icon task_alt, success light cho duyệt.',
+      ],
+      [
+        'custom-cells',
+        'Custom TH / TD',
+        'Header nhiều dòng, cell có metadata và định dạng giá trị.',
+        'Dùng sdTableTitleDef và sdTableCellDef. Giữ hyperlink định danh và căn phải giá trị số.',
+      ],
+      [
+        'inline-edit',
+        'Nhập liệu inline · Thêm / xoá',
+        'Chỉnh sửa nhiều dòng trong cùng một giao dịch.',
+        'Custom TD dùng SdInput/SdInputNumber size sm, hideInlineError; thêm/xoá dòng, tổng cập nhật theo dữ liệu nhập và Lưu chung.',
+      ],
+      [
+        'inline-errors',
+        'Nhập liệu inline · Báo lỗi',
+        'Lỗi FE và phản hồi BE mẫu trên các dòng nhập.',
+        'Lưu dữ liệu chưa hợp lệ: SdInform warning và ô lỗi có tooltip. Sản phẩm trùng: BE mẫu trả error; dữ liệu được giữ để sửa.',
+      ],
+      [
+        'inline-command-header',
+        'Nhập liệu inline · Command header',
+        'Tiết kiệm chỗ cho nút thêm dòng.',
+        'CommandHeaderDef chỉ dùng nút icon kèm tooltip, không hiển thị text. Nút thêm dùng add, primary light, size sm; xoá từng dòng bằng command delete.',
       ],
       [
         'related',
         'Bảng dòng liên quan',
         'Dòng hàng thuộc một bản ghi chính.',
-        'Thông tin header không lặp lại từng dòng; tổng lấy từ số lượng × đơn giá.',
+        'Dùng SdTable và sdTableFooterDef; thành tiền = số lượng × đơn giá, footer tổng hợp các dòng liên quan.',
       ],
       [
         'states',
         'Loading / empty / error',
         'Chưa có hoặc chưa lấy được dữ liệu.',
-        'Phân biệt empty với no-results; error có retry giữ query.',
+        'Dùng luồng tải của SdTable: loading khi chờ request, empty/no-results từ kết quả trả về, lỗi có retry giữ query. Tùy chỉnh nội dung bằng sdDataStateTemplate và SdDataState.',
       ],
     ],
   },
@@ -273,9 +322,15 @@ export const PATTERN_GROUPS: Record<string, PatternGroup> = {
     variants: [
       [
         'crud',
-        'Create / update / detail',
+        'CRUD chung (khuyến khích)',
         'Tạo mới, chỉnh sửa và xem hồ sơ.',
-        'Tạo đơn hàng → Lưu thay đổi → Chỉnh sửa; tránh dùng một chữ Lưu cho mọi ngữ cảnh.',
+        'Tạo mới (add), Chỉnh sửa (edit), Lưu (save): primary fill. Xoá (delete): error fill. Chi tiết dùng hyperlink mã hoặc tên.',
+      ],
+      [
+        'crud-entity',
+        'CRUD theo đối tượng',
+        'Nêu rõ đối tượng khi có nhiều ngữ cảnh thao tác.',
+        'Tạo liên hệ, Chỉnh sửa liên hệ, Lưu liên hệ: primary fill, kèm icon add / edit / save.',
       ],
       [
         'query',
@@ -285,15 +340,21 @@ export const PATTERN_GROUPS: Record<string, PatternGroup> = {
       ],
       [
         'workflow',
-        'Hành động nghiệp vụ',
+        'Tác vụ nghiệp vụ',
         'Chuyển bước xử lý có kết quả rõ.',
-        'Gửi duyệt, Duyệt đơn hàng, Từ chối; đừng dùng Xác nhận khi không rõ xác nhận gì.',
+        'Dùng light, màu theo ý nghĩa nghiệp vụ: primary/info cho gửi và xử lý, success cho duyệt, warning cho tạm dừng, error cho từ chối. Có mẫu kèm icon, không icon và icon-only có tooltip.',
       ],
       [
         'danger',
         'Hành động nguy hiểm',
         'Xóa hoặc hủy một đối tượng cụ thể.',
-        'Ghi tên và hậu quả trong bước xác nhận; nút cuối là Xóa đơn hàng, nút thoát Giữ lại.',
+        'Nút Xoá dùng icon delete, error fill. Ghi rõ đối tượng và hậu quả trong hộp xác nhận; nút thoát là Giữ lại.',
+      ],
+      [
+        'grouped',
+        'Tác vụ gộp · Popover',
+        'Gom tác vụ theo nhóm, giữ thanh hành động gọn.',
+        'Dùng SdButton với SdButtonItem và SdButtonItemDivider. Popover hỗ trợ chuột, bàn phím, Escape và tooltip cho nút chỉ có icon.',
       ],
       ['async', 'Đang lưu / lỗi / thử lại', 'Thao tác bất đồng bộ.', 'Đang lưu… disabled chống gửi lặp; lỗi giữ input và có Thử lại.'],
     ],
@@ -315,7 +376,18 @@ export const PATTERN_GROUPS: Record<string, PatternGroup> = {
         'Nhiều nhóm thông tin có ý nghĩa khác nhau.',
         'Heading nhóm rõ ràng; một footer lưu chung cho một giao dịch.',
       ],
-      ['lines', 'Header + dòng hàng', 'Đơn hàng có tập dòng con và tổng tiền.', 'Add/remove/recalculate; dòng chưa hợp lệ không được lưu.'],
+      [
+        'lines',
+        'Nhập dòng đơn hàng · Table',
+        'Nhập nhiều dòng có nhiều cột, kết hợp dữ liệu chỉ đọc.',
+        'Dùng sd-table và cell def cho sản phẩm, số lượng, đơn giá; thành tiền chỉ đọc và tính tự động. Thêm/xoá dòng, size sm và hideInlineError.',
+      ],
+      [
+        'time-slots',
+        'Nhập khung giờ · Dòng gọn',
+        'Mỗi dòng gồm giờ bắt đầu, giờ kết thúc và nút xoá.',
+        'Dùng hai sd-time trên mỗi dòng; nút thêm icon + text đặt bên dưới. Dùng table khi có nhiều cột, kể cả cột chỉ đọc. Kiểm tra giờ kết thúc sau giờ bắt đầu và các khung không chồng nhau.',
+      ],
       [
         'readonly',
         'Detail dạng label/value',
@@ -332,7 +404,19 @@ export const PATTERN_GROUPS: Record<string, PatternGroup> = {
         'create',
         'Create · Tạo mới',
         'Nhập một hồ sơ ngắn mà không rời danh sách.',
-        'Form rỗng; nút Tạo liên hệ / Hủy; validation và pending state.',
+        'Form trong SdSection không header. Validation FE dùng notify.warning; thông báo BE dùng notify.error. Email minhanh@example.test tạo phản hồi trùng email mẫu sau khi qua validation FE.',
+      ],
+      [
+        'create-inform',
+        'Create · Lỗi bằng Inform',
+        'Giữ thông báo lỗi phía trên form để người dùng đối chiếu khi sửa.',
+        'Validation FE dùng warning. Phản hồi BE dùng error: thử tạo với email minhanh@example.test đã có trong dữ liệu mẫu. Giữ nội dung nhập để sửa và lưu lại.',
+      ],
+      [
+        'section-errors',
+        'Ba section · Cảnh báo từng nhóm',
+        'Nhập liệu chia thành thông tin cơ bản, liên lạc và bổ sung.',
+        'Bấm Tạo liên hệ khi để trống: SdInform warning xuất hiện trên hai section có trường chưa hợp lệ; section bổ sung không báo lỗi. Phản hồi BE trùng email dùng error.',
       ],
       [
         'update',
@@ -340,7 +424,12 @@ export const PATTERN_GROUPS: Record<string, PatternGroup> = {
         'Thay đổi một hồ sơ đã chọn.',
         'Prefill record; Lưu thay đổi / Hủy; chỉ dirty khi giá trị khác bản đã lưu.',
       ],
-      ['detail', 'Detail · Xem thông tin', 'Đọc nhanh rồi quay lại danh sách.', 'Label/value; Chỉnh sửa / Đóng; không hiển thị nút Lưu.'],
+      [
+        'detail',
+        'Detail · Xem thông tin',
+        'Đọc nhanh rồi quay lại danh sách.',
+        'Dùng SdSectionItem: nhãn chữ thường, giá trị text/số in đậm; trạng thái dùng SdBadge với màu tương ứng. Chỉnh sửa primary fill / Đóng text; không hiển thị nút Lưu.',
+      ],
       [
         'sections',
         'Drawer nhiều section',

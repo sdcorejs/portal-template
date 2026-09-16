@@ -20,6 +20,8 @@ for (const group of fs.readdirSync(path.join(moduleRoot, 'features'))) {
     }
     for (const match of text.matchAll(/(?:templateUrl|styleUrl)\s*:\s*['"]([^'"]+)['"]/g))
       collect(path.resolve(path.dirname(absolute), match[1]));
+    for (const match of text.matchAll(/styleUrls\s*:\s*\[([^\]]*)\]/g))
+      for (const style of match[1].matchAll(/['"]([^'"]+)['"]/g)) collect(path.resolve(path.dirname(absolute), style[1]));
   }
   collect(path.join(moduleRoot, 'features', group, group + '.component.ts'));
   collect(path.join(moduleRoot, 'catalog/pattern-catalog.ts'));

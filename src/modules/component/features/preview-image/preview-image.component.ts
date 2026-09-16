@@ -1,3 +1,4 @@
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
 import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
@@ -18,6 +19,7 @@ type ImageSet = 'multi' | 'single' | 'empty' | 'broken' | 'mixed';
   selector: 'app-preview-image-demo',
   standalone: true,
   imports: [
+    DemoPropertyComponent,
     CommonModule,
     FormsModule,
     SdButton,
@@ -129,8 +131,7 @@ export class PreviewImageDemoComponent {
       (download)="onDownload($event)"
       (imageError)="onError($event)">
     </sd-preview-image>
-  \`,
-})
+  \` })
 export class ImageViewerComponent {
   // PreviewItem = string | File | { url?, file?, name?, caption?, alt?, mime? }
   images = [

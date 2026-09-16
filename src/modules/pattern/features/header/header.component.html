@@ -1,15 +1,5 @@
 @if (variant() === 'page') {
-  <div class="header-layout">
-    <nav class="header-variants" aria-label="Biến thể Page Header">
-      @for (item of pageVariants; track item[0]) {
-        <sd-button
-          [title]="item[1]"
-          [type]="pageVariant() === item[0] ? 'light' : 'text'"
-          color="primary"
-          [attr.aria-pressed]="pageVariant() === item[0]"
-          (click)="pageVariant.set(item[0])" />
-      }
-    </nav>
+  <div>
     <div class="d-grid gap-20">
       @for (example of visibleExamples(); track example.id) {
         <article [attr.aria-label]="'Header ' + example.label">
@@ -23,7 +13,7 @@
                     tooltip="Quay lại"
                     type="text"
                     [disabled]="pending()[example.id]"
-                    (click)="example.id === 'update' ? pageVariant.set('actions') : act(example.id, 'Quay lại')" />
+                    (click)="example.id === 'update' ? selectPageVariant('actions') : act(example.id, 'Quay lại')" />
                 }
                 <div>
                   <div class="d-flex align-items-center flex-wrap gap-8">
@@ -72,7 +62,7 @@
                         [tooltip]="action.title"
                         [prefixIcon]="action.icon"
                         [color]="action.color"
-                        [type]="action.color === 'secondary' ? 'text' : 'light'"
+                        type="light"
                         [disabled]="pending()[example.id]"
                         (click)="act(example.id, action.title)" />
                     }

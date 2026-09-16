@@ -1,7 +1,11 @@
 <sd-page [noHeader]="inDrawer()" [title]="title()">
-  <app-record-header headerLeft [kind]="store.kind" [mode]="editing ? 'update' : 'create'" [entity]="current" />
+  <div headerLeft class="d-flex align-items-center gap-8">
+    <sd-button tooltip="Quay lại" type="text" prefixIcon="arrow_back" [disabled]="store.saving()" (click)="cancel()" /><app-record-header
+      [kind]="store.kind"
+      [mode]="editing ? 'update' : 'create'"
+      [entity]="current" />
+  </div>
   <div headerRight class="record-actions">
-    <sd-button title="Quay lại" type="text" prefixIcon="arrow_back" [disabled]="store.saving()" (click)="cancel()" />
     @if (!stale) {
       <sd-button
         title="Lưu"
@@ -13,11 +17,11 @@
         (click)="save()" />
     }
   </div>
-  <div class="p-20 d-flex flex-column gap-8">
+  <div class="d-flex flex-column gap-8" [class.p-20]="!inDrawer()">
     @if (stale) {
       <sd-data-state state="error" title="Hồ sơ không còn tồn tại" message="Quay lại danh sách và chọn một hồ sơ khác." />
     } @else {
-      <app-entity-form-sections [form]="form" [seed]="seed" [extended]="true" [editing]="editing" />
+      <app-entity-form-sections [form]="form" [seed]="seed" [extended]="true" [compact]="inDrawer()" [editing]="editing" />
       @if (saved()) {
         <p role="status" class="text-success">Đã lưu hồ sơ.</p>
       }

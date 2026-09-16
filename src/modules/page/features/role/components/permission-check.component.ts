@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SdCheckbox } from '@sdcorejs/angular/forms/checkbox';
 import { selectionState } from '../data/role-permissions';
 export interface PermissionSelectionChange {
   ids: readonly string[];
@@ -7,28 +7,16 @@ export interface PermissionSelectionChange {
 }
 @Component({
   selector: 'app-role-permission-check',
-  imports: [MatCheckboxModule],
-  template: `<mat-checkbox
-    [checked]="state().checked"
-    [indeterminate]="state().mixed"
+  imports: [SdCheckbox],
+  template: `<sd-checkbox
+    size="sm"
+    [model]="state().checked"
     [disabled]="disabled() || !ids().length"
-    [aria-label]="label()"
-    (change)="changed.emit({ ids: ids(), checked: $event.checked })"
-    >{{ text() }}</mat-checkbox
-  >`,
-  styles: [
-    `
-      :host {
-        display: inline-flex;
-        align-items: center;
-      }
-      mat-checkbox {
-        --mdc-checkbox-selected-icon-color: var(--sd-primary);
-        --mat-checkbox-selected-icon-color: var(--sd-primary);
-        --mat-checkbox-selected-checkmark-color: var(--sd-primary-contrast, #fff);
-      }
-    `,
-  ],
+    [label]="text()"
+    [attr.aria-label]="label()"
+    [title]="label()"
+    (modelChange)="changed.emit({ ids: ids(), checked: $event === true })" />`,
+  styles: [':host { display: inline-flex; align-items: center; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PermissionCheckComponent {

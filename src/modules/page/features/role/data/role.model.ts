@@ -34,12 +34,12 @@ export const ROLE_STATUSES = [
   { id: 'inactive', name: 'Ngừng hoạt động' },
 ];
 export const ROLE_EXAMPLES = [
-  { id: 'roles-matrix', group: 'list', title: 'Role · Ma trận quyền', icon: 'grid_view', layout: 'matrix' },
-  { id: 'roles-tree', group: 'list', title: 'Role · Quyền phân cấp', icon: 'account_tree', layout: 'tree' },
+  { id: 'roles-matrix', path: 'role/matrix', group: 'list', title: 'Role · Ma trận quyền', icon: 'grid_view', layout: 'matrix' },
+  { id: 'roles-tree', path: 'role/tree', group: 'list', title: 'Role · Quyền phân cấp', icon: 'account_tree', layout: 'tree' },
 ] as const;
 export function emptyRole(): RoleRecord {
   return { id: '', code: '', name: '', description: '', status: 'active', users: 0, updatedAt: '', permissions: [] };
 }
 export function roleBaseUrl(layout: RoleLayout): string {
-  return '/page/list/roles-' + (layout === 'tree' ? 'tree' : 'matrix');
+  return '/page/role/' + layout;
 }

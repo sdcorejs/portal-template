@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { Directive, afterRenderEffect, computed, inject, signal, untracked, viewChild } from '@angular/core';
 import { SdTableOption } from '@sdcorejs/angular/components/table';
@@ -11,6 +12,7 @@ import { FormPatternBase } from './form-simple/form-simple.component';
 @Directive()
 export abstract class DrawerPatternBase {
   readonly store = inject(DemoSessionStore);
+  readonly exampleDescription = inject(ActivatedRoute).snapshot.data['description'] ?? '';
   readonly navigation = inject(PageNavigation);
   readonly unsaved = inject(SdUnsavedChangesService);
   private readonly document = inject(DOCUMENT);

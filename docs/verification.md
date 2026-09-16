@@ -279,7 +279,7 @@ Log kiểm tra tại %TEMP%: portal-unit-final21.log, portal-e2e-completion.log 
 
 ## Role Pages — 2026-09-12
 
-Triển khai preview đã được người dùng duyệt: hai mẫu Role độc lập tại `/page/list/roles-matrix` và `/page/list/roles-tree`, kèm create/detail/update. Core 22.2.8, không thêm dependency. Hướng dẫn và ownership: [Role pages](role-pages.md).
+Triển khai preview đã được người dùng duyệt: hai mẫu Role độc lập tại `/page/role/matrix` và `/page/role/tree`, kèm create/detail/update. Core 22.2.8, không thêm dependency. Hướng dẫn và ownership: [Role pages](role-pages.md).
 
 | Kiểm tra | Kết quả / bằng chứng |
 | --- | --- |

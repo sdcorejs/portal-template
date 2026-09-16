@@ -1,6 +1,33 @@
-:host {
-  display: block;
-  height: 100%;
+@use '../../styles/list-layout';
+.list-master-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  flex: 1;
+  min-height: 0;
+  gap: 12px;
+  &.has-detail {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}
+.list-master-table,
+.list-detail-panel {
   min-height: 0;
   min-width: 0;
+  overflow: hidden;
+}
+.list-master-table {
+  display: flex;
+}
+.list-detail-panel {
+  overflow-y: auto;
+}
+@media (max-width: 900px) {
+  .list-master-content,
+  .list-master-content.has-detail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .list-master-content:not(.has-detail) .list-detail-panel,
+  .list-master-content.has-detail .list-master-table {
+    display: none;
+  }
 }

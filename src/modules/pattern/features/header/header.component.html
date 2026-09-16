@@ -41,20 +41,17 @@
                 [attr.aria-label]="'Hành động ' + example.label">
                 @if (['actions', 'compact', 'grouped'].includes(pageVariant()) && (example.id === 'list' || example.id === 'detail')) {
                   @if (pageVariant() === 'grouped' && secondaryActions[example.id].length >= 2) {
-                    <sd-button
-                      prefixIcon="more_vert"
-                      tooltip="Tác vụ khác"
-                      type="text"
-                      [matMenuTriggerFor]="actionMenu"
-                      [disabled]="pending()[example.id]" />
-                    <mat-menu #actionMenu="matMenu">
+                    <sd-button prefixIcon="more_vert" tooltip="Tác vụ khác" type="text" [disabled]="pending()[example.id]">
                       @for (action of secondaryActions[example.id]; track action.title) {
-                        <button mat-menu-item [disabled]="pending()[example.id]" (click)="act(example.id, action.title)">
-                          <sd-icon [name]="action.icon" [color]="action.color" />
-                          <span [class]="'text-' + action.color">{{ action.title }}</span>
-                        </button>
+                        <sd-button-item
+                          [prefixIcon]="action.icon"
+                          [color]="action.color"
+                          [disabled]="pending()[example.id]"
+                          (click)="act(example.id, action.title)"
+                          >{{ action.title }}</sd-button-item
+                        >
                       }
-                    </mat-menu>
+                    </sd-button>
                   } @else {
                     @for (action of secondaryActions[example.id]; track action.title) {
                       <sd-button
@@ -150,20 +147,17 @@
     </div>
     <div sdHeaderRight>
       @if (groupedDrawer() && drawerMode() === 'detail') {
-        <sd-button
-          prefixIcon="more_vert"
-          tooltip="Tác vụ đơn hàng"
-          type="light"
-          [matMenuTriggerFor]="drawerActions"
-          [disabled]="pending()['drawer']" />
-        <mat-menu #drawerActions="matMenu">
+        <sd-button prefixIcon="more_vert" tooltip="Tác vụ đơn hàng" type="light" [disabled]="pending()['drawer']">
           @for (action of secondaryActions.detail; track action.title) {
-            <button mat-menu-item [disabled]="pending()['drawer']" (click)="act('drawer', action.title)">
-              <sd-icon [name]="action.icon" [color]="action.color" />
-              <span [class]="'text-' + action.color">{{ action.title }}</span>
-            </button>
+            <sd-button-item
+              [prefixIcon]="action.icon"
+              [color]="action.color"
+              [disabled]="pending()['drawer']"
+              (click)="act('drawer', action.title)"
+              >{{ action.title }}</sd-button-item
+            >
           }
-        </mat-menu>
+        </sd-button>
       }
     </div>
     <div>

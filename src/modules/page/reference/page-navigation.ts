@@ -27,12 +27,12 @@ export class PageNavigation {
   backToList() {
     if (this.listShell) return this.go('list');
     const lists: Record<string, string> = {
-      customer: '/page/list/list-standard',
-      order: '/page/list/list-advanced-filter',
-      product: '/page/list/list-grouped-tree',
-      ticket: '/page/list/list-master-detail',
-      category: '/page/detail/drawer-compact',
-      contact: '/page/detail/drawer-sections',
+      customer: '/page/company',
+      order: '/page/order',
+      product: '/page/product',
+      ticket: '/page/ticket',
+      category: '/page/category/side-drawer',
+      contact: '/page/contact',
     };
     return this.router?.navigateByUrl(lists[this.store.kind] ?? '/page') ?? Promise.resolve(false);
   }

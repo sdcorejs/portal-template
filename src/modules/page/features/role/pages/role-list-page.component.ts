@@ -16,9 +16,15 @@ interface RoleListRow extends RoleRecord {
   selector: 'app-role-list-page',
   providers: [RoleSessionStore],
   imports: [RouterLink, SdPageComponent, SdButton, SdTable, SdTableCellDefDirective, SdDataState],
-  template: `<sd-page title="Danh sách vai trò"
+  template: `<sd-page
+    title="Danh sách vai trò"
+    [description]="
+      layout === 'matrix'
+        ? 'Gán quyền theo module bằng ma trận CRUD và các tác vụ khác.'
+        : 'Gán quyền theo bảng phân cấp chức năng và các quyền con.'
+    "
     ><sd-button headerRight title="Tạo mới" type="fill" color="primary" prefixIcon="add" (click)="create()" />
-    <div class="role-list">
+    <div class="list-content">
       @if (loading()) {
         <sd-data-state state="loading" title="Đang tải vai trò…" />
       } @else if (error()) {
@@ -26,47 +32,13 @@ interface RoleListRow extends RoleRecord {
       } @else {
         <sd-table [autoId]="'roles-' + layout" [option]="option"
           ><ng-template sdTableCellDef="code" let-row="item"
-            ><a [routerLink]="baseUrl + '/' + row.id + '/detail'" class="record-link">{{ row.code }}</a></ng-template
+            ><a [routerLink]="baseUrl + '/' + row.id + '/detail'">{{ row.code }}</a></ng-template
           ></sd-table
         >
       }
     </div></sd-page
   >`,
-  styles: [
-    `
-      :host {
-        display: block;
-        height: 100%;
-        min-height: 0;
-        min-width: 0;
-      }
-      .role-list {
-        height: 100%;
-        min-height: 0;
-        min-width: 0;
-        display: flex;
-        flex-direction: column;
-        padding: 16px;
-      }
-      sd-table {
-        flex: 1;
-        min-height: 0;
-      }
-      .record-link {
-        color: var(--sd-primary);
-        font-weight: 600;
-        text-decoration: none;
-      }
-      .record-link:hover {
-        text-decoration: underline;
-      }
-      @media (max-width: 600px) {
-        .role-list {
-          padding: 12px;
-        }
-      }
-    `,
-  ],
+  styleUrl: '../../../styles/list-layout.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoleListPageComponent {

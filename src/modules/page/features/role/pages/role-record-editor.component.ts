@@ -17,27 +17,29 @@ import { RoleSessionStore } from '../data/role-session.store';
   providers: [SdUnsavedChangesService],
   imports: [SdPageComponent, SdButton, SdBadge, RoleInformationFormComponent, RolePermissionEditorComponent],
   template: `<sd-page [title]="title()">
-    <div headerLeft>
-      <div class="heading">
-        <h1>
-          {{ title() }}
-          @if (mode() !== 'create') {
-            <span>#{{ seed().code }}</span>
+    <div headerLeft class="d-flex align-items-center gap-8">
+      <sd-button tooltip="Quay lại" type="text" prefixIcon="arrow_back" [disabled]="saving()" (click)="back()" />
+      <div>
+        <div class="heading">
+          <h1>
+            {{ title() }}
+            @if (mode() !== 'create') {
+              <span>#{{ seed().code }}</span>
+            }
+          </h1>
+          @if (viewed()) {
+            <sd-badge
+              type="round"
+              [title]="seed().status === 'active' ? 'Đang hoạt động' : 'Ngừng hoạt động'"
+              [color]="seed().status === 'active' ? 'success' : 'secondary'" />
           }
-        </h1>
-        @if (viewed()) {
-          <sd-badge
-            type="round"
-            [title]="seed().status === 'active' ? 'Đang hoạt động' : 'Ngừng hoạt động'"
-            [color]="seed().status === 'active' ? 'success' : 'secondary'" />
+        </div>
+        @if (mode() !== 'create') {
+          <p class="description">{{ seed().name }}</p>
         }
       </div>
-      @if (mode() !== 'create') {
-        <p class="description">{{ seed().name }}</p>
-      }
     </div>
     <div headerRight class="actions">
-      <sd-button title="Quay lại" type="text" prefixIcon="arrow_back" [disabled]="saving()" (click)="back()" />
       @if (viewed()) {
         <sd-button title="Cập nhật" type="fill" color="primary" prefixIcon="edit" (click)="edit()" />
       } @else {
@@ -53,7 +55,7 @@ import { RoleSessionStore } from '../data/role-session.store';
       }
       <fieldset [disabled]="saving()">
         <app-role-information-form [form]="form" [seed]="seed()" [viewed]="viewed()" [editing]="mode() !== 'create'" />
-        <app-role-permission-editor [layout]="layout()" [(selected)]="selected" [disabled]="viewed() || saving()" />
+        <app-role-permission-editor [layout]="layout()" [viewed]="viewed()" [(selected)]="selected" [disabled]="viewed() || saving()" />
       </fieldset></div
   ></sd-page>`,
   styles: [

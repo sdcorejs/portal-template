@@ -4,11 +4,20 @@ import { referenceUnsavedGuard } from './components/unsaved-changes.guard';
 import { PAGE_EXAMPLES } from './catalog/page-examples';
 import { ROLE_EXAMPLES } from './features/role/data/role.model';
 export const pageRoutes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'list/list-standard' },
-  { path: 'list', pathMatch: 'full', redirectTo: 'list/list-standard' },
-  { path: 'detail', pathMatch: 'full', redirectTo: 'detail/detail-overview' },
+  { path: '', pathMatch: 'full', redirectTo: 'company' },
+  { path: 'list', pathMatch: 'full', redirectTo: 'company' },
+  { path: 'detail', pathMatch: 'full', redirectTo: 'customer' },
+  ...[...PAGE_EXAMPLES, ...ROLE_EXAMPLES].flatMap(example =>
+    [example.group + '/' + example.id, example.id].flatMap(legacy =>
+      ['', '/create', '/:id/detail', '/:id/update'].map(suffix => ({
+        path: legacy + suffix,
+        pathMatch: 'full' as const,
+        redirectTo: example.path + suffix,
+      }))
+    )
+  ),
   ...ROLE_EXAMPLES.map(example => ({
-    path: 'list/' + example.id,
+    path: example.path,
     data: { permission: SD_PERMISSION_PUBLIC, roleLayout: example.layout },
     children: [
       {
@@ -27,8 +36,9 @@ export const pageRoutes: Routes = [
   })),
   ...PAGE_EXAMPLES.map(example => ({
     matcher: segments => {
-      if (segments[0]?.path !== example.group || segments[1]?.path !== example.id) return null;
-      const rest = segments.slice(2);
+      const prefix = example.path.split('/');
+      if (!prefix.every((part, index) => segments[index]?.path === part)) return null;
+      const rest = segments.slice(prefix.length);
       if (!rest.length) return { consumed: segments };
       if (rest.length === 1 && rest[0].path === 'create') return { consumed: segments, posParams: { view: rest[0] } };
       if (rest.length === 2 && ['detail', 'update'].includes(rest[1].path))
@@ -36,9 +46,14 @@ export const pageRoutes: Routes = [
       return null;
     },
     runGuardsAndResolvers: 'always' as const,
-    data: { permission: SD_PERMISSION_PUBLIC, patternId: example.id, title: example.title, icon: example.icon },
+    data: {
+      permission: SD_PERMISSION_PUBLIC,
+      patternId: example.id,
+      title: example.title,
+      icon: example.icon,
+      description: example.description,
+    },
     loadComponent: () => import('./reference/page-reference.component').then(m => m.PageReferenceComponent),
     canDeactivate: [referenceUnsavedGuard],
   })),
-  ...PAGE_EXAMPLES.map(example => ({ path: example.id, pathMatch: 'full' as const, redirectTo: example.group + '/' + example.id })),
 ];

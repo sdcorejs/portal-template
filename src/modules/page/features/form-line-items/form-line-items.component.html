@@ -1,7 +1,11 @@
 <sd-page [noHeader]="inDrawer()" [title]="title()">
-  <app-record-header headerLeft [kind]="store.kind" [mode]="editing ? 'update' : 'create'" [entity]="current" />
+  <div headerLeft class="d-flex align-items-center gap-8">
+    <sd-button tooltip="Quay lại" type="text" prefixIcon="arrow_back" [disabled]="store.saving()" (click)="cancel()" /><app-record-header
+      [kind]="store.kind"
+      [mode]="editing ? 'update' : 'create'"
+      [entity]="current" />
+  </div>
   <div headerRight class="record-actions">
-    <sd-button title="Quay lại" type="text" prefixIcon="arrow_back" [disabled]="store.saving()" (click)="cancel()" />
     @if (!stale) {
       <sd-button
         title="Lưu"

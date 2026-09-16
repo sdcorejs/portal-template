@@ -42,7 +42,7 @@ export class OverviewDemoComponent {
       id: 'pages',
       title: 'Trải nghiệm nghiệp vụ',
       text: 'Pages có bảng, bộ lọc, hồ sơ, tạo/cập nhật và lưu phiên mô phỏng.',
-      path: '/page/list/list-standard',
+      path: '/page/company',
     },
   ];
   readonly choice = computed(() => this.options.find(item => item.id === this.selected())!);
@@ -57,7 +57,7 @@ export class OverviewDemoComponent {
     <p role="status">{{ done().length }}/3 bước hoàn tất</p>
     @if (done().length === 3) {
       <div class="status">
-        <a routerLink="/page/list/list-standard">Review Portal</a> ·
+        <a routerLink="/page/company">Review Portal</a> ·
         <a href="http://localhost:6006" target="_blank" rel="noopener">Review Storybook ↗</a>
       </div>
     }

@@ -2,20 +2,18 @@ import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, input
 import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
-import { SdButton } from '@sdcorejs/angular/components/button';
+import { SdButton, SdButtonItem } from '@sdcorejs/angular/components/button';
 import { SdBadge } from '@sdcorejs/angular/components/badge';
 import { SdSection, SdSectionItem } from '@sdcorejs/angular/components/section';
 import { SdInput } from '@sdcorejs/angular/forms/input';
 import { SdNotifyService } from '@sdcorejs/angular/services/notify';
 import { SdSideDrawer } from '@sdcorejs/angular/components/side-drawer';
 import { SdPermissionService } from '@sdcorejs/angular/modules/permission';
-import { MatMenuModule } from '@angular/material/menu';
-import { SdIcon } from '@sdcorejs/angular/modules/icon';
 import { SdTable, SdTableOption } from '@sdcorejs/angular/components/table';
 import { PatternOrder, seedOrders, STATUS_LABELS } from '../../data/pattern-query';
 @Component({
   selector: 'app-pattern-header',
-  imports: [SdPageComponent, SdButton, SdBadge, SdSection, SdSectionItem, SdInput, SdSideDrawer, MatMenuModule, SdIcon, SdTable],
+  imports: [SdPageComponent, SdButton, SdBadge, SdSection, SdSectionItem, SdInput, SdSideDrawer, SdButtonItem, SdTable],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,5 +1,6 @@
+import { PAGE_EXAMPLES } from '../src/modules/page/catalog/page-examples';
 import { test, expect } from '@playwright/test';
-const base = '/page/list/list-standard';
+const base = '/page/company';
 const header = (page: import('@playwright/test').Page) => page.locator('app-demo-host app-record-header').filter({ visible: true }).first();
 test('CASE-RECORD-URL: detail header, edit, save and reload use the selected record', async ({ page }, info) => {
   await page.goto(base);
@@ -65,7 +66,7 @@ for (const [id, record] of [
   ['form-line-items', 'order-2'],
 ]) {
   test('CASE-DIRECT-UPDATE: ' + id + ' reopens the correct form', async ({ page }) => {
-    await page.goto('/page/detail/' + id + '/' + record + '/update');
+    await page.goto('/page/' + PAGE_EXAMPLES.find(example => example.id === id)!.path + '/' + record + '/update');
     const name = page.getByRole('textbox', { name: 'Tên hồ sơ', exact: true });
     await expect(name).not.toHaveValue('');
     const original = await name.inputValue();
@@ -78,7 +79,7 @@ for (const [id, record] of [
 }
 for (const id of ['drawer-compact', 'drawer-sections']) {
   test('CASE-DRAWER-URL: ' + id + ' create/save/detail/update/reload', async ({ page }) => {
-    const url = '/page/detail/' + id;
+    const url = '/page/' + PAGE_EXAMPLES.find(example => example.id === id)!.path;
     await page.goto(url + '/create');
     let dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();

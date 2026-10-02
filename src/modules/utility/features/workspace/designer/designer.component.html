@@ -1,0 +1,29 @@
+<div class="d-flex flex-column gap-12">
+  <div class="d-flex flex-wrap justify-content-between gap-12 align-items-center">
+    <div>
+      <h2 class="T20M mb-4">Thiết kế biểu mẫu</h2>
+      <p class="T12R text-secondary mb-0">
+        {{ store.fieldCount() }} trường ·
+        {{ store.schemaChanged() ? 'Bản nháp có thay đổi chưa áp dụng' : 'Bản nháp khớp biểu mẫu đang áp dụng' }}
+      </p>
+    </div>
+    <div class="d-flex flex-wrap gap-8">
+      <sd-button title="Mẫu ban đầu" type="text" size="md" (click)="restore()" /><sd-button
+        title="Xuất schema"
+        prefixIcon="download"
+        type="outline"
+        size="md"
+        (click)="exportSchema()" />
+      <sd-button
+        title="Áp dụng biểu mẫu"
+        prefixIcon="publish"
+        type="fill"
+        color="primary"
+        size="md"
+        [disabled]="!store.schemaChanged()"
+        (click)="publish()" /><sd-button title="Thử nhập liệu" type="outline" size="md" (click)="tryForm()" />
+    </div>
+  </div>
+  <p class="T12R text-secondary mb-0" role="status">{{ feedback() }}</p>
+  <div class="builder-frame"><sd-form-builder [(schema)]="store.draftSchema" /></div>
+</div>

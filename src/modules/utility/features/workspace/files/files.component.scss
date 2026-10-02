@@ -1,0 +1,9 @@
+// why: File Explorer requires a sized host and manages its own scroll areas and compact breakpoint.
+:host {
+  display: block;
+  min-width: 0;
+}
+.explorer-frame {
+  height: max(540px, calc(100dvh - 290px));
+  min-width: 0;
+}

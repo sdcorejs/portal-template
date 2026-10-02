@@ -1,0 +1,76 @@
+<div class="d-flex flex-column gap-16">
+  <div class="d-flex flex-wrap justify-content-between gap-12 align-items-center">
+    <div>
+      <h2 class="T20M mb-4">Hàng chờ đề nghị</h2>
+      <p class="T14R text-secondary mb-0">Chọn trạng thái để lọc, mở mã hồ sơ để xem schema đã gửi.</p>
+    </div>
+    <sd-button title="Tạo đề nghị" prefixIcon="add" type="fill" color="primary" size="md" (click)="create()" />
+  </div>
+  <sd-card-group [(model)]="status" class="workspace-scores" autoId="workspace-status">
+    @for (card of cards(); track card.title) {
+      <sd-card [value]="card.id" [autoId]="'workspace-' + card.id"
+        ><div class="p-16">
+          <div class="T12M text-secondary">{{ card.title }}</div>
+          <div class="T24M mt-4">{{ card.count }}</div>
+        </div></sd-card
+      >
+    }
+  </sd-card-group>
+  <div class="d-flex flex-wrap gap-8 align-items-center" aria-label="Thử trạng thái dữ liệu">
+    <span class="T12R text-secondary">Thử trạng thái:</span>
+    <sd-button title="Tải lại" type="text" (click)="reload()" /><sd-button
+      title="Danh sách trống"
+      type="text"
+      (click)="state.set('empty')" /><sd-button title="Giả lập lỗi" type="text" (click)="state.set('error')" /><sd-button
+      title="Dữ liệu mẫu"
+      type="text"
+      (click)="restore()" />
+  </div>
+  <sd-data-state
+    [state]="state()"
+    [retryable]="state() === 'error'"
+    [actionLabel]="state() === 'empty' ? 'Tạo đề nghị' : null"
+    (sdRetry)="reload()"
+    (sdAction)="create()">
+    <div class="workspace-table">
+      <sd-table [option]="tableOption()">
+        <ng-template sdTableCellDef="code" let-row="item"
+          ><sd-button [title]="row.code" type="text" color="primary" (click)="open(row)"
+        /></ng-template>
+        <ng-template [sdTableRowMobileDef]="tableOption()" let-row="item">
+          <div class="d-flex flex-column gap-8 p-12">
+            <sd-button [title]="row.code" type="text" color="primary" (click)="open(row)" /><strong>{{ row.project }}</strong>
+            <span>{{ mobileRows().get(row.id)?.statusLabel }}</span
+            ><span class="T12R text-secondary">Ngân sách: {{ mobileRows().get(row.id)?.amountLabel }} VND</span>
+          </div>
+        </ng-template>
+      </sd-table>
+    </div>
+  </sd-data-state>
+</div>
+<sd-side-drawer title="Hồ sơ đề nghị" width="min(720px, 100vw)" autoId="workspace-record">
+  @if (selected(); as row) {
+    <div class="d-flex flex-column gap-16">
+      <h3 class="T20M">{{ row.code }} · {{ row.project }}</h3>
+      <sd-form-render [schema]="row.schema" [value]="row.data" [viewed]="true" />
+      <sd-section title="Tài liệu đính kèm" icon="attach_file">
+        @for (file of selectedFiles(); track file.id) {
+          <p>{{ file.name }}</p>
+        } @empty {
+          <p class="text-secondary mb-0">Hồ sơ này chưa có tài liệu đính kèm.</p>
+        }
+      </sd-section>
+    </div>
+  }
+  <div sdFooterRight>
+    @if (selected(); as row) {
+      <sd-button
+        title="Duyệt hồ sơ"
+        prefixIcon="done"
+        type="fill"
+        color="success"
+        [disabled]="row.status !== 'pending'"
+        (click)="approve([row])" />
+    }
+  </div>
+</sd-side-drawer>

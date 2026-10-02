@@ -1,4 +1,10 @@
-# Portal Template — Core 22.2.8
+# Portal Template — Core 22.3.0
+
+## Workspace hồ sơ — playground Core UI 22.3
+
+Mở **Utility → Workspace hồ sơ** hoặc `/utility/workspace`. Năm màn liên kết: Hàng chờ, Kho tài liệu, Thiết kế biểu mẫu, Gửi đề nghị, Hoạt động. Đổi schema trong Form Builder rồi **Áp dụng biểu mẫu** để Form Render dùng đúng bản đó; upload file, gửi/duyệt hồ sơ và xem History/Audit Diff, xuất JSON có tiến độ/hủy/thử lại. Dữ liệu giả lập và file nằm trong bộ nhớ trình duyệt; **Reset workspace** khôi phục mẫu.
+
+Chạy `npm run test:e2e:workspace` để kiểm tra Chrome desktop/mobile riêng ở port 2218, một worker. Xem [hướng dẫn, coverage và kiểm chứng](docs/core-ui-playground.md), [inventory công khai 22.3](docs/core-ui-22.3-inventory.json) và ảnh tại `docs/screenshots/`.
 
 Portal Angular gồm thư viện Components/Forms/Services, 14 page nghiệp vụ tương tác và 17 bài Instructions để developer/consumer/AI tham khảo.
 
@@ -33,7 +39,7 @@ Phạm vi kế hoạch và nguồn: [instructions-plan.md](docs/instructions-pla
 
 ## Chạy dự án
 
-Dùng Node **24.15+** (đã kiểm tra với 24.19.0), hoặc Node 22.22.3+. Node 22.14 và Node 18 không phù hợp Angular 22. Các phiên bản chính được pin trong package.json và package-lock.json: Core 22.2.8, Angular 22.1.6, CLI 22.1.7, TypeScript 6.0.3, Storybook 10.6.0.
+Dùng Node **24.15+** (đã kiểm tra với 24.19.0), hoặc Node 22.22.3+. Node 22.14 và Node 18 không phù hợp Angular 22. Các phiên bản chính được pin trong package.json và package-lock.json: Core 22.3.0, Angular 22.1.6, CLI 22.1.7, TypeScript 6.0.3, Storybook 10.6.0.
 
 ```sh
 npm ci
@@ -85,7 +91,7 @@ Thân sd-section dùng p-20. Create/update giữ inline error của Core và dù
 
 ## Bố cục list và bộ lọc Core
 
-List dùng trọn chiều cao vùng làm việc: header chỉ có tiêu đề/hành động, bảng cuộn nội bộ và phân trang ở đáy. Các mẫu tham khảo bố cục XNĐK/HĐMB của sales-platform và dùng API Core 22.2.8 đang cài.
+List dùng trọn chiều cao vùng làm việc: header chỉ có tiêu đề/hành động, bảng cuộn nội bộ và phân trang ở đáy. Các mẫu tham khảo bố cục XNĐK/HĐMB của sales-platform và dùng API Core 22.3.0 đang cài.
 
 | Màn | Bộ lọc | Score card |
 | --- | --- | --- |

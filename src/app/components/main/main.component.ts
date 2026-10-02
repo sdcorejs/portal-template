@@ -29,7 +29,11 @@ export class MainComponent {
   );
   // Pages owns route-scoped drafts; retain the actual RouterOutlet for CanDeactivate.
   readonly useTabRouter = computed(
-    () => this.portalConfig.useTabRouter && !this.currentUrl().startsWith('/page') && !this.currentUrl().startsWith('/pattern')
+    () =>
+      this.portalConfig.useTabRouter &&
+      !this.currentUrl().startsWith('/page') &&
+      !this.currentUrl().startsWith('/pattern') &&
+      !this.currentUrl().startsWith('/utility/workspace')
   );
 
   menus: SdLayoutMenu[] = [
@@ -197,6 +201,17 @@ export class MainComponent {
       icon: 'build',
       title: 'Utility',
       children: [
+        {
+          title: 'Workspace hồ sơ',
+          icon: 'workspaces',
+          children: [
+            { path: '/utility/workspace/queue', permission: SD_PERMISSION_PUBLIC, title: 'Hàng chờ · Table' },
+            { path: '/utility/workspace/files', permission: SD_PERMISSION_PUBLIC, title: 'Kho tài liệu · File Explorer' },
+            { path: '/utility/workspace/designer', permission: SD_PERMISSION_PUBLIC, title: 'Thiết kế · Form Builder' },
+            { path: '/utility/workspace/request', permission: SD_PERMISSION_PUBLIC, title: 'Gửi đề nghị · Form Render' },
+            { path: '/utility/workspace/activity', permission: SD_PERMISSION_PUBLIC, title: 'Hoạt động · History & Diff' },
+          ],
+        },
         { path: '/utility/tooltip', permission: SD_PERMISSION_PUBLIC, title: 'sdTooltip Directive' },
         { path: '/utility/icon', permission: SD_PERMISSION_PUBLIC, title: 'System Icons (Fill/Outline)' },
       ],

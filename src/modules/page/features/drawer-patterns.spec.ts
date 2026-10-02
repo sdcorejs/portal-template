@@ -1,5 +1,6 @@
 import { PageNavigation } from '../reference/page-navigation';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { DrawerCompactComponent } from './drawer-compact/drawer-compact.component';
 import { DemoSessionStore } from '../data/demo-session.store';
 import { SdUnsavedChangesService, SD_UNSAVED_CHANGES_CONFIRMATION_ADAPTER } from '@sdcorejs/angular/services/unsaved-changes';
@@ -9,6 +10,7 @@ describe('CASE-DRAWER — scoped close guard', () => {
       providers: [
         DemoSessionStore,
         PageNavigation,
+        provideRouter([]),
         SdUnsavedChangesService,
         { provide: SD_UNSAVED_CHANGES_CONFIRMATION_ADAPTER, useValue: { confirm: () => 'cancel' } },
       ],

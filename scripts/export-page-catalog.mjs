@@ -6,10 +6,10 @@ export async function loadCatalog() {
   const source = readFileSync('src/modules/page/catalog/pattern-registry.ts', 'utf8');
   const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ES2022 } }).outputText;
   const { PAGE_PATTERNS } = await import('data:text/javascript;base64,' + Buffer.from(js).toString('base64'));
-  return { schemaVersion: 1, coreVersion: '22.2.8', patterns: structuredClone(PAGE_PATTERNS) };
+  return { schemaVersion: 1, coreVersion: '22.3.0', patterns: structuredClone(PAGE_PATTERNS) };
 }
 export function validateCatalog(catalog) {
-  if (catalog.schemaVersion !== 1 || catalog.coreVersion !== '22.2.8' || catalog.patterns.length !== 15)
+  if (catalog.schemaVersion !== 1 || catalog.coreVersion !== '22.3.0' || catalog.patterns.length !== 15)
     throw new Error('Catalog version/count mismatch');
   const ids = new Set();
   for (const p of catalog.patterns) {
@@ -45,7 +45,7 @@ export async function renderArtifacts() {
   collect('src/modules/page');
   sources.files['src/styles/reference.scss'] = readFileSync('src/styles/reference.scss', 'utf8');
   const markdown =
-    '# Page patterns — Core 22.2.8\n\nGenerated from the pattern registry. Demo data is synthetic and scoped to one mounted reference; replace the service boundary for production.\n\n' +
+    '# Page patterns — Core 22.3.0\n\nGenerated from the pattern registry. Demo data is synthetic and scoped to one mounted reference; replace the service boundary for production.\n\n' +
     catalog.patterns
       .map(
         p =>

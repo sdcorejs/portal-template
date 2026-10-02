@@ -107,7 +107,7 @@
                     <ng-template sdTableCellDef="quantity" let-line="item">
                       <sd-input-number
                         [model]="+line.quantity"
-                        (modelChange)="changeLine(line.id, 'quantity', $event == null ? '' : '' + $event)"
+                        (modelChange)="changeLine(line.id, 'quantity', $event === null || $event === undefined ? '' : '' + $event)"
                         [min]="1"
                         [precision]="0"
                         required

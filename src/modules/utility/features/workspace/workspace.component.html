@@ -1,0 +1,24 @@
+<sd-page title="Workspace hồ sơ" description="Thiết kế biểu mẫu → gửi đề nghị → duyệt hồ sơ. Một phiên demo để khám phá Core UI 22.3.">
+  <div class="workspace-body d-flex flex-column gap-16 p-16">
+    <nav aria-label="Các màn workspace" class="workspace-navigation d-flex gap-8">
+      @for (item of navigation(); track item.path) {
+        <sd-button
+          [title]="item.title"
+          [prefixIcon]="item.icon"
+          [type]="item.active ? 'fill' : 'light'"
+          [color]="item.active ? 'primary' : 'secondary'"
+          size="md"
+          [attr.aria-current]="item.active ? 'page' : null"
+          (click)="navigate(item.path)" />
+      }
+    </nav>
+    <div class="d-flex flex-wrap gap-12 align-items-center justify-content-between">
+      <p class="workspace-note T12R text-secondary mb-0">
+        Dữ liệu giả lập · {{ store.requests().length }} hồ sơ · {{ store.fileCount() }} tài liệu · biểu mẫu v{{ store.schemaVersion() }}.
+        File và bản nháp nằm trong bộ nhớ; reload khởi tạo phiên mới.
+      </p>
+      <sd-button title="Reset workspace" prefixIcon="restart_alt" type="outline" size="sm" (click)="reset()" />
+    </div>
+    <router-outlet />
+  </div>
+</sd-page>

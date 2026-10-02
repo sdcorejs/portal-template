@@ -1,0 +1,5 @@
+// why: prevent form/stepper intrinsic widths from stretching the existing mobile portal shell.
+:host {
+  display: block;
+  min-width: 0;
+}

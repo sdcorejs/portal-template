@@ -1,0 +1,9 @@
+// why: the embedded designer owns palette/canvas/inspector scrolling and needs a real height on every viewport.
+:host {
+  display: block;
+  min-width: 0;
+}
+.builder-frame {
+  height: max(650px, calc(100dvh - 310px));
+  min-width: 0;
+}

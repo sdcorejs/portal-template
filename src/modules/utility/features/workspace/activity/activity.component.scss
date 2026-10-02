@@ -1,0 +1,5 @@
+// why: activity columns shrink inside the existing responsive Core grid.
+:host {
+  display: block;
+  min-width: 0;
+}

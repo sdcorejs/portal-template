@@ -6,6 +6,14 @@ export const utilityRoutes: Routes = [
     path: '',
     data: { permission: SD_PERMISSION_PUBLIC },
     children: [
+      {
+        path: 'workspace',
+        data: { permission: SD_PERMISSION_PUBLIC },
+        loadChildren: () => import('./features/workspace/workspace.routes').then(m => m.workspaceRoutes),
+      },
+      { path: 'file-explorer', pathMatch: 'full', redirectTo: 'workspace/files' },
+      { path: 'form-builder', pathMatch: 'full', redirectTo: 'workspace/designer' },
+      { path: 'form-render', pathMatch: 'full', redirectTo: 'workspace/request' },
       { path: 'icons', redirectTo: 'icon' },
       { path: '', data: { permission: SD_PERMISSION_PUBLIC }, redirectTo: 'tooltip', pathMatch: 'full' },
       {

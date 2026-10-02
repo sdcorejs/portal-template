@@ -1,0 +1,138 @@
+{
+  "baseCommit": "2b9e562efe7979b5a5ea910afbf6e097f39360a0",
+  "branch": "codex/core-ui-22-3-playground",
+  "coreVersion": "22.3.0",
+  "coreSourceCommit": "c9d8469061f9d54a05dd33e99684b9101989404c",
+  "angularVersion": "22.1.6",
+  "checkedAtUtc": "2026-10-02T07:45:37.4185588Z",
+  "changedFileCount": 58,
+  "changedFiles": [
+    ".gitignore",
+    "CLAUDE.md",
+    "README.md",
+    "docs/core-ui-22.3-inventory.json",
+    "docs/core-ui-change-inventory.json",
+    "docs/core-ui-playground.md",
+    "docs/page-pattern.md",
+    "docs/screenshots/workspace-activity-desktop.png",
+    "docs/screenshots/workspace-designer-desktop.png",
+    "docs/screenshots/workspace-export-desktop.png",
+    "docs/screenshots/workspace-files-desktop.png",
+    "docs/screenshots/workspace-files-empty-desktop.png",
+    "docs/screenshots/workspace-files-mobile.png",
+    "docs/screenshots/workspace-files-preview-desktop.png",
+    "docs/screenshots/workspace-queue-desktop.png",
+    "docs/screenshots/workspace-queue-mobile.png",
+    "docs/screenshots/workspace-request-mobile.png",
+    "docs/screenshots/workspace-table-mobile.png",
+    "e2e/pattern.spec.ts",
+    "e2e/workspace.spec.ts",
+    "package-lock.json",
+    "package.json",
+    "playwright.workspace.config.ts",
+    "public/catalog/page-pattern-sources.v1.json",
+    "public/catalog/page-patterns.v1.json",
+    "public/pattern-source.json",
+    "scripts/check-toolchain.mjs",
+    "scripts/export-page-catalog.mjs",
+    "src/app/components/main/main.component.ts",
+    "src/modules/page/catalog/pattern-registry.spec.ts",
+    "src/modules/page/catalog/pattern-registry.ts",
+    "src/modules/page/features/drawer-patterns.spec.ts",
+    "src/modules/page/features/list-patterns.spec.ts",
+    "src/modules/page/reference/page-reference.component.spec.ts",
+    "src/modules/pattern/features/stepper/stepper.component.html",
+    "src/modules/utility/features/workspace/activity/activity.component.html",
+    "src/modules/utility/features/workspace/activity/activity.component.scss",
+    "src/modules/utility/features/workspace/activity/activity.component.ts",
+    "src/modules/utility/features/workspace/data/workspace.seed.ts",
+    "src/modules/utility/features/workspace/data/workspace.store.spec.ts",
+    "src/modules/utility/features/workspace/data/workspace.store.ts",
+    "src/modules/utility/features/workspace/designer/designer.component.html",
+    "src/modules/utility/features/workspace/designer/designer.component.scss",
+    "src/modules/utility/features/workspace/designer/designer.component.ts",
+    "src/modules/utility/features/workspace/files/files.component.html",
+    "src/modules/utility/features/workspace/files/files.component.scss",
+    "src/modules/utility/features/workspace/files/files.component.ts",
+    "src/modules/utility/features/workspace/queue/queue.component.html",
+    "src/modules/utility/features/workspace/queue/queue.component.scss",
+    "src/modules/utility/features/workspace/queue/queue.component.ts",
+    "src/modules/utility/features/workspace/request/request.component.html",
+    "src/modules/utility/features/workspace/request/request.component.scss",
+    "src/modules/utility/features/workspace/request/request.component.ts",
+    "src/modules/utility/features/workspace/workspace.component.html",
+    "src/modules/utility/features/workspace/workspace.component.scss",
+    "src/modules/utility/features/workspace/workspace.component.ts",
+    "src/modules/utility/features/workspace/workspace.routes.ts",
+    "src/modules/utility/routes.ts"
+  ],
+  "finalLintFix": {
+    "source": "src/modules/pattern/features/stepper/stepper.component.html",
+    "oldExpression": "$event == null",
+    "newExpression": "$event === null || $event === undefined",
+    "behavior": "null and undefined map to empty string; numeric values retain string conversion",
+    "browserRegression": "e2e/pattern.spec.ts: repeated rows clears, validates and restores quantity"
+  },
+  "verification": {
+    "fullRepoLint": "PASS: 0 errors, 0 warnings",
+    "angularTypecheck": "PASS: ngc -p tsconfig.app.json --rootDir src",
+    "fullUnit": "PASS: 45/45",
+    "devBuild": "PASS: npm run build",
+    "catalogCheckAndTests": "PASS: 2/2 tests",
+    "patternCheckAndTests": "PASS: 2/2 tests",
+    "affectedStepperBrowser": "PASS: 3/3, Chrome, one worker, exact isolated checkout at port 2218",
+    "workspaceBrowserPriorEvidence": "PASS: 7/7 desktop/mobile; retained without overwriting screenshots"
+  },
+  "componentInventory": {
+    "before": 20,
+    "after": 25,
+    "documentedGroups": 39,
+    "file": "docs/core-ui-22.3-inventory.json"
+  },
+  "retainedScreenshots": [
+    {
+      "name": "workspace-activity-desktop.png",
+      "sha256": "f21641aebda30c68f2c4e0276f168d7cc758fa16b0cac5737bb8410b4f125a7b"
+    },
+    {
+      "name": "workspace-designer-desktop.png",
+      "sha256": "dd0946e5dc0a4fabad66d74c1c274e1f3b08fef6dba695a3f0bfb92bb1c7a8d7"
+    },
+    {
+      "name": "workspace-export-desktop.png",
+      "sha256": "c0a216d3e809a9282236f7f41ed67795f27180923abd2b5507db044627532aef"
+    },
+    {
+      "name": "workspace-files-desktop.png",
+      "sha256": "96e7404ca04c4adafd78ea058c56c3ed9893ff82e62c29a964e91ad36c3e65cc"
+    },
+    {
+      "name": "workspace-files-empty-desktop.png",
+      "sha256": "12525f1faa701902998e011e152324c14ece4124a214f3967d2e8ee549a69446"
+    },
+    {
+      "name": "workspace-files-mobile.png",
+      "sha256": "c1b0649db22e9f8d39143ea9aae5dba8f64a3026e472e0d89b99388e7900f63d"
+    },
+    {
+      "name": "workspace-files-preview-desktop.png",
+      "sha256": "b2d13925e942ecbc4e270b66057d1c21a47e0fd5cf26ce789d03ae19bd630bf6"
+    },
+    {
+      "name": "workspace-queue-desktop.png",
+      "sha256": "7f77e9cb916e16bacbbda9dce71f465f367449f33e7c1ca9b5c11083a908dccb"
+    },
+    {
+      "name": "workspace-queue-mobile.png",
+      "sha256": "cd9ec39c44e5dfee3cdedf3f811ff0a95099f14637338c2a2704e899288aee76"
+    },
+    {
+      "name": "workspace-request-mobile.png",
+      "sha256": "601433e6e1bdb6027d887bd26e07739348b7bbaa4c8e9f1778d4a8c28d2a9790"
+    },
+    {
+      "name": "workspace-table-mobile.png",
+      "sha256": "edb5eb1adf9d36b283c3d257de26a9eecbaa2e1da5896036e4201fa03d18ed90"
+    }
+  ]
+}

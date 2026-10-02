@@ -1,0 +1,98 @@
+<div class="d-flex flex-column gap-16">
+  <div class="d-flex flex-wrap gap-12 justify-content-between align-items-center">
+    <div>
+      <h2 class="T20M mb-4">Gửi đề nghị</h2>
+      <p class="T12R text-secondary mb-0">
+        Biểu mẫu v{{ store.schemaVersion() }} được chuyển trực tiếp từ màn thiết kế. Bản nháp được giữ khi chuyển màn trong workspace.
+      </p>
+    </div>
+    <sd-button title="Điền dữ liệu mẫu" type="outline" size="md" [disabled]="busy() || !!submitted()" (click)="fillSample()" />
+  </div>
+  @for (message of errors(); track message) {
+    <p class="p-12 bg-error-light rounded-8 text-error mb-0" role="alert">{{ message }}</p>
+  }
+  @for (message of warnings(); track message) {
+    <p class="p-12 bg-warning-light rounded-8 mb-0" role="status">{{ message }}</p>
+  }
+  @if (submitted(); as row) {
+    <sd-section title="Đề nghị đã được gửi" icon="check_circle"
+      ><p class="T16M">{{ row.code }} · {{ row.project }}</p>
+      <p>{{ row.attachments.length }} tài liệu đã liên kết. Bạn có thể duyệt hồ sơ trong Hàng chờ.</p>
+      <div class="d-flex flex-wrap gap-8">
+        <sd-button title="Mở hàng chờ" type="fill" color="primary" size="md" (click)="openQueue()" /><sd-button
+          title="Tạo đề nghị tiếp"
+          type="outline"
+          size="md"
+          (click)="newRequest()" /></div
+    ></sd-section>
+  } @else {
+    <sd-stepper
+      [(selectedIndex)]="step"
+      [linear]="true"
+      [orientation]="viewport.isMobile() ? 'vertical' : 'horizontal'"
+      animationDuration="0ms"
+      autoId="workspace-request">
+      <sd-step label="Thông tin đề nghị" [stepControl]="form">
+        <div class="d-flex flex-column gap-16 p-12">
+          <sd-form-render [schema]="store.publishedSchema()" [(value)]="store.draftValue" [form]="form" />
+          <div>
+            <sd-button
+              title="Tiếp tục: Tài liệu"
+              prefixIcon="arrow_forward"
+              type="fill"
+              color="primary"
+              size="md"
+              [disabled]="busy()"
+              (click)="next()" />
+          </div>
+        </div>
+      </sd-step>
+      <sd-step label="Tài liệu đính kèm">
+        <div class="d-flex flex-column gap-16 p-12">
+          <p class="T14R">Chọn hoặc kéo thả tài liệu. File được lưu vào thư mục Đính kèm đề nghị và gắn với hồ sơ này.</p>
+          <sd-upload-file
+            label="Tài liệu đề nghị"
+            [(model)]="store.attachmentIds"
+            [upload]="store.uploadAttachments"
+            [details]="store.attachmentDetails"
+            [extensions]="['txt', 'json', 'csv', 'pdf', 'png', 'jpg', 'jpeg', 'webp', 'svg']"
+            [maxSize]="5"
+            [max]="3"
+            [disabled]="busy()" />
+          <div class="d-flex flex-wrap gap-8">
+            <sd-button title="Quay lại thông tin" type="outline" size="md" [disabled]="busy()" (click)="step.set(0)" /><sd-button
+              title="Kiểm tra trước khi gửi"
+              type="fill"
+              color="primary"
+              size="md"
+              [loading]="busy()"
+              (click)="prepareReview()" />
+          </div>
+        </div>
+      </sd-step>
+      <sd-step label="Kiểm tra & gửi">
+        <div class="d-flex flex-column gap-16 p-12">
+          <sd-form-render [schema]="store.publishedSchema()" [value]="store.draftValue()" [viewed]="true" />
+          <sd-section title="Tài liệu đã chuẩn bị" icon="attach_file">
+            @for (name of attachmentNames(); track name) {
+              <p>{{ name }}</p>
+            } @empty {
+              <p class="text-secondary mb-0">Không đính kèm tài liệu.</p>
+            }
+          </sd-section>
+          <sd-switch label="Giả lập lỗi lần gửi tiếp theo" [(model)]="store.failNextSave" [disabled]="busy()" />
+          <div class="d-flex flex-wrap gap-8">
+            <sd-button title="Quay lại tài liệu" type="outline" size="md" [disabled]="busy()" (click)="step.set(1)" /><sd-button
+              title="Gửi đề nghị"
+              prefixIcon="send"
+              type="fill"
+              color="primary"
+              size="md"
+              [loading]="busy()"
+              (click)="submit()" />
+          </div>
+        </div>
+      </sd-step>
+    </sd-stepper>
+  }
+</div>

@@ -1,0 +1,197 @@
+[
+  {
+    "component": "components/anchor/sd-anchor",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/api-contract-builder/sd-api-contract-builder",
+    "before": false,
+    "after": false
+  },
+  {
+    "component": "components/audit-diff/sd-audit-diff",
+    "before": false,
+    "after": true
+  },
+  {
+    "component": "components/autoid-inspector/sd-autoid-inspector",
+    "before": false,
+    "after": false
+  },
+  {
+    "component": "components/avatar/sd-avatar",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/badge/sd-badge",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/breadcrumb/sd-breadcrumb",
+    "before": false,
+    "after": false
+  },
+  {
+    "component": "components/button/sd-button",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/card/sd-card",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/ckeditor-styles/sd-ckeditor-styles",
+    "before": false,
+    "after": false
+  },
+  {
+    "component": "components/code-editor/sd-code-editor",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/data-state/sd-data-state",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/editor/sd-editor",
+    "before": false,
+    "after": false
+  },
+  {
+    "component": "components/file-explorer/sd-file-explorer",
+    "before": false,
+    "after": true
+  },
+  {
+    "component": "components/form-generic/sd-form-generic",
+    "before": false,
+    "after": true
+  },
+  {
+    "component": "components/highlight/sd-highlight",
+    "before": false,
+    "after": false
+  },
+  {
+    "component": "components/history/sd-history",
+    "before": false,
+    "after": true
+  },
+  {
+    "component": "components/image-editor/sd-image-editor",
+    "before": false,
+    "after": false
+  },
+  {
+    "component": "components/import-excel/sd-import-excel",
+    "before": false,
+    "after": false
+  },
+  {
+    "component": "components/inform/sd-inform",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/job-progress/sd-job-progress",
+    "before": false,
+    "after": true
+  },
+  {
+    "component": "components/mini-editor/sd-mini-editor",
+    "before": false,
+    "after": false
+  },
+  {
+    "component": "components/modal/sd-modal",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/operator/sd-operator",
+    "before": false,
+    "after": false
+  },
+  {
+    "component": "components/org-chart/sd-org-chart",
+    "before": false,
+    "after": false
+  },
+  {
+    "component": "components/preview/sd-preview",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/query-bar/sd-query-bar",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/query-builder/sd-query-builder",
+    "before": false,
+    "after": false
+  },
+  {
+    "component": "components/quick-action/sd-quick-action",
+    "before": false,
+    "after": false
+  },
+  {
+    "component": "components/section/sd-section",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/side-drawer/sd-side-drawer",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/splitter/sd-splitter",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/stepper/sd-stepper",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/tab-router/sd-tab-router",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/tab/sd-tab",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/table/sd-table",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/tree/sd-tree",
+    "before": false,
+    "after": false
+  },
+  {
+    "component": "components/upload-file/sd-upload-file",
+    "before": true,
+    "after": true
+  },
+  {
+    "component": "components/view/sd-view",
+    "before": true,
+    "after": true
+  }
+]

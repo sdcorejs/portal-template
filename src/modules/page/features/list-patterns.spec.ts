@@ -1,10 +1,11 @@
 import { PageNavigation } from '../reference/page-navigation';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { ListStandardComponent } from './list-standard/list-standard.component';
 import { ListGroupedTreeComponent } from './list-grouped-tree/list-grouped-tree.component';
 import { DemoSessionStore } from '../data/demo-session.store';
 describe('CASE-LIST — selection context and hierarchy', () => {
-  beforeEach(() => TestBed.configureTestingModule({ providers: [DemoSessionStore, PageNavigation] }));
+  beforeEach(() => TestBed.configureTestingModule({ providers: [DemoSessionStore, PageNavigation, provideRouter([])] }));
   it('keeps table configuration stable when session records change so applied filters survive', () => {
     const store = TestBed.inject(DemoSessionStore);
     store.reset();

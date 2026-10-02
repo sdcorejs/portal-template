@@ -8,7 +8,7 @@ Tài liệu này quy định **cách viết các màn demo/sample** trong repo `
 
 ## 1. Stack & nguyên tắc chung
 
-- **Angular 19, standalone components, signals-first.** Dùng `signal()` / `computed()` cho mọi state demo. Không dùng `@Input()` decorator — dùng `input()` / `model()` / `output()` khi cần.
+- **Angular 22, standalone components, signals-first.** Dùng `signal()` / `computed()` cho mọi state demo. Không dùng `@Input()` decorator — dùng `input()` / `model()` / `output()` khi cần.
 - **`ChangeDetectionStrategy.OnPush`** bắt buộc.
 - **Native control flow** trong template: `@if` / `@for (… track …)` / `@let`. Không dùng `*ngIf` / `*ngFor`.
 - **Comment WHY** bằng tiếng Việt khi logic không hiển nhiên. Không comment WHAT.

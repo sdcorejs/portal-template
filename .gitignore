@@ -45,4 +45,5 @@ Thumbs.db
 .firebase/
 /storybook-static
 /playwright-report
+/playwright-workspace-report
 /test-results

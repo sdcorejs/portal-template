@@ -1,0 +1,18 @@
+<div class="d-flex flex-column gap-12">
+  <div class="d-flex flex-wrap gap-12 justify-content-between align-items-center">
+    <sd-switch label="Chế độ chỉ đọc" [(model)]="readOnly" />
+    <div class="d-flex flex-wrap gap-8">
+      <sd-button title="Tải lại kho" prefixIcon="refresh" type="outline" size="md" (click)="explorer()?.reload()" /><sd-button
+        title="Giả lập lỗi đọc"
+        type="text"
+        size="md"
+        (click)="simulateError()" />
+    </div>
+  </div>
+  <p class="T12R text-secondary mb-0" role="status">{{ opened() }}</p>
+  <div class="explorer-frame">
+    @for (version of [store.resetVersion()]; track version) {
+      <sd-file-explorer [option]="option()" (open)="onOpen($event)" />
+    }
+  </div>
+</div>

@@ -5,7 +5,7 @@ import { PAGE_EXAMPLES } from '../catalog/page-examples';
 describe('CASE-REFERENCE — business route lifecycle', () => {
   it('guards every editable page and preserves old URLs as redirects', () => {
     const screens = pageRoutes.filter(route => route.loadComponent);
-    expect(screens.length).toBe(12);
+    expect(screens.length).toBe(13);
     expect(screens.every(route => route.canDeactivate?.includes(referenceUnsavedGuard))).toBeTrue();
     expect(screens.every(route => route.data?.['title'] && route.data?.['icon'])).toBeTrue();
     for (const example of PAGE_EXAMPLES) {

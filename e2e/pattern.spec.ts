@@ -399,6 +399,12 @@ test('Stepper: optional steps, business branch and repeated rows', async ({ page
   await demo.getByRole('button', { name: 'Tiếp tục', exact: true }).click();
   const services = demo.locator('sd-table sd-input input');
   await expect(services).toHaveCount(2);
+  const quantity = demo.locator('sd-table sd-input-number input').first();
+  await quantity.fill('');
+  await quantity.press('Tab');
+  await demo.getByRole('button', { name: 'Tiếp tục', exact: true }).click({ delay: 350 });
+  await expect(quantity).toHaveAttribute('aria-invalid', 'true');
+  await quantity.fill('1');
   await services.nth(1).fill('Lắp đặt');
   await demo.locator('th sd-button[tooltip="Thêm dịch vụ"] button').click({ delay: 350 });
   await expect(services).toHaveCount(3);

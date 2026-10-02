@@ -1,0 +1,52 @@
+<div class="d-flex flex-column gap-16">
+  <sd-section title="Xuất hồ sơ & tiến độ" icon="download">
+    <div class="d-flex flex-column gap-16 p-16">
+      <p class="T14R mb-0">
+        Thử công việc chạy theo từng lô: tiến độ, hủy, lỗi và chạy lại. Kết quả là file JSON của đúng dữ liệu trong phiên.
+      </p>
+      <sd-switch label="Giả lập lỗi xuất dữ liệu" [(model)]="failExport" [disabled]="running()" />
+      <sd-job-progress [state]="job()" mode="details" (sdCancel)="cancelExport()" (sdRetry)="startExport()" />
+      <div class="d-flex flex-wrap gap-8">
+        <sd-button
+          title="Chuẩn bị bản xuất"
+          prefixIcon="play_arrow"
+          type="fill"
+          color="primary"
+          size="md"
+          [disabled]="running()"
+          (click)="startExport()" /><sd-button
+          title="Tải JSON"
+          prefixIcon="download"
+          type="outline"
+          size="md"
+          [disabled]="!exportBlob()"
+          (click)="download()" />
+      </div>
+    </div>
+  </sd-section>
+  <div class="row row-sm gap-y-16">
+    <div class="col-lg-6">
+      <sd-section title="Thay đổi gần nhất" icon="difference">
+        @if (store.lastChange(); as change) {
+          <div class="d-flex flex-column gap-12 p-16">
+            <h3 class="T16M mb-0">{{ change.title }}</h3>
+            <sd-switch label="Hiện trường không đổi" [(model)]="includeUnchanged" /><sd-audit-diff
+              [before]="change.before"
+              [after]="change.after"
+              [options]="diffOptions()"
+              mode="detail-list" />
+          </div>
+        } @else {
+          <sd-data-state
+            state="empty"
+            title="Chưa có thay đổi"
+            message="Duyệt một hồ sơ hoặc áp dụng biểu mẫu mới để xem Before/After."
+            [compact]="true" />
+        }
+      </sd-section>
+    </div>
+    <div class="col-lg-6">
+      <sd-section title="Lịch sử workspace" icon="history"><div class="p-16"><sd-history [items]="store.history()" /></div></sd-section>
+    </div>
+  </div>
+</div>

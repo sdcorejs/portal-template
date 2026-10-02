@@ -1,0 +1,22 @@
+// why: selectable summaries need a responsive four-to-two column layout; the table owns internal scrolling.
+:host {
+  display: block;
+  min-width: 0;
+}
+.workspace-scores {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.workspace-table {
+  height: 480px;
+  min-width: 0;
+}
+@media (max-width: 700px) {
+  .workspace-scores {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .workspace-table {
+    height: 560px;
+  }
+}

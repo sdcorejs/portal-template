@@ -80,8 +80,14 @@ test('successor tree recovers native root and lazy branch failure and locks sele
     .click();
   await expect(page.locator('sd-tree [role=treeitem]')).toHaveCount(2);
   await page.getByTestId('tree-child-error').getByRole('button').click();
+  // A reload retains the previous roots; count alone can still match stale nodes.
+  const rootLoading = page.locator('sd-tree .sd-tree__root-loading');
+  await expect(rootLoading).toBeVisible();
+  await expect(rootLoading).toBeHidden();
+  await expect(page.locator('sd-tree [role=tree]')).toHaveAttribute('aria-busy', 'false');
   await expect(page.locator('sd-tree [role=treeitem]')).toHaveCount(2);
   await page.locator('sd-tree [role=treeitem]').first().focus();
+  await expect(page.locator('sd-tree [role=treeitem]').first()).toBeFocused();
   await page.keyboard.press('ArrowRight');
   await expect(page.getByTestId('tree-error')).toContainText(/Chưa tải được nhánh|Branch unavailable/);
   await page

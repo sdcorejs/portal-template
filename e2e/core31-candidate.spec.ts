@@ -335,8 +335,12 @@ test('Form tabs use manual keyboard activation and hidden legal page keeps value
   await page.goto('/utility/form-navigation');
   await chooseNavigation(page, 'Tabs');
   const form = liveForm(page),
-    info = form.getByRole('tab', { name: 'Thông tin', exact: true });
+    info = form.locator('sd-tab-group').getByRole('tab', { name: 'Thông tin', exact: true });
+  // Steps also expose role=tab; bind keyboard actions to the applied Tabs renderer.
+  await expect(form.locator('sd-tab-group')).toBeVisible();
+  await expect(form.locator('mat-step-header')).toHaveCount(0);
   await info.focus();
+  await expect(info).toBeFocused();
   await page.keyboard.press('ArrowRight');
   await expect(form.getByRole('tab', { name: 'Phê duyệt', exact: true })).toBeFocused();
   await expect(info).toHaveAttribute('aria-selected', 'true');

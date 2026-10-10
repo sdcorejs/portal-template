@@ -1,6 +1,6 @@
 # Mẫu quản lý vai trò
 
-Hai ví dụ riêng ngay trong menu **Page** dùng Core UI 22.2.12. Mỗi ví dụ mở danh sách trước; tạo mới, chi tiết và cập nhật được điều hướng từ danh sách:
+Hai ví dụ riêng ngay trong menu **Page** dùng dependency canonical Core UI 22.3.0 trên Angular 22. Checkout candidate hiện kiểm tra private tar `22.2.15` r3 touch-fix, chưa phải bản npm 3.1 được phát hành. Mỗi ví dụ mở danh sách trước; tạo mới, chi tiết và cập nhật được điều hướng từ danh sách:
 
 | Mẫu | URL danh sách | Cách gán quyền |
 | --- | --- | --- |
@@ -28,6 +28,6 @@ Mã/tên bắt buộc, mã duy nhất trong từng mẫu và chỉ gồm chữ h
 - `PermissionTreeComponent`: dùng `SdTable` với `tree.loadType: 'static'`; Core xử lý bung/thu hàng cha, checkbox dùng chung helpers để giữ phạm vi quyền.
 - `RoleSessionStore`: adapter giả lập, validation và lưu phiên; thay boundary này bằng API khi tích hợp.
 
-Core 22.2.8 chưa công bố input `indeterminate` ở `SdCheckbox`. `PermissionCheckComponent` dùng `MatCheckbox` từ dependency Angular Material hiện có để hỗ trợ mixed state và bàn phím, nhận màu từ theme Core. Không thêm package hoặc truy cập nội bộ Core.
+API công khai `SdCheckbox` của gói candidate không có input cho `indeterminate` hoặc tên truy cập của native checkbox. `PermissionCheckComponent` dùng `MatCheckbox` từ dependency Angular Material hiện có để hỗ trợ mixed state, tên truy cập và bàn phím, nhận màu từ theme Core. Nhãn chọn tất cả khớp tên truy cập; phạm vi và output chọn quyền giữ nguyên. Không thêm package hoặc truy cập nội bộ Core.
 
 Hai mẫu được đăng ký trong catalog và source bundle. Chạy `npm run export:catalog` sau khi sửa nguồn, `npm run check:catalog` để kiểm tra đồng bộ. Browser regression dành cho Role và URL các page cũ: `npx playwright test --config playwright.roles.config.ts` (chỉ cần Portal 2208).

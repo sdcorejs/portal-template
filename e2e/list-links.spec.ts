@@ -37,6 +37,13 @@ for (const [id, code, badgeType] of [
       await page.keyboard.press('Escape');
       await expect(page.getByRole('dialog')).not.toBeVisible();
       await expect(link).toBeFocused();
+    } else if (id === 'list-master-detail') {
+      const detail = page.getByRole('complementary', { name: 'Chi tiết yêu cầu', exact: true });
+      await expect(detail).toBeVisible();
+      await detail.getByRole('button', { name: 'Đóng', exact: true }).click();
+      await expect(detail).toBeHidden();
+      await expect(page).toHaveURL('/page/ticket');
+      await expect(link).toBeVisible();
     } else {
       await page.getByRole('button', { name: 'Quay lại', exact: true }).click();
       await expect(link).toBeVisible();

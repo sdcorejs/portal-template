@@ -1,5 +1,65 @@
-/** Source inventory for the three documented demo groups; compared with Storybook's live index. */
+/** Registered source/story inventory; `covered` means indexed, not behavioral QA. */
 export const DEMO_INVENTORY = [
+  {
+    title: 'Components/kanban',
+    componentSource: 'src/modules/component/features/kanban/kanban.component.ts',
+    storyFile: 'src/modules/component/features/kanban/kanban.stories.ts',
+    status: 'covered',
+  },
+  {
+    title: 'Components/tree',
+    componentSource: 'src/modules/component/features/tree/tree.component.ts',
+    storyFile: 'src/modules/component/features/tree/tree.stories.ts',
+    status: 'covered',
+  },
+  {
+    title: 'Components/org-chart',
+    componentSource: 'src/modules/component/features/org-chart/org-chart.component.ts',
+    storyFile: 'src/modules/component/features/org-chart/org-chart.stories.ts',
+    status: 'covered',
+  },
+  {
+    title: 'Components/modal-resizable',
+    componentSource: 'src/modules/component/features/modal-resizable/modal-resizable.component.ts',
+    storyFile: 'src/modules/component/features/modal-resizable/modal-resizable.stories.ts',
+    status: 'covered',
+  },
+  {
+    title: 'Components/import-excel',
+    componentSource: 'src/modules/component/features/import-excel/import-excel.component.ts',
+    storyFile: 'src/modules/component/features/import-excel/import-excel.stories.ts',
+    status: 'covered',
+  },
+  {
+    title: 'Components/image-editor',
+    componentSource: 'src/modules/component/features/image-editor/image-editor.component.ts',
+    storyFile: 'src/modules/component/features/image-editor/image-editor.stories.ts',
+    status: 'covered',
+  },
+  {
+    title: 'Components/autoid-inspector',
+    componentSource: 'src/modules/component/features/autoid-inspector/autoid-inspector.component.ts',
+    storyFile: 'src/modules/component/features/autoid-inspector/autoid-inspector.stories.ts',
+    status: 'covered',
+  },
+  {
+    title: 'Components/api-contract-builder',
+    componentSource: 'src/modules/component/features/api-contract-builder/api-contract-builder.component.ts',
+    storyFile: 'src/modules/component/features/api-contract-builder/api-contract-builder.stories.ts',
+    status: 'covered',
+  },
+  {
+    title: 'Components/query-builder',
+    componentSource: 'src/modules/component/features/query-builder/query-builder.component.ts',
+    storyFile: 'src/modules/component/features/query-builder/query-builder.stories.ts',
+    status: 'covered',
+  },
+  {
+    title: 'Components/button/outline',
+    componentSource: 'src/modules/component/features/button/outline/outline.component.ts',
+    storyFile: 'src/modules/component/features/button/outline/outline.stories.ts',
+    status: 'covered',
+  },
   {
     title: 'Components/anchor',
     componentSource: 'src/modules/component/features/anchor/basic/basic.component.ts',
@@ -282,5 +342,17 @@ export const DEMO_INVENTORY = [
     storyFile: 'src/modules/service/features/unsaved-changes/unsaved-changes.stories.ts',
     status: 'covered',
   },
+  {
+    title: 'Utilities/candidate/explorer-metadata-move',
+    componentSource: 'src/modules/utility/features/explorer-candidate/explorer-candidate.component.ts',
+    storyFile: 'src/modules/utility/features/explorer-candidate/explorer-candidate.stories.ts',
+    status: 'covered',
+  },
+  {
+    title: 'Utilities/candidate/form-tabs-steps',
+    componentSource: 'src/modules/utility/features/form-navigation/form-navigation.component.ts',
+    storyFile: 'src/modules/utility/features/form-navigation/form-navigation.stories.ts',
+    status: 'covered',
+  },
 ] as const;
-export const STORYBOOK_GROUP_ORDER = ['Components', 'Forms', 'Services', 'Pages'];
+export const STORYBOOK_GROUP_ORDER = ['Components', 'Forms', 'Services', 'Utilities', 'Pages'];

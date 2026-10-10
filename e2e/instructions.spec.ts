@@ -13,11 +13,15 @@ test('article links navigate between distinct lessons and support Back', async (
 });
 test('setup and integration checklists expose completion', async ({ page }) => {
   await page.goto('/instruction/getting-started/setup');
-  for (const checkbox of await demo(page).getByRole('checkbox').all()) await checkbox.check();
+  const setupChecks = demo(page).getByRole('checkbox');
+  await expect(setupChecks).toHaveCount(3);
+  for (const checkbox of await setupChecks.all()) await checkbox.check();
   await expect(demo(page).getByRole('link', { name: 'Review Portal' })).toBeVisible();
   await page.goto('/instruction/architecture/integration');
   await demo(page).getByRole('button', { name: 'Git submodule', exact: true }).click();
-  for (const checkbox of await demo(page).getByRole('checkbox').all()) await checkbox.check();
+  const integrationChecks = demo(page).getByRole('checkbox');
+  await expect(integrationChecks).toHaveCount(5);
+  for (const checkbox of await integrationChecks.all()) await checkbox.check();
   await expect(demo(page).getByRole('status')).toContainText('Đủ 5 điểm');
   await page.getByRole('button', { name: 'Reset ví dụ', exact: true }).click();
   await expect(demo(page).getByRole('status')).toContainText('Còn thiếu');
@@ -196,7 +200,7 @@ test('spacing, validation and view density', async ({ page }) => {
   await demo(page).getByRole('button', { name: 'Kiểm tra dữ liệu' }).click();
   await expect(demo(page)).toContainText('Vui lòng nhập thông tin');
   await demo(page).getByRole('button', { name: 'Xem chi tiết', exact: true }).click();
-  expect(await body.evaluate(element => getComputedStyle(element).gap)).toBe('16px');
+  await expect(body).toHaveCSS('gap', '16px');
 });
 test('zoom keyboard focus return and mobile containment', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });

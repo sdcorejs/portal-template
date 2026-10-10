@@ -5,6 +5,6 @@ describe('CASE-CATALOG — discoverable patterns', () => {
     expect(PAGE_PATTERNS.length).toBe(15);
     expect(new Set(PAGE_PATTERNS.map(x => x.id)).size).toBe(15);
     expect(Object.keys(PATTERN_LOADERS).sort()).toEqual(PAGE_PATTERNS.map(x => x.id).sort());
-    expect(PAGE_PATTERNS.every(x => x.coreVersion === '22.3.0' && x.suitableWhen && x.avoidWhen)).toBeTrue();
+    expect(PAGE_PATTERNS.every(x => x.coreVersion === '22.3.1' && x.suitableWhen && x.avoidWhen)).toBeTrue();
   });
 });

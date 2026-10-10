@@ -1,0 +1,38 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+.image-workspace {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+sd-image-editor {
+  display: flex;
+  height: 620px;
+  min-width: 0;
+  max-width: 100%;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.code-card {
+  grid-column: 1 / -1;
+}
+pre {
+  max-width: 100%;
+  overflow: auto;
+  padding: 12px;
+  background: var(--sd-surface-container, #f4f6f9);
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+@media (max-width: 800px) {
+  sd-image-editor {
+    height: 600px;
+  }
+}

@@ -42,23 +42,28 @@ test('CASE-QUICK-SEARCH: keyword plus dropdown combine and preserve on return', 
   await selectCore(page, 'Trạng thái', 'Đang hoạt động');
   await expect(page.locator('app-demo-host sd-table a.record-link')).toHaveCount(1);
 });
-test('CASE-EXTERNAL: filters combine with quick search and scorecards reflect saves', async ({ page }) => {
+test('CASE-EXTERNAL: status and region filters combine and scorecards reflect saves', async ({ page }) => {
   await openPattern(page, 'list-advanced-filter');
-  const cards = page.locator('.list-scorecards');
-  await expect(cards.locator('dd')).toHaveText(['30', '10', '10']);
-  const search = page.getByPlaceholder('Tìm theo mã hoặc tên', { exact: true });
-  await search.fill('ORD-0002');
-  await search.press('Enter');
+  const cards = page.getByRole('group', { name: 'Thống kê toàn bộ đơn hàng', exact: true });
+  await expect(cards.locator('strong')).toHaveText(['30', '10', '10']);
+  await expect(page.getByPlaceholder('Tìm theo mã hoặc tên', { exact: true })).toHaveCount(0);
   await selectCore(page, 'Trạng thái', 'Chờ xử lý');
-  await selectCore(page, 'Khu vực', 'Miền Trung');
   const table = page.locator('app-demo-host sd-table');
+  await expect(table.locator('a').first()).toHaveText('ORD-0002');
+  await expect(table).toHaveAttribute('data-loading', 'false');
+  await selectCore(page, 'Khu vực', 'Miền Bắc');
+  await expect(table).toHaveAttribute('data-loading', 'true');
+  await expect(table).toHaveAttribute('data-loading', 'false');
+  await expect(table.locator('a')).toHaveCount(0);
+  await selectCore(page, 'Khu vực', 'Miền Trung');
   const row = table.getByRole('row').filter({ hasText: 'ORD-0002' }).first();
   await expect(row).toBeVisible();
-  await expect(page.locator('app-demo-host sd-table a.record-link')).toHaveCount(1);
+  await expect(table.locator('a')).toHaveCount(10);
   await row.getByRole('checkbox').check();
   await table.getByRole('button', { name: 'Duyệt đơn hàng', exact: true }).click();
-  await expect(cards.locator('dd')).toHaveText(['30', '9', '11']);
-  await expect(page.locator('app-demo-host sd-table a.record-link')).toHaveCount(0);
+  await expect(cards.locator('strong')).toHaveText(['30', '9', '11']);
+  await expect(row).toHaveCount(0);
+  await expect(table.locator('a')).toHaveCount(9);
 });
 test('CASE-EXTERNAL-ONLY: product listing filters without quick search', async ({ page }) => {
   await openPattern(page, 'list-grouped-tree');

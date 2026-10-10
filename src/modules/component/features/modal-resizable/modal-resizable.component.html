@@ -1,0 +1,104 @@
+<app-demo-lab-frame
+  [title]="t('Modal Resizable · So sánh dự án', 'Modal Resizable · Project comparison')"
+  [description]="t('Mở bảng nổi không chặn trang và thử lưu ghi chú cục bộ.', 'Open nonmodal docked panels and save local notes.')"
+  (resetRequested)="reset()"
+  ><div class="lab-grid" data-testid="modal-resizable-demo">
+    <aside class="lab-card">
+      <h2>{{ t('Kiểm tra hai công việc', 'Inspect two work items') }}</h2>
+      <p>
+        {{
+          t(
+            'Máy tính mở hai bảng để so sánh. Màn hình hẹp chỉ giữ một bảng đang mở.',
+            'Desktop allows two panels for comparison. Narrow screens keep one open panel.'
+          )
+        }}
+      </p>
+      <div class="lab-toolbar">
+        <sd-button
+          data-testid="panel-open-a"
+          color="primary"
+          [title]="t('Mở OPS-101', 'Open OPS-101')"
+          [disabled]="busy()"
+          (click)="open('a')" /><sd-button
+          data-testid="panel-open-b"
+          [title]="t('Mở OPS-102', 'Open OPS-102')"
+          [disabled]="busy()"
+          (click)="open('b')" />
+      </div>
+      <div class="lab-toolbar">
+        <sd-button data-testid="panel-fail" [title]="t('Lần lưu tới bị lỗi', 'Fail next save')" (click)="failNext.set(true)" /><sd-button
+          data-testid="panel-lock"
+          [title]="locked() ? t('Cho phép sửa', 'Enable editing') : t('Chỉ xem', 'Read only')"
+          (click)="lock()" />
+      </div>
+      <p class="lab-status" data-testid="panel-status" role="status" [attr.data-status]="status()">
+        {{
+          status() === 'error'
+            ? t('Lưu thất bại. Ghi chú còn nguyên; thử lưu lại.', 'Save failed. Draft preserved; save again to retry.')
+            : status() === 'saved'
+              ? t('Đã lưu trong phiên demo.', 'Saved in this demo session.')
+              : t('Ghi chú từ 1 đến 120 ký tự.', 'Notes require 1–120 characters.')
+        }}
+      </p>
+      <p>
+        {{
+          t(
+            'Nhãn điều khiển gốc của Core hiện dùng tiếng Việt. Đóng bảng giữ bản nháp; Đặt lại xóa toàn bộ.',
+            'Native Core panel controls currently use Vietnamese. Closing preserves drafts; Reset clears all.'
+          )
+        }}
+      </p>
+    </aside>
+    <section class="lab-card">
+      <h2>{{ t('Bản ghi đã lưu', 'Saved records') }}</h2>
+      <p data-testid="panel-saved-a">OPS-101 · {{ savedA() || t('Chưa lưu ghi chú', 'No saved note') }}</p>
+      <p data-testid="panel-saved-b">OPS-102 · {{ savedB() || t('Chưa lưu ghi chú', 'No saved note') }}</p>
+    </section>
+  </div>
+  @for (version of [panelGeneration()]; track version) {
+    <sd-modal-resizable #panelA [width]="width()" [editable]="!locked()"
+      ><span sdTitle>OPS-101 · Harbor</span>
+      <div sdBody class="lab-card" data-testid="panel-body-a">
+        <h2>{{ t('Kiểm tra máy quét', 'Scanner checks') }}</h2>
+        <p>Linh · P1</p>
+        <label class="lab-field"
+          >{{ t('Ghi chú', 'Note')
+          }}<textarea
+            data-testid="panel-note-a"
+            maxlength="120"
+            [disabled]="locked() || busy()"
+            [value]="noteA()"
+            (input)="noteA.set($any($event.target).value)"></textarea>
+        </label>
+      </div>
+      <sd-button
+        sdFooterRight
+        data-testid="panel-save-a"
+        [title]="t('Lưu ghi chú', 'Save note')"
+        [disabled]="locked() || busy() || !noteA().trim()"
+        (click)="save('a')" /><sd-button sdFooterLeft [title]="t('Đóng', 'Close')" (click)="panelA.close()"
+    /></sd-modal-resizable>
+    <sd-modal-resizable #panelB [width]="width()" [editable]="!locked()"
+      ><span sdTitle>OPS-102 · Harbor</span>
+      <div sdBody class="lab-card" data-testid="panel-body-b">
+        <h2>{{ t('Lịch nhận hàng', 'Receiving schedule') }}</h2>
+        <p>Minh · P2</p>
+        <label class="lab-field"
+          >{{ t('Ghi chú', 'Note')
+          }}<textarea
+            data-testid="panel-note-b"
+            maxlength="120"
+            [disabled]="locked() || busy()"
+            [value]="noteB()"
+            (input)="noteB.set($any($event.target).value)"></textarea>
+        </label>
+      </div>
+      <sd-button
+        sdFooterRight
+        data-testid="panel-save-b"
+        [title]="t('Lưu ghi chú', 'Save note')"
+        [disabled]="locked() || busy() || !noteB().trim()"
+        (click)="save('b')" /><sd-button sdFooterLeft [title]="t('Đóng', 'Close')" (click)="panelB.close()"
+    /></sd-modal-resizable>
+  }
+</app-demo-lab-frame>

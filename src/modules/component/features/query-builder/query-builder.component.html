@@ -1,0 +1,131 @@
+<sd-page
+  title="Query Builder"
+  description="Thiết kế điều kiện AND/OR, so sánh trường và áp dụng vào 6 dự án hư cấu. Chọn dòng để thử hành động và hoàn tác.">
+  <div headerRight>
+    <sd-button title="Khôi phục dữ liệu" type="outline" prefixIcon="restart_alt" [disabled]="state() === 'loading'" (click)="reset()" />
+  </div>
+  <div class="demo-page-body">
+    <sd-breadcrumb [items]="trail" ariaLabel="Đường dẫn demo truy vấn" />
+    <div class="row row-sm mx-0 mt-12">
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings"
+          ><div class="p-16">
+            <div class="demo-config-panel d-flex flex-column gap-12">
+              <sd-select
+                label="Tình huống"
+                [model]="preset()"
+                (modelChange)="selectPreset($event)"
+                [items]="presetOptions"
+                valueField="id"
+                displayField="name"
+                [clearable]="false"
+                autoId="query-preset" />
+              <sd-button title="Nạp tình huống" type="outline" [disabled]="state() === 'loading'" (click)="loadPreset()" />
+              <sd-select
+                label="Chế độ hiển thị"
+                [model]="mode()"
+                (modelChange)="mode.set($event === 'view' ? 'view' : 'edit')"
+                [items]="modeOptions"
+                valueField="id"
+                displayField="name"
+                [clearable]="false"
+                autoId="query-mode" />
+              <sd-switch [(model)]="disabled" label="Khóa trình thiết kế" />
+              <sd-switch [(model)]="failNext" label="Giả lập lỗi lần truy vấn tới" />
+              <p class="T12R text-secondary mb-0">
+                So sánh trường đang bật: Ngân sách và Đã chi cùng nhóm money. JSON bên dưới là Filter thực được bàn giao.
+              </p>
+            </div>
+          </div></sd-section
+        >
+        <sd-section title="Lọc nhanh ngân sách" icon="tune" class="mt-16"
+          ><div class="p-16">
+            <div class="d-flex flex-wrap align-items-center gap-8">
+              <sd-operator [(model)]="operator" [operators]="operators" [disabled]="disabled()" autoId="query-operator" />
+              <sd-input-number [(model)]="threshold" label="Ngân sách (triệu)" [min]="0" [disabled]="disabled()" />
+              <sd-button
+                title="Dùng bộ lọc nhanh"
+                type="outline"
+                [disabled]="disabled() || threshold() === null || state() === 'loading'"
+                (click)="quickFilter()" />
+            </div></div
+        ></sd-section>
+      </div>
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+          <sd-section title="Xem trước · Trình thiết kế" icon="filter_alt"
+            ><div class="p-16">
+              <div class="query-builder-preview" role="region" aria-label="Trình thiết kế điều kiện" tabindex="0">
+                <sd-query-builder
+                  [fields]="fields"
+                  [(value)]="value"
+                  [mode]="mode()"
+                  [disabled]="disabled() || state() === 'loading'"
+                  [comparisonMode]="comparisonMode()"
+                  autoId="query-demo" />
+              </div>
+              <p class="query-scroll-hint T12R text-secondary mt-8 mb-0">Vuốt ngang để xem hết điều kiện.</p>
+              <sd-button
+                class="mt-12"
+                title="Áp dụng bộ lọc"
+                type="fill"
+                color="primary"
+                [loading]="state() === 'loading'"
+                [disabled]="state() === 'loading'"
+                (click)="apply()" />
+              @if (error()) {
+                <p role="alert" class="text-error mt-12">{{ error() }}</p>
+              }
+              <p role="status" aria-live="polite" class="T13R mt-12 mb-0">{{ status() }}</p>
+            </div></sd-section
+          >
+          <sd-section title="Kết quả truy vấn" icon="table_chart"
+            ><div class="p-16">
+              <sd-input
+                [(model)]="search"
+                label="Tìm trong kết quả"
+                placeholder="Mã hoặc tên dự án"
+                prefixIcon="search"
+                autoId="query-search" />
+              <p class="T13R mt-12" data-testid="query-count">{{ results().length }} / {{ rows().length }} dự án phù hợp</p>
+              <sd-data-state
+                [state]="resultState()"
+                [retryable]="state() === 'error'"
+                (sdRetry)="apply()"
+                [title]="resultState() === 'empty' ? 'Không có dự án phù hợp' : null">
+                <sd-table [option]="tableOption()">
+                  <ng-template sdTableCellDef="active" let-row="item"
+                    ><span>{{ row.active ? 'Đang chạy' : 'Tạm dừng' }}</span></ng-template
+                  >
+                  <ng-template sdTableCellDef="name" let-row="item"><sd-highlight [text]="row.name" [term]="search()" /></ng-template>
+                  <ng-template [sdTableRowMobileDef]="tableOption()" let-row="item">
+                    <div class="p-12 d-flex flex-column gap-8">
+                      <strong>{{ row.id }}</strong
+                      ><sd-highlight [text]="row.name" [term]="search()" /><span
+                        >Ngân sách: {{ row.budget }} · Đã chi: {{ row.spent }} triệu</span
+                      ><span>{{ row.active ? 'Đang chạy' : 'Tạm dừng' }}</span>
+                    </div>
+                  </ng-template>
+                </sd-table>
+              </sd-data-state>
+              @if (undoIds().length) {
+                <sd-quick-action opened contained class="mt-12"
+                  ><span sdMessage>Đã tạm dừng {{ undoIds().length }} dự án.</span
+                  ><sd-button sdAction title="Hoàn tác tạm dừng" type="outline" (click)="undo()"
+                /></sd-quick-action>
+              }</div
+          ></sd-section>
+          <sd-section title="Mã nguồn & Filter" icon="code"
+            ><div class="p-16">
+              <h4 class="T14M mb-8">Filter hiện tại</h4>
+              <sd-code-editor [model]="json()" language="json" [viewed]="true" maxHeight="220px" />
+              <h4 class="T14M mt-16 mb-8">HTML</h4>
+              <sd-code-editor [model]="htmlCode()" language="html" [viewed]="true" maxHeight="200px" />
+              <h4 class="T14M mt-16 mb-8">TypeScript</h4>
+              <sd-code-editor [model]="tsCode" language="typescript" [viewed]="true" maxHeight="240px" /></div
+          ></sd-section>
+        </div>
+      </div>
+    </div>
+  </div>
+</sd-page>

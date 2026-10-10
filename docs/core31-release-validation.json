@@ -1,0 +1,387 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "scope": "local clean-installed public consumer acceptance before authorized PR/merge/deployment",
+  "base": "8e238b1d8fddf7f9ec67586721e770d124e132f8",
+  "branch": "codex/portal-core-ui-3-1-release",
+  "library": {
+    "name": "@sdcorejs/angular",
+    "version": "22.3.1",
+    "integrity": "sha512-JMbOpEic6GDnHU5FbYA2/qmsLzs1TMJxJZ22Omf1Tag/HRR4y0Th7VzPx0Sgga00cTuu9dknqN/G5XY4h1D+og==",
+    "sourceCommit": "629ab5ff475c307b8d19a393a6fdc967139ed3a2",
+    "tag": "v3.1",
+    "published": true
+  },
+  "angularMajor": 22,
+  "environment": {
+    "node": "24.19.0",
+    "chrome": "154.0.0.0",
+    "workers": 1,
+    "angularBuildWorkers": 2
+  },
+  "runtimeSnapshot": {
+    "files": 586,
+    "sha256": "fccb8823ea0b2e2408adf726dda9818693a9df8b36dec8da65cf2358f3681aa4",
+    "method": "Sorted POSIX name NUL SHA256(content) LF for src/scripts/e2e, all Playwright configs/workflows and package/lock/Angular/TS/release identity; text line endings normalized LF, binary bytes unchanged.",
+    "unchangedDuringGates": true
+  },
+  "startedAtUtc": "2026-10-10T04:50:26.686410+00:00",
+  "finishedAtUtc": "2026-10-10T05:08:49.762836+00:00",
+  "gates": [
+    {
+      "name": "public-identity-before",
+      "command": "npm run check:core-release",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 0.13,
+      "logSha256": "5c82a729e67f91df44d4137df6663fc1873cee6f735a7b588e767162d5db5f17"
+    },
+    {
+      "name": "toolchain",
+      "command": "npm run check:toolchain",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 0.05,
+      "logSha256": "859a5e06fe68339ccfd41bbe1c775d30606bf7a8b91dce61bce12f5c12f61dbd"
+    },
+    {
+      "name": "format",
+      "command": "npx prettier --check <owned source/scripts/release configs>",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 1.12,
+      "logSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "name": "catalog-tests",
+      "command": "npm run test:catalog",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 0.47,
+      "logSha256": "8e1deb33a403ecda0cae649ef081fce61dad809a724d1c37cfe5c55753ff74b6"
+    },
+    {
+      "name": "pattern-tests",
+      "command": "npm run test:pattern",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 0.26,
+      "logSha256": "5f1ee5ed1cde6ff017d29af4a6cf819c26a68133b5fa6ffb30a429ae68f3d04a"
+    },
+    {
+      "name": "catalog-check",
+      "command": "npm run check:catalog",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 0.38,
+      "logSha256": "7ec9b009721d7132f69d47eb684af7997fb2e78882a7ca1d34d162c97e61ad7f"
+    },
+    {
+      "name": "coverage-check",
+      "command": "npm run check:core-coverage",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 0.54,
+      "logSha256": "d5ddb4cef83f2fb309da39da5e400aff240c0776ad4f876ef44c50702d5ebaba"
+    },
+    {
+      "name": "pattern-check",
+      "command": "npm run check:pattern",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 0.21,
+      "logSha256": "f5e905224ce4f1c3bf6caf19db7107a0daa9ba9e68b99a8595c8c9c10dbc8e29"
+    },
+    {
+      "name": "lint",
+      "command": "npm run lint",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 6.25,
+      "logSha256": "2485af9646ed0fe546a725d2e2a0b6fa55cfd9fe6a7b223792c6604a5baaf6ed"
+    },
+    {
+      "name": "typecheck",
+      "command": "npx ngc -p tsconfig.app.json --noEmit",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 7.12,
+      "logSha256": "177f2a1d0df62da4d467d09dca6da5a26e574971c9afe077f5037fe3800bf253"
+    },
+    {
+      "name": "unit",
+      "command": "npm test -- --watch=false --browsers=ChromeHeadless",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 20.64,
+      "logSha256": "8c98c4544abd19ccf46590b3610b35b8451aeb888b861263f355ebb6997c9a5c"
+    },
+    {
+      "name": "app-build",
+      "command": "npm run build",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 16.84,
+      "logSha256": "dc2ba9a95238650314a3798d5c53809cdcf17004c449b24010cc13ba8a179c2d"
+    },
+    {
+      "name": "storybook-build",
+      "command": "npm run build-storybook",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 104.93,
+      "logSha256": "7b0cf48bc12c9374a053d27f16f3c349d2fde5e71412012ad282db145dec706c"
+    },
+    {
+      "name": "portal-browser",
+      "command": "npm run test:e2e:release",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 873.99,
+      "logSha256": "98ca67e1b940fa4a82215f6d7626e9d1356b743e1db49690c375de90e3f5cceb"
+    },
+    {
+      "name": "storybook-browser",
+      "command": "npm run test:e2e:release-storybook",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 18.58,
+      "logSha256": "9bff524bd61d088c126d586e86eb48f40072f5d558dfd996d24710d3e4297e58"
+    },
+    {
+      "name": "pages-build",
+      "command": "npm run build -- --base-href=/portal-template/",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 19.97,
+      "logSha256": "58587d5a5b5629bcb133e2e1a22a98c1d357c8dcdfc4f9fdb3bde896172fba85"
+    },
+    {
+      "name": "pages-browser",
+      "command": "npm run test:e2e:release-pages",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 31.27,
+      "logSha256": "2bf2ff59555120049535f744c200e9552e55414ddc0c892e5358966871591973"
+    },
+    {
+      "name": "public-identity-after",
+      "command": "npm run check:core-release",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 0.13,
+      "logSha256": "5c82a729e67f91df44d4137df6663fc1873cee6f735a7b588e767162d5db5f17"
+    }
+  ],
+  "unitCases": 57,
+  "generatorCases": 4,
+  "browser": {
+    "portal": {
+      "status": "PASS",
+      "cases": 231,
+      "uniqueCaseIds": 231,
+      "skipped": 0,
+      "flaky": 0,
+      "retries": 0,
+      "reportSha256": "72a799594ab45f1eb9090bb6633affb06c49cbcceeab729f5e551786b811783f"
+    },
+    "storybook": {
+      "status": "PASS",
+      "cases": 2,
+      "uniqueCaseIds": 2,
+      "skipped": 0,
+      "flaky": 0,
+      "retries": 0,
+      "reportSha256": "130974014eca5aa345198cfe8968d9351591aa55b512e178acdd63af77faf018",
+      "renderedStories": 62
+    },
+    "pages": {
+      "status": "PASS",
+      "cases": 3,
+      "uniqueCaseIds": 3,
+      "skipped": 0,
+      "flaky": 0,
+      "retries": 0,
+      "reportSha256": "ef6d7fb8bda0f20dc58af902cf31ccc77f59c65eb9b0d206d1001a387cf58d99",
+      "viewports": [
+        1440,
+        390,
+        320
+      ],
+      "screenshots": 27,
+      "screenshotLedgerSha256": "4d34660665d29ea7b6457d93b4f37ffad54b72818118dc7e143cc1befc6fa458",
+      "assertions": [
+        "exact public revision/version/SRI/source",
+        "cold deep-link category and desktop active leaf",
+        "query/fragment preserved; reload preserves history; native menu Tree and browser Back",
+        "seven native workflow actions; Explorer selection; changed Builder schema applied to native Tabs Render",
+        "seven decoded font faces, no document overflow on seven component routes",
+        "no runtime, asset or unexpected console errors; only bound HTML document 404 fallback classified",
+        "native Render input in viewport before Form screenshot"
+      ],
+      "mobileActiveLeafLimit": "Public V1 mobile menu exposes no aria-current marker; category and native menu navigation are asserted."
+    }
+  },
+  "catalogLineEndingCheck": {
+    "status": "PASS",
+    "scope": "real catalog export from complete LF versus CRLF fixture",
+    "files": 106,
+    "artifacts": {
+      "public/catalog/page-patterns.v1.json": "bc97d9d57a90c1745b4a03f16b5edfa35b9ffb6eef7719f6cf3403d9c9066885",
+      "public/catalog/page-pattern-sources.v1.json": "8e6c9917dabaa0f3c9efbee4db8b9760c6dd731ac93d383606bc8b3656bc0805",
+      "docs/page-pattern.md": "4735bb21f4e1d54473d3a3f4c3a119c8cdd110a4326f747adbc903403a5e0b9b"
+    }
+  },
+  "sourceCoverageComparison": {
+    "status": "PASS",
+    "base": "8e238b1d8fddf7f9ec67586721e770d124e132f8",
+    "libraryVersion": "22.3.1",
+    "method": "Same installed public export declarations and AST import matcher applied to immutable main source and release source. Counts are source presence only, not workflow behavior.",
+    "groups": {
+      "components": {
+        "exports": 41,
+        "baseSourcePresent": 25,
+        "releaseSourcePresent": 38,
+        "addedSourceGroups": [
+          "components/api-contract-builder",
+          "components/autoid-inspector",
+          "components/breadcrumb",
+          "components/highlight",
+          "components/image-editor",
+          "components/import-excel",
+          "components/kanban",
+          "components/modal-resizable",
+          "components/operator",
+          "components/org-chart",
+          "components/query-builder",
+          "components/quick-action",
+          "components/tree"
+        ]
+      },
+      "forms": {
+        "exports": 23,
+        "baseSourcePresent": 15,
+        "releaseSourcePresent": 15,
+        "addedSourceGroups": []
+      },
+      "services": {
+        "exports": 11,
+        "baseSourcePresent": 5,
+        "releaseSourcePresent": 6,
+        "addedSourceGroups": [
+          "services/excel"
+        ]
+      }
+    }
+  },
+  "independentReview": {
+    "agent": "/root/portal_r3_review_sol",
+    "model": "Sol",
+    "status": "PASS",
+    "runtimeFingerprint": "fccb8823ea0b2e2408adf726dda9818693a9df8b36dec8da65cf2358f3681aa4",
+    "reviewReceiptSha256": "9056239a8a66ffda330c3ce1cc344ed43f82e2f96b3e60a780ffdeded5e6c910"
+  },
+  "coverage": {
+    "./components/kanban": {
+      "desktop": "PASS: full authored journey + Pages native action at 1440px",
+      "mobile": "PASS: full authored responsive journey + Pages native action/capture at 390px and 320px"
+    },
+    "./components/tree": {
+      "desktop": "PASS: full authored journey + Pages native action at 1440px",
+      "mobile": "PASS: full authored responsive journey + Pages native action/capture at 390px and 320px"
+    },
+    "./components/org-chart": {
+      "desktop": "PASS: full authored journey + Pages native action at 1440px",
+      "mobile": "PASS: full authored responsive journey + Pages native action/capture at 390px and 320px"
+    },
+    "./components/modal-resizable": {
+      "desktop": "PASS: full authored journey + Pages native action at 1440px",
+      "mobile": "PASS: full authored responsive journey + Pages native action/capture at 390px and 320px"
+    },
+    "./components/import-excel": {
+      "desktop": "PASS: full authored journey + Pages native action at 1440px",
+      "mobile": "PASS: full authored responsive journey + Pages native action/capture at 390px and 320px"
+    },
+    "./components/image-editor": {
+      "desktop": "PASS: full authored journey + Pages native action at 1440px",
+      "mobile": "PASS: full authored responsive journey + Pages native action/capture at 390px and 320px"
+    },
+    "./components/autoid-inspector": {
+      "desktop": "PASS: full authored journey + Pages native action at 1440px",
+      "mobile": "PASS: full authored responsive journey + Pages native action/capture at 390px and 320px"
+    },
+    "./components/file-explorer": {
+      "desktop": "PASS: typed selection, native/API move, confirmation/cancel/retry; Pages selection",
+      "mobile": "PASS: responsive authored journey and Pages selected state at 390px/320px"
+    },
+    "./components/form-generic": {
+      "desktop": "PASS: Builder/Render same-schema editing, tabs/steps, validation, conditional membership and retry",
+      "mobile": "PASS: Tabs schema handoff and native Render input in viewport at 390px/320px; responsive authored journey"
+    },
+    "./components/table": {
+      "desktop": "PASS: workspace filter/sort/selection/detail/approval and Query Builder results",
+      "mobile": "PASS: workspace compact cards/reflow in authored mobile journey; no separate full 320px Table interaction audit"
+    },
+    "./components/upload-file": {
+      "desktop": "PASS: local workbook/file validation, progress/removal/retry and Explorer handoff",
+      "mobile": "PASS: upload/file-browser workspace reflow; no separate full mobile upload interaction audit"
+    },
+    "./components/api-contract-builder": {
+      "desktop": "PASS: full authored Contract journey in complete Portal suite",
+      "mobile": "PASS: authored compact responsive journey in complete Portal suite"
+    },
+    "./components/query-builder": {
+      "desktop": "PASS: nested AND/OR/field/date queries, result actions and recovery",
+      "mobile": "PASS: authored compact responsive journey in complete Portal suite"
+    },
+    "./components/button": {
+      "desktop": "PASS: Outline loading/error/retry/disabled/confirm/keyboard journey",
+      "mobile": "PASS: authored Outline responsive journey in complete Portal suite"
+    }
+  },
+  "releaseCiAndOnline": {
+    "status": "PENDING at this local acceptance snapshot",
+    "policy": "Require terminal PR verification on current head, full same-main-SHA verification before Pages deploy, then online exact-SHA Pages acceptance.",
+    "site": "https://sdcorejs.github.io/portal-template/"
+  },
+  "formalConvergence": {
+    "status": "NOT_RUN",
+    "reason": "No approved artifact graph supplied; no formal approval/hash or convergence PASS is claimed."
+  },
+  "knownWarnings": [
+    "Existing unused-import/compiler warnings",
+    "Sass deprecations from published library assets",
+    "Existing initial demo bundle and pattern stylesheet budget warnings; no budgets raised",
+    "Existing CommonJS optimization warnings"
+  ],
+  "remainingGaps": {
+    "components": [
+      "Editor",
+      "MiniEditor: separate licensing decision"
+    ],
+    "forms": [
+      "autocomplete",
+      "date-range",
+      "entity-picker",
+      "inline-text",
+      "input-color",
+      "segmented",
+      "time-range",
+      "tree-select"
+    ],
+    "services": [
+      "api",
+      "cache",
+      "persistence",
+      "storage",
+      "task"
+    ]
+  },
+  "limits": [
+    "Fictional in-browser demo state; no production backend/persistence/security enforcement",
+    "Viewport resize is not native mobile IME verification",
+    "Some native Modal/OrgChart labels lack locale override",
+    "One-shot public Router synchronization for base-prefixed V1 boot; preserves route URL/history; library bytes unchanged",
+    "Per-entry workflow evidence is recorded only where actually asserted; import presence is separate"
+  ]
+}

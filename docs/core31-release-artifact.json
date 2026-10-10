@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "name": "@sdcorejs/angular",
+  "version": "22.3.1",
+  "published": true,
+  "sourceCommit": "629ab5ff475c307b8d19a393a6fdc967139ed3a2",
+  "tag": "v3.1",
+  "tarball": "https://registry.npmjs.org/@sdcorejs/angular/-/angular-22.3.1.tgz",
+  "integrity": "sha512-JMbOpEic6GDnHU5FbYA2/qmsLzs1TMJxJZ22Omf1Tag/HRR4y0Th7VzPx0Sgga00cTuu9dknqN/G5XY4h1D+og==",
+  "sha256": "8d5830e9e1ab370b79acea32275f81ba3536d09da87597346ff47838204fea86",
+  "packedFiles": 350,
+  "installedPackageFingerprint": "f647d84cbf915e9c99cd9b5a5161925a1bf7fde090af2f0f68a383496b07c7fb",
+  "verifiedAtUtc": "2026-10-10T04:01:43.115966+00:00",
+  "npmUrl": "https://www.npmjs.com/package/@sdcorejs/angular/v/22.3.1",
+  "publisherRun": "https://github.com/sdcorejs/sdcorejs-angular/actions/runs/38019593287",
+  "independentRegistryBytesMatchProducer": true,
+  "fonts": [
+    {
+      "file": "assets/fonts/material-icons/material-icons-outlined-v110-latin-regular.woff2",
+      "bytes": 155276,
+      "sha256": "35dca8a7145a17c8d1306f25a3ca091578e15396f0b22d61eb8e73262ac75577"
+    },
+    {
+      "file": "assets/fonts/material-icons/material-icons-v145-latin-regular.woff2",
+      "bytes": 128352,
+      "sha256": "8265f64786397d6b832d1ca0aafdf149ad84e72759fffa9f7272e91a0fb015d1"
+    },
+    {
+      "file": "assets/fonts/material-symbols/material-symbols-v29-latin-regular.woff2",
+      "bytes": 304188,
+      "sha256": "47f6ec7dee7733ae9fe2a7d8311bf8d2975e9e326046f64881c2843266b42310"
+    },
+    {
+      "file": "assets/fonts/roboto/roboto-v50-latin_vietnamese-500.woff2",
+      "bytes": 22676,
+      "sha256": "b0dbf9b56356043c45dea4424aafad3fcb9f20b6d86796ebea96d0774b5f1251"
+    },
+    {
+      "file": "assets/fonts/roboto/roboto-v50-latin_vietnamese-600.woff2",
+      "bytes": 22632,
+      "sha256": "5c0c4d159f0ee9e06264f0b725bbf28e2fa52d1d2d559efaa8461a1001a759e7"
+    },
+    {
+      "file": "assets/fonts/roboto/roboto-v50-latin_vietnamese-italic.woff2",
+      "bytes": 24264,
+      "sha256": "ea9fa1f7141df438b3b2f6d5de18f0c26fae49d65fd21bfb62d02ec563d94b12"
+    },
+    {
+      "file": "assets/fonts/roboto/roboto-v50-latin_vietnamese-regular.woff2",
+      "bytes": 22220,
+      "sha256": "10b4dfcbe328a93edacfce1526ecc889893ae90b5523e00c68fa56013836301d"
+    }
+  ],
+  "peerDependencies": {
+    "@angular/animations": "^22.0.0",
+    "@angular/cdk": "^22.0.0",
+    "@angular/common": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/forms": "^22.0.0",
+    "@angular/material": "^22.0.0",
+    "@angular/material-date-fns-adapter": "^22.0.0",
+    "@angular/platform-browser": "^22.0.0",
+    "@angular/router": "^22.0.0",
+    "rxjs": "^7.8.0"
+  }
+}

@@ -1,4 +1,8 @@
-# Portal Template — Core 22.3.0
+# Portal Template — Core UI playground
+
+Portal Angular 22 với dữ liệu hư cấu, demo tương tác và state có thể khôi phục. Xem [hướng dẫn release và các luồng demo](docs/core31-release.md), [ma trận source coverage](docs/core-demo-coverage.md).
+
+**Public package:** `@sdcorejs/angular@22.3.1` đã được đối chiếu tarball/SRI với source tag `v3.1`, pin lock và clean install riêng. Local acceptance và review Sol đã PASS: 57 unit, 231 Portal browser, 62 stories và ba viewport Pages. Xem [bằng chứng public](docs/core31-release-validation.json); CI trên SHA hiện tại và kiểm tra bản deploy được chốt riêng, candidate lịch sử giữ cục bộ.
 
 ## Workspace hồ sơ — playground Core UI 22.3
 
@@ -39,7 +43,7 @@ Phạm vi kế hoạch và nguồn: [instructions-plan.md](docs/instructions-pla
 
 ## Chạy dự án
 
-Dùng Node **24.15+** (đã kiểm tra với 24.19.0), hoặc Node 22.22.3+. Node 22.14 và Node 18 không phù hợp Angular 22. Các phiên bản chính được pin trong package.json và package-lock.json: Core 22.3.0, Angular 22.1.6, CLI 22.1.7, TypeScript 6.0.3, Storybook 10.6.0.
+Dùng Node **24.15+** (đã kiểm tra với 24.19.0), hoặc Node 22.22.3+. Node 22.14 và Node 18 không phù hợp Angular 22. Các phiên bản chính được pin trong package.json và package-lock.json: Core 22.3.1, Angular 22.1.6, CLI 22.1.7, TypeScript 6.0.3, Storybook 10.6.0.
 
 ```sh
 npm ci
@@ -91,7 +95,7 @@ Thân sd-section dùng p-20. Create/update giữ inline error của Core và dù
 
 ## Bố cục list và bộ lọc Core
 
-List dùng trọn chiều cao vùng làm việc: header chỉ có tiêu đề/hành động, bảng cuộn nội bộ và phân trang ở đáy. Các mẫu tham khảo bố cục XNĐK/HĐMB của sales-platform và dùng API Core 22.3.0 đang cài.
+List dùng trọn chiều cao vùng làm việc: header chỉ có tiêu đề/hành động, bảng cuộn nội bộ và phân trang ở đáy. Các mẫu tham khảo bố cục XNĐK/HĐMB của sales-platform và dùng API Core 22.3.1 đang cài.
 
 | Màn | Bộ lọc | Score card |
 | --- | --- | --- |
@@ -156,3 +160,8 @@ src/
 Các nhóm demo Components, Forms, Instructions, Services, Utilities nằm trong `features/` của module tương ứng. Pages đổi `patterns/` thành `features/`; `components`, `data`, `catalog`, `reference` giữ ở cấp module vì dùng chung giữa các mẫu. Chỉ tạo các thư mục tùy chọn khi có nội dung. URL Portal và ID Storybook được giữ nguyên.
 
 Khi tạo module/entity, tham khảo cây thư mục và các page mẫu hiện có. Entity routes dùng `''`, `create`, `:id/detail`, `:id/update`. Module công bố cấu hình và routes qua `index.ts`; Portal không deep import feature.
+
+
+## Core UI component playground
+
+Kanban, Tree, OrgChart, ModalResizable, ImportExcel, ImageEditor và AutoIdInspector có demo native, VI/EN và Reset. Explorer metadata/move, Form tabs/steps, Contract/Query và workspace nối các thao tác qua dữ liệu hư cấu. Xem [screen map và giới hạn](docs/core31-release.md).

@@ -1,0 +1,81 @@
+<sd-page
+  title="Outline & Confirm"
+  description="Thử sắc thái nút outline, trạng thái tải/lỗi/khóa và hành động cần xác nhận trên một hồ sơ demo.">
+  <div headerRight><sd-button title="Khôi phục hồ sơ" type="outline" [disabled]="loading()" (click)="reset()" /></div>
+  <div class="demo-page-body row row-sm mx-0">
+    <div class="col-md-4">
+      <sd-section title="Thuộc tính" icon="settings"
+        ><div class="p-16">
+          <div class="d-flex flex-column gap-16">
+            <sd-switch [(model)]="disabled" label="Khóa các hành động" />
+            <sd-switch [(model)]="failNext" label="Giả lập lỗi lần tải tới" />
+            <p class="T12R text-secondary mb-0">
+              Tab để di chuyển và Enter/Space để kích hoạt. Hủy xác nhận giữ nguyên dữ liệu. Nút loading chặn kích hoạt lặp.
+            </p>
+          </div>
+        </div></sd-section
+      >
+    </div>
+    <div class="col-md-8">
+      <div class="d-flex flex-column gap-16">
+        <sd-section title="Xem trước · Outline theo sắc thái" icon="palette"
+          ><div class="p-16">
+            <div class="d-flex flex-wrap gap-12 tone-preview">
+              @for (tone of tones; track tone.color) {
+                <sd-button
+                  [title]="tone.title"
+                  type="outline"
+                  [color]="tone.color"
+                  [disabled]="disabled() || loading()"
+                  (click)="status.set('Đã thử sắc thái ' + tone.title + '.')" />
+              }
+            </div></div
+        ></sd-section>
+        <sd-section title="Hồ sơ NOVA-204" icon="description"
+          ><div class="p-16">
+            <p data-testid="outline-record-state">{{ approved() ? 'Đã duyệt' : 'Chờ duyệt' }} · Ngân sách 120 triệu · Nhóm Sản phẩm</p>
+            <div class="d-flex flex-wrap gap-12">
+              <sd-button
+                title="Tải lại hồ sơ"
+                type="outline"
+                color="primary"
+                prefixIcon="refresh"
+                [loading]="loading()"
+                [disabled]="disabled() || loading()"
+                (click)="reload()" />
+              <sd-button
+                title="Duyệt hồ sơ"
+                type="outline"
+                color="success"
+                prefixIcon="done"
+                [disabled]="disabled() || approved() || loading()"
+                (click)="approve()" />
+              <sd-button
+                title="Yêu cầu bổ sung"
+                type="outline"
+                color="warning"
+                prefixIcon="edit_note"
+                [disabled]="disabled() || loading()"
+                (click)="reason()" />
+              <sd-button title="Chưa đủ quyền (demo)" type="outline" [disabled]="true" />
+            </div>
+            @if (error()) {
+              <div role="alert" class="mt-16">
+                <p class="text-error">{{ error() }}</p>
+                <sd-button title="Thử lại" type="outline" color="error" [disabled]="disabled() || loading()" (click)="reload()" />
+              </div>
+            }
+            <p role="status" aria-live="polite" class="mt-16 mb-0">{{ status() }}</p>
+          </div></sd-section
+        >
+        <sd-section title="Mã nguồn" icon="code"
+          ><div class="p-16">
+            <h4 class="T14M mb-8">HTML</h4>
+            <sd-code-editor [model]="htmlCode()" language="html" [viewed]="true" maxHeight="240px" />
+            <h4 class="T14M mt-16 mb-8">TypeScript</h4>
+            <sd-code-editor [model]="tsCode" language="typescript" [viewed]="true" maxHeight="280px" /></div
+        ></sd-section>
+      </div>
+    </div>
+  </div>
+</sd-page>

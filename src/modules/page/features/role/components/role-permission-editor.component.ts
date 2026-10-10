@@ -34,7 +34,7 @@ import { PermissionTreeComponent } from './permission-tree.component';
                   [selected]="selected()"
                   [ids]="visibleIds()"
                   label="Chọn tất cả quyền đang hiển thị"
-                  text="Chọn tất cả kết quả"
+                  text="Chọn tất cả quyền đang hiển thị"
                   [disabled]="disabled()"
                   (changed)="select($event)" />
               }

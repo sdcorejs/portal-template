@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { captureCompatibility } from './helpers/core-candidate-capture';
 
 const browserErrors = new Map<unknown, string[]>();
 test.beforeEach(({ page }) => {
@@ -43,7 +44,7 @@ test('workspace entry and real table states, filters, sort, detail and approval'
   await expect(page.getByRole('dialog', { name: 'Hồ sơ đề nghị' })).not.toBeVisible();
   await page.getByRole('button', { name: 'Hoạt động', exact: true }).click();
   await expect(page.locator('sd-audit-diff')).toContainText('Đã duyệt');
-  await page.screenshot({ path: 'docs/screenshots/workspace-activity-desktop.png', fullPage: true });
+  await captureCompatibility(page, { path: 'docs/screenshots/workspace-activity-desktop.png', fullPage: true });
   expect(errors).toEqual([]);
 });
 
@@ -77,7 +78,7 @@ test('same published schema validates, submits with error recovery, then appears
   await expect(page.locator('app-workspace-request')).toContainText('REQ-0025');
   await page.getByRole('button', { name: 'Mở hàng chờ', exact: true }).click();
   await expect(page.getByRole('button', { name: 'REQ-0025', exact: true })).toBeVisible();
-  await page.screenshot({ path: 'docs/screenshots/workspace-queue-desktop.png', fullPage: true });
+  await captureCompatibility(page, { path: 'docs/screenshots/workspace-queue-desktop.png', fullPage: true });
 });
 
 test('file explorer has folders, empty state, preview, upload and retry', async ({ page }) => {
@@ -97,7 +98,7 @@ test('file explorer has folders, empty state, preview, upload and retry', async 
   await fileSearch.fill('workspace-note');
   await expect(explorer.locator('[data-item-id="readme"]')).not.toBeVisible();
   await fileSearch.fill('');
-  await page.screenshot({ path: 'docs/screenshots/workspace-files-desktop.png', fullPage: true });
+  await captureCompatibility(page, { path: 'docs/screenshots/workspace-files-desktop.png', fullPage: true });
   await explorer.locator('[data-item-id="readme"]').click();
   await expect(explorer.getByRole('dialog')).toContainText('Không có bản xem trước');
   const downloadPromise = page.waitForEvent('download');
@@ -111,7 +112,7 @@ test('file explorer has folders, empty state, preview, upload and retry', async 
   await explorer.getByRole('dialog').evaluate(async element => {
     await Promise.all(element.getAnimations({ subtree: true }).map(animation => animation.finished.catch(() => undefined)));
   });
-  await page.screenshot({ path: 'docs/screenshots/workspace-files-preview-desktop.png', fullPage: true });
+  await captureCompatibility(page, { path: 'docs/screenshots/workspace-files-preview-desktop.png', fullPage: true });
   await explorer.getByRole('dialog').getByRole('button', { name: 'Đóng', exact: true }).click();
   await explorer.getByRole('button', { name: 'Dạng lưới', exact: true }).click();
   await explorer.locator('[data-item-id="empty-folder"]').click();
@@ -119,7 +120,7 @@ test('file explorer has folders, empty state, preview, upload and retry', async 
   await page.getByRole('switch', { name: 'Chế độ chỉ đọc', exact: true }).click();
   await expect(explorer.locator('input[type="file"]')).toHaveCount(0);
   await expect(explorer.locator('sd-data-state')).toContainText('Thư mục trống');
-  await page.screenshot({ path: 'docs/screenshots/workspace-files-empty-desktop.png', fullPage: true });
+  await captureCompatibility(page, { path: 'docs/screenshots/workspace-files-empty-desktop.png', fullPage: true });
   await page.getByRole('button', { name: 'Giả lập lỗi đọc', exact: true }).click();
   await expect(page.locator('sd-file-explorer')).toContainText('Mô phỏng lỗi đọc thư mục');
   await page.locator('sd-file-explorer').locator('sd-data-state').getByRole('button', { name: 'Thử lại', exact: true }).click();
@@ -134,7 +135,7 @@ test('form designer supports a real edit, publishing and renderer handoff', asyn
   await page.getByRole('textbox', { name: 'Nhãn hiển thị', exact: true }).press('Tab');
   await expect(page.getByRole('button', { name: 'Áp dụng biểu mẫu', exact: true })).toBeEnabled();
   await page.getByRole('button', { name: 'Áp dụng biểu mẫu', exact: true }).click();
-  await page.screenshot({ path: 'docs/screenshots/workspace-designer-desktop.png', fullPage: true });
+  await captureCompatibility(page, { path: 'docs/screenshots/workspace-designer-desktop.png', fullPage: true });
   await page.getByRole('button', { name: 'Thử nhập liệu', exact: true }).click();
   await expect(page.getByRole('textbox', { name: 'Tên dự án thử nghiệm', exact: true })).toBeVisible();
 });
@@ -154,7 +155,7 @@ test('export can cancel, recover and download the actual session snapshot', asyn
   const downloadPromise = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Tải JSON', exact: true }).click();
   expect((await downloadPromise).suggestedFilename()).toBe('workspace-requests.json');
-  await page.screenshot({ path: 'docs/screenshots/workspace-export-desktop.png', fullPage: true });
+  await captureCompatibility(page, { path: 'docs/screenshots/workspace-export-desktop.png', fullPage: true });
 });
 
 test('table sorts, approves a selected pending row and resets the shared session', async ({ page }) => {
@@ -177,14 +178,14 @@ test('mobile renders compact file browser, stacked form and table cards', async 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/utility/workspace/queue');
   await expect(page.locator('app-workspace-queue')).toBeVisible();
-  await page.screenshot({ path: 'docs/screenshots/workspace-queue-mobile.png', fullPage: true });
+  await captureCompatibility(page, { path: 'docs/screenshots/workspace-queue-mobile.png', fullPage: true });
   await page.getByRole('button', { name: 'REQ-0001', exact: true }).scrollIntoViewIfNeeded();
-  await page.screenshot({ path: 'docs/screenshots/workspace-table-mobile.png', fullPage: true });
+  await captureCompatibility(page, { path: 'docs/screenshots/workspace-table-mobile.png', fullPage: true });
   await page.getByRole('button', { name: 'Kho tài liệu', exact: true }).click();
   await expect(page.locator('sd-file-explorer')).toContainText('Hướng dẫn demo.txt');
-  await page.screenshot({ path: 'docs/screenshots/workspace-files-mobile.png', fullPage: true });
+  await captureCompatibility(page, { path: 'docs/screenshots/workspace-files-mobile.png', fullPage: true });
   await page.getByRole('button', { name: 'Gửi đề nghị', exact: true }).click();
   await expect(page.getByRole('textbox', { name: 'Tên dự án', exact: true })).toBeVisible();
-  await page.screenshot({ path: 'docs/screenshots/workspace-request-mobile.png', fullPage: true });
+  await captureCompatibility(page, { path: 'docs/screenshots/workspace-request-mobile.png', fullPage: true });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBeTruthy();
 });

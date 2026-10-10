@@ -9,10 +9,10 @@
     <sd-button title="Điền dữ liệu mẫu" type="outline" size="md" [disabled]="busy() || !!submitted()" (click)="fillSample()" />
   </div>
   @for (message of errors(); track message) {
-    <p class="p-12 bg-error-light rounded-8 text-error mb-0" role="alert">{{ message }}</p>
+    <sd-inform error [description]="message" />
   }
   @for (message of warnings(); track message) {
-    <p class="p-12 bg-warning-light rounded-8 mb-0" role="status">{{ message }}</p>
+    <sd-inform warning [description]="message" />
   }
   @if (submitted(); as row) {
     <sd-section title="Đề nghị đã được gửi" icon="check_circle"

@@ -2,7 +2,8 @@ import { INSTRUCTIONS, INSTRUCTION_GROUPS } from '../../../modules/instruction';
 import { PAGE_EXAMPLES, ROLE_EXAMPLES } from '../../../modules/page';
 import { PATTERN_GROUPS, PATTERN_PATHS } from '../../../modules/pattern/catalog/pattern-catalog';
 import { SD_PERMISSION_PUBLIC } from '@sdcorejs/angular/modules/permission';
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { LocationStrategy } from '@angular/common';
 import { SdLayoutComponent, SdLayoutMenu } from '@sdcorejs/angular/modules';
 import { SdTabRouterOutletComponent } from '@sdcorejs/angular/components';
 import { NavigationEnd, Router } from '@angular/router';
@@ -36,6 +37,23 @@ export class MainComponent {
       !this.currentUrl().startsWith('/utility/workspace')
   );
 
+  constructor() {
+    const baseHref = inject(LocationStrategy).getBaseHref();
+    if (baseHref && baseHref !== '/') {
+      afterNextRender(() => {
+        // V1 can miss the initial Router event and retain a base-prefixed browser path.
+        // Replay this one navigation through the public Router after the shell subscribes.
+        if (this.router.getCurrentNavigation()) return;
+        void this.router
+          .navigateByUrl(this.currentUrl(), { onSameUrlNavigation: 'reload', replaceUrl: true })
+          .then(navigated => {
+            if (!navigated) console.error('Portal navigation could not synchronize after initial render.');
+          })
+          .catch(() => console.error('Portal navigation could not synchronize after initial render.'));
+      });
+    }
+  }
+
   menus: SdLayoutMenu[] = [
     {
       icon: 'school',
@@ -53,6 +71,16 @@ export class MainComponent {
       icon: 'widgets',
       title: 'Component',
       children: [
+        { path: '/component/kanban', permission: SD_PERMISSION_PUBLIC, title: 'Kanban' },
+        { path: '/component/tree', permission: SD_PERMISSION_PUBLIC, title: 'Tree' },
+        { path: '/component/org-chart', permission: SD_PERMISSION_PUBLIC, title: 'Org Chart' },
+        { path: '/component/modal-resizable', permission: SD_PERMISSION_PUBLIC, title: 'Modal Resizable' },
+        { path: '/component/import-excel', permission: SD_PERMISSION_PUBLIC, title: 'Import Excel' },
+        { path: '/component/image-editor', permission: SD_PERMISSION_PUBLIC, title: 'Image Editor' },
+        { path: '/component/autoid-inspector', permission: SD_PERMISSION_PUBLIC, title: 'AutoId Inspector' },
+        { path: '/component/api-contract-builder', permission: SD_PERMISSION_PUBLIC, title: 'API Contract Builder' },
+        { path: '/component/query-builder', permission: SD_PERMISSION_PUBLIC, title: 'Query Builder' },
+        { path: '/component/button/outline', permission: SD_PERMISSION_PUBLIC, title: 'Outline & Confirm' },
         {
           path: '/component/button',
           permission: SD_PERMISSION_PUBLIC,
@@ -210,6 +238,14 @@ export class MainComponent {
             { path: '/utility/workspace/designer', permission: SD_PERMISSION_PUBLIC, title: 'Thiết kế · Form Builder' },
             { path: '/utility/workspace/request', permission: SD_PERMISSION_PUBLIC, title: 'Gửi đề nghị · Form Render' },
             { path: '/utility/workspace/activity', permission: SD_PERMISSION_PUBLIC, title: 'Hoạt động · History & Diff' },
+          ],
+        },
+        {
+          title: 'Core 3.1 — Playground',
+          icon: 'science',
+          children: [
+            { path: '/utility/explorer-candidate', permission: SD_PERMISSION_PUBLIC, title: 'Explorer — Metadata & Move' },
+            { path: '/utility/form-navigation', permission: SD_PERMISSION_PUBLIC, title: 'Form — Tabs & Steps' },
           ],
         },
         { path: '/utility/tooltip', permission: SD_PERMISSION_PUBLIC, title: 'sdTooltip Directive' },

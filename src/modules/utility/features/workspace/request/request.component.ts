@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, v
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SdFormRender } from '@sdcorejs/angular/components/form-generic';
+import { SdInform } from '@sdcorejs/angular/components/inform';
 import { SdUploadFile } from '@sdcorejs/angular/components/upload-file';
 import { SdStepper, SdStep } from '@sdcorejs/angular/components/stepper';
 import { SdSection } from '@sdcorejs/angular/components/section';
@@ -14,7 +15,7 @@ import { WORKSPACE_SAMPLE_VALUE } from '../data/workspace.seed';
 @Component({
   selector: 'app-workspace-request',
   standalone: true,
-  imports: [SdFormRender, SdUploadFile, SdStepper, SdStep, SdSection, SdButton, SdSwitch],
+  imports: [SdFormRender, SdInform, SdUploadFile, SdStepper, SdStep, SdSection, SdButton, SdSwitch],
   templateUrl: './request.component.html',
   styleUrl: './request.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

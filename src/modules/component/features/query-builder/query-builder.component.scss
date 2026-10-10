@@ -1,0 +1,38 @@
+:host {
+  display: block;
+  height: 100%;
+}
+.demo-page-body {
+  padding: 12px 4px;
+  min-height: 100%;
+  background: var(--mat-sys-surface-container-low, #f1f5f9);
+}
+.col-md-4,
+.col-md-8,
+sd-section {
+  min-width: 0;
+}
+.query-builder-preview {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.query-builder-preview:focus-visible {
+  outline: 2px solid var(--mat-sys-primary);
+  outline-offset: 2px;
+}
+.query-scroll-hint {
+  display: none;
+}
+sd-query-builder,
+sd-table {
+  display: block;
+  min-width: 0;
+}
+@media (max-width: 767.98px) {
+  .query-scroll-hint {
+    display: block;
+  }
+  .col-md-8 {
+    margin-top: 16px;
+  }
+}

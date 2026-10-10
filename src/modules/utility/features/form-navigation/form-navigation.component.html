@@ -1,0 +1,117 @@
+<sd-page
+  title="Form — Tabs & Steps"
+  description="Thiết kế nhiều trang rồi áp dụng cùng schema vào Render. Thử linear validation, trang theo điều kiện và gửi bản chụp cục bộ.">
+  <div class="demo-page-body">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-12">
+      <sd-breadcrumb [items]="trail" ariaLabel="Đường dẫn biểu mẫu" />
+      <sd-button size="md" title="Khôi phục form demo" type="outline" [disabled]="busy()" (click)="reset()" />
+    </div>
+    <div class="row row-sm mx-0 mt-12">
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính bản nháp" icon="settings"
+          ><div class="p-16 d-flex flex-column gap-12">
+            <sd-select
+              label="Điều hướng"
+              [model]="draftMode()"
+              (modelChange)="selectNavigation($event)"
+              [items]="navigationOptions"
+              valueField="id"
+              displayField="name"
+              [clearable]="false"
+              autoId="candidate-form-navigation" />
+            @if (draftMode() === 'steps') {
+              <sd-switch label="Steps linear" [model]="linear()" (modelChange)="setLinear($event)" />
+            }
+            <sd-button size="md" title="Mở Form Builder" type="outline" (click)="panel.set('builder')" />
+            <sd-button size="md" title="Áp dụng schema" type="fill" [disabled]="!changed() || busy()" (click)="applySchema()" />
+            <sd-button size="md" title="Xuất schema đang áp dụng" type="outline" (click)="exportSchema()" />
+            <p class="T12R text-secondary mb-0" data-testid="candidate-schema-state">
+              {{ changed() ? 'Bản nháp có thay đổi chưa áp dụng' : 'Builder và Render dùng cùng schema' }} · Render: {{ appliedMode() }}
+            </p>
+          </div></sd-section
+        >
+        <sd-section title="Thử nhập liệu" icon="edit_note" class="mt-16"
+          ><div class="p-16 d-flex flex-column gap-12">
+            <sd-switch [(model)]="viewed" label="Chỉ xem dữ liệu" />
+            <sd-switch [(model)]="failNextSubmit" label="Giả lập lỗi gửi lần tới" />
+            <sd-button size="md" title="Điền mẫu mọi trang" type="outline" [disabled]="busy() || viewed()" (click)="fillSample()" />
+            <sd-button size="md" title="Đến Xác nhận qua model" type="outline" [disabled]="busy()" (click)="jumpToReview()" />
+            <p class="T12R text-secondary mb-0">
+              Trong Steps linear, cả nút Tiếp và thay đổi activePageId phải qua cùng validation gate. Tabs dùng phím mũi tên để focus, Enter
+              để mở trang.
+            </p>
+          </div></sd-section
+        >
+      </div>
+      <div class="col-md-8">
+        <div class="d-flex flex-column gap-16">
+          <div class="render-panel" [hidden]="panel() !== 'render'">
+            <sd-section title="Xem trước — Form Render" icon="dynamic_form"
+              ><div class="p-16">
+                <p class="T13R" data-testid="candidate-active-page">Trang đang mở: {{ activePageId() ?? 'chưa chọn' }}</p>
+                <div class="render-frame" data-testid="candidate-live-render">
+                  <sd-form-render
+                    #liveRender
+                    [schema]="applied()"
+                    [(value)]="value"
+                    [(activePageId)]="activePageId"
+                    [form]="form"
+                    [viewed]="viewed()" />
+                </div>
+                <div class="d-flex flex-wrap gap-8 mt-16">
+                  <sd-button size="md" title="Kiểm tra toàn bộ trang" type="outline" [disabled]="busy()" (click)="validate()" />
+                  <sd-button size="md" title="Gửi demo" type="fill" [loading]="busy()" [disabled]="busy() || viewed()" (click)="submit()" />
+                </div>
+                @if (errors().length) {
+                  <sd-inform error title="Kiểm tra lại dữ liệu" class="mt-12" data-testid="candidate-form-errors">
+                    @for (error of errors(); track $index) {
+                      <p class="mb-4">{{ error }}</p>
+                    }
+                  </sd-inform>
+                }
+                @if (warnings().length) {
+                  <sd-inform warning title="Lưu ý trước khi gửi" class="mt-12">
+                    @for (warning of warnings(); track $index) {
+                      <p class="mb-4">{{ warning }}</p>
+                    }
+                  </sd-inform>
+                }
+                <p role="status" aria-live="polite" class="T13R mt-12 mb-0">{{ status() }}</p>
+              </div></sd-section
+            >
+          </div>
+          <div class="builder-panel" [hidden]="panel() !== 'builder'">
+            <sd-section title="Xem trước — Form Builder" icon="dashboard_customize"
+              ><div class="p-12">
+                <div class="d-flex flex-wrap gap-8 mb-12">
+                  <sd-button size="md" title="Quay lại Render" type="outline" (click)="panel.set('render')" /><sd-button
+                    size="md"
+                    title="Áp dụng bản nháp từ Builder"
+                    type="fill"
+                    [disabled]="!changed() || busy()"
+                    (click)="applySchema()" />
+                </div>
+                <div class="builder-frame"><sd-form-builder [(schema)]="draft" /></div></div
+            ></sd-section>
+          </div>
+          @if (submitted()) {
+            <sd-section title="Bản gửi đã lưu trong phiên" icon="check_circle"
+              ><div class="p-16" data-testid="candidate-submitted">
+                <p class="T13R">Bản chụp giữ nguyên schema/value tại thời điểm gửi.</p>
+                <sd-code-editor [model]="submittedJson()" language="json" [viewed]="true" maxHeight="260px" /></div
+            ></sd-section>
+          }
+          <sd-section title="Mã nguồn & dữ liệu" icon="code"
+            ><div class="p-16">
+              <h4 class="T14M mb-8">Value của cùng schema</h4>
+              <sd-code-editor [model]="valueJson()" language="json" [viewed]="true" maxHeight="200px" />
+              <h4 class="T14M mt-16 mb-8">HTML</h4>
+              <sd-code-editor [model]="htmlCode" language="html" [viewed]="true" maxHeight="200px" />
+              <h4 class="T14M mt-16 mb-8">TypeScript</h4>
+              <sd-code-editor [model]="tsCode" language="typescript" [viewed]="true" maxHeight="240px" /></div
+          ></sd-section>
+        </div>
+      </div>
+    </div>
+  </div>
+</sd-page>

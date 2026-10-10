@@ -1,0 +1,60 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+.fixture {
+  min-height: 112px;
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px dashed var(--sd-outline, #8797a5);
+  border-radius: 8px;
+}
+.fixture input {
+  width: 100%;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--sd-outline, #8797a5);
+  border-radius: 6px;
+}
+.fixture-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.fixture button {
+  padding: 12px;
+  min-height: 44px;
+  background: var(--sd-surface-container, #f4f6f9);
+  color: inherit;
+  border: 1px solid var(--sd-outline, #8797a5);
+  border-radius: 6px;
+}
+.fixture :focus-visible {
+  outline: 3px solid var(--sd-primary, #0867b3);
+  outline-offset: 3px;
+}
+.audit-elements {
+  display: grid;
+  gap: 12px;
+}
+.audit-elements article {
+  display: grid;
+  gap: 4px;
+  overflow-wrap: anywhere;
+}
+.audit-elements code {
+  font-size: 12px;
+}
+.metadata-card,
+.code-card {
+  grid-column: 1 / -1;
+}
+pre {
+  max-width: 100%;
+  overflow: auto;
+  padding: 12px;
+  background: var(--sd-surface-container, #f4f6f9);
+  border-radius: 8px;
+  font-size: 12px;
+}

@@ -1,4 +1,4 @@
-# Page patterns — Core 22.3.0
+# Page patterns — Core 22.3.1
 
 Generated from the pattern registry. Demo data is synthetic and scoped to one mounted reference; replace the service boundary for production.
 

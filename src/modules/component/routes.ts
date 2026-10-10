@@ -7,6 +7,57 @@ export const componentRoutes: Routes = [
     data: { permission: SD_PERMISSION_PUBLIC },
     children: [
       {
+        path: 'import-excel',
+        loadComponent: () => import('./features/import-excel/import-excel.component').then(m => m.ImportExcelDemoComponent),
+        data: { permission: SD_PERMISSION_PUBLIC },
+      },
+      {
+        path: 'image-editor',
+        loadComponent: () => import('./features/image-editor/image-editor.component').then(m => m.ImageEditorDemoComponent),
+        data: { permission: SD_PERMISSION_PUBLIC },
+      },
+      {
+        path: 'autoid-inspector',
+        loadComponent: () => import('./features/autoid-inspector/autoid-inspector.component').then(m => m.AutoidInspectorDemoComponent),
+        data: { permission: SD_PERMISSION_PUBLIC },
+      },
+      {
+        path: 'kanban',
+        loadComponent: () => import('./features/kanban/kanban.component').then(m => m.KanbanDemoComponent),
+        data: { permission: SD_PERMISSION_PUBLIC },
+      },
+      {
+        path: 'tree',
+        loadComponent: () => import('./features/tree/tree.component').then(m => m.TreeDemoComponent),
+        data: { permission: SD_PERMISSION_PUBLIC },
+      },
+      {
+        path: 'org-chart',
+        loadComponent: () => import('./features/org-chart/org-chart.component').then(m => m.OrgChartDemoComponent),
+        data: { permission: SD_PERMISSION_PUBLIC },
+      },
+      {
+        path: 'modal-resizable',
+        loadComponent: () => import('./features/modal-resizable/modal-resizable.component').then(m => m.ModalResizableDemoComponent),
+        data: { permission: SD_PERMISSION_PUBLIC },
+      },
+      {
+        path: 'api-contract-builder',
+        data: { permission: SD_PERMISSION_PUBLIC },
+        loadComponent: () =>
+          import('./features/api-contract-builder/api-contract-builder.component').then(m => m.ApiContractBuilderDemoComponent),
+      },
+      {
+        path: 'query-builder',
+        data: { permission: SD_PERMISSION_PUBLIC },
+        loadComponent: () => import('./features/query-builder/query-builder.component').then(m => m.QueryBuilderDemoComponent),
+      },
+      {
+        path: 'button/outline',
+        data: { permission: SD_PERMISSION_PUBLIC },
+        loadComponent: () => import('./features/button/outline/outline.component').then(m => m.ButtonOutlineDemoComponent),
+      },
+      {
         path: 'button',
         data: { permission: SD_PERMISSION_PUBLIC },
         loadComponent: () => import('./features/button/button.component').then(m => m.ButtonDemoComponent),

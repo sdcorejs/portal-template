@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  height: 100%;
+}
+.demo-page-body {
+  padding: 12px 4px;
+  min-height: 100%;
+  background: var(--mat-sys-surface-container-low, #f1f5f9);
+}
+.tone-preview {
+  padding: 16px;
+  background: var(--mat-sys-surface, white);
+  border-radius: 8px;
+}
+@media (max-width: 767.98px) {
+  .col-md-8 {
+    margin-top: 16px;
+  }
+}

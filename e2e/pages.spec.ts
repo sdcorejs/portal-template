@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { openPattern, selectCore } from './helpers/demo-fixtures';
+import { discardUnsavedChanges, expectRecordSaving, openPattern, openRecord, selectCore } from './helpers/demo-fixtures';
 const patterns = [
   'list-standard',
   'list-advanced-filter',
@@ -31,7 +31,7 @@ test('CASE-SESSION: create, update, reload and revisit preserve data', async ({ 
   const save = page.getByRole('button', { name: 'Lưu', exact: true });
   const start = Date.now();
   await save.click();
-  await expect(page.getByRole('status').filter({ hasText: 'Đang lưu hồ sơ' })).toBeVisible();
+  await expectRecordSaving(page);
   await expect(page.locator('app-demo-host')).toContainText('Danh mục phiên làm việc');
   await expect(save).toHaveCount(0);
   expect(Date.now() - start).toBeGreaterThanOrEqual(1000);
@@ -85,7 +85,7 @@ test('CASE-SELECTION: sorting keeps identity and bulk action persists', async ({
   await expect(table.getByRole('checkbox', { checked: true })).toHaveCount(0);
 });
 test('CASE-LINES: editing a line persists the calculated total', async ({ page }) => {
-  await openPattern(page, 'form-line-items');
+  await openRecord(page, 'form-line-items');
   await page.getByRole('button', { name: 'Cập nhật', exact: true }).click();
   const quantity = page.locator('app-line-item-editor').getByRole('textbox', { name: 'Số lượng', exact: true }).first();
   await quantity.fill('7');
@@ -109,8 +109,7 @@ test('CASE-DRAWER: discard confirmation and focus restoration', async ({ page })
   await page.getByRole('button', { name: 'Tiếp tục chỉnh sửa', exact: true }).click();
   await expect(drawer.getByRole('textbox', { name: 'Tên hồ sơ', exact: true })).toHaveValue('Liên hệ mới');
   await page.keyboard.press('Escape');
-  await page.getByRole('radio', { name: 'Bỏ thay đổi', exact: true }).check();
-  await page.getByRole('button', { name: 'Tiếp tục', exact: true }).click();
+  await discardUnsavedChanges(page);
   await expect(drawer).not.toBeVisible();
   await expect(opener).toBeFocused();
 });

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { SdCheckbox } from '@sdcorejs/angular/forms/checkbox';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { selectionState } from '../data/role-permissions';
 export interface PermissionSelectionChange {
   ids: readonly string[];
@@ -7,15 +7,17 @@ export interface PermissionSelectionChange {
 }
 @Component({
   selector: 'app-role-permission-check',
-  imports: [SdCheckbox],
-  template: `<sd-checkbox
-    size="sm"
-    [model]="state().checked"
+  imports: [MatCheckbox],
+  // Core's checkbox has no public indeterminate/name inputs; this scoped control needs both.
+  template: `<mat-checkbox
+    [checked]="state().checked"
+    [indeterminate]="state().mixed"
     [disabled]="disabled() || !ids().length"
-    [label]="text()"
-    [attr.aria-label]="label()"
+    [aria-label]="label()"
     [title]="label()"
-    (modelChange)="changed.emit({ ids: ids(), checked: $event === true })" />`,
+    (change)="changed.emit({ ids: ids(), checked: $event.checked })"
+    >{{ text() }}</mat-checkbox
+  >`,
   styles: [':host { display: inline-flex; align-items: center; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

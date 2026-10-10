@@ -1,0 +1,59 @@
+<app-demo-lab-frame
+  [title]="t('Tree · Danh mục dịch vụ', 'Tree · Service catalogue')"
+  [description]="
+    t('Cây độc lập tải từng nhánh và chọn các mục đã tải.', 'Standalone tree with lazy branches and selection of loaded items.')
+  "
+  (resetRequested)="reset()"
+  ><div class="lab-grid" data-testid="tree-demo">
+    <aside class="lab-card">
+      <h2>{{ t('Khám phá danh mục', 'Explore the catalogue') }}</h2>
+      <p>
+        {{
+          t(
+            'Mũi tên mở nhánh; Space chọn. Chọn nhánh bao gồm các mục con đã tải.',
+            'Arrow keys expand branches; Space selects. A branch selection includes loaded descendants.'
+          )
+        }}
+      </p>
+      <label class="lab-field"
+        >{{ t('Tìm dịch vụ', 'Search services')
+        }}<input
+          type="search"
+          data-testid="tree-search"
+          [disabled]="locked()"
+          [value]="query()"
+          (input)="search($any($event.target).value)"
+      /></label>
+      <div class="lab-toolbar">
+        <sd-button data-testid="tree-root-error" [title]="t('Lỗi tải gốc', 'Root load failure')" (click)="load('root-error')" /><sd-button
+          data-testid="tree-child-error"
+          [title]="t('Lỗi tải nhánh', 'Branch load failure')"
+          (click)="load('child-error')" /><sd-button
+          data-testid="tree-empty"
+          [title]="t('Danh mục trống', 'Empty catalogue')"
+          (click)="load('empty')" /><sd-button
+          data-testid="tree-lock"
+          [title]="locked() ? t('Mở chỉnh sửa', 'Enable changes') : t('Khóa thao tác', 'Disable actions')"
+          (click)="locked.set(!locked())" />
+      </div>
+      <div class="lab-status" role="status" data-testid="tree-selection" [attr.data-count]="selected().length">
+        {{ selected().length }} {{ t('mục đã chọn', 'selected items') }}
+        @for (item of selected(); track item.id) {
+          <p>{{ item.id }} · {{ label(item) }}</p>
+        }
+      </div>
+      @if (detail(); as item) {
+        <p class="lab-status">{{ item.id }} · {{ t('Phụ trách', 'Owner') }}: {{ item.owner }}</p>
+      }
+    </aside>
+    <section class="lab-card">
+      <h2>{{ t('Dịch vụ Harbor', 'Harbor services') }}</h2>
+      <sd-tree [option]="option()" [selectedItems]="selected()" (selectedItemsChange)="select($event)" (loadError)="showError($event)" />
+      @if (error()) {
+        <p class="lab-status" data-testid="tree-error" role="status">
+          {{ lastError() }} · {{ t('Dùng nút tải lại trong cây.', 'Use the native retry control in the tree.') }}
+        </p>
+      }
+    </section>
+  </div></app-demo-lab-frame
+>

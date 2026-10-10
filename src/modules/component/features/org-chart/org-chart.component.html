@@ -1,0 +1,68 @@
+<app-demo-lab-frame
+  [title]="t('Org Chart · Nhóm dự án', 'Org Chart · Project teams')"
+  [description]="
+    t('Thu gọn sơ đồ, xem phụ trách và thử các trạng thái dữ liệu.', 'Collapse teams, inspect ownership and explore data states.')
+  "
+  (resetRequested)="reset()"
+  ><div class="lab-grid" data-testid="org-chart-demo">
+    <aside class="lab-card">
+      <h2>{{ t('Phối hợp nhóm', 'Coordinate teams') }}</h2>
+      <p>
+        {{
+          t(
+            'Tab đến nút thu gọn hoặc xem chi tiết. Sơ đồ cuộn ngang trong vùng bên phải.',
+            'Tab to collapse or detail buttons. The chart scrolls inside its preview.'
+          )
+        }}
+      </p>
+      <div class="lab-toolbar">
+        <sd-button data-testid="org-load" [title]="t('Tải lại', 'Reload')" (click)="load()" /><sd-button
+          data-testid="org-error"
+          [title]="t('Giả lập lỗi tải', 'Simulate load failure')"
+          (click)="load(true)" /><sd-button data-testid="org-empty" [title]="t('Sơ đồ trống', 'Empty chart')" (click)="empty()" /><sd-button
+          data-testid="org-lock"
+          [title]="locked() ? t('Cho phép thao tác', 'Enable actions') : t('Khóa thao tác', 'Disable actions')"
+          (click)="locked.set(!locked())" />
+      </div>
+      <div class="lab-status" data-testid="org-selection" role="status">
+        @if (selected(); as item) {
+          {{ item.description }} · {{ label(item) }}
+        } @else {
+          {{ t('Chọn một nhóm để xem phụ trách.', 'Choose a team to inspect ownership.') }}
+        }
+      </div>
+      <p class="lab-status">
+        {{ t('Nhãn thu gọn gốc của Core hiện dùng tiếng Anh.', 'Native Core collapse labels currently remain in English.') }}
+      </p>
+    </aside>
+    <section class="lab-card">
+      <h2>{{ t('Sơ đồ Harbor', 'Harbor chart') }}</h2>
+      @if (state() === 'loading') {
+        <p role="status">{{ t('Đang tải sơ đồ…', 'Loading chart…') }}</p>
+      } @else if (state() === 'error') {
+        <p role="alert">{{ t('Chưa tải được sơ đồ giả lập.', 'Fictional chart unavailable.') }}</p>
+        <sd-button data-testid="org-retry" [title]="t('Thử lại', 'Retry')" (click)="load()" />
+      } @else if (state() === 'empty') {
+        <p>{{ t('Chưa có nhóm. Đặt lại để nạp mẫu.', 'No teams. Reset to load the sample.') }}</p>
+      } @else {
+        <div
+          class="lab-scroll"
+          tabindex="0"
+          [attr.aria-label]="t('Sơ đồ nhóm, có thể cuộn ngang', 'Scrollable team chart')"
+          [attr.inert]="locked() ? '' : null">
+          @for (version of [generation()]; track version) {
+            <sd-org-chart autoId="successor-org" [items]="items()"
+              ><ng-template sdOrgChartItemDef let-item
+                ><strong>{{ item.title }}</strong>
+                <p>{{ item.description }}</p>
+                <sd-button
+                  [attr.data-testid]="'org-detail-' + item.id"
+                  [title]="t('Xem phụ trách', 'View owner')"
+                  [disabled]="locked()"
+                  (click)="show(item)" /></ng-template
+            ></sd-org-chart>
+          }
+        </div>
+      }
+    </section></div
+></app-demo-lab-frame>

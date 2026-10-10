@@ -1,0 +1,26 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+.asset-records {
+  display: grid;
+  gap: 12px;
+}
+.asset-row {
+  display: grid;
+  gap: 4px;
+  padding-block: 12px;
+  border-bottom: 1px solid var(--sd-outline, #d7dce2);
+  overflow-wrap: anywhere;
+}
+.code-card {
+  grid-column: 1 / -1;
+}
+pre {
+  max-width: 100%;
+  padding: 12px;
+  overflow: auto;
+  background: var(--sd-surface-container, #f4f6f9);
+  border-radius: 8px;
+  font-size: 12px;
+}

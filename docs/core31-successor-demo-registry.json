@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "scope": "seven new successor workflows only; existing imports are not automatically audited",
+  "demos": [
+    {
+      "entry": "components/kanban",
+      "route": "/component/kanban",
+      "nativeSelector": "sd-kanban",
+      "source": "src/modules/component/features/kanban/kanban.component.ts",
+      "test": "e2e/core31-successor-operations.spec.ts"
+    },
+    {
+      "entry": "components/tree",
+      "route": "/component/tree",
+      "nativeSelector": "sd-tree",
+      "source": "src/modules/component/features/tree/tree.component.ts",
+      "test": "e2e/core31-successor-operations.spec.ts"
+    },
+    {
+      "entry": "components/org-chart",
+      "route": "/component/org-chart",
+      "nativeSelector": "sd-org-chart",
+      "source": "src/modules/component/features/org-chart/org-chart.component.ts",
+      "test": "e2e/core31-successor-operations.spec.ts"
+    },
+    {
+      "entry": "components/modal-resizable",
+      "route": "/component/modal-resizable",
+      "nativeSelector": "sd-modal-resizable",
+      "source": "src/modules/component/features/modal-resizable/modal-resizable.component.ts",
+      "test": "e2e/core31-successor-operations.spec.ts"
+    },
+    {
+      "entry": "components/import-excel",
+      "route": "/component/import-excel",
+      "nativeSelector": "sd-import-excel",
+      "source": "src/modules/component/features/import-excel/import-excel.component.ts",
+      "test": "e2e/core31-successor-files.spec.ts"
+    },
+    {
+      "entry": "components/image-editor",
+      "route": "/component/image-editor",
+      "nativeSelector": "sd-image-editor",
+      "source": "src/modules/component/features/image-editor/image-editor.component.ts",
+      "test": "e2e/core31-successor-files.spec.ts"
+    },
+    {
+      "entry": "components/autoid-inspector",
+      "route": "/component/autoid-inspector",
+      "nativeSelector": "sd-autoid-inspector",
+      "source": "src/modules/component/features/autoid-inspector/autoid-inspector.component.ts",
+      "test": "e2e/core31-successor-files.spec.ts"
+    }
+  ]
+}

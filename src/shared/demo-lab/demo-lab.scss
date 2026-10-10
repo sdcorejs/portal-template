@@ -1,0 +1,109 @@
+:host {
+  display: block;
+  min-width: 0;
+  height: 100%;
+}
+.lab-content {
+  padding: 16px;
+  background: var(--mat-sys-surface-container-low, #f1f5f9);
+  min-height: 100%;
+}
+.lab-local-note {
+  margin: 0 0 16px;
+  color: var(--mat-sys-on-surface-variant, #475569);
+}
+.lab-grid {
+  display: grid;
+  grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.lab-card {
+  background: var(--mat-sys-surface, white);
+  border: 1px solid var(--mat-sys-outline-variant, #cbd5e1);
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 0;
+}
+.lab-card h2 {
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+.lab-card p {
+  margin: 0 0 12px;
+}
+.lab-toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.lab-toolbar + .lab-toolbar {
+  margin-top: 12px;
+}
+.lab-status {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 6px;
+  background: var(--mat-sys-surface-container, #e2e8f0);
+  overflow-wrap: anywhere;
+}
+.lab-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 12px 0;
+}
+.lab-scroll {
+  overflow: auto;
+  max-width: 100%;
+}
+.lab-field {
+  display: grid;
+  gap: 6px;
+  margin: 12px 0;
+}
+.lab-field input,
+.lab-field textarea,
+.lab-field select {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 40px;
+  border: 1px solid var(--mat-sys-outline, #64748b);
+  background: var(--mat-sys-surface, white);
+  color: inherit;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font: inherit;
+}
+.lab-field input:focus-visible,
+.lab-field textarea:focus-visible,
+.lab-scroll:focus-visible {
+  outline: 2px solid var(--mat-sys-primary, #2563eb);
+  outline-offset: 2px;
+}
+.lab-card pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.lab-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.lab-card th,
+.lab-card td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid var(--mat-sys-outline-variant, #cbd5e1);
+}
+@media (max-width: 800px) {
+  .lab-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lab-content {
+    padding: 12px;
+  }
+  .lab-card {
+    padding: 12px;
+  }
+}

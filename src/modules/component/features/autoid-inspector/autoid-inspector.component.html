@@ -1,0 +1,195 @@
+<app-demo-lab-frame
+  [title]="t('Kiểm tra AutoId · Tài sản Harbor', 'AutoId inspector · Harbor assets')"
+  [description]="
+    t(
+      'Quét vùng mẫu, phát hiện ID trùng hoặc thiếu rồi tải chẩn đoán cục bộ.',
+      'Scan the sample area, find duplicate or missing IDs and download local diagnostics.'
+    )
+  "
+  (resetRequested)="reset()">
+  <div data-testid="autoid-inspector-demo" class="lab-grid">
+    <section class="lab-card">
+      <h2>{{ t('1. Chọn tình huống', '1. Choose a scenario') }}</h2>
+      <div class="lab-toolbar">
+        <sd-button data-testid="autoid-clean" [title]="t('ID đầy đủ', 'Complete IDs')" type="outline" (click)="setMode('clean')" />
+        <sd-button
+          data-testid="autoid-broken"
+          [title]="t('ID trùng và thiếu', 'Duplicate and missing IDs')"
+          type="outline"
+          (click)="setMode('broken')" />
+        <sd-button data-testid="autoid-empty" [title]="t('Vùng trống', 'Empty area')" type="outline" (click)="setMode('empty')" />
+      </div>
+      <p>
+        {{
+          t(
+            'Chỉ vùng có khung bên dưới được quét. Các nút cấu hình, menu và trang khác không thuộc phạm vi kiểm tra.',
+            'Only the bordered area below is scanned. Configuration controls, menus and other pages stay outside this audit scope.'
+          )
+        }}
+      </p>
+      <div #fixture data-testid="autoid-fixture" class="fixture">
+        @if (mode() !== 'empty') {
+          <label for="fixture-asset-code">{{ t('Mã tài sản mẫu', 'Sample asset code') }}</label>
+          <input
+            id="fixture-asset-code"
+            data-autoid="asset-code"
+            value="AST-201"
+            [attr.aria-label]="t('Mã tài sản mẫu', 'Sample asset code')" />
+          <div class="fixture-actions">
+            <button
+              type="button"
+              [attr.data-autoid]="mode() === 'broken' ? 'asset-code' : 'asset-save'"
+              (click)="fixtureAction.set('save')">
+              {{ t('Lưu mẫu', 'Save sample') }}
+            </button>
+            <button type="button" [attr.data-autoid]="mode() === 'broken' ? null : 'asset-archive'" (click)="fixtureAction.set('archive')">
+              {{ t('Lưu trữ mẫu', 'Archive sample') }}
+            </button>
+          </div>
+        }
+      </div>
+      @if (mode() === 'empty') {
+        <p>
+          {{
+            t(
+              'Vùng mẫu không có phần tử. Quét lại để xem kết quả rỗng.',
+              'The sample area has no elements. Scan again to see an empty result.'
+            )
+          }}
+        </p>
+      }
+      @if (fixtureAction() !== 'none') {
+        <p role="status">
+          {{
+            fixtureAction() === 'save'
+              ? t('Đã thử lưu tài sản hư cấu trong vùng mẫu.', 'The fictional asset save action was exercised.')
+              : t('Đã thử lưu trữ tài sản hư cấu trong vùng mẫu.', 'The fictional asset archive action was exercised.')
+          }}
+        </p>
+      }
+      <sd-autoid-inspector [enabled]="nativeEnabled()" [config]="{ root: fixture, extraRequireSelectors: ['input', 'button'] }" />
+    </section>
+    <section class="lab-card">
+      <h2>{{ t('2. Kiểm tra và tải kết quả', '2. Audit and download') }}</h2>
+      <div class="lab-toolbar">
+        <sd-button
+          data-testid="autoid-scan"
+          color="primary"
+          [title]="t('Quét / Thử lại', 'Scan / Retry')"
+          prefixIcon="search"
+          [disabled]="!enabled()"
+          (click)="scan()" />
+        <sd-button
+          data-testid="autoid-highlight"
+          [attr.data-active]="highlighted()"
+          [title]="highlighted() ? t('Tắt đánh dấu', 'Hide highlights') : t('Đánh dấu trên mẫu', 'Highlight sample')"
+          type="outline"
+          [disabled]="!enabled() || !scanned() || !elements().length"
+          (click)="highlight()" />
+        <sd-button
+          data-testid="autoid-export"
+          [title]="t('Tải chẩn đoán JSON', 'Download JSON diagnostics')"
+          type="outline"
+          prefixIcon="download"
+          [disabled]="!enabled() || !scanned() || !elements().length"
+          (click)="exportJson()" />
+        <sd-button
+          data-testid="autoid-disable"
+          [title]="enabled() ? t('Tắt kiểm tra', 'Disable audit') : t('Bật kiểm tra', 'Enable audit')"
+          type="outline"
+          (click)="toggleEnabled()" />
+      </div>
+      @if (!enabled()) {
+        <p class="lab-status" role="status">
+          {{ t('Kiểm tra đang tắt. Bật lại để tiếp tục.', 'Audit is disabled. Enable it to continue.') }}
+        </p>
+      }
+      @if (error()) {
+        <p class="lab-status" role="alert">
+          {{ t('Không thể hoàn thành thao tác. Quét lại để thử lần nữa.', 'The action could not be completed. Scan again to retry.') }}
+        </p>
+      }
+      <div
+        data-testid="autoid-audit"
+        [attr.data-duplicate-count]="audit()?.duplicateCount ?? 0"
+        [attr.data-missing-count]="audit()?.missingCount ?? 0"
+        class="lab-status"
+        role="status"
+        aria-live="polite">
+        @if (audit(); as audit) {
+          <p>
+            {{ audit.total }} {{ t('phần tử', 'elements') }} · {{ audit.duplicateCount }} {{ t('ID trùng', 'duplicate IDs') }} ·
+            {{ audit.missingCount }} {{ t('ID thiếu', 'missing IDs') }}
+          </p>
+          @if (!audit.total) {
+            <p>{{ t('Không có phần tử trong vùng mẫu.', 'No elements in the sample area.') }}</p>
+          }
+          @if (audit.duplicateCount || audit.missingCount) {
+            <p>
+              {{
+                t(
+                  'Bổ sung ID duy nhất cho từng điều khiển rồi quét lại. Phần tử thiếu ID vẫn có XPath dự phòng trong tệp xuất.',
+                  'Assign a unique ID to every control, then scan again. Elements without IDs retain a fallback XPath in the export.'
+                )
+              }}
+            </p>
+          }
+        } @else {
+          <p>{{ t('Chưa quét tình huống hiện tại.', 'The current scenario has not been scanned.') }}</p>
+        }
+      </div>
+      <p data-testid="autoid-local-only">
+        {{
+          t(
+            'Chỉ xử lý cục bộ. Chưa cấu hình máy chủ sinh E2E, nên sinh Playwright/Robot chưa khả dụng.',
+            'Local processing only. No E2E generator host is configured, so Playwright/Robot generation is unavailable.'
+          )
+        }}
+      </p>
+      <sd-button
+        data-testid="autoid-native"
+        [title]="t('Mở công cụ gốc', 'Open native inspector')"
+        type="outline"
+        [disabled]="!enabled()"
+        (click)="openNative()" />
+      <p>
+        {{
+          t(
+            'Bảng công cụ gốc của phiên bản Core này giữ nhãn tiếng Việt. Các điều khiển của demo phía trên hỗ trợ VI/EN.',
+            'This Core version’s native inspector panel retains Vietnamese labels. The demo controls above support VI/EN.'
+          )
+        }}
+      </p>
+    </section>
+    <section class="lab-card metadata-card">
+      <h2>{{ t('Metadata phần tử', 'Element metadata') }}</h2>
+      <div class="audit-elements">
+        @for (element of elements(); track element.stt) {
+          <article>
+            <strong>{{ element.autoid || t('(thiếu ID)', '(missing ID)') }}</strong
+            ><span
+              >{{ element.tag }} ·
+              {{
+                element.duplicate
+                  ? t('Trùng', 'Duplicate')
+                  : element.missingAutoid
+                    ? t('Cần bổ sung ID', 'Needs an ID')
+                    : t('Duy nhất', 'Unique')
+              }}</span
+            ><code>{{ element.xpath }}</code>
+          </article>
+        } @empty {
+          <p>{{ t('Quét vùng mẫu để xem các phần tử và XPath.', 'Scan the sample area to inspect elements and their XPath.') }}</p>
+        }
+      </div>
+      <details>
+        <summary>{{ t('Xem JSON trực tiếp', 'View live JSON') }}</summary>
+        <pre data-testid="autoid-metadata"><code>{{ metadata() }}</code></pre>
+      </details>
+    </section>
+    <section class="lab-card code-card">
+      <h2>{{ t('Mã tích hợp', 'Integration code') }}</h2>
+      <pre><code>{{ code }}</code></pre>
+    </section>
+  </div>
+</app-demo-lab-frame>

@@ -1,4 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
+import { discardUnsavedChanges } from './helpers/demo-fixtures';
 const root = (layout: string) => '/page/role/' + layout;
 const checkbox = (page: Page, name: string) => page.getByRole('checkbox', { name, exact: true });
 const button = (page: Page, name: string) => page.getByRole('button', { name, exact: true });
@@ -27,7 +28,23 @@ for (const layout of ['matrix', 'tree']) {
     await link.click();
     await expect(page.getByRole('heading', { name: 'Chi tiết vai trò #ROLE-SALES' })).toBeVisible();
     await expect(button(page, 'Tạo mới')).toHaveCount(0);
-    await expect(checkbox(page, 'Tạo · Khách hàng')).toBeDisabled();
+    const permissionTable = page.locator('app-role-permission-' + layout);
+    await expect(permissionTable.getByRole('checkbox')).toHaveCount(0);
+    const createCell =
+      layout === 'matrix'
+        ? permissionTable
+            .getByRole('row')
+            .filter({ has: page.getByText('Khách hàng', { exact: true }) })
+            .getByRole('cell')
+            .nth(2)
+        : permissionTable
+            .getByRole('row')
+            .filter({ has: page.getByRole('cell', { name: 'Tạo', exact: true }) })
+            .filter({ has: page.getByRole('cell', { name: 'Khách hàng', exact: true }) })
+            .getByRole('cell')
+            .last();
+    await expect(createCell).toHaveCount(1);
+    await expect(createCell).toHaveText('Có');
     await button(page, 'Cập nhật').click();
     await expect(page).toHaveURL(root(layout) + '/role-sales/update');
     await expect(page.getByRole('tab', { name: 'CRM 8', exact: true })).toBeVisible();
@@ -56,11 +73,11 @@ for (const layout of ['matrix', 'tree']) {
     await button(page, 'Tạo mới').click();
     await expect(page).toHaveURL(root(layout) + '/create');
     await button(page, 'Lưu').click();
-    await expect(page.getByRole('alert')).toContainText('bắt buộc');
+    await expect(page.locator('app-role-record-editor').getByRole('alert')).toContainText('bắt buộc');
     await page.getByRole('textbox', { name: 'Mã vai trò', exact: true }).fill('ROLE-SALES');
     await page.getByRole('textbox', { name: 'Tên vai trò', exact: true }).pressSequentially('Vai trò thử nghiệm', { delay: 30 });
     await button(page, 'Lưu').click();
-    await expect(page.getByRole('alert')).toContainText('đã tồn tại');
+    await expect(page.locator('app-role-record-editor').getByRole('alert')).toContainText('đã tồn tại');
     await page.getByRole('textbox', { name: 'Mã vai trò', exact: true }).fill('ROLE-NEW');
     await button(page, 'Lưu').click();
     await expect(page).toHaveURL(new RegExp('/role/' + layout + '/role-[a-f0-9-]+/detail$'));
@@ -107,6 +124,9 @@ test('matrix: filtered bulk/column scope preserves hidden grants and shows missi
   const search = page.getByRole('textbox', { name: 'Tìm chức năng hoặc quyền', exact: true });
   await search.fill('Nguồn khách hàng');
   await expect(page.locator('app-role-permission-matrix tbody tr:has(app-role-permission-check)')).toHaveCount(1);
+  await expect(checkbox(page, 'Chọn tất cả quyền đang hiển thị').locator('xpath=ancestor::mat-checkbox')).toContainText(
+    'Chọn tất cả quyền đang hiển thị'
+  );
   await checkbox(page, 'Chọn Tạo cho các chức năng đang hiển thị').check();
   await checkbox(page, 'Chọn tất cả quyền đang hiển thị').check();
   await checkbox(page, 'Chọn tất cả quyền đang hiển thị').uncheck();
@@ -136,7 +156,7 @@ test('tree: collapse is independent of grants; parent/child mixed selection', as
   await expect(parent).toBeChecked({ indeterminate: true });
 });
 
-test('unsaved guard supports cancel, discard, save and browser Back', async ({ page }) => {
+test('unsaved guard supports cancel/discard and browser Back; explicit save persists', async ({ page }) => {
   await page.goto(root('matrix'));
   await page.getByRole('link', { name: 'ROLE-SALES', exact: true }).click();
   await button(page, 'Cập nhật').click();
@@ -146,15 +166,14 @@ test('unsaved guard supports cancel, discard, save and browser Back', async ({ p
   await button(page, 'Tiếp tục chỉnh sửa').click();
   await expect(name).toHaveValue('Bản nháp');
   await button(page, 'Quay lại').click();
-  await page.getByRole('radio', { name: 'Bỏ thay đổi', exact: true }).check();
-  await button(page, 'Tiếp tục').click();
+  await discardUnsavedChanges(page);
   await expect(page).toHaveURL(root('matrix'));
   await page.getByRole('link', { name: 'ROLE-SALES', exact: true }).click();
   await button(page, 'Cập nhật').click();
   await name.fill('Lưu khi rời trang');
+  await button(page, 'Lưu').click();
+  await expect(page).toHaveURL(root('matrix') + '/role-sales/detail');
   await button(page, 'Quay lại').click();
-  await page.getByRole('radio', { name: 'Lưu thay đổi', exact: true }).check();
-  await button(page, 'Tiếp tục').click();
   await expect(page).toHaveURL(root('matrix'));
   await expect(page.getByText('Lưu khi rời trang', { exact: true })).toBeVisible();
 });
@@ -169,7 +188,7 @@ test('storage error retains draft and dirty guard; missing ID is explicit', asyn
     };
   });
   await button(page, 'Lưu').click();
-  await expect(page.getByRole('alert')).toContainText('Không thể ghi dữ liệu phiên');
+  await expect(page.locator('app-role-record-editor').getByRole('alert')).toContainText('Không thể ghi dữ liệu phiên');
   await expect(name).toHaveValue('Giữ bản nháp khi lỗi');
   await button(page, 'Quay lại').click();
   await button(page, 'Tiếp tục chỉnh sửa').click();

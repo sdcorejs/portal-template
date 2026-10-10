@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  height: 100%;
+}
+.demo-page-body {
+  padding: 12px 4px;
+  min-height: 100%;
+  background: var(--mat-sys-surface-container-low, #f1f5f9);
+}
+.demo-config-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.contract-preview {
+  min-width: 0;
+  overflow: auto;
+}
+.diagnostics {
+  padding-left: 20px;
+  max-height: 320px;
+  overflow: auto;
+  overflow-wrap: anywhere;
+}
+.diagnostics li {
+  margin-bottom: 12px;
+}
+@media (max-width: 767.98px) {
+  .col-md-8 {
+    margin-top: 16px;
+  }
+}

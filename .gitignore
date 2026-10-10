@@ -46,4 +46,15 @@ Thumbs.db
 /storybook-static
 /playwright-report
 /playwright-workspace-report
+/playwright-core31-report
+/playwright-core31-candidate-report
 /test-results
+
+# Release QA and build revision stay local
+/public/release.json
+/playwright-release-report
+/docs/core31-*-results.json
+/docs/core31-*-diagnostic.json
+/docs/core31-*-font-load.json
+/docs/screenshots/core31-public-release-*
+/docs/screenshots/core31-successor-*

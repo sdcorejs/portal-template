@@ -1,0 +1,134 @@
+<app-demo-lab-frame
+  [title]="t('Chỉnh ảnh · Tài sản Harbor', 'Image editor · Harbor asset')"
+  [description]="
+    t(
+      'Cắt, xoay và hoàn tác trên ảnh mẫu cục bộ; xuất ảnh PNG cùng thông tin chỉnh sửa.',
+      'Crop, rotate and undo edits on a local sample image; export a PNG with its edit metadata.'
+    )
+  "
+  (resetRequested)="reset()">
+  <div data-testid="image-editor-demo" class="image-workspace">
+    <section class="lab-card">
+      <h2>{{ t('Ảnh tài sản AST-201', 'Asset image AST-201') }}</h2>
+      <div class="lab-toolbar">
+        <sd-button
+          data-testid="image-load"
+          color="primary"
+          [title]="t('Nạp ảnh mẫu / Thử lại', 'Load sample / Retry')"
+          prefixIcon="image"
+          [loading]="seeding()"
+          [disabled]="seeding() || status() === 'exporting'"
+          (click)="loadSample()" />
+        <sd-button
+          data-testid="image-invalid"
+          [title]="t('Thử ảnh hỏng', 'Try corrupt image')"
+          type="outline"
+          [disabled]="seeding() || status() === 'exporting'"
+          (click)="invalidSource()" />
+        <sd-button
+          data-testid="image-lock"
+          [title]="exportLocked() ? t('Cho phép xuất', 'Allow export') : t('Tắt xuất kết quả', 'Disable export')"
+          type="outline"
+          (click)="exportLocked.set(!exportLocked())" />
+      </div>
+      <p data-testid="image-status" [attr.data-status]="status()" class="lab-status" role="status" aria-live="polite">
+        {{ statusLabel() }}
+      </p>
+      @if (seedError()) {
+        <p role="alert">
+          {{ t('Không thể tạo ảnh mẫu. Nạp lại để thử lần nữa.', 'The sample could not be created. Load it again to retry.') }}
+        </p>
+      }
+      <sd-image-editor [source]="source()" [option]="option" />
+      <p>
+        {{
+          t(
+            'Ảnh mẫu 640 × 400 px được tạo trong trình duyệt. Dùng các nút gốc để xoay, cắt, hoàn tác và làm lại. Có thể dùng bàn phím trên vùng cắt.',
+            'The 640 × 400 px sample is generated in this browser. Use the native controls to rotate, crop, undo and redo. The crop area also supports the keyboard.'
+          )
+        }}
+      </p>
+      <div class="lab-toolbar">
+        <sd-button
+          data-testid="image-export"
+          [title]="t('Áp dụng và xem kết quả', 'Apply and preview result')"
+          prefixIcon="check"
+          [disabled]="!canExport()"
+          [loading]="status() === 'exporting'"
+          (click)="exportResult()" />
+        <sd-button
+          data-testid="image-download"
+          [title]="t('Tải PNG', 'Download PNG')"
+          prefixIcon="download"
+          type="outline"
+          [disabled]="!result() || exportLocked()"
+          (click)="download()" />
+      </div>
+      @if (exportLocked()) {
+        <p class="lab-status" role="status">
+          {{
+            t(
+              'Ứng dụng đang tắt xuất và tải. Các thao tác chỉnh ảnh vẫn dùng được.',
+              'The application has disabled export and download. Image editing remains available.'
+            )
+          }}
+        </p>
+      }
+      @if (exportError()) {
+        <p role="alert">
+          {{
+            t('Không thể xuất ảnh. Kiểm tra ảnh và thử áp dụng lại.', 'The image could not be exported. Check it and try applying again.')
+          }}
+        </p>
+      }
+    </section>
+    <div class="lab-grid">
+      <section class="lab-card">
+        <h2>{{ t('Kết quả cục bộ', 'Local result') }}</h2>
+        @if (result(); as result) {
+          <div data-testid="image-result" [attr.data-width]="result.width" [attr.data-height]="result.height">
+            <img
+              data-testid="image-result-preview"
+              [src]="resultUrl()"
+              [alt]="t('Ảnh tài sản Harbor đã chỉnh sửa', 'Edited Harbor asset image')" />
+            <p>{{ result.fileName }} · {{ result.width }} × {{ result.height }} px · {{ result.size }} B · {{ result.mimeType }}</p>
+            <p>
+              {{
+                t(
+                  'Kết quả là bản chụp của lần áp dụng gần nhất. Áp dụng lại sau khi chỉnh thêm.',
+                  'This result is a snapshot of the latest application. Apply again after further edits.'
+                )
+              }}
+            </p>
+          </div>
+        } @else {
+          <p>{{ t('Chưa có kết quả. Nạp ảnh, chỉnh sửa rồi chọn Áp dụng.', 'No result yet. Load an image, edit it and select Apply.') }}</p>
+        }
+        <p>
+          {{
+            t(
+              'Không tải lên máy chủ. URL xem trước được thu hồi khi thay kết quả, khôi phục hoặc rời trang.',
+              'No server upload. Preview URLs are revoked when replacing a result, resetting or leaving this page.'
+            )
+          }}
+        </p>
+      </section>
+      <section class="lab-card">
+        <h2>{{ t('Thông tin chỉnh sửa trực tiếp', 'Live edit metadata') }}</h2>
+        <pre data-testid="image-edits"><code>{{ editsJson() }}</code></pre>
+      </section>
+      <section class="lab-card code-card">
+        <h2>{{ t('Mã tích hợp', 'Integration code') }}</h2>
+        <pre><code>{{ code }}</code></pre>
+        <p>
+          {{
+            t(
+              'API công khai chỉ nhận source và option. Các nút gốc tự khóa khi trống, đang tải hoặc đang xuất; khóa xuất ở đây do ứng dụng quản lý.',
+              'The public inputs are source and option. Native controls disable during empty, loading and exporting states; this export lock belongs to the application.'
+            )
+          }}
+        </p>
+      </section>
+    </div>
+  </div>
+</app-demo-lab-frame>

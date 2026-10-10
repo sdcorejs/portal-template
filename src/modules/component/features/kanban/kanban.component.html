@@ -1,0 +1,78 @@
+<app-demo-lab-frame
+  [title]="t('Kanban · Hàng đợi vận hành', 'Kanban · Operations queue')"
+  [description]="
+    t('Tìm việc, di chuyển và thử lưu thất bại bằng dữ liệu giả lập.', 'Search work, move cards and try failed saves with fictional data.')
+  "
+  (resetRequested)="reset()">
+  <div class="lab-grid" data-testid="kanban-demo">
+    <aside class="lab-card">
+      <h2>{{ t('Thử quy trình', 'Try the workflow') }}</h2>
+      <p>
+        {{
+          t(
+            'Dùng menu trên thẻ hoặc Alt + phím mũi tên để chuyển cột; thao tác kéo là tùy chọn.',
+            'Use the card menu or Alt + arrow keys to move columns; dragging is optional.'
+          )
+        }}
+      </p>
+      <div class="lab-toolbar">
+        <sd-button
+          data-testid="kanban-move"
+          color="primary"
+          [title]="t('Chuyển OPS-101 sang kiểm tra', 'Move OPS-101 to Review')"
+          [disabled]="locked() || loading() || board()?.pendingId() !== null"
+          (click)="move()" />
+      </div>
+      <div class="lab-toolbar">
+        <sd-button
+          data-testid="kanban-fail"
+          [title]="failNext() ? t('Lần tới sẽ lỗi', 'Next move fails') : t('Giả lập lỗi lưu', 'Fail next save')"
+          (click)="failNext.set(true)" /><sd-button
+          data-testid="kanban-lock"
+          [title]="locked() ? t('Cho phép chỉnh sửa', 'Enable editing') : t('Chỉ xem', 'Read only')"
+          (click)="locked.set(!locked())" />
+      </div>
+      <div class="lab-toolbar">
+        <sd-button data-testid="kanban-empty" [title]="t('Danh sách trống', 'Empty queue')" (click)="empty()" /><sd-button
+          data-testid="kanban-load-error"
+          [title]="t('Lỗi tải danh sách', 'Queue load error')"
+          (click)="reload(true)" />
+      </div>
+      <p
+        class="lab-status"
+        role="status"
+        data-testid="kanban-summary"
+        [attr.data-review-count]="reviewCount()"
+        [attr.data-status]="status()">
+        {{ reviewCount() }} {{ t('việc đang kiểm tra', 'items in Review') }} ·
+        {{
+          status() === 'saved'
+            ? t('Đã lưu cục bộ', 'Saved locally')
+            : status() === 'rejected'
+              ? t('Lưu thất bại; dữ liệu chưa đổi', 'Save failed; data unchanged')
+              : t('Sẵn sàng thử', 'Ready to explore')
+        }}
+      </p>
+    </aside>
+    <section class="lab-card">
+      <h2>{{ t('Hàng đợi Harbor', 'Harbor queue') }}</h2>
+      <sd-kanban
+        autoId="successor-kanban"
+        [columns]="columns()"
+        [option]="option()"
+        [(model)]="items"
+        [(keyword)]="keyword"
+        [(collapsedColumns)]="collapsed"
+        [readonly]="locked()"
+        [loading]="loading()"
+        [error]="loadError()"
+        [ariaLabel]="t('Bảng công việc Harbor', 'Harbor work board')"
+        (sdRetry)="reload()"
+        ><ng-template [sdKanbanCardTemplate]="option()" let-item
+          ><strong>{{ item.id }} · {{ t(item.titleVi, item.titleEn) }}</strong>
+          <p>{{ item.owner }} · {{ item.priority }}</p></ng-template
+        ></sd-kanban
+      >
+    </section>
+  </div>
+</app-demo-lab-frame>

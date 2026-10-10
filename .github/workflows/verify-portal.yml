@@ -1,0 +1,70 @@
+name: Verify Portal Template
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: portal-verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      NG_BUILD_MAX_WORKERS: '2'
+      CORE31_COMPAT_CAPTURE: none
+      CORE31_ARTIFACT_REVISION: public-release
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+          cache: npm
+      - name: Clean install
+        run: npm ci
+      - name: Verify exact public package and peers
+        run: |
+          npm run check:core-release
+          npm run check:toolchain
+      - name: Check generators and source
+        run: |
+          npm run test:catalog
+          npm run test:pattern
+          npm run check:catalog
+          npm run check:pattern
+          npm run check:core-coverage
+          npm run lint
+          npx ngc -p tsconfig.app.json --noEmit
+      - name: Install Chrome for unit and browser checks
+        run: npx playwright install --with-deps chrome
+      - name: Unit tests
+        run: npm test -- --watch=false --browsers=ChromeHeadless
+      - name: Build app and Storybook
+        run: |
+          npm run build
+          npm run build-storybook
+      - name: Complete Portal browser suite
+        run: npm run test:e2e:release
+      - name: Render every Storybook example
+        run: npm run test:e2e:release-storybook
+      - name: Verify Pages build and deep links
+        run: |
+          npm run build -- --base-href=/portal-template/
+          cp dist/browser/index.html dist/browser/404.html
+          npm run test:e2e:release-pages
+      - name: Verify package after all gates
+        run: npm run check:core-release
+      - name: Retain failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portal-verification-failure
+          path: test-results/
+          retention-days: 7

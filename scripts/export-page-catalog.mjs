@@ -2,14 +2,17 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 
 import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import ts from 'typescript';
+// Publish identical source snapshots after Windows CRLF or Linux LF checkout.
+const readSource = file => readFileSync(file, 'utf8').replace(/\r\n/g, '\n');
+const coreVersion = JSON.parse(readFileSync('package.json', 'utf8')).dependencies['@sdcorejs/angular'];
 export async function loadCatalog() {
-  const source = readFileSync('src/modules/page/catalog/pattern-registry.ts', 'utf8');
+  const source = readSource('src/modules/page/catalog/pattern-registry.ts');
   const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ES2022 } }).outputText;
   const { PAGE_PATTERNS } = await import('data:text/javascript;base64,' + Buffer.from(js).toString('base64'));
-  return { schemaVersion: 1, coreVersion: '22.3.0', patterns: structuredClone(PAGE_PATTERNS) };
+  return { schemaVersion: 1, coreVersion, patterns: structuredClone(PAGE_PATTERNS) };
 }
 export function validateCatalog(catalog) {
-  if (catalog.schemaVersion !== 1 || catalog.coreVersion !== '22.3.0' || catalog.patterns.length !== 15)
+  if (catalog.schemaVersion !== 1 || catalog.coreVersion !== coreVersion || catalog.patterns.length !== 15)
     throw new Error('Catalog version/count mismatch');
   const ids = new Set();
   for (const p of catalog.patterns) {
@@ -39,13 +42,15 @@ export async function renderArtifacts() {
       const path = dir + '/' + entry.name;
       if (entry.isDirectory()) collect(path);
       else if (/\.(ts|html|scss)$/.test(path) && !path.endsWith('.spec.ts') && !path.endsWith('.stories.ts'))
-        sources.files[path] = readFileSync(path, 'utf8');
+        sources.files[path] = readSource(path);
     }
   }
   collect('src/modules/page');
-  sources.files['src/styles/reference.scss'] = readFileSync('src/styles/reference.scss', 'utf8');
+  sources.files['src/styles/reference.scss'] = readSource('src/styles/reference.scss');
   const markdown =
-    '# Page patterns — Core 22.3.0\n\nGenerated from the pattern registry. Demo data is synthetic and scoped to one mounted reference; replace the service boundary for production.\n\n' +
+    '# Page patterns — Core ' +
+    coreVersion +
+    '\n\nGenerated from the pattern registry. Demo data is synthetic and scoped to one mounted reference; replace the service boundary for production.\n\n' +
     catalog.patterns
       .map(
         p =>
@@ -87,7 +92,7 @@ export async function renderArtifacts() {
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   for (const [path, content] of Object.entries(await renderArtifacts())) {
     if (process.argv.includes('--check')) {
-      if (!existsSync(path) || readFileSync(path, 'utf8') !== content) throw new Error('Stale generated artifact: ' + path);
+      if (!existsSync(path) || readSource(path) !== content) throw new Error('Stale generated artifact: ' + path);
     } else {
       mkdirSync(dirname(path), { recursive: true });
       writeFileSync(path, content);

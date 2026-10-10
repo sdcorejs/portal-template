@@ -7,6 +7,17 @@ export const utilityRoutes: Routes = [
     data: { permission: SD_PERMISSION_PUBLIC },
     children: [
       {
+        path: 'explorer-candidate',
+        data: { permission: SD_PERMISSION_PUBLIC },
+        loadComponent: () =>
+          import('./features/explorer-candidate/explorer-candidate.component').then(m => m.ExplorerCandidateDemoComponent),
+      },
+      {
+        path: 'form-navigation',
+        data: { permission: SD_PERMISSION_PUBLIC },
+        loadComponent: () => import('./features/form-navigation/form-navigation.component').then(m => m.FormNavigationDemoComponent),
+      },
+      {
         path: 'workspace',
         data: { permission: SD_PERMISSION_PUBLIC },
         loadChildren: () => import('./features/workspace/workspace.routes').then(m => m.workspaceRoutes),

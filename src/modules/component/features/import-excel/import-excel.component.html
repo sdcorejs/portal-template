@@ -1,0 +1,119 @@
+<app-demo-lab-frame
+  [title]="t('Nhập Excel · Tài sản Harbor', 'Import Excel · Harbor assets')"
+  [description]="
+    t(
+      'Đọc tệp .xlsx trên máy, kiểm tra từng dòng rồi nhận vào danh sách của phiên này.',
+      'Read a local .xlsx workbook, validate each row, then accept it into this session’s asset list.'
+    )
+  "
+  (resetRequested)="reset()">
+  <div data-testid="import-excel-demo" class="lab-grid">
+    <section class="lab-card">
+      <h2>{{ t('1. Tải mẫu và nhập tệp', '1. Download a sample and import') }}</h2>
+      <p>
+        {{
+          t(
+            'Dữ liệu hư cấu của kho HARBOR và RIDGE. Giữ hai dòng tiêu đề; tối đa 20 tài sản, số lượng từ 1 đến 100.',
+            'Fictional HARBOR and RIDGE sites. Keep both header rows; at most 20 assets with quantities from 1 to 100.'
+          )
+        }}
+      </p>
+      <div class="lab-toolbar">
+        <sd-button
+          data-testid="import-sample"
+          [title]="t('Mẫu có cảnh báo', 'Sample with warning')"
+          prefixIcon="download"
+          [loading]="downloading()"
+          [disabled]="downloading()"
+          (click)="downloadSample()" />
+        <sd-button
+          data-testid="import-invalid-sample"
+          [title]="t('Mẫu lỗi số lượng', 'Invalid quantity sample')"
+          type="outline"
+          [disabled]="downloading()"
+          (click)="downloadSample('invalid')" />
+        <sd-button
+          data-testid="import-empty-sample"
+          [title]="t('Mẫu trống', 'Empty workbook')"
+          type="outline"
+          [disabled]="downloading()"
+          (click)="downloadSample('empty')" />
+      </div>
+      @if (downloadError()) {
+        <p class="lab-status" role="alert">
+          {{ t('Không thể tạo tệp mẫu. Thử tải lại.', 'The sample could not be generated. Try downloading again.') }}
+        </p>
+      }
+      <div class="lab-toolbar">
+        <sd-button
+          data-testid="import-open"
+          color="primary"
+          [title]="t('Mở trình nhập Excel', 'Open Excel import')"
+          prefixIcon="upload_file"
+          [disabled]="readOnly() || !mounted()"
+          (click)="importer()?.open()" />
+        <sd-button
+          data-testid="import-readonly"
+          [title]="readOnly() ? t('Cho phép nhập', 'Allow import') : t('Chuyển chỉ đọc', 'Set read-only')"
+          type="outline"
+          (click)="toggleReadOnly()" />
+      </div>
+      <p class="lab-status" role="status">
+        {{
+          readOnly()
+            ? t('Chế độ chỉ đọc: nhập tài sản đang tắt.', 'Read-only mode: asset import is disabled.')
+            : t(
+                'Sẵn sàng chọn tệp cục bộ. Cảnh báo được phép nhận; dòng lỗi phải sửa trước.',
+                'Ready for a local workbook. Warnings may be accepted; errors must be corrected first.'
+              )
+        }}
+      </p>
+      @if (mounted()) {
+        <sd-import-excel [option]="option()" />
+      }
+    </section>
+    <section class="lab-card">
+      <h2>{{ t('2. Tài sản đã nhận', '2. Accepted assets') }}</h2>
+      <p data-testid="import-accepted-count" [attr.data-count]="accepted().length" class="lab-status" role="status">
+        {{ accepted().length }} {{ t('tài sản trong phiên này', 'assets in this session') }}
+      </p>
+      <div data-testid="import-accepted-records" class="asset-records">
+        @for (asset of accepted(); track asset.code) {
+          <article class="asset-row">
+            <strong>{{ asset.code }} · {{ asset.name }}</strong
+            ><span>{{ asset.quantity }} {{ t('thiết bị', 'units') }} · {{ asset.site }}</span>
+          </article>
+        } @empty {
+          <p>
+            {{
+              t(
+                'Chưa nhận tài sản. Tải mẫu, nhập tệp và xác nhận các dòng hợp lệ.',
+                'No assets accepted yet. Download a sample, import it and confirm the valid rows.'
+              )
+            }}
+          </p>
+        }
+      </div>
+      <p>
+        {{
+          t(
+            'Mỗi lần nhận thay thế danh sách cục bộ. Khôi phục sẽ xóa phiên và tạo lại trình nhập; dữ liệu không gửi lên máy chủ.',
+            'Each acceptance replaces this local list. Reset clears the session and recreates the importer; records stay in this browser.'
+          )
+        }}
+      </p>
+    </section>
+    <section class="lab-card code-card">
+      <h2>{{ t('Mã tích hợp', 'Integration code') }}</h2>
+      <pre><code>{{ optionCode() }}</code></pre>
+      <p>
+        {{
+          t(
+            'Hàm accept của thư viện chạy đồng bộ. Ứng dụng cần tự quản lý lưu dữ liệu và xử lý lỗi khi kết nối API thật.',
+            'The library accept callback runs synchronously. Applications own persistence and failure handling when connecting a real API.'
+          )
+        }}
+      </p>
+    </section>
+  </div>
+</app-demo-lab-frame>

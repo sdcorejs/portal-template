@@ -40,18 +40,23 @@ for (const id of [
     await link.click();
     await expect(page).toHaveURL(href!);
     const surface = id.startsWith('drawer-') ? page.getByRole('dialog') : page.locator('app-demo-host');
+    const back = id.startsWith('drawer-')
+      ? surface.locator('.record-actions').getByRole('button', { name: 'Đóng', exact: true })
+      : surface.getByRole('button', { name: 'Quay lại', exact: true });
     await surface.getByRole('button', { name: 'Cập nhật', exact: true }).click();
     await expect(page).toHaveURL(href!.replace(/\/detail$/, '/update'));
     await expect(surface.getByRole('textbox', { name: 'Tên hồ sơ', exact: true })).not.toHaveValue('');
-    await surface.getByRole('button', { name: 'Quay lại', exact: true }).click();
+    await back.click();
     await expect(page).toHaveURL(href!);
-    await surface.getByRole('button', { name: 'Quay lại', exact: true }).click();
+    await back.click();
     await expect(page).toHaveURL(base);
+    if (id.startsWith('drawer-')) await expect(surface).toBeHidden();
     await page.getByRole('button', { name: 'Tạo mới', exact: true }).click();
     await expect(page).toHaveURL(base + '/create');
     await expect(surface.getByRole('textbox', { name: 'Tên hồ sơ', exact: true })).toHaveValue('');
     await expect(surface.getByRole('button', { name: 'Lưu', exact: true })).toBeVisible();
-    await surface.getByRole('button', { name: 'Quay lại', exact: true }).click();
+    await back.click();
     await expect(page).toHaveURL(base);
+    if (id.startsWith('drawer-')) await expect(surface).toBeHidden();
   });
 }

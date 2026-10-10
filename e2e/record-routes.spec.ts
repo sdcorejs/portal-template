@@ -1,5 +1,6 @@
 import { PAGE_EXAMPLES } from '../src/modules/page/catalog/page-examples';
 import { test, expect } from '@playwright/test';
+import { discardUnsavedChanges, expectRecordSaving } from './helpers/demo-fixtures';
 const base = '/page/company';
 const header = (page: import('@playwright/test').Page) => page.locator('app-demo-host app-record-header').filter({ visible: true }).first();
 test('CASE-RECORD-URL: detail header, edit, save and reload use the selected record', async ({ page }, info) => {
@@ -18,7 +19,7 @@ test('CASE-RECORD-URL: detail header, edit, save and reload use the selected rec
   await expect(page).toHaveURL(new RegExp('customer-2/update$'));
   await page.getByRole('textbox', { name: 'Tên hồ sơ', exact: true }).fill('An Phú Logistics cập nhật');
   await page.getByRole('button', { name: 'Lưu', exact: true }).click();
-  await expect(page.getByRole('status').filter({ hasText: 'Đang lưu hồ sơ' })).toBeVisible();
+  await expectRecordSaving(page);
   await expect(page).toHaveURL(new RegExp('customer-2/detail$'));
   await expect(header(page).locator('.record-description')).toHaveText('An Phú Logistics cập nhật');
   await page.reload();
@@ -53,8 +54,7 @@ test('CASE-HISTORY-GUARD: browser Back and header Back protect dirty edits', asy
   await expect(page).toHaveURL(new RegExp('/customer-1/update$'));
   await expect(name).toHaveValue('Bản nháp chưa lưu');
   await page.getByRole('button', { name: 'Quay lại', exact: true }).click();
-  await page.getByRole('radio', { name: 'Bỏ thay đổi', exact: true }).check();
-  await page.getByRole('button', { name: 'Tiếp tục', exact: true }).click();
+  await discardUnsavedChanges(page);
   await expect(page).toHaveURL(new RegExp('/customer-1/detail$'));
   await expect(header(page).locator('.record-description')).toHaveText('Công ty Minh An');
 });
@@ -93,10 +93,10 @@ for (const id of ['drawer-compact', 'drawer-sections']) {
     await page.reload();
     dialog = page.getByRole('dialog');
     await expect(dialog.getByRole('textbox', { name: 'Tên hồ sơ', exact: true })).toHaveValue('Hồ sơ từ drawer');
-    await dialog.getByRole('button', { name: 'Quay lại', exact: true }).click();
+    await dialog.locator('.record-actions').getByRole('button', { name: 'Đóng', exact: true }).click();
     await expect(page).toHaveURL(new RegExp('/detail$'));
     await expect(dialog.getByRole('button', { name: 'Cập nhật', exact: true })).toBeVisible();
-    await dialog.getByRole('button', { name: 'Quay lại', exact: true }).click();
+    await dialog.locator('.record-actions').getByRole('button', { name: 'Đóng', exact: true }).click();
     await expect(page).toHaveURL(url);
     await expect(dialog).not.toBeVisible();
   });

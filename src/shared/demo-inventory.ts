@@ -343,9 +343,9 @@ export const DEMO_INVENTORY = [
     status: 'covered',
   },
   {
-    title: 'Utilities/candidate/explorer-metadata-move',
-    componentSource: 'src/modules/utility/features/explorer-candidate/explorer-candidate.component.ts',
-    storyFile: 'src/modules/utility/features/explorer-candidate/explorer-candidate.stories.ts',
+    title: 'Components/file-explorer',
+    componentSource: 'src/modules/component/features/file-explorer/file-explorer.component.ts',
+    storyFile: 'src/modules/component/features/file-explorer/file-explorer.stories.ts',
     status: 'covered',
   },
   {

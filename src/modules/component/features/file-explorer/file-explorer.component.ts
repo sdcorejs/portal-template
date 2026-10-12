@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal, viewChild } from '@angular/core';
-import { SdBreadcrumb, type SdBreadcrumbItem } from '@sdcorejs/angular/components/breadcrumb';
 import { SdButton } from '@sdcorejs/angular/components/button';
 import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdInform } from '@sdcorejs/angular/components/inform';
 import {
   SdFileExplorer,
   SdFileExplorerColumnDef,
@@ -14,13 +14,15 @@ import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 import { SdConfirmService } from '@sdcorejs/angular/services/confirm';
-import { ExplorerCandidateStore, type ExplorerDemoData, type ExplorerDemoItem } from './explorer-candidate.data';
+import { DemoPropertyComponent } from '../../../../app/components/demo-property/demo-property.component';
+import { FileExplorerDemoStore, type ExplorerDemoData, type ExplorerDemoItem } from './file-explorer.data';
 
 @Component({
-  selector: 'app-explorer-candidate-demo',
+  selector: 'app-file-explorer-demo',
   standalone: true,
   imports: [
-    SdBreadcrumb,
+    DemoPropertyComponent,
+    SdInform,
     SdButton,
     SdCodeEditor,
     SdFileExplorer,
@@ -30,16 +32,15 @@ import { ExplorerCandidateStore, type ExplorerDemoData, type ExplorerDemoItem } 
     SdSwitch,
     SdPageComponent,
   ],
-  providers: [ExplorerCandidateStore],
-  templateUrl: './explorer-candidate.component.html',
-  styleUrl: './explorer-candidate.component.scss',
+  providers: [FileExplorerDemoStore],
+  templateUrl: './file-explorer.component.html',
+  styleUrl: './file-explorer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExplorerCandidateDemoComponent {
-  readonly store = inject(ExplorerCandidateStore);
+export class FileExplorerDemoComponent {
+  readonly store = inject(FileExplorerDemoStore);
   private readonly confirm = inject(SdConfirmService);
   readonly explorer = viewChild<SdFileExplorer<ExplorerDemoData>>(SdFileExplorer);
-  readonly trail: SdBreadcrumbItem[] = [{ label: 'Workspace', url: '/utility/workspace/files' }, { label: 'Explorer candidate' }];
   readonly selected = signal<readonly ExplorerDemoItem[]>([]);
   readonly inspected = signal<ExplorerDemoItem | null>(null);
   readonly customLabel = signal(true);
@@ -236,6 +237,4 @@ const option: SdFileExplorerConfig<Metadata> = {
     this.status.set('Đã khôi phục seed, metadata và bộ đếm di chuyển.');
   }
 }
-SdTabComponent({ component: ExplorerCandidateDemoComponent, name: 'Explorer Metadata & Move', icon: 'drive_file_move' })(
-  ExplorerCandidateDemoComponent
-);
+SdTabComponent({ component: FileExplorerDemoComponent, name: 'File Explorer', icon: 'folder' })(FileExplorerDemoComponent);

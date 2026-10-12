@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { SdButton } from '@sdcorejs/angular/components/button';
 import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
+import { SdInform } from '@sdcorejs/angular/components/inform';
 import { SdSection } from '@sdcorejs/angular/components/section';
-import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
-import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 import { SdConfirmService } from '@sdcorejs/angular/services/confirm';
 import type { Color } from '@sdcorejs/utils/models';
+import { DemoPropertyComponent } from '../../../../../app/components/demo-property/demo-property.component';
 
 @Component({
   selector: 'app-button-outline-demo',
   standalone: true,
-  imports: [SdButton, SdCodeEditor, SdSection, SdSwitch, SdPageComponent],
+  imports: [DemoPropertyComponent, SdButton, SdCodeEditor, SdInform, SdSection, SdSwitch],
   templateUrl: './outline.component.html',
   styleUrl: './outline.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -119,4 +119,3 @@ export class ApprovalExample {
     this.status.set('Đã khôi phục hồ sơ NOVA-204 về trạng thái chờ duyệt.');
   }
 }
-SdTabComponent({ component: ButtonOutlineDemoComponent, name: 'Outline & Confirm', icon: 'smart_button' })(ButtonOutlineDemoComponent);

@@ -128,7 +128,6 @@
       "sources": [
         "src/modules/component/features/api-contract-builder/api-contract-builder.component.ts",
         "src/modules/component/features/query-builder/query-builder.component.ts",
-        "src/modules/utility/features/explorer-candidate/explorer-candidate.component.ts",
         "src/modules/utility/features/form-navigation/form-navigation.component.ts"
       ]
     },
@@ -146,6 +145,7 @@
         "src/modules/component/features/autoid-inspector/autoid-inspector.component.ts",
         "src/modules/component/features/button/button.component.ts",
         "src/modules/component/features/button/outline/outline.component.ts",
+        "src/modules/component/features/file-explorer/file-explorer.component.ts",
         "src/modules/component/features/image-editor/image-editor.component.ts",
         "src/modules/component/features/import-excel/import-excel.component.ts",
         "src/modules/component/features/kanban/kanban.component.ts",
@@ -200,7 +200,6 @@
         "src/modules/service/features/loading/loading.component.ts",
         "src/modules/service/features/notify/notify.component.ts",
         "src/modules/service/features/unsaved-changes/unsaved-changes.component.ts",
-        "src/modules/utility/features/explorer-candidate/explorer-candidate.component.ts",
         "src/modules/utility/features/form-navigation/form-navigation.component.ts",
         "src/modules/utility/features/workspace/activity/activity.component.ts",
         "src/modules/utility/features/workspace/designer/designer.component.ts",
@@ -253,6 +252,7 @@
         "src/modules/component/features/badge/badge.component.ts",
         "src/modules/component/features/button/button.component.ts",
         "src/modules/component/features/button/outline/outline.component.ts",
+        "src/modules/component/features/file-explorer/file-explorer.component.ts",
         "src/modules/component/features/modal/basic/basic.component.ts",
         "src/modules/component/features/modal/slots/slots.component.ts",
         "src/modules/component/features/modal/view-modes/view-modes.component.ts",
@@ -297,7 +297,6 @@
         "src/modules/service/features/confirm/with-radio/with-radio.component.ts",
         "src/modules/service/features/loading/loading.component.ts",
         "src/modules/service/features/notify/notify.component.ts",
-        "src/modules/utility/features/explorer-candidate/explorer-candidate.component.ts",
         "src/modules/utility/features/form-navigation/form-navigation.component.ts",
         "src/modules/utility/features/tooltip/tooltip.component.ts"
       ]
@@ -349,7 +348,7 @@
       "desktop": "PASS: typed selection, native/API move, confirmation/cancel/retry; Pages selection",
       "mobile": "PASS: responsive authored journey and Pages selected state at 390px/320px",
       "sources": [
-        "src/modules/utility/features/explorer-candidate/explorer-candidate.component.ts",
+        "src/modules/component/features/file-explorer/file-explorer.component.ts",
         "src/modules/utility/features/workspace/files/files.component.ts"
       ]
     },
@@ -443,6 +442,8 @@
       "desktop": "Not individually recorded on this public pin",
       "mobile": "Not individually recorded on this public pin",
       "sources": [
+        "src/modules/component/features/button/outline/outline.component.ts",
+        "src/modules/component/features/file-explorer/file-explorer.component.ts",
         "src/modules/pattern/components/form-editor.component.ts",
         "src/modules/pattern/features/form/time-slots.component.ts",
         "src/modules/pattern/features/table/inline-table.component.ts",
@@ -633,6 +634,7 @@
         "src/modules/component/features/badge/badge.component.ts",
         "src/modules/component/features/button/button.component.ts",
         "src/modules/component/features/button/outline/outline.component.ts",
+        "src/modules/component/features/file-explorer/file-explorer.component.ts",
         "src/modules/component/features/modal/basic/basic.component.ts",
         "src/modules/component/features/modal/slots/slots.component.ts",
         "src/modules/component/features/modal/view-modes/view-modes.component.ts",
@@ -695,7 +697,6 @@
         "src/modules/service/features/confirm/with-radio/with-radio.component.ts",
         "src/modules/service/features/loading/loading.component.ts",
         "src/modules/service/features/notify/notify.component.ts",
-        "src/modules/utility/features/explorer-candidate/explorer-candidate.component.ts",
         "src/modules/utility/features/form-navigation/form-navigation.component.ts",
         "src/modules/utility/features/icon/icon.component.ts",
         "src/modules/utility/features/tooltip/tooltip.component.ts",
@@ -788,7 +789,7 @@
         "src/modules/component/features/avatar/avatar.component.ts",
         "src/modules/component/features/badge/badge.component.ts",
         "src/modules/component/features/button/button.component.ts",
-        "src/modules/component/features/button/outline/outline.component.ts",
+        "src/modules/component/features/file-explorer/file-explorer.component.ts",
         "src/modules/component/features/image-editor/image-editor.component.ts",
         "src/modules/component/features/import-excel/import-excel.component.ts",
         "src/modules/component/features/kanban/kanban.component.ts",
@@ -843,7 +844,6 @@
         "src/modules/service/features/loading/loading.component.ts",
         "src/modules/service/features/notify/notify.component.ts",
         "src/modules/service/features/unsaved-changes/unsaved-changes.component.ts",
-        "src/modules/utility/features/explorer-candidate/explorer-candidate.component.ts",
         "src/modules/utility/features/form-navigation/form-navigation.component.ts",
         "src/modules/utility/features/icon/icon.component.ts",
         "src/modules/utility/features/tooltip/tooltip.component.ts"
@@ -1305,6 +1305,7 @@
         "src/modules/component/features/badge/badge.component.ts",
         "src/modules/component/features/button/button.component.ts",
         "src/modules/component/features/button/outline/outline.component.ts",
+        "src/modules/component/features/file-explorer/file-explorer.component.ts",
         "src/modules/component/features/modal/basic/basic.component.ts",
         "src/modules/component/features/preview-image/preview-image.component.ts",
         "src/modules/component/features/preview-pdf/preview-pdf.component.ts",
@@ -1341,7 +1342,6 @@
         "src/modules/service/features/confirm/with-input/with-input.component.ts",
         "src/modules/service/features/confirm/with-radio/with-radio.component.ts",
         "src/modules/service/features/notify/notify.component.ts",
-        "src/modules/utility/features/explorer-candidate/explorer-candidate.component.ts",
         "src/modules/utility/features/form-navigation/form-navigation.component.ts",
         "src/modules/utility/features/workspace/activity/activity.component.ts",
         "src/modules/utility/features/workspace/files/files.component.ts",
@@ -1433,13 +1433,13 @@
       "sources": [
         "src/modules/component/features/api-contract-builder/api-contract-builder.component.ts",
         "src/modules/component/features/button/outline/outline.component.ts",
+        "src/modules/component/features/file-explorer/file-explorer.component.ts",
         "src/modules/component/features/query-builder/query-builder.component.ts",
         "src/modules/pattern/features/button/button.component.ts",
         "src/modules/service/features/confirm/confirm/confirm.component.ts",
         "src/modules/service/features/confirm/with-date/with-date.component.ts",
         "src/modules/service/features/confirm/with-input/with-input.component.ts",
         "src/modules/service/features/confirm/with-radio/with-radio.component.ts",
-        "src/modules/utility/features/explorer-candidate/explorer-candidate.component.ts",
         "src/modules/utility/features/workspace/workspace.component.ts"
       ]
     },

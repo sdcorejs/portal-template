@@ -12,12 +12,14 @@ import { SdSelect } from '@sdcorejs/angular/forms/select';
 import { SdSwitch } from '@sdcorejs/angular/forms/switch';
 import { Color as SdColor } from '@sdcorejs/utils/models';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
+import { ButtonOutlineDemoComponent } from './outline/outline.component';
 
 @Component({
   selector: 'app-button-demo',
   standalone: true,
   imports: [
     DemoPropertyComponent,
+    ButtonOutlineDemoComponent,
     CommonModule,
     FormsModule,
     SdButton,
@@ -36,7 +38,7 @@ import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 export class ButtonDemoComponent {
   // Trạng thái (Token)
   title = signal<string>('Nút bấm');
-  pageDescription = signal<string>('Thành phần nút bấm cơ bản, hỗ trợ nhiều kiểu dáng, màu sắc và trạng thái loading.');
+  pageDescription = signal<string>('Thử kiểu dáng, màu sắc, trạng thái tải/lỗi/khóa và hành động cần xác nhận của nút bấm.');
   type = signal<SdButtonType>('fill');
   color = signal<SdColor>('primary');
   size = signal<SdButtonSize>('md');

@@ -1,7 +1,12 @@
 <sd-page [title]="'SdButton Component'" [description]="pageDescription()">
   <div headerRight>
     <div class="d-flex gap-8">
-      <!-- Có thể thêm nút Action ở đây nếu cần -->
+      <sd-button
+        title="Outline & Confirm"
+        type="outline"
+        size="sm"
+        prefixIcon="expand_more"
+        (click)="outlineExamples.scrollIntoView({ block: 'start' })" />
     </div>
   </div>
 
@@ -92,6 +97,9 @@
           ></sd-section>
         </div>
       </div>
+    </div>
+    <div #outlineExamples class="mt-24">
+      <app-button-outline-demo />
     </div>
   </div>
 </sd-page>

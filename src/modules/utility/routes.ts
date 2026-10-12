@@ -9,8 +9,8 @@ export const utilityRoutes: Routes = [
       {
         path: 'explorer-candidate',
         data: { permission: SD_PERMISSION_PUBLIC },
-        loadComponent: () =>
-          import('./features/explorer-candidate/explorer-candidate.component').then(m => m.ExplorerCandidateDemoComponent),
+        pathMatch: 'full',
+        redirectTo: '/component/file-explorer',
       },
       {
         path: 'form-navigation',

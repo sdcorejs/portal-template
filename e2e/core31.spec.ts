@@ -148,7 +148,7 @@ test('query results sort/select/confirm/undo and quick operator hands off a real
 test('outline loading/error/retry, cancel/confirm and required reason work with keyboard', async ({ page }) => {
   await page.goto('/component/button/outline');
   await expect(page.getByRole('button', { name: 'Chưa đủ quyền (demo)' })).toBeDisabled();
-  await page.getByRole('switch', { name: 'Giả lập lỗi lần tải tới', exact: true }).click();
+  await page.getByRole('switch', { name: 'failNext — Giả lập lỗi lần tải tới', exact: true }).click();
   const reload = page.getByRole('button', { name: 'Tải lại hồ sơ', exact: true });
   await reload.focus();
   await page.keyboard.press('Enter');

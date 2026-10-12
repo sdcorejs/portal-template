@@ -1,20 +1,34 @@
-<sd-page
-  title="Outline & Confirm"
-  description="Thử sắc thái nút outline, trạng thái tải/lỗi/khóa và hành động cần xác nhận trên một hồ sơ demo.">
-  <div headerRight><sd-button title="Khôi phục hồ sơ" type="outline" [disabled]="loading()" (click)="reset()" /></div>
-  <div class="demo-page-body row row-sm mx-0">
+<section aria-label="Outline & Confirm">
+  <div class="d-flex align-items-center justify-content-between gap-12 mb-12">
+    <h2 class="T18M mb-0">Outline & Confirm</h2>
+    <sd-button size="sm" title="Khôi phục hồ sơ" type="outline" [disabled]="loading()" (click)="reset()" />
+  </div>
+  <div class="row row-sm mx-0">
     <div class="col-md-4">
       <sd-section title="Thuộc tính" icon="settings"
-        ><div class="p-16">
-          <div class="d-flex flex-column gap-16">
-            <sd-switch [(model)]="disabled" label="Khóa các hành động" />
-            <sd-switch [(model)]="failNext" label="Giả lập lỗi lần tải tới" />
-            <p class="T12R text-secondary mb-0">
-              Tab để di chuyển và Enter/Space để kích hoạt. Hủy xác nhận giữ nguyên dữ liệu. Nút loading chặn kích hoạt lặp.
-            </p>
+        ><div class="demo-property-content">
+          <div class="demo-config-panel">
+            <app-demo-property label="disabled">
+              <span propertyDescription>Khóa các hành động của hồ sơ demo.</span>
+              <sd-switch [(model)]="disabled" label="disabled — Khóa các hành động" class="property-switch" size="sm" hideInlineError />
+            </app-demo-property>
+            <app-demo-property label="failNext">
+              <span propertyDescription>Giả lập lỗi lần tải tới để thử lỗi và tải lại.</span>
+              <sd-switch
+                [(model)]="failNext"
+                label="failNext — Giả lập lỗi lần tải tới"
+                class="property-switch"
+                size="sm"
+                hideInlineError />
+            </app-demo-property>
           </div>
-        </div></sd-section
-      >
+          <div class="demo-section-content">
+            <sd-inform
+              secondary
+              type="tip"
+              description="Tab để di chuyển và Enter/Space để kích hoạt. Hủy xác nhận giữ nguyên dữ liệu. Nút loading chặn kích hoạt lặp." />
+          </div></div
+      ></sd-section>
     </div>
     <div class="col-md-8">
       <div class="d-flex flex-column gap-16">
@@ -78,4 +92,4 @@
       </div>
     </div>
   </div>
-</sd-page>
+</section>

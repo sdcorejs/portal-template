@@ -80,7 +80,7 @@ export class MainComponent {
         { path: '/component/autoid-inspector', permission: SD_PERMISSION_PUBLIC, title: 'AutoId Inspector' },
         { path: '/component/api-contract-builder', permission: SD_PERMISSION_PUBLIC, title: 'API Contract Builder' },
         { path: '/component/query-builder', permission: SD_PERMISSION_PUBLIC, title: 'Query Builder' },
-        { path: '/component/button/outline', permission: SD_PERMISSION_PUBLIC, title: 'Outline & Confirm' },
+        { path: '/component/file-explorer', permission: SD_PERMISSION_PUBLIC, title: 'File Explorer' },
         {
           path: '/component/button',
           permission: SD_PERMISSION_PUBLIC,
@@ -243,10 +243,7 @@ export class MainComponent {
         {
           title: 'Core 3.1 — Playground',
           icon: 'science',
-          children: [
-            { path: '/utility/explorer-candidate', permission: SD_PERMISSION_PUBLIC, title: 'Explorer — Metadata & Move' },
-            { path: '/utility/form-navigation', permission: SD_PERMISSION_PUBLIC, title: 'Form — Tabs & Steps' },
-          ],
+          children: [{ path: '/utility/form-navigation', permission: SD_PERMISSION_PUBLIC, title: 'Form — Tabs & Steps' }],
         },
         { path: '/utility/tooltip', permission: SD_PERMISSION_PUBLIC, title: 'sdTooltip Directive' },
         { path: '/utility/icon', permission: SD_PERMISSION_PUBLIC, title: 'System Icons (Fill/Outline)' },

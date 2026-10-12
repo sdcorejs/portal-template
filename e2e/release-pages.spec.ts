@@ -174,7 +174,7 @@ for (const width of [1440, 390, 320]) {
     }
     await page.goto('utility/explorer-candidate');
     await expect(page.locator('sd-file-explorer')).toBeVisible();
-    await expectShell(page, width, 'Utility', 'Explorer — Metadata & Move');
+    await expectShell(page, width, 'Component', 'File Explorer');
     await page
       .locator('sd-file-explorer')
       .getByRole('checkbox', { name: /Brief-Nova\.txt/ })

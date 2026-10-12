@@ -75,7 +75,7 @@ export function moveExplorerDemoFiles(
 }
 
 @Injectable()
-export class ExplorerCandidateStore {
+export class FileExplorerDemoStore {
   readonly rows = signal(explorerDemoSeed());
   readonly readOnly = signal(false);
   readonly failReads = signal(false);

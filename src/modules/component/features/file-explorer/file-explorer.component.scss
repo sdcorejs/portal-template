@@ -3,6 +3,15 @@
   height: 100%;
   min-width: 0;
 }
+// Nhãn hiển thị ở cột trái; giữ nhãn của switch cho trình đọc màn hình.
+:host ::ng-deep .property-switch sd-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 .demo-page-body {
   padding: 12px 4px;
   min-height: 100%;

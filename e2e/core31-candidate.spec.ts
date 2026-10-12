@@ -169,7 +169,7 @@ test('Explorer typed columns, eligibility, selection/confirm and itemLeft projec
   await brief.getByRole('button', { name: 'Thao tác với Brief-Nova.txt', exact: true }).click();
   await page.getByRole('button', { name: 'Thông tin metadata', exact: true }).click();
   await expect(page.getByTestId('candidate-metadata')).toContainText('Người phụ trách');
-  await page.getByRole('switch', { name: 'Hiện nhãn metadata tùy chỉnh', exact: true }).click();
+  await page.getByRole('switch', { name: 'customLabel — Hiện nhãn metadata tùy chỉnh', exact: true }).click();
   await expect(page.getByTestId('candidate-metadata')).not.toContainText('Người phụ trách');
   await expect(page.getByTestId('candidate-metadata')).not.toContainText('Nhãn dự phòng');
   // Row commands can scroll the horizontal metadata grid. Restore the name column for the evidence frame.
@@ -203,13 +203,13 @@ test('Explorer native move picker preserves metadata and consumer cancellation l
 
 test('Explorer failed mutation retries safely and accepted move refresh does not replay mutation', async ({ page }) => {
   await page.goto('/utility/explorer-candidate');
-  await page.getByRole('switch', { name: 'Giả lập lỗi di chuyển lần tới', exact: true }).click();
+  await page.getByRole('switch', { name: 'failNextMove — Giả lập lỗi di chuyển lần tới', exact: true }).click();
   await selectBrief(page);
   await page.getByRole('button', { name: 'Chuyển vào Lưu trữ', exact: true }).click();
   await acceptMove(page);
   await expect(page.getByTestId('candidate-move-counters')).toHaveText('1 lần thử · 0 mutation đã lưu');
   await expect(explorer(page)).toContainText('Giả lập lỗi di chuyển');
-  await page.getByRole('switch', { name: 'Lỗi refresh sau khi đã di chuyển', exact: true }).click();
+  await page.getByRole('switch', { name: 'failRefreshAfterMove — Lỗi refresh sau khi đã di chuyển', exact: true }).click();
   await page.getByRole('button', { name: 'Chuyển vào Lưu trữ', exact: true }).click();
   await acceptMove(page);
   await expect(page.getByTestId('candidate-move-counters')).toHaveText('2 lần thử · 1 mutation đã lưu');
@@ -241,7 +241,7 @@ test('Explorer local upload/search, read failure and empty folder are recoverabl
 
 test('Explorer no-actions config hides all selection affordances and re-enabling restores selection', async ({ page }) => {
   await page.goto('/utility/explorer-candidate');
-  const toggle = page.getByRole('switch', { name: 'Hành động khi chọn tệp', exact: true });
+  const toggle = page.getByRole('switch', { name: 'selector.actions — Hành động khi chọn tệp', exact: true });
   await toggle.click();
   await expect(explorer(page).getByRole('row').filter({ hasText: 'Brief-Nova.txt' })).toBeVisible();
   await expect(explorer(page).getByRole('checkbox')).toHaveCount(0);

@@ -1,0 +1,139 @@
+<sd-page title="File Explorer" description="Duyệt hồ sơ hư cấu, thao tác theo metadata và di chuyển tệp qua cùng pipeline của Core UI.">
+  <div headerRight>
+    <sd-button
+      size="sm"
+      title="Khôi phục kho demo"
+      type="outline"
+      prefixIcon="restart_alt"
+      [disabled]="moving() || bulkBusy()"
+      (click)="reset()" />
+  </div>
+  <div class="demo-page-body">
+    <div class="row row-sm mx-0">
+      <div class="col-md-4">
+        <sd-section title="Thuộc tính" icon="settings"
+          ><div class="demo-property-content">
+            <div class="demo-config-panel">
+              <app-demo-property label="readOnly">
+                <span propertyDescription>Chỉ đọc dữ liệu demo; khóa upload và các hành động cập nhật.</span>
+                <sd-switch [(model)]="store.readOnly" label="readOnly — Chỉ đọc (demo)" class="property-switch" size="sm" hideInlineError />
+              </app-demo-property>
+              <app-demo-property label="selector.actions">
+                <span propertyDescription>Khi không có hành động, checkbox và thanh chọn tệp được ẩn.</span>
+                <sd-switch
+                  [model]="selectionActionsEnabled()"
+                  (modelChange)="setSelectionActions($event)"
+                  [disabled]="moving() || bulkBusy()"
+                  label="selector.actions — Hành động khi chọn tệp"
+                  class="property-switch"
+                  size="sm"
+                  hideInlineError />
+              </app-demo-property>
+              <app-demo-property label="failNextMove">
+                <span propertyDescription>Giả lập lỗi di chuyển lần tới để thử lại an toàn.</span>
+                <sd-switch
+                  [(model)]="store.failNextMove"
+                  label="failNextMove — Giả lập lỗi di chuyển lần tới"
+                  class="property-switch"
+                  size="sm"
+                  hideInlineError />
+              </app-demo-property>
+              <app-demo-property label="failRefreshAfterMove">
+                <span propertyDescription>Lỗi refresh sau khi đã di chuyển; thử lại không lưu mutation lần hai.</span>
+                <sd-switch
+                  [(model)]="store.failRefreshAfterMove"
+                  label="failRefreshAfterMove — Lỗi refresh sau khi đã di chuyển"
+                  class="property-switch"
+                  size="sm"
+                  hideInlineError />
+              </app-demo-property>
+              <app-demo-property label="customLabel">
+                <span propertyDescription>Hiện nhãn Người phụ trách trong metadata đã mở.</span>
+                <sd-switch
+                  [(model)]="customLabel"
+                  label="customLabel — Hiện nhãn metadata tùy chỉnh"
+                  class="property-switch"
+                  size="sm"
+                  hideInlineError />
+              </app-demo-property>
+            </div>
+            <div class="demo-section-content d-flex flex-column gap-12">
+              <sd-button size="sm" title="Giả lập lỗi đọc" type="outline" [disabled]="moving()" (click)="simulateReadError()" />
+              <sd-button size="sm" title="Khôi phục đọc danh sách" type="outline" [disabled]="moving()" (click)="restoreReads()" />
+              <sd-inform
+                secondary
+                type="tip"
+                description="Chọn tệp rồi thử hành động nhóm. Có thể dùng nút di chuyển của Core để chọn thư mục hoặc kéo thả tệp vào cây thư mục. Share là liên kết minh họa trong trình duyệt." />
+            </div></div
+        ></sd-section>
+        <sd-section title="Theo dõi phiên" icon="history" class="mt-16"
+          ><div class="p-16">
+            <p data-testid="candidate-selection">{{ selected().length }} tệp đang chọn</p>
+            <p data-testid="candidate-move-counters">{{ store.moveAttempts() }} lần thử · {{ store.moveCommits() }} mutation đã lưu</p>
+            <p role="status" aria-live="polite" class="T13R mb-0">{{ status() }}</p>
+          </div></sd-section
+        >
+        @if (inspected(); as item) {
+          <sd-section title="Metadata đã mở" icon="info" class="mt-16"
+            ><div class="p-16" data-testid="candidate-metadata">
+              <strong>{{ item.name }}</strong>
+              <sd-section-item label="Nhãn dự phòng"
+                ><span itemLeft>
+                  @if (customLabel()) {
+                    <strong>Người phụ trách</strong>
+                  }</span
+                >{{ item.data?.ownerName ?? 'Chưa phân công' }}</sd-section-item
+              >
+              <sd-section-item label="Phân loại">{{
+                item.data?.classification === 'private' ? 'Riêng tư (demo)' : 'Trong nhóm'
+              }}</sd-section-item>
+            </div></sd-section
+          >
+        }
+      </div>
+      <div class="col-md-8">
+        <sd-section title="Xem trước — Kho tài liệu" icon="folder"
+          ><div class="p-12">
+            <div class="explorer-frame">
+              @for (version of [resetVersion()]; track version) {
+                <sd-file-explorer [option]="activeOption()" (open)="onOpen($event)">
+                  <ng-template
+                    sdFileExplorerColumnDef="owner"
+                    [sdFileExplorerColumnFor]="activeOption()"
+                    title="Người phụ trách"
+                    width="152px"
+                    let-data="data"
+                    >{{ data?.ownerName ?? 'Chưa phân công' }}</ng-template
+                  >
+                  <ng-template
+                    sdFileExplorerColumnDef="classification"
+                    [sdFileExplorerColumnFor]="activeOption()"
+                    title="Phân loại"
+                    width="130px"
+                    let-data="data"
+                    >{{ data?.classification === 'private' ? 'Riêng tư' : 'Trong nhóm' }}</ng-template
+                  >
+                  <ng-template
+                    sdFileExplorerColumnDef="reviewed"
+                    [sdFileExplorerColumnFor]="activeOption()"
+                    title="Đã xem"
+                    width="100px"
+                    let-data="data"
+                    >{{ data?.reviewed ? 'Đã xem' : 'Chưa xem' }}</ng-template
+                  >
+                </sd-file-explorer>
+              }
+            </div>
+          </div></sd-section
+        >
+        <sd-section title="Mã nguồn" icon="code" class="mt-16"
+          ><div class="p-16">
+            <h4 class="T14M mb-8">HTML</h4>
+            <sd-code-editor [model]="htmlCode" language="html" [viewed]="true" maxHeight="220px" />
+            <h4 class="T14M mt-16 mb-8">TypeScript</h4>
+            <sd-code-editor [model]="tsCode" language="typescript" [viewed]="true" maxHeight="260px" /></div
+        ></sd-section>
+      </div>
+    </div>
+  </div>
+</sd-page>

@@ -1,5 +1,6 @@
 import { SD_PERMISSION_PUBLIC } from '@sdcorejs/angular/modules/permission';
-import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router, Routes } from '@angular/router';
 
 export const componentRoutes: Routes = [
   {
@@ -55,12 +56,18 @@ export const componentRoutes: Routes = [
       {
         path: 'button/outline',
         data: { permission: SD_PERMISSION_PUBLIC },
-        loadComponent: () => import('./features/button/outline/outline.component').then(m => m.ButtonOutlineDemoComponent),
+        pathMatch: 'full',
+        redirectTo: ({ queryParams, fragment }) => inject(Router).createUrlTree(['/component/button'], { queryParams, fragment }),
       },
       {
         path: 'button',
         data: { permission: SD_PERMISSION_PUBLIC },
         loadComponent: () => import('./features/button/button.component').then(m => m.ButtonDemoComponent),
+      },
+      {
+        path: 'file-explorer',
+        data: { permission: SD_PERMISSION_PUBLIC },
+        loadComponent: () => import('./features/file-explorer/file-explorer.component').then(m => m.FileExplorerDemoComponent),
       },
       {
         path: 'avatar',

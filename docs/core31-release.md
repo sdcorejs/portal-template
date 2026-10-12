@@ -9,11 +9,11 @@ All fixtures are fictional. Actions and uploaded files stay in the browser sessi
 | Menu / route | Meaningful flow |
 |---|---|
 | Utility → Workspace hồ sơ / `/utility/workspace` | Filter and select Table records; upload/preview files; edit a Form Builder schema, apply that same schema to Form Render, submit and review local history. |
-| Utility → Explorer Metadata & Move / `/utility/explorer-candidate` | Typed metadata, custom columns, selection commands and native/API move through one local pipeline, confirmation, cancellation and retry. |
+| Component → File Explorer / `/component/file-explorer` | Typed metadata, custom columns, selection commands and native/API move through one local pipeline, confirmation, cancellation and retry. The previous `/utility/explorer-candidate` link redirects here. |
 | Utility → Form Navigation / `/utility/form-navigation` | Builder schema handoff to Render, tabs/steps, validation and conditional page/model membership. |
 | Component → API Contract Builder | Edit/validate a contract, retain a snapshot and export canonical JSON. No API request or secret value is required. |
 | Component → Query Builder | AND/OR, nested conditions, dates and field comparison; search/sort/select Table results, confirm actions and undo. |
-| Component → Outline & Confirm | Loading, error/retry, disabled buttons and required confirmation reason. |
+| Component → Button / `/component/button` | Basic properties plus Outline & Confirm examples: loading, error/retry, disabled buttons and required confirmation reason. The previous `/component/button/outline` link redirects here. ConfirmService examples remain under Service. |
 | `/component/kanban` | Search and inspect the operational queue; move with native keyboard/menu or local confirmed async action, fail/retry and reset. |
 | `/component/tree` | Lazy root/child loading, native keyboard expansion, loaded-descendant selection and retry. |
 | `/component/org-chart` | Collapse fictional teams and open node details; loading/error/empty/disabled scenarios. |

@@ -1,6 +1,6 @@
-import { canMoveExplorerDemoFiles, ExplorerCandidateStore, explorerDemoSeed, moveExplorerDemoFiles } from './explorer-candidate.data';
+import { canMoveExplorerDemoFiles, FileExplorerDemoStore, explorerDemoSeed, moveExplorerDemoFiles } from './file-explorer.data';
 
-describe('candidate Explorer consumer storage', () => {
+describe('File Explorer consumer storage', () => {
   it('moves selected files together and preserves DTO identity without mutating the seed', () => {
     const seed = explorerDemoSeed(),
       files = seed.filter(row => ['brief', 'budget'].includes(row.id));
@@ -28,7 +28,7 @@ describe('candidate Explorer consumer storage', () => {
     expect(moveExplorerDemoFiles(moved, [current], null).find(row => row.id === 'brief')!.parentId).toBeNull();
   });
   it('does not commit an upload if read-only is enabled while transferring', async () => {
-    const store = new ExplorerCandidateStore();
+    const store = new FileExplorerDemoStore();
     const pending = store.upload(new File(['fictional'], 'late-readonly.txt'), null, new AbortController().signal, () => {
       store.readOnly.set(true);
     });
@@ -36,7 +36,7 @@ describe('candidate Explorer consumer storage', () => {
     expect(store.rows().some(row => row.name === 'late-readonly.txt')).toBeFalse();
   });
   it('does not repopulate a reset session with an upload already in progress', async () => {
-    const store = new ExplorerCandidateStore();
+    const store = new FileExplorerDemoStore();
     let reset = false;
     const pending = store.upload(new File(['fictional'], 'stale-session.txt'), null, new AbortController().signal, () => {
       if (!reset) {
@@ -48,7 +48,7 @@ describe('candidate Explorer consumer storage', () => {
     expect(store.rows().map(row => row.id)).toEqual(explorerDemoSeed().map(row => row.id));
   });
   it('aborts an in-flight upload without adding a file', async () => {
-    const store = new ExplorerCandidateStore(),
+    const store = new FileExplorerDemoStore(),
       controller = new AbortController();
     const pending = store.upload(new File(['fictional'], 'cancelled.txt'), null, controller.signal, () => controller.abort());
     await expectAsync(pending).toBeRejected();

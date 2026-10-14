@@ -2,7 +2,13 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './e2e',
-  testMatch: ['feedback.spec.ts', 'core31.spec.ts', 'core31-candidate.spec.ts', 'core31-touch-fix.spec.ts'],
+  testMatch: [
+    'feedback.spec.ts',
+    'file-explorer-actions.spec.ts',
+    'core31.spec.ts',
+    'core31-candidate.spec.ts',
+    'core31-touch-fix.spec.ts',
+  ],
   workers: 1,
   timeout: 60000,
   expect: { timeout: 10000 },

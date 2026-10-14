@@ -109,10 +109,12 @@ export class FileExplorerDemoComponent {
         },
       ],
     },
+    // Có icon thì dùng tooltip để dòng gọn; Core vẫn lấy tooltip làm nhãn trong menu/drawer.
+    // Action không có icon cần giữ title để không tạo nút trống.
     fileCommands: [
-      { title: 'Thông tin metadata', prefixIcon: 'info', onClick: item => this.inspect(item) },
+      { tooltip: 'Thông tin metadata', prefixIcon: 'info', onClick: item => this.inspect(item) },
       {
-        title: 'Đánh dấu tệp đã xem',
+        tooltip: 'Đánh dấu tệp đã xem',
         prefixIcon: 'done',
         disabled: item => !!item.data?.locked || this.store.readOnly(),
         loading: () => this.bulkBusy(),
@@ -123,7 +125,7 @@ export class FileExplorerDemoComponent {
     ],
     folderCommands: [
       {
-        title: 'Đếm tài liệu',
+        tooltip: 'Đếm tài liệu',
         prefixIcon: 'folder_open',
         onClick: item =>
           this.status.set(

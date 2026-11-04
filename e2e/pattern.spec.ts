@@ -658,7 +658,7 @@ test('icon filter is keyboard accessible and source is real Angular', async ({ p
   await expect(card).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('app-pattern-score [role="status"]')).toContainText('8 / 24');
   await expect(page.locator('app-pattern-score tbody tr')).toHaveCount(4);
-  expect((await page.locator('app-pattern-score tbody .badge').allTextContents()).every(x => x === 'Chờ xử lý')).toBe(true);
+  expect((await page.locator('app-pattern-score tbody sd-badge').allTextContents()).every(x => x === 'Chờ xử lý')).toBe(true);
   // Core cards throttle repeated activation for 300 ms.
   await page.waitForTimeout(350);
   await page.keyboard.press('Space');

@@ -96,6 +96,7 @@ const useCases = {
 };
 const validationPath = path.join(root, 'docs/core31-release-validation.json');
 const currentQa = fs.existsSync(validationPath) ? JSON.parse(fs.readFileSync(validationPath, 'utf8')) : {};
+const validationMatches = currentQa.library?.version === library.version && currentQa.library?.integrity === artifact.integrity;
 const registry = JSON.parse(fs.readFileSync('docs/core31-successor-demo-registry.json', 'utf8'));
 const newEntries = new Set(['api-contract-builder', 'breadcrumb', 'highlight', 'operator', 'query-builder', 'quick-action']);
 const rows = entries.map(key => {
@@ -104,7 +105,7 @@ const rows = entries.map(key => {
   const files = [...new Set(sources.get(key))].sort();
   const demo = registry.demos.find(demo => demo.entry === key.slice(2));
   if (demo && (!files.includes(demo.source) || !fs.existsSync(demo.test))) throw new Error('Invalid interactive demo registry: ' + key);
-  const qa = currentQa.coverage?.[key] ?? {
+  const qa = (validationMatches ? currentQa.coverage?.[key] : null) ?? {
     desktop: 'Not individually recorded on this public pin',
     mobile: 'Not individually recorded on this public pin',
   };
@@ -148,7 +149,7 @@ const output = {
 };
 const markdown = `# Core demo source inventory
 
-Exact public dependency and installed Core: **${library.version}** (Angular 22). Registry integrity and producer source identity are in [release artifact](core31-release-artifact.json). Current execution results are reported separately in [release validation](core31-release-validation.json).
+Exact public dependency and installed Core: **${library.version}** (Angular 22). Registry integrity and producer source identity are in [release artifact](core31-release-artifact.json). Historical version-bound results are in [release validation](core31-release-validation.json); results from a different Core version are not carried forward.
 
 ${output.method}
 

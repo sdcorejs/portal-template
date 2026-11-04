@@ -78,7 +78,7 @@ export class ListScoreFilterComponent extends ListPatternBase {
         title: 'Trạng thái',
         type: 'values',
         option: { items: STATUS_OPTIONS, valueField: 'id', displayField: 'name' },
-        useBadge: (_value, row) => statusBadge(row.status, 'round'),
+        useBadge: (_value, row) => statusBadge(row.status),
         width: '170px',
       },
       { field: 'amount', title: 'Giá trị (VND)', type: 'number', align: 'right', width: '160px' },

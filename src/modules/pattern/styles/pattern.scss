@@ -106,25 +106,6 @@ h3 {
 p {
   margin: 8px 0;
 }
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 8px;
-  font-size: 12px;
-  border-radius: 4px;
-  background: #fff2dc;
-  color: #82550c;
-  white-space: nowrap;
-}
-.badge.active {
-  background: #eaf0ff;
-  color: #254fae;
-}
-.badge.done {
-  background: #e8f4eb;
-  color: #256638;
-}
 .query-bar {
   display: flex;
   flex-wrap: wrap;

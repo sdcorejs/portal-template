@@ -11,7 +11,11 @@ const manifest = JSON.parse(readFileSync(new URL('../package.json', import.meta.
 const coreVersion = manifest.dependencies['@sdcorejs/angular'];
 assert.match(coreVersion, /^22\.3\.\d+$/);
 assert.equal(require('@sdcorejs/angular/package.json').version, coreVersion);
-// utils 1.2.5 exports public entry points without exposing package.json.
-assert.equal(JSON.parse(readFileSync(new URL('../node_modules/@sdcorejs/utils/package.json', import.meta.url), 'utf8')).version, '1.2.5');
+// utils công bố entry point nhưng không export package.json.
+const utilsVersion = manifest.dependencies['@sdcorejs/utils'];
+assert.equal(
+  JSON.parse(readFileSync(new URL('../node_modules/@sdcorejs/utils/package.json', import.meta.url), 'utf8')).version,
+  utilsVersion
+);
 assert.equal(require('@angular/core/package.json').version.split('.')[0], '22');
-console.log('Core UI ' + coreVersion + ', utils 1.2.5 and Angular 22 on supported Node ' + process.versions.node);
+console.log('Core UI ' + coreVersion + ', utils ' + utilsVersion + ' and Angular 22 on supported Node ' + process.versions.node);

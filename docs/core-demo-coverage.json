@@ -1,23 +1,25 @@
 {
-  "libraryVersion": "22.3.1",
-  "declaredDependencyVersion": "22.3.1",
+  "libraryVersion": "22.3.4",
+  "declaredDependencyVersion": "22.3.4",
   "installedArtifact": {
-    "version": "22.3.1",
-    "integrity": "sha512-JMbOpEic6GDnHU5FbYA2/qmsLzs1TMJxJZ22Omf1Tag/HRR4y0Th7VzPx0Sgga00cTuu9dknqN/G5XY4h1D+og==",
-    "sourceCommit": "629ab5ff475c307b8d19a393a6fdc967139ed3a2",
+    "version": "22.3.4",
+    "integrity": "sha512-r88n9ds+QgmIYKWk7F5N9FQYgV63KoMKnd5o4fNZv574kWonWKq/ZrNZ6fQwtPAJnmqqcsKLXYSPV0K3D0L6HQ==",
+    "sourceCommit": "db7f86079ec737f8f48f54daf9779fdc231a861a",
     "published": true
   },
   "angularMajor": 22,
   "releasePortalBase": "8e238b1d8fddf7f9ec67586721e770d124e132f8",
   "method": "AST import declarations in src/modules/**/*.component.ts matched to installed secondary exports; source presence is not a demonstrated workflow. Explicit successor registry binds seven routes to actual native component selectors and authored browser journeys; current execution/visual acceptance is reported separately, never inferred from imports. Snippets, stories and test imports are excluded. Helpers are classified separately.",
   "components": {
-    "exportedEntries": 41,
+    "exportedEntries": 43,
     "sourcePresent": 38,
     "registeredInteractiveDemos": 7,
     "sourceWithoutSuccessorDemoAudit": 31,
     "missingUiGroups": [
       "components/editor",
-      "components/mini-editor"
+      "components/editor-engine",
+      "components/mini-editor",
+      "components/window"
     ]
   },
   "rows": [
@@ -42,8 +44,8 @@
       "demoStatus": "source present",
       "batch": 1,
       "useCases": "Edit/view/disabled; valid/invalid/empty; snapshot; canonical JSON export",
-      "desktop": "PASS: full authored Contract journey in complete Portal suite",
-      "mobile": "PASS: authored compact responsive journey in complete Portal suite",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
       "sources": [
         "src/modules/component/features/api-contract-builder/api-contract-builder.component.ts"
       ]
@@ -74,8 +76,8 @@
       "demoStatus": "interactive demo registered",
       "batch": "existing",
       "useCases": "Scoped local fixture audit, duplicate/missing IDs, highlight, local export; optional native panel",
-      "desktop": "PASS: full authored journey + Pages native action at 1440px",
-      "mobile": "PASS: full authored responsive journey + Pages native action/capture at 390px and 320px",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
       "sources": [
         "src/modules/component/features/autoid-inspector/autoid-inspector.component.ts"
       ]
@@ -111,7 +113,10 @@
         "src/modules/page/features/role/components/permission-matrix.component.ts",
         "src/modules/page/features/role/components/permission-tree.component.ts",
         "src/modules/page/features/role/pages/role-record-editor.component.ts",
+        "src/modules/pattern/components/order-detail.component.ts",
+        "src/modules/pattern/features/composition/record-collection.component.ts",
         "src/modules/pattern/features/header/header.component.ts",
+        "src/modules/pattern/features/score/score.component.ts",
         "src/modules/pattern/features/stepper/stepper.component.ts",
         "src/modules/pattern/features/table/tree-table.component.ts"
       ]
@@ -138,8 +143,8 @@
       "demoStatus": "source present",
       "batch": "existing",
       "useCases": "Tones, loading, error/retry, disabled, confirmation, keyboard",
-      "desktop": "PASS: Outline loading/error/retry/disabled/confirm/keyboard journey",
-      "mobile": "PASS: authored Outline responsive journey in complete Portal suite",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
       "sources": [
         "src/modules/component/features/api-contract-builder/api-contract-builder.component.ts",
         "src/modules/component/features/autoid-inspector/autoid-inspector.component.ts",
@@ -339,14 +344,25 @@
       "sources": []
     },
     {
+      "entry": "components/editor-engine",
+      "kind": "UI group",
+      "interactiveDemo": null,
+      "demoStatus": "gap",
+      "batch": 3,
+      "useCases": "Pending functional demo",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
+      "sources": []
+    },
+    {
       "entry": "components/file-explorer",
       "kind": "UI group",
       "interactiveDemo": null,
       "demoStatus": "source present",
       "batch": "existing",
       "useCases": "Folders, search, paging, preview; typed metadata, selection actions, native/API move, cancellation and retry",
-      "desktop": "PASS: typed selection, native/API move, confirmation/cancel/retry; Pages selection",
-      "mobile": "PASS: responsive authored journey and Pages selected state at 390px/320px",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
       "sources": [
         "src/modules/component/features/file-explorer/file-explorer.component.ts",
         "src/modules/utility/features/workspace/files/files.component.ts"
@@ -359,8 +375,8 @@
       "demoStatus": "source present",
       "batch": "existing",
       "useCases": "Builder to same schema to Render and validated submission; tabs/steps, model gates and conditional pages",
-      "desktop": "PASS: Builder/Render same-schema editing, tabs/steps, validation, conditional membership and retry",
-      "mobile": "PASS: Tabs schema handoff and native Render input in viewport at 390px/320px; responsive authored journey",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
       "sources": [
         "src/modules/utility/features/form-navigation/form-navigation.component.ts",
         "src/modules/utility/features/workspace/designer/designer.component.ts",
@@ -407,8 +423,8 @@
       "demoStatus": "interactive demo registered",
       "batch": "existing",
       "useCases": "Local PNG source, load failure/retry, native crop/rotate/history, local Blob preview/export",
-      "desktop": "PASS: full authored journey + Pages native action at 1440px",
-      "mobile": "PASS: full authored responsive journey + Pages native action/capture at 390px and 320px",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
       "sources": [
         "src/modules/component/features/image-editor/image-editor.component.ts"
       ]
@@ -426,8 +442,8 @@
       "demoStatus": "interactive demo registered",
       "batch": "existing",
       "useCases": "Native local workbook chooser/parse, invalid/warning rows, corrected synchronous session acceptance",
-      "desktop": "PASS: full authored journey + Pages native action at 1440px",
-      "mobile": "PASS: full authored responsive journey + Pages native action/capture at 390px and 320px",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
       "sources": [
         "src/modules/component/features/import-excel/import-excel.component.ts"
       ]
@@ -477,8 +493,8 @@
       "demoStatus": "interactive demo registered",
       "batch": "existing",
       "useCases": "Native ordered board, search/menu/keyboard and confirmed local async moves, failure/reset/read-only",
-      "desktop": "PASS: full authored journey + Pages native action at 1440px",
-      "mobile": "PASS: full authored responsive journey + Pages native action/capture at 390px and 320px",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
       "sources": [
         "src/modules/component/features/kanban/kanban.component.ts"
       ]
@@ -524,8 +540,8 @@
       "demoStatus": "interactive demo registered",
       "batch": "existing",
       "useCases": "Interactive nonmodal docked component: compare two records, local note validation/save/retry, narrow single panel",
-      "desktop": "PASS: full authored journey + Pages native action at 1440px",
-      "mobile": "PASS: full authored responsive journey + Pages native action/capture at 390px and 320px",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
       "sources": [
         "src/modules/component/features/modal-resizable/modal-resizable.component.ts"
       ]
@@ -556,8 +572,8 @@
       "demoStatus": "interactive demo registered",
       "batch": "existing",
       "useCases": "Fictional project teams, native collapse/custom-node detail, loading/error/empty/disabled preview",
-      "desktop": "PASS: full authored journey + Pages native action at 1440px",
-      "mobile": "PASS: full authored responsive journey + Pages native action/capture at 390px and 320px",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
       "sources": [
         "src/modules/component/features/org-chart/org-chart.component.ts"
       ]
@@ -598,8 +614,8 @@
       "demoStatus": "source present",
       "batch": 1,
       "useCases": "AND/OR, nesting, fields, date, search, sort, selection, confirm/undo, empty/error/retry",
-      "desktop": "PASS: nested AND/OR/field/date queries, result actions and recovery",
-      "mobile": "PASS: authored compact responsive journey in complete Portal suite",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
       "sources": [
         "src/modules/component/features/query-builder/query-builder.component.ts"
       ]
@@ -856,8 +872,8 @@
       "demoStatus": "source present",
       "batch": "existing",
       "useCases": "Filter/sort, row actions, selection actions, desktop and mobile cards",
-      "desktop": "PASS: workspace filter/sort/selection/detail/approval and Query Builder results",
-      "mobile": "PASS: workspace compact cards/reflow in authored mobile journey; no separate full 320px Table interaction audit",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
       "sources": [
         "src/modules/component/features/query-builder/query-builder.component.ts",
         "src/modules/component/features/table/basic/basic.component.ts",
@@ -898,8 +914,8 @@
       "demoStatus": "interactive demo registered",
       "batch": "existing",
       "useCases": "Standalone lazy catalogue, native keyboard expansion, loaded-descendant selection, root/child retry",
-      "desktop": "PASS: full authored journey + Pages native action at 1440px",
-      "mobile": "PASS: full authored responsive journey + Pages native action/capture at 390px and 320px",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
       "sources": [
         "src/modules/component/features/tree/tree.component.ts"
       ]
@@ -911,8 +927,8 @@
       "demoStatus": "source present",
       "batch": "existing",
       "useCases": "Local validation, progress, removal and Explorer handoff",
-      "desktop": "PASS: local workbook/file validation, progress/removal/retry and Explorer handoff",
-      "mobile": "PASS: upload/file-browser workspace reflow; no separate full mobile upload interaction audit",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
       "sources": [
         "src/modules/component/features/upload-file/upload-file.component.ts",
         "src/modules/utility/features/workspace/request/request.component.ts"
@@ -930,6 +946,17 @@
       "sources": [
         "src/modules/page/components/entity-facts.component.ts"
       ]
+    },
+    {
+      "entry": "components/window",
+      "kind": "UI group",
+      "interactiveDemo": null,
+      "demoStatus": "gap",
+      "batch": 3,
+      "useCases": "Pending functional demo",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
+      "sources": []
     },
     {
       "entry": "forms/autocomplete",
@@ -1442,6 +1469,17 @@
         "src/modules/service/features/confirm/with-radio/with-radio.component.ts",
         "src/modules/utility/features/workspace/workspace.component.ts"
       ]
+    },
+    {
+      "entry": "services/date-time",
+      "kind": "service",
+      "interactiveDemo": null,
+      "demoStatus": "gap",
+      "batch": 3,
+      "useCases": "Pending functional demo",
+      "desktop": "Not individually recorded on this public pin",
+      "mobile": "Not individually recorded on this public pin",
+      "sources": []
     },
     {
       "entry": "services/excel",

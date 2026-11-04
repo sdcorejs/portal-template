@@ -7,7 +7,11 @@
     <div class="pattern-body">
       <h2>{{ row.code }} · {{ row.name }}</h2>
       <p>
-        <span [class]="'badge ' + row.status">{{ labels[row.status] }}</span>
+        <sd-badge
+          type="round"
+          size="sm"
+          [color]="row.status === 'done' ? 'success' : row.status === 'active' ? 'primary' : 'warning'"
+          [title]="labels[row.status]" />
       </p>
       @if (editing()) {
         <fieldset [disabled]="saving()" class="form-grid">

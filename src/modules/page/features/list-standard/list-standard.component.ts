@@ -79,8 +79,7 @@ export abstract class ListPatternBase {
           field: 'status',
           title: 'Trạng thái',
           type: 'values',
-          useBadge: (_value, row) =>
-            statusBadge(row.status, this.store.kind === 'customer' ? 'tag' : this.store.kind === 'order' ? 'round' : 'icon'),
+          useBadge: (_value, row) => statusBadge(row.status),
           option: { items: STATUS_OPTIONS, valueField: 'id', displayField: 'name' },
           width: '150px',
         },

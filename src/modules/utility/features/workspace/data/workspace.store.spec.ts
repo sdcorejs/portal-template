@@ -22,12 +22,16 @@ describe('Workspace demo contracts', () => {
   it('publishes an independent schema snapshot and leaves existing record schemas intact', async () => {
     const original = structuredClone(store.publishedSchema());
     const edited = structuredClone(store.draftSchema());
-    edited.pages[0].elements[0].label = 'Nhãn mới';
+    const field = edited.pages[0].elements[0];
+    if (!('label' in field)) throw new Error('Expected a field with a label');
+    field.label = 'Nhãn mới';
     store.draftSchema.set(edited);
     expect(store.publishedSchema()).toEqual(original);
     store.publishSchema();
-    edited.pages[0].elements[0].label = 'Không được rò sang bản áp dụng';
-    expect(store.publishedSchema().pages[0].elements[0].label).toBe('Nhãn mới');
+    field.label = 'Không được rò sang bản áp dụng';
+    const publishedField = store.publishedSchema().pages[0].elements[0];
+    if (!('label' in publishedField)) throw new Error('Expected a published field with a label');
+    expect(publishedField.label).toBe('Nhãn mới');
     expect(store.requests()[0].schema).toEqual(original);
   });
 

@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { openPattern } from './helpers/demo-fixtures';
 for (const [id, code, badgeType] of [
-  ['list-standard', 'CUS-0001', 'tag'],
+  ['list-standard', 'CUS-0001', 'round'],
   ['list-advanced-filter', 'ORD-0001', 'round'],
-  ['list-grouped-tree', 'PRO-0001', 'icon'],
-  ['list-master-detail', 'TIC-0001', 'icon'],
+  ['list-grouped-tree', 'PRO-0001', 'round'],
+  ['list-master-detail', 'TIC-0001', 'round'],
   ['drawer-compact', 'CAT-0001', 'round'],
-  ['drawer-sections', 'CON-0001', 'tag'],
+  ['drawer-sections', 'CON-0001', 'round'],
 ]) {
   test('CASE-RECORD-LINK: ' + id + ' opens by code with ' + badgeType + ' status badges', async ({ page }, testInfo) => {
     await openPattern(page, id);
@@ -20,12 +20,9 @@ for (const [id, code, badgeType] of [
       .first();
     const badge = row.locator('sd-badge');
     await expect(badge).toContainText('Đang hoạt động');
-    if (badgeType === 'tag') await expect(badge.locator('.c-badge--tag')).toBeVisible();
-    if (badgeType === 'round') {
-      await expect(badge.locator('.c-badge')).toBeVisible();
-      await expect(badge.locator('.c-badge--tag')).toHaveCount(0);
-    }
-    if (badgeType === 'icon') await expect(badge.locator('.c-badge-icon')).toBeVisible();
+    await expect(badge.locator('.c-badge')).toBeVisible();
+    await expect(badge.locator('.c-badge--tag, .c-badge-icon')).toHaveCount(0);
+    await expect(badge.locator('.c-badge')).toHaveCSS('border-radius', '999px');
     await page.screenshot({ path: testInfo.outputPath('listing.png') });
     if (id === 'list-standard') {
       await link.focus();

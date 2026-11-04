@@ -2,7 +2,7 @@
 
 Portal Angular 22 với dữ liệu hư cấu, demo tương tác và state có thể khôi phục. Xem [hướng dẫn release và các luồng demo](docs/core31-release.md), [ma trận source coverage](docs/core-demo-coverage.md).
 
-**Public package:** `@sdcorejs/angular@22.3.1` đã được đối chiếu tarball/SRI với source tag `v3.1`, pin lock và clean install riêng. Local acceptance và review Sol đã PASS: 57 unit, 231 Portal browser, 62 stories và ba viewport Pages. Xem [bằng chứng public](docs/core31-release-validation.json); CI trên SHA hiện tại và kiểm tra bản deploy được chốt riêng, candidate lịch sử giữ cục bộ.
+**Public package:** `@sdcorejs/angular@22.3.4` được pin cùng lockfile; tarball/SRI, npm provenance của source tag `v3.4` và toàn bộ file cài đặt đã được đối chiếu trong [release artifact](docs/core31-release-artifact.json). Xem [nâng Core, sửa ảnh và badge](docs/core34-upgrade.md). [Bằng chứng 22.3.1 trước đây](docs/core31-release-validation.json) là lịch sử; CI của commit mới và trạng thái deploy được kiểm tra riêng.
 
 ## Workspace hồ sơ — playground Core UI 22.3
 
@@ -43,7 +43,7 @@ Phạm vi kế hoạch và nguồn: [instructions-plan.md](docs/instructions-pla
 
 ## Chạy dự án
 
-Dùng Node **24.15+** (đã kiểm tra với 24.19.0), hoặc Node 22.22.3+. Node 22.14 và Node 18 không phù hợp Angular 22. Các phiên bản chính được pin trong package.json và package-lock.json: Core 22.3.1, Angular 22.1.6, CLI 22.1.7, TypeScript 6.0.3, Storybook 10.6.0.
+Dùng Node **24.15+** (đã kiểm tra với 24.19.0), hoặc Node 22.22.3+. Node 22.14 và Node 18 không phù hợp Angular 22. Các phiên bản chính được pin trong package.json và package-lock.json: Core 22.3.4, Angular 22.1.6, CLI 22.1.7, TypeScript 6.0.3, Storybook 10.6.0.
 
 ```sh
 npm ci
@@ -95,7 +95,7 @@ Thân sd-section dùng p-20. Create/update giữ inline error của Core và dù
 
 ## Bố cục list và bộ lọc Core
 
-List dùng trọn chiều cao vùng làm việc: header chỉ có tiêu đề/hành động, bảng cuộn nội bộ và phân trang ở đáy. Các mẫu tham khảo bố cục XNĐK/HĐMB của sales-platform và dùng API Core 22.3.1 đang cài.
+List dùng trọn chiều cao vùng làm việc: header chỉ có tiêu đề/hành động, bảng cuộn nội bộ và phân trang ở đáy. Các mẫu tham khảo bố cục XNĐK/HĐMB của sales-platform và dùng API Core 22.3.4 đang cài.
 
 | Màn | Bộ lọc | Score card |
 | --- | --- | --- |

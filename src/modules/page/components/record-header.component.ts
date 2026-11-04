@@ -67,5 +67,5 @@ export class RecordHeaderComponent {
   readonly prefix = computed(
     () => (this.mode() === 'detail' ? 'Chi tiết ' : this.mode() === 'create' ? 'Tạo ' : 'Cập nhật ') + ENTITY_NOUNS[this.kind()]
   );
-  readonly badge = computed(() => (this.entity() ? statusBadge(this.entity()!.status, 'round') : null));
+  readonly badge = computed(() => (this.entity() ? statusBadge(this.entity()!.status) : null));
 }

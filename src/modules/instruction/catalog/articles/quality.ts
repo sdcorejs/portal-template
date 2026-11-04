@@ -8,7 +8,7 @@ export default {
       title: 'Giữ ngữ nghĩa tương tác',
       text: 'Dùng button cho hành động, anchor cho điều hướng. Ảnh thông tin có alt mô tả; ảnh chỉ trang trí có alt rỗng, không phụ thuộc ảnh từ backend hay frontend.',
       file: 'component.html',
-      code: '<button type="button" (click)="onSave()">Lưu</button>\n<a routerLink="/page">Xem page mẫu</a>\n<img src="/assets/instructions/quality/overview.svg" alt="Luồng kiểm tra accessibility" />\n<iframe title="Ví dụ component" src="/example"></iframe>',
+      code: '<button type="button" (click)="onSave()">Lưu</button>\n<a routerLink="/page">Xem page mẫu</a>\n<img src="assets/instructions/quality/overview.svg" alt="Luồng kiểm tra accessibility" />\n<iframe title="Ví dụ component" src="/example"></iframe>',
       result: 'Tab tới được control; Enter/Space hoạt động theo ngữ nghĩa mặc định.',
     },
     {
@@ -41,7 +41,7 @@ export default {
   ],
   related: ['spacing', 'typescript'],
   screenshot: {
-    src: '/assets/instructions/quality/example.png',
+    src: 'assets/instructions/quality/example.png',
     alt: 'Ảnh ví dụ HTML có caption, header bảng và nút xác nhận dùng được bằng bàn phím.',
   },
 } satisfies ArticleText;

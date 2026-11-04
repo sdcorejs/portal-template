@@ -35,6 +35,7 @@
     <ng-template sdTableCellDef="status" let-row="item">
       @if (row.kind === 'product') {
         <sd-badge
+          type="round"
           size="sm"
           [color]="row.status === 'active' ? 'success' : 'warning'"
           [title]="row.status === 'active' ? 'Đang bán' : 'Tạm ngừng'" />

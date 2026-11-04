@@ -21,7 +21,7 @@ export class ListMasterDetailComponent extends ListPatternBase {
   readonly editor = viewChild<FormSectionsComponent>('editor');
   readonly unsaved = inject(SdUnsavedChangesService);
   readonly entity = computed(() => this.store.records().find(row => row.id === this.store.selectedId()));
-  readonly badge = computed(() => statusBadge(this.entity()?.status ?? 'pending', 'round'));
+  readonly badge = computed(() => statusBadge(this.entity()?.status ?? 'pending'));
   readonly region = computed(() => GROUP_OPTIONS.find(group => group.id === this.entity()?.group)?.name ?? '—');
   constructor() {
     super();

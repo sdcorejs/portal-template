@@ -22,7 +22,11 @@
             <td>{{ row.code }}</td>
             <td>{{ row.name }}</td>
             <td>
-              <span [class]="'badge ' + row.status">{{ labels[row.status] }}</span>
+              <sd-badge
+                type="round"
+                size="sm"
+                [color]="row.status === 'done' ? 'success' : row.status === 'active' ? 'primary' : 'warning'"
+                [title]="labels[row.status]" />
             </td>
           </tr>
         }

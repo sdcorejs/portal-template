@@ -24,7 +24,7 @@ interface PermissionRow {
     </ng-template>
     <ng-template sdTableCellDef="type" let-row="item">
       @if (row.type) {
-        <sd-badge type="tag" [title]="row.type" [color]="row.type === 'Other' ? 'warning' : 'secondary'" />
+        <sd-badge type="round" [title]="row.type" [color]="row.type === 'Other' ? 'warning' : 'secondary'" />
       }
     </ng-template>
     <ng-template sdTableCellDef="ids" let-row="item">

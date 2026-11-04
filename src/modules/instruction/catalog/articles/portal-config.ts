@@ -35,7 +35,7 @@ export default {
   ],
   related: ['theme', 'overview'],
   screenshot: {
-    src: '/assets/instructions/portal-config/example.png',
+    src: 'assets/instructions/portal-config/example.png',
     alt: 'Ảnh form cấu hình Portal thật: sidebar, định dạng số, ngôn ngữ và tab-router.',
   },
 } satisfies ArticleText;

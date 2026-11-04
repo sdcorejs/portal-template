@@ -53,5 +53,8 @@ test('CASE-TAB-METADATA: tab router shows a meaningful title and icon', async ({
   await page.getByRole('button', { name: 'Lưu & Tải lại', exact: true }).click();
   await page.goto('/form/input');
   await expect(page.locator('sd-tab-router-item')).toContainText('SdInput Component');
-  await expect(page.locator('sd-tab-router-item sd-icon').filter({ hasText: 'edit_note' })).toBeVisible();
+  // Core 22.3.4 ẩn thanh tab đơn; mở màn thứ hai để kiểm tra metadata đang hiển thị.
+  await page.getByRole('link', { name: 'Select', exact: true }).click();
+  const inputTab = page.locator('sd-tab-router-item').filter({ hasText: 'SdInput Component' });
+  await expect(inputTab.locator('sd-icon').filter({ hasText: 'edit_note' })).toBeVisible();
 });

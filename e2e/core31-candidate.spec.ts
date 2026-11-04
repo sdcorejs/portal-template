@@ -393,7 +393,8 @@ test('Form Builder edit hands off the same schema and submit retry/view mode pre
   await page.keyboard.press('Control+Shift+z');
   await expect(builder.locator('[data-builder-page]')).toHaveCount(5);
   await builder.locator(`[data-builder-page="${newPageId}"]`).click();
-  await builder.locator('[data-page-action="up"]').click();
+  await builder.getByRole('button', { name: 'Thao tác trang', exact: true }).click();
+  await page.locator('[data-page-action="up"]').click();
   await builder.locator('[data-builder-page]').first().click();
   await capture(page, 'builder-desktop');
   // Copy the schema emitted by real page CRUD to Render, including its extra page.

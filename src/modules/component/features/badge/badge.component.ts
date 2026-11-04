@@ -3,7 +3,7 @@ import { SdTabComponent } from '@sdcorejs/angular/components/tab-router';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SdBadge, SdBadgeType } from '@sdcorejs/angular/components/badge';
+import { SdBadge, SdBadgeType, SD_BADGE_TYPE_OPTIONS } from '@sdcorejs/angular/components/badge';
 import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
 import { SdSection } from '@sdcorejs/angular/components/section';
 import { SdInput } from '@sdcorejs/angular/forms/input';
@@ -38,18 +38,18 @@ export class BadgeDemoComponent {
   title = signal<string>('99+');
   pageDescription = signal<string>('Thành phần hiển thị nhãn trạng thái, thông báo hoặc chỉ số đếm nhanh.');
   description = signal<string>('Tin nhắn mới');
-  type = signal<SdBadgeType>('tag');
+  label = signal<string>('Trạng thái');
+  pulse = signal(false);
+  type = signal<SdBadgeType>('round');
   color = signal<SdColor>('error');
   size = signal<SdSize>('md');
   icon = signal<string>('notifications');
 
   // Các danh sách tùy chọn
-  types: SdBadgeType[] = ['tag', 'round', 'icon'];
-  typeOptions = [
-    { id: 'tag', name: 'Tag' },
-    { id: 'round', name: 'Round' },
-    { id: 'icon', name: 'Icon' },
-  ];
+  readonly typeOptions = SD_BADGE_TYPE_OPTIONS.map(({ value }) => ({
+    id: value,
+    name: value.charAt(0).toUpperCase() + value.slice(1),
+  }));
   colors: SdColor[] = ['primary', 'secondary', 'success', 'warning', 'error', 'info'];
   colorOptions = [
     { id: 'primary', name: 'Primary' },
@@ -71,6 +71,8 @@ export class BadgeDemoComponent {
     const props = [];
 
     if (this.type()) props.push(`[type]="'${this.type()}'"`);
+    if (this.type() === 'pair' && this.label()) props.push(`[label]="'${this.label()}'"`);
+    if ((this.type() === 'dot' || this.type() === 'icon') && this.pulse()) props.push('[pulse]="true"');
     if (this.color()) props.push(`[color]="'${this.color()}'"`);
     if (this.size()) props.push(`[size]="'${this.size()}'"`);
     if (this.title()) props.push(`[title]="'${this.title()}'"`);

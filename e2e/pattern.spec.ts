@@ -8,7 +8,7 @@ test('inline operators combine numeric comparison and text filtering', async ({ 
   await expect(table.locator('tbody a')).toHaveCount(6);
   const amount = table.locator('th').filter({ has: page.getByRole('button', { name: 'Giá trị (VND)', exact: true }) });
   await amount.getByRole('button').nth(1).click();
-  await page.getByRole('menuitem', { name: 'Nhỏ hơn LESS_THAN', exact: true }).click();
+  await page.getByRole('menuitemradio', { name: 'Nhỏ hơn', exact: true }).click();
   await amount.getByRole('textbox').fill('7000000');
   await amount.getByRole('textbox').press('Enter');
   await expect(table.locator('tbody a')).toHaveCount(2);
@@ -174,11 +174,11 @@ test('Core table states load, empty, error retry and unmatched search', async ({
   await open(page, 'table', 'states');
   const demo = page.locator('app-pattern-table');
   const table = demo.locator('sd-table');
-  await expect(table.locator('.c-loading')).toBeVisible();
+  await expect(table.locator('.c-table[aria-busy="true"]')).toBeVisible();
   await expect(table.getByRole('row').filter({ hasText: 'DH-1001' })).toBeVisible();
   await demo.getByRole('button', { name: 'Chưa có dữ liệu', exact: true }).click();
   await expect(table.getByText('Chưa có đơn hàng', { exact: true })).toBeVisible();
-  await expect(table.locator('.c-loading')).toBeHidden();
+  await expect(table.locator('.c-table[aria-busy="true"]')).toBeHidden();
   await expect(table.getByRole('row').filter({ hasText: 'DH-1001' })).toHaveCount(0);
   await page.locator('.preview-stage').screenshot({ path: 'test-results/table-empty-core.png' });
   await demo.getByRole('button', { name: 'Lỗi rồi thử lại', exact: true }).click();
@@ -189,8 +189,8 @@ test('Core table states load, empty, error retry and unmatched search', async ({
   const search = table.getByPlaceholder('Tìm mã hoặc tên khách hàng');
   await search.fill('khong-ton-tai');
   await search.press('Enter');
-  await expect(table.getByText('Không có kết quả phù hợp', { exact: true })).toBeVisible();
-  await expect(table.locator('.c-loading')).toBeHidden();
+  await expect(table.locator('sd-data-state').getByText('Không có kết quả phù hợp', { exact: true })).toBeVisible();
+  await expect(table.locator('.c-table[aria-busy="true"]')).toBeHidden();
   await expect(table.getByRole('row').filter({ hasText: 'DH-1001' })).toHaveCount(0);
   await page.locator('.preview-stage').screenshot({ path: 'test-results/table-no-results-core.png' });
   await search.fill('DH-1002');
@@ -219,7 +219,7 @@ test('tree showcase: hierarchy, leaf selection and row commands', async ({ page 
   await expect(demo.getByRole('button', { name: 'Tạm ngừng sản phẩm đã chọn', exact: true })).toBeInViewport();
   await page.locator('.preview-stage').screenshot({ path: 'test-results/tree-showcase-selection.png' });
   await demo.getByRole('button', { name: 'Tạm ngừng sản phẩm đã chọn', exact: true }).click();
-  await expect(demo.getByRole('status')).toHaveText('Đã tạm ngừng 2 sản phẩm.');
+  await expect(demo.locator('.tree-feedback[role="status"]')).toHaveText('Đã tạm ngừng 2 sản phẩm.');
   await expect(row('SP-001')).toContainText('Tạm ngừng');
   await expect(row('SP-003')).toContainText('Tạm ngừng');
   await expect(row('SP-002')).toContainText('Đang bán');
@@ -253,7 +253,7 @@ test('tree showcase: select all excludes parents and collapsed products', async 
   await demo.getByRole('columnheader').getByRole('checkbox').check();
   await expect(demo.locator('tbody input[type="checkbox"]:checked')).toHaveCount(2);
   await demo.getByRole('button', { name: 'Tạm ngừng sản phẩm đã chọn', exact: true }).click();
-  await expect(demo.getByRole('status')).toHaveText('Đã tạm ngừng 2 sản phẩm.');
+  await expect(demo.locator('.tree-feedback[role="status"]')).toHaveText('Đã tạm ngừng 2 sản phẩm.');
   await expect(row('SP-005')).toContainText('Tạm ngừng');
   await expect(row('SP-006')).toContainText('Tạm ngừng');
   await expect(demo.locator('tbody input[type="checkbox"]:checked')).toHaveCount(0);
@@ -658,7 +658,7 @@ test('icon filter is keyboard accessible and source is real Angular', async ({ p
   await expect(card).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('app-pattern-score [role="status"]')).toContainText('8 / 24');
   await expect(page.locator('app-pattern-score tbody tr')).toHaveCount(4);
-  expect((await page.locator('app-pattern-score tbody .badge').allTextContents()).every(x => x === 'Chờ xử lý')).toBe(true);
+  expect((await page.locator('app-pattern-score tbody sd-badge').allTextContents()).every(x => x === 'Chờ xử lý')).toBe(true);
   // Core cards throttle repeated activation for 300 ms.
   await page.waitForTimeout(350);
   await page.keyboard.press('Space');

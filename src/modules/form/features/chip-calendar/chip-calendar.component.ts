@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/c
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SdCodeEditor } from '@sdcorejs/angular/components/code-editor';
 import { SdSection } from '@sdcorejs/angular/components/section';
-import { SdChipCalendar } from '@sdcorejs/angular/forms/chip-calendar';
+import { SdChipCalendar, SdChipCalendarValue } from '@sdcorejs/angular/forms/chip-calendar';
 import { SdInput } from '@sdcorejs/angular/forms/input';
 import { SdPageComponent } from '@sdcorejs/angular/modules/layout';
 import { Size as SdSize } from '@sdcorejs/utils/models';
@@ -41,7 +41,7 @@ export class ChipCalendarDemoComponent {
 
   // Configuration signals
   label = signal<string>('Chọn các ngày');
-  modelValue = signal<(string | number)[]>(['2026/04/17', '2026/04/18', '2026/04/20']);
+  modelValue = signal<SdChipCalendarValue[]>(['2026/04/17', '2026/04/18', '2026/04/20']);
   size = signal<SdSize>('md');
   required = signal<boolean>(false);
   minValue = signal<number>(0);
@@ -67,7 +67,7 @@ export class ChipCalendarDemoComponent {
   });
 
   tsCode = `import { Component, signal } from '@angular/core';
-import { SdChipCalendar } from '@sdcorejs/angular/forms/chip-calendar';
+import { SdChipCalendar, SdChipCalendarValue } from '@sdcorejs/angular/forms/chip-calendar';
 
 @Component({
   selector: 'app-my-component',
@@ -77,7 +77,7 @@ import { SdChipCalendar } from '@sdcorejs/angular/forms/chip-calendar';
 })
 export class MyComponent {
   // Định dạng: yyyy/MM/dd
-  selectedDates = signal<string[]>(['2026/04/17', '2026/04/18', '2026/04/20']);
+  selectedDates = signal<SdChipCalendarValue[]>(['2026/04/17', '2026/04/18', '2026/04/20']);
 }`;
 }
 

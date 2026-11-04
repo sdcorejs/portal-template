@@ -3,7 +3,7 @@ import { defineConfig } from '@playwright/test';
 const onlineUrl = process.env['PORTAL_RELEASE_URL'];
 export default defineConfig({
   testDir: './e2e',
-  testMatch: 'release-pages.spec.ts',
+  testMatch: ['release-pages.spec.ts', 'deployment-assets.spec.ts'],
   fullyParallel: false,
   workers: 1,
   retries: 0,

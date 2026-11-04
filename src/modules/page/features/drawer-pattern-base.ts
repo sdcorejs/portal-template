@@ -41,7 +41,7 @@ export abstract class DrawerPatternBase {
           type: 'values',
           width: '180px',
           option: { items: STATUS_OPTIONS, valueField: 'id', displayField: 'name' },
-          useBadge: (_value, row) => statusBadge(row.status, this.store.kind === 'category' ? 'round' : 'tag'),
+          useBadge: (_value, row) => statusBadge(row.status),
         },
       ],
       paginate: { pageSize: 10 },

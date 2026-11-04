@@ -44,7 +44,7 @@ export default {
   ],
   related: ['overview', 'integration'],
   screenshot: {
-    src: '/assets/instructions/setup/portal-running.png',
+    src: 'assets/instructions/setup/portal-running.png',
     alt: 'Portal đang chạy với danh sách khách hàng, hyperlink mã và badge trạng thái.',
   },
 } satisfies ArticleText;

@@ -1,6 +1,8 @@
 # Core UI playground release
 
-Public dependency: `@sdcorejs/angular@22.3.1`, producer source `629ab5ff475c307b8d19a393a6fdc967139ed3a2` / tag `v3.1`. Registry bytes, SRI, seven fonts and clean-installed package/peers are verified in [release artifact](core31-release-artifact.json). Local public consumer acceptance passed all 18 gates: 57 unit cases, four generator cases, 231 Portal browser cases, all 62 stories through two browser cases and three Pages viewport journeys. Sol independently reviewed the runtime and actual captures. [Validation](core31-release-validation.json) binds these local results to the runtime fingerprint. PR/current-SHA CI and online deployed-SHA acceptance are separate release steps. Previous candidate results remain local historical evidence.
+Public dependency: `@sdcorejs/angular@22.3.4`, producer source `db7f86079ec737f8f48f54daf9779fdc231a861a` / tag `v3.4`. Registry bytes, SRI, seven fonts, clean-installed files and npm provenance are recorded in the [release artifact](core31-release-artifact.json). See [the current upgrade and fixes](core34-upgrade.md).
+
+[The previous 22.3.1 validation](core31-release-validation.json) records 57 unit cases, four generator cases, 231 Portal browser cases, 62 stories and three Pages viewport journeys on that older runtime. Those results are historical and do not establish acceptance for a later Core pin. PR/current-SHA CI and online deployed-SHA acceptance remain separate release steps.
 
 All fixtures are fictional. Actions and uploaded files stay in the browser session; Reset restores the example. The app keeps Angular 22 and the existing Portal shell, tokens and navigation.
 

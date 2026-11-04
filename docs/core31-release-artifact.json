@@ -1,19 +1,18 @@
 {
   "schemaVersion": 1,
   "name": "@sdcorejs/angular",
-  "version": "22.3.1",
+  "version": "22.3.4",
   "published": true,
-  "sourceCommit": "629ab5ff475c307b8d19a393a6fdc967139ed3a2",
-  "tag": "v3.1",
-  "tarball": "https://registry.npmjs.org/@sdcorejs/angular/-/angular-22.3.1.tgz",
-  "integrity": "sha512-JMbOpEic6GDnHU5FbYA2/qmsLzs1TMJxJZ22Omf1Tag/HRR4y0Th7VzPx0Sgga00cTuu9dknqN/G5XY4h1D+og==",
-  "sha256": "8d5830e9e1ab370b79acea32275f81ba3536d09da87597346ff47838204fea86",
-  "packedFiles": 350,
-  "installedPackageFingerprint": "f647d84cbf915e9c99cd9b5a5161925a1bf7fde090af2f0f68a383496b07c7fb",
-  "verifiedAtUtc": "2026-10-10T04:01:43.115966+00:00",
-  "npmUrl": "https://www.npmjs.com/package/@sdcorejs/angular/v/22.3.1",
-  "publisherRun": "https://github.com/sdcorejs/sdcorejs-angular/actions/runs/38019593287",
-  "independentRegistryBytesMatchProducer": true,
+  "sourceCommit": "db7f86079ec737f8f48f54daf9779fdc231a861a",
+  "tag": "v3.4",
+  "tarball": "https://registry.npmjs.org/@sdcorejs/angular/-/angular-22.3.4.tgz",
+  "integrity": "sha512-r88n9ds+QgmIYKWk7F5N9FQYgV63KoMKnd5o4fNZv574kWonWKq/ZrNZ6fQwtPAJnmqqcsKLXYSPV0K3D0L6HQ==",
+  "sha256": "d6942111e6be435028806fce55ef874705d16c8b6a535c8c785adee777304c33",
+  "packedFiles": 566,
+  "installedPackageFingerprint": "0bf7ddcfe81d42be182d4f220bc52b24e250699085db2ba673c41f1309c60a93",
+  "verifiedAtUtc": "2026-11-04T11:15:30.806671+00:00",
+  "npmUrl": "https://www.npmjs.com/package/@sdcorejs/angular/v/22.3.4",
+  "publisherRun": "https://github.com/sdcorejs/sdcorejs-angular/actions/runs/41018379683/attempts/1",
   "fonts": [
     {
       "file": "assets/fonts/material-icons/material-icons-outlined-v110-latin-regular.woff2",
@@ -52,15 +51,21 @@
     }
   ],
   "peerDependencies": {
-    "@angular/animations": "^22.0.0",
+    "rxjs": "^7.8.0",
     "@angular/cdk": "^22.0.0",
-    "@angular/common": "^22.0.0",
     "@angular/core": "^22.0.0",
     "@angular/forms": "^22.0.0",
-    "@angular/material": "^22.0.0",
-    "@angular/material-date-fns-adapter": "^22.0.0",
-    "@angular/platform-browser": "^22.0.0",
+    "@angular/common": "^22.0.0",
     "@angular/router": "^22.0.0",
-    "rxjs": "^7.8.0"
+    "@angular/material": "^22.0.0",
+    "@angular/animations": "^22.0.0",
+    "@angular/platform-browser": "^22.0.0",
+    "@angular/material-date-fns-adapter": "^22.0.0"
+  },
+  "provenance": {
+    "url": "https://registry.npmjs.org/-/npm/v1/attestations/@sdcorejs%2fangular@22.3.4",
+    "predicateType": "https://slsa.dev/provenance/v1",
+    "registrySha512MatchesSubject": true,
+    "registryFilesMatchInstalledPackage": true
   }
 }

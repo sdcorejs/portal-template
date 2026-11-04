@@ -37,7 +37,7 @@ export default {
   ],
   related: ['di', 'typescript'],
   screenshot: {
-    src: '/assets/instructions/signals/example.png',
+    src: 'assets/instructions/signals/example.png',
     alt: 'Ảnh demo Angular thật: parent truyền đơn giá, child tính tổng và phát sự kiện thêm hàng.',
   },
 } satisfies ArticleText;

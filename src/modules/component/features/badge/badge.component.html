@@ -43,6 +43,20 @@
                   size="sm"></sd-select
               ></app-demo-property>
 
+              @if (type() === 'pair') {
+                <app-demo-property label="label">
+                  <span propertyDescription>Nhãn bên trái của badge pair.</span>
+                  <sd-input [(model)]="label" hideInlineError size="sm" />
+                </app-demo-property>
+              }
+
+              @if (type() === 'dot' || type() === 'icon') {
+                <app-demo-property label="pulse">
+                  <span propertyDescription>Hiệu ứng nhấp nháy quanh chấm trạng thái.</span>
+                  <sd-switch [(model)]="pulse" size="sm" />
+                </app-demo-property>
+              }
+
               <app-demo-property label="size">
                 <span propertyDescription>Điều chỉnh kích thước tổng thể của badge.</span>
                 <sd-select [items]="sizeOptions" valueField="id" displayField="name" [(model)]="size" hideInlineError size="sm"></sd-select
@@ -60,6 +74,8 @@
                 class="p-24 bg-slate-100 rounded-8 border border-dashed border-slate-300 d-flex align-items-center justify-content-center">
                 <sd-badge
                   [type]="type()"
+                  [label]="label()"
+                  [pulse]="pulse()"
                   [color]="color()"
                   [size]="size()"
                   [title]="title()"

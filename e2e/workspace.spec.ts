@@ -67,7 +67,7 @@ test('same published schema validates, submits with error recovery, then appears
   await page.getByRole('button', { name: 'Tiếp tục: Tài liệu', exact: true }).click();
   await expect(page.locator('sd-upload-file')).toBeVisible();
   const chooserPromise = page.waitForEvent('filechooser');
-  await page.locator('sd-upload-file').getByRole('button', { name: 'Tải file', exact: true }).click();
+  await page.locator('sd-upload-file').getByRole('button', { name: 'Tải lên', exact: true }).click();
   await (await chooserPromise).setFiles({ name: 'brief-nova.txt', mimeType: 'text/plain', buffer: Buffer.from('Fictional Nova brief') });
   await page.getByRole('button', { name: 'Kiểm tra trước khi gửi', exact: true }).click();
   await expect(page.locator('app-workspace-request')).toContainText('brief-nova.txt');

@@ -70,7 +70,10 @@ for (const language of ['vi', 'en']) {
     await page.keyboard.press('Enter');
     await expect(page.locator('app-file-explorer-demo').getByRole('status')).toContainText('Lưu trữ có 0 tài liệu');
 
-    const move = file.getByRole('button', { name: language === 'vi' ? 'Di chuyển đến…' : 'Move to…', exact: true });
+    const move = file.getByRole('button', {
+      name: language === 'vi' ? 'Di chuyển đến…: Brief-Nova.txt' : 'Move to…: Brief-Nova.txt',
+      exact: true,
+    });
     await keyboardFocus(page, move);
     await expectTooltip(page, language === 'vi' ? 'Di chuyển đến…: Brief-Nova.txt' : 'Move to…: Brief-Nova.txt');
     await page

@@ -1,3 +1,4 @@
+import { SdBadge } from '@sdcorejs/angular/components/badge';
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal, viewChild } from '@angular/core';
 import { SdButton } from '@sdcorejs/angular/components/button';
@@ -9,7 +10,7 @@ import { SdNotifyService } from '@sdcorejs/angular/services/notify';
 import { PatternStore } from '../data/pattern-store';
 @Component({
   selector: 'app-pattern-order-detail',
-  imports: [SdButton, SdSideDrawer, FormsModule],
+  imports: [SdBadge, SdButton, SdSideDrawer, FormsModule],
   templateUrl: './order-detail.component.html',
   styleUrl: '../styles/pattern.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -32,7 +32,7 @@ export default {
   ],
   related: ['quality', 'theme'],
   screenshot: {
-    src: '/assets/instructions/spacing/example.png',
+    src: 'assets/instructions/spacing/example.png',
     alt: 'Ảnh demo Core thật: body padding 20 px, form gap 8 px và vùng inline error được giữ.',
   },
 } satisfies ArticleText;

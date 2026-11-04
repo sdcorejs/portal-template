@@ -181,7 +181,7 @@ test('Explorer native move picker preserves metadata and consumer cancellation l
   await page.goto('/utility/explorer-candidate');
   // Explicit selector.actions are caller-owned; the deliberate native picker remains on each row.
   const row = explorer(page).getByRole('row').filter({ hasText: 'Brief-Nova.txt' });
-  await row.getByRole('button', { name: 'Di chuyển đến…', exact: true }).click();
+  await row.getByRole('button', { name: 'Di chuyển đến…: Brief-Nova.txt', exact: true }).click();
   const picker = explorer(page).getByRole('dialog');
   await picker.getByRole('treeitem', { name: 'Lưu trữ', exact: true }).click();
   await capture(page, 'move-picker-desktop');
@@ -393,7 +393,8 @@ test('Form Builder edit hands off the same schema and submit retry/view mode pre
   await page.keyboard.press('Control+Shift+z');
   await expect(builder.locator('[data-builder-page]')).toHaveCount(5);
   await builder.locator(`[data-builder-page="${newPageId}"]`).click();
-  await builder.locator('[data-page-action="up"]').click();
+  await builder.getByRole('button', { name: 'Thao tác trang', exact: true }).click();
+  await page.locator('[data-page-action="up"]').click();
   await builder.locator('[data-builder-page]').first().click();
   await capture(page, 'builder-desktop');
   // Copy the schema emitted by real page CRUD to Render, including its extra page.

@@ -5,7 +5,7 @@ const meta: Meta<BadgeDemoComponent> = {
   component: BadgeDemoComponent,
   tags: ['autodocs'],
   parameters: {
-    docs: { description: { component: 'Core 22.2.8. Ví dụ tương tác dùng chung với portal; thay đổi cấu hình trực tiếp trong preview.' } },
+    docs: { description: { component: 'Core 22.3.4. Ví dụ tương tác dùng chung với portal; thay đổi cấu hình trực tiếp trong preview.' } },
   },
 };
 export default meta;

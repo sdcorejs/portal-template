@@ -75,9 +75,10 @@ test('tab router keeps lesson title, icon and independent lesson state', async (
   await demo(page).getByRole('button', { name: 'Lưu & Tải lại', exact: true }).click();
   await page.goto('/instruction/modern-angular/signals');
   await expect(page.locator('sd-tab-router-item')).toContainText('Signals & Component APIs');
-  await expect(page.locator('sd-tab-router-item sd-icon').filter({ hasText: 'bolt' })).toBeVisible();
   await page.locator('.related').getByRole('link', { name: 'Dependency Injection →' }).click();
   await expect(page).toHaveURL(/dependency-injection$/);
+  // Core 22.3.4 chỉ hiện thanh tab khi có ít nhất hai tab.
+  await expect(page.locator('sd-tab-router-item sd-icon').filter({ hasText: 'bolt' })).toBeVisible();
   await expect(demo(page).getByRole('button', { name: 'Tăng Shared A' })).toBeVisible();
 });
 

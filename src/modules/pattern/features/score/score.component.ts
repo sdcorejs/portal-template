@@ -1,9 +1,10 @@
+import { SdBadge } from '@sdcorejs/angular/components/badge';
 import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
 import { ScoreCard, ScorecardStripComponent } from '../../components/scorecard-strip.component';
 import { seedOrders, STATUS_LABELS } from '../../data/pattern-query';
 @Component({
   selector: 'app-pattern-score',
-  imports: [ScorecardStripComponent],
+  imports: [SdBadge, ScorecardStripComponent],
   templateUrl: './score.component.html',
   styleUrl: '../../styles/pattern.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

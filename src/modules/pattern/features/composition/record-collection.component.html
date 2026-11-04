@@ -30,7 +30,11 @@
       <article class="record-card">
         <div class="d-flex align-items-center flex-wrap gap-8 justify-content-between">
           <span class="text-secondary fs-13">{{ row.code }}</span
-          ><span [class]="'badge ' + row.status">{{ labels[row.status] }}</span>
+          ><sd-badge
+            type="round"
+            size="sm"
+            [color]="row.status === 'done' ? 'success' : row.status === 'active' ? 'primary' : 'warning'"
+            [title]="labels[row.status]" />
         </div>
         <h3 class="mt-18">{{ row.name }}</h3>
         <p class="text-secondary fs-13">{{ row.region }} · {{ row.owner }}</p>

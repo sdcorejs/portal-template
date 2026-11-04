@@ -25,7 +25,7 @@ export class InstructionArticleComponent {
   readonly related = computed(() => INSTRUCTIONS.filter(item => this.article().related.includes(item.id)));
   readonly zoom = viewChild<ElementRef<HTMLDialogElement>>('zoom');
   readonly imageTrigger = viewChild<ElementRef<HTMLButtonElement>>('imageTrigger');
-  readonly imagePath = computed(() => '/assets/instructions/' + this.meta().id + '/overview.svg');
+  readonly imagePath = computed(() => 'assets/instructions/' + this.meta().id + '/overview.svg');
   readonly sections = [
     { id: 'goals', title: 'Mục tiêu & chuẩn bị' },
     { id: 'steps', title: 'Hướng dẫn thực hiện' },

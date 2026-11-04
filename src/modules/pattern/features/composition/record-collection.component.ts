@@ -1,9 +1,10 @@
+import { SdBadge } from '@sdcorejs/angular/components/badge';
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { SdButton } from '@sdcorejs/angular/components/button';
 import { PatternOrder, OrderStatus, STATUS_LABELS } from '../../data/pattern-query';
 @Component({
   selector: 'app-pattern-collection',
-  imports: [SdButton],
+  imports: [SdBadge, SdButton],
   templateUrl: './record-collection.component.html',
   styleUrl: '../../styles/pattern.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

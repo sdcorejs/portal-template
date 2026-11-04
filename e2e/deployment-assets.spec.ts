@@ -55,6 +55,8 @@ test('badge playground exposes all six public Core types and their controls', as
     if (name === 'Icon') await page.screenshot({ path: info.outputPath('badge-types.png') });
     await page.getByRole('option', { name, exact: true }).click();
     await expect(type).toContainText(name);
+    // Model đổi trước khi animation đóng panel kết thúc; đợi panel cũ rời DOM rồi mới mở lại.
+    await expect(page.locator('[role="listbox"]')).toHaveCount(0);
     await expect(preview).toBeVisible();
     if (name === 'Pair') {
       await expect(page.locator('app-demo-property[label="label"]')).toBeVisible();

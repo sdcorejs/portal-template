@@ -18,5 +18,6 @@ Local validation on a clean install:
 - Pages build under `/portal-template/`: pass.
 - Deployment regression: all 17 lesson diagrams, their zoom views, five screenshots and links, all six Badge types with pair/pulse controls, and six page listing/drawer badge variants: pass.
 - Existing Pages journeys at 1440, 390 and 320 pixels: pass.
+- Badge regression stability: 10 consecutive runs pass after waiting for the old dropdown panel to leave the DOM before reopening it.
 
 The Storybook build and rendering of all 62 stories pass locally. The full Portal suite and Storybook rendering remain CI gates before merge. Deployment is confirmed from the exact merged commit and its Pages workflow, separately from local checks.

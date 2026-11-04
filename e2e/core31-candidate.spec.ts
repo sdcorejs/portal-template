@@ -181,7 +181,7 @@ test('Explorer native move picker preserves metadata and consumer cancellation l
   await page.goto('/utility/explorer-candidate');
   // Explicit selector.actions are caller-owned; the deliberate native picker remains on each row.
   const row = explorer(page).getByRole('row').filter({ hasText: 'Brief-Nova.txt' });
-  await row.getByRole('button', { name: 'Di chuyển đến…', exact: true }).click();
+  await row.getByRole('button', { name: 'Di chuyển đến…: Brief-Nova.txt', exact: true }).click();
   const picker = explorer(page).getByRole('dialog');
   await picker.getByRole('treeitem', { name: 'Lưu trữ', exact: true }).click();
   await capture(page, 'move-picker-desktop');

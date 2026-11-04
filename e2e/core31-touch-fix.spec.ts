@@ -75,7 +75,7 @@ for (const width of [320, 390]) {
       await loadedFonts(page);
       const explorer = page.locator('sd-file-explorer');
       const row = explorer.getByRole('row').filter({ hasText: 'Brief-Nova.txt' });
-      const move = row.getByRole('button', { name: 'Di chuyển đến…', exact: true });
+      const move = row.getByRole('button', { name: 'Di chuyển đến…: Brief-Nova.txt', exact: true });
       const first = await touchGeometry(page, move);
       await localEvidence(page, `item-move-${width}`, { width, first });
       for (const edge of ['above', 'below']) {

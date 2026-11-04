@@ -6,7 +6,7 @@ Instructions diagrams used `/assets/...`, which bypassed the `/portal-template/`
 
 Badge playground types come from Core's public `SD_BADGE_TYPE_OPTIONS`: icon, round, tag, solid, dot and pair. Pair exposes its label; dot/icon expose pulse. Generated example code follows those controls. Page and Pattern status badges use round consistently, including table cells, drawers, permission trees and collection/score examples. Published pattern source snapshots and catalog capabilities match the runtime examples.
 
-The Core upgrade also widens the ChipCalendar demo model to `SdChipCalendarValue[]` and narrows the field union in the Workspace snapshot test. The coverage generator no longer carries passing results from a different Core version into the current inventory.
+The Core upgrade also widens the ChipCalendar demo model to `SdChipCalendarValue[]` and narrows the field union in the Workspace snapshot test. Instructions use the accessible heading now supplied by Core's SdPage, avoiding duplicate level-one headings. Explorer tests use the new per-file accessible Move name. The coverage generator no longer carries passing results from a different Core version into the current inventory.
 
 ## Validation
 
@@ -19,4 +19,4 @@ Local validation on a clean install:
 - Deployment regression: all 17 lesson diagrams, their zoom views, five screenshots and links, all six Badge types with pair/pulse controls, and six page listing/drawer badge variants: pass.
 - Existing Pages journeys at 1440, 390 and 320 pixels: pass.
 
-The full Portal suite and Storybook rendering remain CI gates before merge. Deployment is confirmed from the exact merged commit and its Pages workflow, separately from local checks.
+The Storybook build and rendering of all 62 stories pass locally. The full Portal suite and Storybook rendering remain CI gates before merge. Deployment is confirmed from the exact merged commit and its Pages workflow, separately from local checks.
